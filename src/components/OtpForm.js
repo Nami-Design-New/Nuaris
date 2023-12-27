@@ -2,9 +2,14 @@ import React, { useEffect, useState } from "react";
 import fav from "../assets/images/fav.svg";
 import axios from "../util/axios";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setIsAuth } from "../redux/slices/authSlice";
 
 const OtpForm = ({ formData, setFormData }) => {
   const [otpValue, setOtpValue] = useState("");
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   // digits handle input
   const handleInput = (index, event) => {
@@ -72,7 +77,8 @@ const OtpForm = ({ formData, setFormData }) => {
     await axios
       .request(requestOptions)
       .then(() => {
-        console.log("login successful");
+        dispatch(setIsAuth(true));
+        navigate("/");
       })
       .catch(err => {
         if (
@@ -84,7 +90,6 @@ const OtpForm = ({ formData, setFormData }) => {
           const errorMessage = err.response.data.otp[0];
           toast.error(errorMessage);
         }
-        
       })
       .finally(() => setLoading(false));
   };
