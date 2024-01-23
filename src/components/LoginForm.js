@@ -56,23 +56,25 @@ const LoginForm = ({ setShowOtp, formData, setFormData, setSelection }) => {
   const handleSubmit = async (e) => {
     setLoading(true);
     e.preventDefault();
-    await axios
-      .request(requestOptions)
-      .then(() => {
-        setShowOtp(true);
-      })
-      .catch((err) => {
-        if (
-          err.response &&
-          err.response.data &&
-          err.response.data.email &&
-          err.response.data.email.length > 0
-        ) {
-          const errorMessage = err.response.data.email[0];
-          toast.error(errorMessage);
-        }
-      })
-      .finally(() => setLoading(false));
+    // await axios
+    //   .request(requestOptions)
+    //   .then(() => {
+    //     setShowOtp(true);
+    //   })
+    //   .catch((err) => {
+    //     if (
+    //       err.response &&
+    //       err.response.data &&
+    //       err.response.data.email &&
+    //       err.response.data.email.length > 0
+    //     ) {
+    //       const errorMessage = err.response.data.email[0];
+    //       toast.error(errorMessage);
+    //     }
+    //   })
+    //   .finally(() => setLoading(false));
+    setSelection("OTP")
+    setLoading(false);
   };
   const [value, setValue] = React.useState(0);
 
