@@ -5,18 +5,22 @@ import Home from "./pages/Home";
 import { store } from "./redux/store";
 import { Provider } from "react-redux";
 import { ToastContainer } from "react-toastify";
+import { ThemeProvider } from "@mui/material/styles";
+import theme from "./theme";
 
 const App = () => {
   return (
-    <main className="App">
-    <ToastContainer/>
-      <Provider store={store}>
-        <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/" element={<Home />} />
-        </Routes>
-      </Provider>
-    </main>
+    <ThemeProvider theme={theme}>
+      <main className="App">
+        <ToastContainer />
+        <Provider store={store}>
+          <Routes>
+            <Route path="/login" element={<Login />} />
+            <Route path="/" element={<Home />} />
+          </Routes>
+        </Provider>
+      </main>
+    </ThemeProvider>
   );
 };
 

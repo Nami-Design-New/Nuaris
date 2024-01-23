@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
-import fav from "../assets/images/fav.svg";
 import axios from "../util/axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setIsAuth } from "../redux/slices/authSlice";
+import { Box, Button } from "@mui/material";
+import leftArrow from "../assets/images/left-arrow.svg";
+import wavingHand from "../assets/images/waving-hand.svg";
 
-const OtpForm = ({ formData, setFormData }) => {
+const OtpForm = ({ formData, setFormData, setSelection }) => {
   const [otpValue, setOtpValue] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -62,16 +64,16 @@ const OtpForm = ({ formData, setFormData }) => {
   const [loading, setLoading] = useState(false);
   const headersList = {
     Accept: "application/json",
-    "Content-Type": "application/json"
+    "Content-Type": "application/json",
   };
   const requestOptions = {
     method: "POST",
     url: "/users/login-otp/",
     headers: headersList,
-    data: formData
+    data: formData,
   };
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e) => {
     setLoading(true);
     e.preventDefault();
     await axios
@@ -80,7 +82,7 @@ const OtpForm = ({ formData, setFormData }) => {
         dispatch(setIsAuth(true));
         navigate("/");
       })
-      .catch(err => {
+      .catch((err) => {
         if (
           err.response &&
           err.response.data &&
@@ -95,41 +97,69 @@ const OtpForm = ({ formData, setFormData }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div className="head">
-        <img src={fav} alt="logoFav" loading="lazy" />
-        <h1>Enter the verification code</h1>
-        <p>
-          We've sent a 6-digit confirmation code to
-          <span> example@example.com </span>
-          enter the code for verification
+    <Box>
+      <div className="login-message">
+        <div className="welcome-message">
+          <h2>Welcome Back!</h2>
+          <img src={wavingHand} alt="waving hand" loading="lazy" />
+        </div>
+        <p className="guide">
+          Enter the verification code sent to<span> mail@mail.com</span>
         </p>
       </div>
-      <div className="otp-container">
-        {[1, 2, 3, 4, 5, 6].map(index =>
-          <input
-            key={index}
-            id={`input${index}`}
-            className="otp-input"
-            type="number"
-            maxLength="1"
-            inputMode="numeric"
-            pattern="[0-9]"
-            required
-            value={otpValue[index - 1] || ""}
-            onChange={e => handleInput(index, e)}
-            onKeyDown={e => handleKeyDown(index, e)}
-          />
-        )}
-      </div>
-      <button
-        style={{ opacity: loading ? 0.7 : 1 }}
-        disabled={loading}
-        type="submit"
-      >
-        Confirm <i className={loading ? "fa-solid fa-spinner fa-spin" : ""} />
-      </button>
-    </form>
+      <form onSubmit={handleSubmit}>
+        <div className="otp-container">
+          {[1, 2, 3, 4, 5, 6].map((index) => (
+            <input
+              key={index}
+              id={`input${index}`}
+              className="otp-input"
+              type="number"
+              maxLength="1"
+              inputMode="numeric"
+              pattern="[0-9]"
+              required
+              value={otpValue[index - 1] || ""}
+              onChange={(e) => handleInput(index, e)}
+              onKeyDown={(e) => handleKeyDown(index, e)}
+            />
+          ))}
+        </div>
+        <Box className="submit-buttons">
+          <Button
+            sx={{
+              border: "1px solid grey",
+              flex: 1,
+              ":hover": {
+                border: "1px solid #006980",
+              },
+            }}
+            variant="outlined"
+            disabled={loading}
+            onClick={() => setSelection("Selection")}
+          >
+            {loading ? (
+              <i className="fa-solid fa-spinner fa-spin" />
+            ) : (
+              <img src={leftArrow} alt="left arrow" loading="lazy" />
+            )}
+          </Button>
+          <Button
+            disabled={loading}
+            variant="contained"
+            type="submit"
+            color="secondary"
+            sx={{ flex: 13 }}
+          >
+            {loading ? (
+              <i className="fa-solid fa-spinner fa-spin ml-5" />
+            ) : (
+              "Confirm"
+            )}
+          </Button>
+        </Box>
+      </form>
+    </Box>
   );
 };
 
