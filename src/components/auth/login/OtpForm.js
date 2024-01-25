@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import axios from "../util/axios";
+import axios from "../../../util/axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { setIsAuth } from "../redux/slices/authSlice";
+import { setIsAuth } from "../../../redux/slices/authSlice";
 import { Box, Button } from "@mui/material";
-import leftArrow from "../assets/images/left-arrow.svg";
-import wavingHand from "../assets/images/waving-hand.svg";
+import leftArrow from "../../../assets/images/left-arrow.svg";
+import wavingHand from "../../../assets/images/waving-hand.svg";
 
 const OtpForm = ({ formData, setFormData, setSelection }) => {
   const [otpValue, setOtpValue] = useState("");
@@ -149,8 +149,8 @@ const OtpForm = ({ formData, setFormData, setSelection }) => {
             variant="contained"
             type="submit"
             color="secondary"
-            sx={{ flex: 13 }}
-          >
+            sx={{ flex: 13, padding: "16px 20px" }}
+            >
             {loading ? (
               <i className="fa-solid fa-spinner fa-spin ml-5" />
             ) : (

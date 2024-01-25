@@ -1,9 +1,9 @@
 import * as React from "react";
-import leftArrow from "../assets/images/left-arrow.svg";
-import googleIcon from "../assets/images/google.svg";
-import axios from "../util/axios";
+import leftArrow from "../../../assets/images/left-arrow.svg";
+import googleIcon from "../../../assets/images/google.svg";
+import axios from "../../../util/axios";
 import { toast } from "react-toastify";
-import wavingHand from "../assets/images/waving-hand.svg";
+import wavingHand from "../../../assets/images/waving-hand.svg";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
@@ -41,7 +41,7 @@ function TabPanel(props) {
   );
 }
 
-const LoginForm = ({ setShowOtp, formData, setFormData, setSelection }) => {
+const RegisterForm = ({ setShowOtp, formData, setFormData, setSelection }) => {
   const [loading, setLoading] = React.useState(false);
   const headersList = {
     Accept: "application/json",
@@ -93,12 +93,12 @@ const LoginForm = ({ setShowOtp, formData, setFormData, setSelection }) => {
     >
       <div className="login-message">
         <div className="welcome-message">
-          <h2>Welcome Back!</h2>
+          <h2>Welcome !</h2>
           <img src={wavingHand} alt="waving hand" loading="lazy" />
         </div>
         <p className="guide">
-          Please enter the email address Or phone number registered with us as
-          an <span className="agent">agent</span>.
+          Please enter the email address or phone number to complete your
+          registration as an <span className="agent">agent</span>.
         </p>
       </div>
       <div>
@@ -188,6 +188,7 @@ const LoginForm = ({ setShowOtp, formData, setFormData, setSelection }) => {
                     ":hover": {
                       border: "1px solid #006980",
                     },
+                    
                   }}
                   variant="outlined"
                   disabled={loading}
@@ -204,7 +205,8 @@ const LoginForm = ({ setShowOtp, formData, setFormData, setSelection }) => {
                   variant="contained"
                   type="submit"
                   color="secondary"
-                  sx={{ flex: 13 }}
+                  sx={{ flex: 13, padding: "16px 20px" }}
+
                 >
                   {loading ? (
                     <i className="fa-solid fa-spinner fa-spin ml-5" />
@@ -223,7 +225,7 @@ const LoginForm = ({ setShowOtp, formData, setFormData, setSelection }) => {
         <div style={lineStyle}></div>
       </Box>
       <Button
-        sx={{ background: "#EBF3F5", color: "#231F20",padding: "16px 24px" }}
+        sx={{ background: "#EBF3F5", color: "#231F20", padding: "16px 24px" }}
         startIcon={<img src={googleIcon} loading="lazy" alt="google icon" />}
       >
         Continue with Google
@@ -232,4 +234,4 @@ const LoginForm = ({ setShowOtp, formData, setFormData, setSelection }) => {
   );
 };
 
-export default LoginForm;
+export default RegisterForm;

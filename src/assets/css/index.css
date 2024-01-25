@@ -52,20 +52,23 @@ a {
 
 .auth_section {
   width: 100%;
-  height: 100vh;
+  height: 100%;
   display: flex;
 }
 
-.auth_section .auth-form {
-  flex: 1;
+.auth-image-container {
+  height: 100vh;
+  position: sticky;
+  top: 0;
 }
 .login-image {
-  flex: 1;
-}
-.login-image img {
   width: 100%;
   height: 100vh;
   object-fit: cover;
+}
+.register-image {
+  width: 100%;
+  height: 100%;
 }
 
 .auth_section .auth-form form {
@@ -136,8 +139,8 @@ a {
   flex-direction: column;
 }
 .auth_section .auth-form form .form_group .input_field input {
-  height: 56px;
-  padding: 10px;
+  min-height: 56px;
+  padding: 12px 16px;
   background: none;
   outline: none;
   border: 1px solid #dddddd;
@@ -262,20 +265,31 @@ a {
 }
 .otp-container .otp-input:focus {
   border-color: #005a64;
-} /*# sourceMappingURL=index.css.map */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+}
+.filepond--drop-label {
+  border-radius: 12px;
+  border: 1px solid var(--InputStroke, #f2f2f2);
+  background: var(--InputBG, #f8f8f8);
+  padding: 12px 16px;
+  height: 100%;
+}
+.filepond--drop-label label {
+  color: #e2e2e2;
+  font-family: Outfit;
+  font-size: 40px;
+  font-style: normal;
+  font-weight: 900;
+  line-height: normal;
+  text-transform: uppercase;
+}
+.filepond--credits {
+  display: none;
 }
 @media (max-width: 768px) {
-  .login-image {
-    flex: 0;
+  .auth-image-container {
+    flex: 0 !important;
   }
-  .auth_section .auth-form .login {
-    padding: 0 20px;
+  .auth_section .auth-form .head h3 {
+    font-size: 25px;
   }
 }

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import wavingHand from "../assets/images/waving-hand.svg";
+import wavingHand from "../../../assets/images/waving-hand.svg";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 
