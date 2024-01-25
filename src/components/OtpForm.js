@@ -97,7 +97,7 @@ const OtpForm = ({ formData, setFormData, setSelection }) => {
   };
 
   return (
-    <Box>
+    <Box sx={{ maxWidth: "480px" }}>
       <div className="login-message">
         <div className="welcome-message">
           <h2>Welcome Back!</h2>

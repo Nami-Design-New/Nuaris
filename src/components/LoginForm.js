@@ -73,7 +73,7 @@ const LoginForm = ({ setShowOtp, formData, setFormData, setSelection }) => {
     //     }
     //   })
     //   .finally(() => setLoading(false));
-    setSelection("OTP")
+    setSelection("OTP");
     setLoading(false);
   };
   const [value, setValue] = React.useState(0);
@@ -83,7 +83,14 @@ const LoginForm = ({ setShowOtp, formData, setFormData, setSelection }) => {
   };
 
   return (
-    <div className="login">
+    <Box
+      sx={{
+        maxWidth: "480px",
+        display: "flex",
+        flexDirection: "column",
+        gap: "16px",
+      }}
+    >
       <div className="login-message">
         <div className="welcome-message">
           <h2>Welcome Back!</h2>
@@ -144,7 +151,7 @@ const LoginForm = ({ setShowOtp, formData, setFormData, setSelection }) => {
                   variant="contained"
                   type="submit"
                   color="secondary"
-                  sx={{ flex: 13 }}
+                  sx={{ flex: 13, padding: "16px 20px" }}
                 >
                   {loading ? (
                     <i className="fa-solid fa-spinner fa-spin ml-5" />
@@ -216,12 +223,12 @@ const LoginForm = ({ setShowOtp, formData, setFormData, setSelection }) => {
         <div style={lineStyle}></div>
       </Box>
       <Button
-        sx={{ padding: "16px 24px", background: "#EBF3F5", color: "#231F20" }}
+        sx={{ background: "#EBF3F5", color: "#231F20",padding: "16px 24px" }}
         startIcon={<img src={googleIcon} loading="lazy" alt="google icon" />}
       >
         Continue with Google
       </Button>
-    </div>
+    </Box>
   );
 };
 

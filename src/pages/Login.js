@@ -52,7 +52,6 @@ const Login = () => {
             setSelection={setSelection}
           />
         )}
-      
       </Box>
       <div className="login-image">
         <img src={loginImage} alt="logoFav" loading="lazy" />
