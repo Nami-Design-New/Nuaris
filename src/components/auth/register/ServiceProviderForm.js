@@ -82,11 +82,15 @@ const ServiceProviderForm = ({ formData, setFormData, setSelection }) => {
     >
       <Box component="form" onSubmit={handleSubmit} noValidate>
         <Grid container spacing={2}>
-          <Grid container justifyContent="center" alignItems="stretch" xs={12} sx={{ paddingLeft: "16px" }}>
+          <Grid
+            container
+            justifyContent="center"
+            alignItems="stretch"
+            xs={12}
+            sx={{ paddingLeft: "16px" }}
+          >
             <Grid item xs={12} md={6}>
-              <Typography variant="h6">
-                Upload Your Logo
-              </Typography>
+              <Typography variant="h6">Upload Your Logo</Typography>
               <FilePond
                 stylePanelLayout="compact" // Optional: Adjust layout as needed
                 files={files}
@@ -97,8 +101,27 @@ const ServiceProviderForm = ({ formData, setFormData, setSelection }) => {
               />
             </Grid>
 
-            <Grid container xs={12} md={6} sx={{ paddingLeft: "16px" }}>
-              <Grid item xs={12}>
+            <Grid
+              container
+              xs={12}
+              md={6}
+              sx={{
+                paddingLeft: {
+                  xs: "0",
+                  md: "16px",
+                },
+              }}
+            >
+              <Grid
+                item
+                xs={12}
+                sx={{
+                  marginBottom: {
+                    xs: "16px",
+                    md: "0",
+                  },
+                }}
+              >
                 <Typography variant="h6">First Name</Typography>
                 <TextField
                   required
@@ -112,7 +135,6 @@ const ServiceProviderForm = ({ formData, setFormData, setSelection }) => {
               </Grid>
               <Grid item xs={12}>
                 <Typography variant="h6">Family Name</Typography>
-
                 <TextField
                   required
                   fullWidth

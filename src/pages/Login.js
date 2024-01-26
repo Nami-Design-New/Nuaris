@@ -19,7 +19,7 @@ const Login = () => {
           height: "100%",
           flex: 1,
           padding: {
-            xs: "50px",
+            xs: "16px",
             md: "80px 120px",
           },
         }}

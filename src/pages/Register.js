@@ -102,7 +102,7 @@ const Register = () => {
           height: "100%",
           flex: selection === "Selection" || selection === "OTP" ? "1" : "3",
           padding: {
-            xs: "50px",
+            xs: "16px",
             md: "80px 120px",
           },
         }}

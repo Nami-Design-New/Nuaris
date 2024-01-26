@@ -95,8 +95,27 @@ const AgentForm = ({ formData, setFormData, setSelection }) => {
               />
             </Grid>
 
-            <Grid container xs={12} md={6} sx={{ paddingLeft: "16px" }}>
-              <Grid item xs={12}>
+            <Grid
+              container
+              xs={12}
+              md={6}
+              sx={{
+                paddingLeft: {
+                  xs: "0",
+                  md: "16px",
+                },
+              }}
+            >
+              <Grid
+                item
+                xs={12}
+                sx={{
+                  marginBottom: {
+                    xs: "16px",
+                    md: "0",
+                  },
+                }}
+              >
                 <Typography variant="h6">First Name</Typography>
                 <TextField
                   required
