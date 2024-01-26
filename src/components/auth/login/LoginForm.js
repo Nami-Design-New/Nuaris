@@ -56,24 +56,21 @@ const LoginForm = ({ setShowOtp, formData, setFormData, setSelection }) => {
   const handleSubmit = async (e) => {
     setLoading(true);
     e.preventDefault();
-    // await axios
-    //   .request(requestOptions)
-    //   .then(() => {
-    //     setShowOtp(true);
-    //   })
-    //   .catch((err) => {
-    //     if (
-    //       err.response &&
-    //       err.response.data &&
-    //       err.response.data.email &&
-    //       err.response.data.email.length > 0
-    //     ) {
-    //       const errorMessage = err.response.data.email[0];
-    //       toast.error(errorMessage);
-    //     }
-    //   })
-    //   .finally(() => setLoading(false));
-    setSelection("OTP");
+    await axios
+      .request(requestOptions)
+      .then(() => {
+        setSelection("OTP");
+      })
+      .catch((err) => {
+        console.log(err);
+        if (err.response?.data?.email?.length > 0) {
+          const errorMessage = err.response.data.email[0];
+          toast.error(errorMessage);
+        } else {
+          toast.error("User does not exist");
+        }
+      })
+      .finally(() => setLoading(false));
     setLoading(false);
   };
   const [value, setValue] = React.useState(0);
@@ -223,7 +220,7 @@ const LoginForm = ({ setShowOtp, formData, setFormData, setSelection }) => {
         <div style={lineStyle}></div>
       </Box>
       <Button
-        sx={{ background: "#EBF3F5", color: "#231F20",padding: "16px 24px" }}
+        sx={{ background: "#EBF3F5", color: "#231F20", padding: "16px 24px" }}
         startIcon={<img src={googleIcon} loading="lazy" alt="google icon" />}
       >
         Continue with Google

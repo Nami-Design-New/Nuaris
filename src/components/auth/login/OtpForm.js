@@ -83,13 +83,14 @@ const OtpForm = ({ formData, setFormData, setSelection }) => {
         navigate("/");
       })
       .catch((err) => {
-        if (
-          err.response &&
-          err.response.data &&
-          err.response.data.otp &&
-          err.response.data.otp.length > 0
-        ) {
+        console.log(err);
+
+        if (err.response?.data?.otp?.length > 0) {
           const errorMessage = err.response.data.otp[0];
+          toast.error(errorMessage);
+        }
+        if (err.response?.data?.email?.length > 0) {
+          const errorMessage = err.response.data.email[0];
           toast.error(errorMessage);
         }
       })
@@ -104,7 +105,7 @@ const OtpForm = ({ formData, setFormData, setSelection }) => {
           <img src={wavingHand} alt="waving hand" loading="lazy" />
         </div>
         <p className="guide">
-          Enter the verification code sent to<span> mail@mail.com</span>
+          Enter the verification code sent to<span> {formData.email}</span>
         </p>
       </div>
       <form onSubmit={handleSubmit}>
@@ -150,7 +151,7 @@ const OtpForm = ({ formData, setFormData, setSelection }) => {
             type="submit"
             color="secondary"
             sx={{ flex: 13, padding: "16px 20px" }}
-            >
+          >
             {loading ? (
               <i className="fa-solid fa-spinner fa-spin ml-5" />
             ) : (
