@@ -31,7 +31,17 @@ const ServiceProviderForm = ({ formData, setFormData, setSelection }) => {
   const [city, setCity] = useState("");
   const [mapSearch, setMapSearch] = useState("");
   const [files, setFiles] = useState([]);
-
+  const [coreSelected, setCoreSelected] = useState({
+    products: false,
+    services: false,
+  });
+  const [businessLines, setBusinessLines] = useState("");
+  const handleCoreSelect = (button) => {
+    setCoreSelected((prevcoreSelected) => ({
+      ...prevcoreSelected,
+      [button]: !prevcoreSelected[button],
+    }));
+  };
   const handleInputChange = (setter) => (event) => {
     setter(event.target.value);
   };
@@ -67,12 +77,6 @@ const ServiceProviderForm = ({ formData, setFormData, setSelection }) => {
     //   .finally(() => setLoading(false));
     setLoading(false);
   };
-  const [value, setValue] = React.useState(0);
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
-  // Custom styles to ensure FilePond takes full height
 
   return (
     <Box
@@ -196,6 +200,68 @@ const ServiceProviderForm = ({ formData, setFormData, setSelection }) => {
               onChange={handleInputChange(setRegistrationNumber)}
               variant="outlined"
               placeholder="XXXX XXXX XXXX XXXX"
+            />
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <Typography variant="h6">
+              Company core
+              <span style={{ color: "#777", fontSize: "13px" }}>
+                ( you can choose both )
+              </span>
+            </Typography>
+            <Box sx={{ display: "flex", gap: "8px" }}>
+              <Button
+                onClick={() => handleCoreSelect("products")}
+                sx={{
+                  padding: "12px 16px",
+                  minHeight: "54px",
+                  fontFamily: "29LT Kaff",
+                  fontSize: "14px",
+                  backgroundColor: coreSelected.products
+                    ? "#006980"
+                    : "#EBF3F5",
+                  color: coreSelected.products ? "white" : "#006980",
+                  "&:hover": {
+                    backgroundColor: coreSelected.products
+                      ? "#005f73"
+                      : "#aeaeae",
+                  },
+                }}
+              >
+                products
+              </Button>
+              <Button
+                onClick={() => handleCoreSelect("services")}
+                sx={{
+                  padding: "12px 16px",
+                  minHeight: "54px",
+                  fontFamily: "29LT Kaff",
+                  fontSize: "14px",
+                  backgroundColor: coreSelected.services
+                    ? "#006980"
+                    : "#EBF3F5",
+                  color: coreSelected.services ? "white" : "#006980",
+                  "&:hover": {
+                    backgroundColor: coreSelected.services
+                      ? "#005f73"
+                      : "#aeaeae",
+                  },
+                }}
+              >
+                services
+              </Button>
+            </Box>
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <Typography variant="h6">Company major business lines</Typography>
+            <TextField
+              required
+              fullWidth
+              id="registrationNumber"
+              value={businessLines}
+              onChange={handleInputChange(setBusinessLines)}
+              variant="outlined"
+              placeholder="Write here"
             />
           </Grid>
           <Grid item xs={12} md={6}>
