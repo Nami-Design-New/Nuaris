@@ -1,7 +1,7 @@
 import leftArrow from "../../../assets/images/left-arrow.svg";
 import axios from "../../../util/axios";
 import { toast } from "react-toastify";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Box,
   TextField,
@@ -12,6 +12,8 @@ import {
   Typography,
   Grid,
 } from "@mui/material";
+import { Country, City } from "country-state-city";
+
 import { FilePond, registerPlugin } from "react-filepond";
 import "filepond/dist/filepond.min.css";
 import FilePondPluginImageExifOrientation from "filepond-plugin-image-exif-orientation";
@@ -29,6 +31,7 @@ const HostForm = ({ formData, setFormData, setSelection }) => {
   const [registrationNumber, setRegistrationNumber] = useState("");
   const [country, setCountry] = useState("");
   const [city, setCity] = useState("");
+  const [cities, setCities] = useState([]);
   const [mapSearch, setMapSearch] = useState("");
   const [files, setFiles] = useState([]);
 
@@ -67,13 +70,14 @@ const HostForm = ({ formData, setFormData, setSelection }) => {
     //   .finally(() => setLoading(false));
     setLoading(false);
   };
-  const [value, setValue] = React.useState(0);
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
-  // Custom styles to ensure FilePond takes full height
-
+  useEffect(() => {
+    if (country) {
+      setCities(City.getCitiesOfCountry(country));
+    } else {
+      setCities([]);
+    }
+  }, [country]);
   return (
     <Box
       sx={{
@@ -208,12 +212,14 @@ const HostForm = ({ formData, setFormData, setSelection }) => {
                 value={country}
                 onChange={handleInputChange(setCountry)}
               >
-                {/* Populate with actual country options */}
                 <MenuItem value="">
                   <em>None</em>
                 </MenuItem>
-                <MenuItem value={"Country1"}>Country1</MenuItem>
-                <MenuItem value={"Country2"}>Country2</MenuItem>
+                {Country.getAllCountries().map((country) => (
+                  <MenuItem key={country.isoCode} value={country.isoCode}>
+                    {country.name}
+                  </MenuItem>
+                ))}
               </Select>
             </FormControl>
           </Grid>
@@ -226,12 +232,14 @@ const HostForm = ({ formData, setFormData, setSelection }) => {
                 value={city}
                 onChange={handleInputChange(setCity)}
               >
-                {/* Populate with actual city options based on coreSelected country */}
                 <MenuItem value="">
                   <em>None</em>
                 </MenuItem>
-                <MenuItem value={"City1"}>City1</MenuItem>
-                <MenuItem value={"City2"}>City2</MenuItem>
+                {cities.map((city) => (
+                  <MenuItem key={city.name} value={city.name}>
+                    {city.name}
+                  </MenuItem>
+                ))}
               </Select>
             </FormControl>
           </Grid>
