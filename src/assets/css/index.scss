@@ -75,34 +75,28 @@ $transation: 0.4s ease-in-out;
   display: flex;
   overflow: hidden;
   .right_side {
-    width: 50%;
+    flex: 1;
     position: relative;
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center;
-    }
+    background-size: cover;
+    background-position: center left;
     @media (max-width: 992px) {
       display: none;
     }
   }
   .left-side {
-    width: 50%;
+    flex: 1;
     padding: 60px 80px;
     display: flex;
+    gap: 60px;
     align-items: center;
     flex-direction: column;
-    @media (max-width: 992px) {
-      width: 100%;
-    }
     @media (max-width: 576px) {
       padding: 32px 24px;
     }
     .form-header {
       width: 100%;
-      margin-bottom: 160px;
       display: flex;
+      justify-content: space-between;
       flex-direction: column;
       gap: 16px;
       .logo {
@@ -158,6 +152,10 @@ $transation: 0.4s ease-in-out;
     }
     .form-container {
       width: 100%;
+      flex: 1 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
       .head {
         color: $dark;
         font-size: 32px;

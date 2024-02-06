@@ -3,16 +3,28 @@ import { Link } from "react-router-dom";
 
 const UserNameForm = ({ setShowLoginForm }) => {
   const [loading, setLoading] = useState(false);
-  
-  const handleBackButtonClick = (e) => {
+  const [formData, setFormData] = useState({});
+
+  const handleBackButtonClick = e => {
     e.preventDefault();
     setShowLoginForm(false);
   };
 
   return (
     <form>
-      <input type="text" placeholder="Username" />
-      <input type="password" placeholder="Password" />
+      <input
+        required
+        type="text"
+        name="userName"
+        placeholder="Username"
+        onChange={e => setFormData({ ...formData, username: e.target.value })}
+      />
+      <input
+        type="password"
+        placeholder="Password"
+        required
+        onChange={e => setFormData({ ...formData, email: e.target.value })}
+      />
       <Link to={"/reset-password"}>Forget Password ?</Link>
       <div className="buttons">
         <button className="back" onClick={handleBackButtonClick}>

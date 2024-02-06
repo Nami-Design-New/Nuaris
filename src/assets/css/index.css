@@ -49,16 +49,10 @@ a {
   overflow: hidden;
 }
 .auth_section .right_side {
-  width: 50%;
+  flex: 1;
   position: relative;
-}
-.auth_section .right_side img {
-  width: 100%;
-  height: 100%;
-  -o-object-fit: cover;
-     object-fit: cover;
-  -o-object-position: center;
-     object-position: center;
+  background-size: cover;
+  background-position: center left;
 }
 @media (max-width: 992px) {
   .auth_section .right_side {
@@ -66,16 +60,12 @@ a {
   }
 }
 .auth_section .left-side {
-  width: 50%;
+  flex: 1;
   padding: 60px 80px;
   display: flex;
+  gap: 60px;
   align-items: center;
   flex-direction: column;
-}
-@media (max-width: 992px) {
-  .auth_section .left-side {
-    width: 100%;
-  }
 }
 @media (max-width: 576px) {
   .auth_section .left-side {
@@ -84,8 +74,8 @@ a {
 }
 .auth_section .left-side .form-header {
   width: 100%;
-  margin-bottom: 160px;
   display: flex;
+  justify-content: space-between;
   flex-direction: column;
   gap: 16px;
 }
@@ -142,6 +132,10 @@ a {
 }
 .auth_section .left-side .form-container {
   width: 100%;
+  flex: 1 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 .auth_section .left-side .form-container .head {
   color: #0d0d0d;

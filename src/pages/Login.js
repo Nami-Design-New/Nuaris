@@ -34,9 +34,7 @@ const Login = () => {
               setShowLoginForm={setShowLoginForm}
             />}
       </div>
-      <div className="right_side">
-        <img src={loginImage} alt="login-frame" />
-      </div>
+      <div className="right_side" style={{ backgroundImage: `url(${loginImage})` }} />
     </div>
   );
 };
