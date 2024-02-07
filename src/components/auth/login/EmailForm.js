@@ -2,13 +2,18 @@ import React, { useState } from "react";
 import { toast } from "react-toastify";
 import axios from "../../../util/axios";
 
-const EmailForm = ({ setShowLoginForm }) => {
+const EmailForm = ({
+  setShowLoginForm,
+  SetShowOtpForm,
+  formData,
+  setFormData
+}) => {
   const [loading, setLoading] = useState(false);
-  const [formData, setFormData] = useState({});
 
   const handleBackButtonClick = e => {
     e.preventDefault();
     setShowLoginForm(false);
+    setFormData({});
   };
 
   const headersList = {
@@ -21,33 +26,38 @@ const EmailForm = ({ setShowLoginForm }) => {
     headers: headersList,
     data: formData
   };
+
   const handleSubmit = async e => {
     setLoading(true);
     e.preventDefault();
-    await axios
-      .request(requestOptions)
-      .then(() => {})
-      .catch(err => {
-        if (
-          err.response &&
-          err.response.data &&
-          err.response.data.email &&
-          err.response.data.email.length > 0
-        ) {
-          const errorMessage = err.response.data.email[0];
-          toast.error(errorMessage);
-        }
-      })
-      .finally(() => setLoading(false));
+    try {
+      const response = await axios.request(requestOptions);
+      console.log("Response:", response);
+      SetShowOtpForm(true);
+      setShowLoginForm(false);
+    } catch (error) {
+      console.error("Error:", error);
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.email &&
+        error.response.data.email.length > 0
+      ) {
+        const errorMessage = error.response.data.email[0];
+        toast.error(errorMessage);
+      }
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
-    <form onSubmit={() => handleSubmit()}>
+    <form onSubmit={handleSubmit}>
       <input
         type="email"
         placeholder="EX: mail@mail.com"
         required
-        onChange={e => setFormData({ ...formData, username: e.target.value })}
+        onChange={e => setFormData({ ...formData, email: e.target.value })}
       />
       <div className="buttons">
         <button className="back" onClick={handleBackButtonClick}>

@@ -5,16 +5,36 @@ import UserNameForm from "./UserNameForm";
 import EmailForm from "./EmailForm";
 import PhoneForm from "./PhoneForm";
 
-const LoginForm = ({ userTypeSelected, setShowLoginForm }) => {
+const LoginForm = ({
+  userTypeSelected,
+  setShowLoginForm,
+  SetShowOtpForm,
+  formData,
+  setFormData
+}) => {
   const [formType, setFormType] = useState("userNameAndPassword");
 
   let formComponent;
   if (formType === "userNameAndPassword") {
     formComponent = <UserNameForm setShowLoginForm={setShowLoginForm} />;
   } else if (formType === "email") {
-    formComponent = <EmailForm setShowLoginForm={setShowLoginForm} />;
+    formComponent = (
+      <EmailForm
+        setShowLoginForm={setShowLoginForm}
+        SetShowOtpForm={SetShowOtpForm}
+        formData={formData}
+        setFormData={setFormData}
+      />
+    );
   } else {
-    formComponent = <PhoneForm setShowLoginForm={setShowLoginForm} />;
+    formComponent = (
+      <PhoneForm
+        setShowLoginForm={setShowLoginForm}
+        SetShowOtpForm={SetShowOtpForm}
+        formData={formData}
+        setFormData={setFormData}
+      />
+    );
   }
 
   return (

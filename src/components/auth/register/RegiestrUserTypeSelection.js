@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import handWave from "../../../assets/images/waving-hand.svg";
+import { Link } from 'react-router-dom';
 
-const UserTypeSelection = ({ setShowLoginForm, setUserTypeSelected }) => {
+const RegiestrUserTypeSelection = ({ setUserTypeSelected }) => {
   const [activeType, setActiveType] = useState("host");
-
   const handleSetType = type => {
     setActiveType(type);
     setUserTypeSelected(type);
@@ -16,7 +16,7 @@ const UserTypeSelection = ({ setShowLoginForm, setUserTypeSelected }) => {
       </h2>
       <p className="sub-head">Please select the user type.</p>
       <div className="selection-grid">
-        {["host", "agent", "service provide", "employee"].map(type => (
+        {["host", "agent", "service provide"].map(type =>
           <button
             key={type}
             className={`select ${activeType === type ? "active" : ""}`}
@@ -24,13 +24,11 @@ const UserTypeSelection = ({ setShowLoginForm, setUserTypeSelected }) => {
           >
             {type}
           </button>
-        ))}
+        )}
       </div>
-      <button className="next" onClick={() => setShowLoginForm(true)}>
-        Next
-      </button>
+      <Link to={"/Register-Host"} className="next">Next</Link>
     </div>
   );
 };
 
-export default UserTypeSelection;
+export default RegiestrUserTypeSelection;
