@@ -124,7 +124,7 @@ $transation: 0.4s ease-in-out;
           display: block;
           position: relative;
           &::after {
-            content: '';
+            content: "";
             position: absolute;
             width: 4px;
             height: 4px;
@@ -135,7 +135,7 @@ $transation: 0.4s ease-in-out;
             border-radius: 50%;
           }
           &::before {
-            content: '';
+            content: "";
             position: absolute;
             width: 4px;
             height: 4px;
@@ -224,7 +224,7 @@ $transation: 0.4s ease-in-out;
           transition: $transation;
           color: $dark;
           &::after {
-            content: '';
+            content: "";
             position: absolute;
             bottom: -2px;
             width: 0;
@@ -264,7 +264,6 @@ $transation: 0.4s ease-in-out;
           align-self: flex-end;
           color: $main;
         }
-
         .resend {
           @include space-between();
           h6 {
@@ -335,7 +334,7 @@ $transation: 0.4s ease-in-out;
           transition: $transation;
           color: $dark;
           &::after {
-            content: '';
+            content: "";
             position: absolute;
             bottom: -2px;
             width: 0;
@@ -437,6 +436,34 @@ $transation: 0.4s ease-in-out;
         border-radius: 4px 0 0 4px !important;
       }
     }
+    .phone-group {
+      display: flex;
+      gap: 8px;
+      .phone-code {
+        height: 54px;
+        border-radius: 4px;
+      }
+    }
+    .searchMapGroup {
+      gap: 8px;
+      display: flex;
+      button {
+        width: 60px;
+        height: 54px;
+        border-radius: 8px;
+        @include clearInput();
+        background-image: url(../images/mapIcon.svg);
+      }
+      span {
+        width: 100%;
+        height: 54px;
+        outline: none;
+        border: 1px solid $inputStroke;
+        border-radius: 4px;
+        background: $inputBG;
+        padding: 8px 16px;
+      }
+    }
     input,
     select {
       width: 100%;
@@ -450,6 +477,9 @@ $transation: 0.4s ease-in-out;
     label {
       color: $dark;
       font-weight: 500;
+    }
+    select {
+      cursor: pointer;
     }
   }
 }
@@ -516,8 +546,22 @@ $transation: 0.4s ease-in-out;
   min-height: 100%;
   label {
     color: #e2e2e2;
-    font-family: 'Outfit', sans-serif;
+    font-family: "Outfit", sans-serif;
     font-weight: 900;
     font-size: 40px;
+  }
+}
+.ReactFlagsSelect-module_selectBtn__19wW7 {
+  border: 1px solid $inputStroke;
+  background: $inputBG;
+  height: 54px;
+  box-shadow: none;
+  outline: none;
+  color: $inputHint;
+}
+.ReactFlagsSelect-module_filterBox__3m8EU {
+  padding: 8px;
+  input {
+    margin: 0;
   }
 }

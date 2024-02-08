@@ -454,6 +454,36 @@ a {
   border-right: 0 !important;
   border-radius: 4px 0 0 4px !important;
 }
+.regiesteration-form .input-field .phone-group {
+  display: flex;
+  gap: 8px;
+}
+.regiesteration-form .input-field .phone-group .phone-code {
+  height: 54px;
+  border-radius: 4px;
+}
+.regiesteration-form .input-field .searchMapGroup {
+  gap: 8px;
+  display: flex;
+}
+.regiesteration-form .input-field .searchMapGroup button {
+  width: 60px;
+  height: 54px;
+  border-radius: 8px;
+  border: none;
+  background: none;
+  outline: none;
+  background-image: url(../images/mapIcon.svg);
+}
+.regiesteration-form .input-field .searchMapGroup span {
+  width: 100%;
+  height: 54px;
+  outline: none;
+  border: 1px solid #f2f2f2;
+  border-radius: 4px;
+  background: #f8f8f8;
+  padding: 8px 16px;
+}
 .regiesteration-form .input-field input,
 .regiesteration-form .input-field select {
   width: 100%;
@@ -467,6 +497,9 @@ a {
 .regiesteration-form .input-field label {
   color: #0d0d0d;
   font-weight: 500;
+}
+.regiesteration-form .input-field select {
+  cursor: pointer;
 }
 
 .otp-container {
@@ -548,4 +581,20 @@ a {
   font-family: "Outfit", sans-serif;
   font-weight: 900;
   font-size: 40px;
+}
+
+.ReactFlagsSelect-module_selectBtn__19wW7 {
+  border: 1px solid #f2f2f2;
+  background: #f8f8f8;
+  height: 54px;
+  box-shadow: none;
+  outline: none;
+  color: #aaaaaa;
+}
+
+.ReactFlagsSelect-module_filterBox__3m8EU {
+  padding: 8px;
+}
+.ReactFlagsSelect-module_filterBox__3m8EU input {
+  margin: 0;
 }/*# sourceMappingURL=index.css.map */
