@@ -257,37 +257,6 @@ a {
   align-self: flex-end;
   color: #006980;
 }
-.auth-section .left-side .form-container form .buttons {
-  display: flex;
-  gap: 12px;
-}
-.auth-section .left-side .form-container form .log {
-  border: none;
-  background: none;
-  outline: none;
-  width: 100%;
-  height: 54px;
-  background: #006980;
-  color: #fff;
-  border-radius: 12px;
-}
-.auth-section .left-side .form-container form .back {
-  border: none;
-  background: none;
-  outline: none;
-  width: 100%;
-  height: 54px;
-  border: 1px solid #0d0d0d;
-  color: #0d0d0d;
-  border-radius: 12px;
-  width: 70px;
-  font-size: 18px;
-  transition: 0.4s ease-in-out;
-}
-.auth-section .left-side .form-container form .back:hover {
-  color: #006980;
-  border-color: #006980;
-}
 .auth-section .left-side .form-container form .resend {
   display: flex;
   align-items: center;
@@ -466,7 +435,27 @@ a {
   display: flex;
   flex-direction: column;
 }
-.regiesteration-form .input-field input {
+.regiesteration-form .input-field .pass-group {
+  display: flex;
+}
+.regiesteration-form .input-field .pass-group button {
+  border: none;
+  background: none;
+  outline: none;
+  width: 60px;
+  height: 54px;
+  border: 1px solid #f2f2f2;
+  background: #f8f8f8;
+  border-left: 0;
+  border-radius: 0 4px 4px 0 !important;
+  color: #aaaaaa;
+}
+.regiesteration-form .input-field .pass-group input {
+  border-right: 0 !important;
+  border-radius: 4px 0 0 4px !important;
+}
+.regiesteration-form .input-field input,
+.regiesteration-form .input-field select {
   width: 100%;
   height: 54px;
   outline: none;
@@ -500,6 +489,40 @@ a {
 }
 .otp-container .otp-input::-webkit-inner-spin-button {
   display: none;
+}
+
+.buttons {
+  display: flex;
+  gap: 12px;
+}
+
+.log {
+  border: none;
+  background: none;
+  outline: none;
+  width: 100%;
+  height: 54px;
+  background: #006980;
+  color: #fff;
+  border-radius: 12px;
+}
+
+.back {
+  border: none;
+  background: none;
+  outline: none;
+  width: 100%;
+  height: 54px;
+  border: 1px solid #0d0d0d;
+  color: #0d0d0d;
+  border-radius: 12px;
+  width: 70px;
+  font-size: 18px;
+  transition: 0.4s ease-in-out;
+}
+.back:hover {
+  color: #006980;
+  border-color: #006980;
 }
 
 .filepond--root .filepond--credits[style] {

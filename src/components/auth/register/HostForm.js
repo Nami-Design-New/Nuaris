@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
+import ReactFlagsSelect from "react-flags-select";
+
 // filepond
 import { FilePond, registerPlugin } from "react-filepond";
 import "filepond/dist/filepond.min.css";
@@ -7,12 +9,24 @@ import FilePondPluginImagePreview from "filepond-plugin-image-preview";
 import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
 registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
 
+const HostForm = ({ setFormSelection }) => {
+  const [selectedCountry, setSelectedCountry] = useState(null);
+  const [showPass, setShowPass] = useState(false);
 
-const HostForm = () => {
+  const handleSelectCountry = countryCode => {
+    setSelectedCountry(countryCode);
+  };
+
+  const handleBackButtonClick = e => {
+    e.preventDefault();
+    setFormSelection("");
+  };
+
   return (
     <div className="regiesteration-form">
       <div className="container p-0">
         <div className="row m-0">
+          {/* First Name , Last Name */}
           <div className="col-lg-6 col-12 p-2">
             <div className="input-field mb-3">
               <label htmlFor="firstName">First Name</label>
@@ -33,6 +47,7 @@ const HostForm = () => {
               />
             </div>
           </div>
+          {/* Logo */}
           <div className="col-lg-6 col-12 p-2">
             <div className="input-field">
               <label htmlFor="logo">Upload Your Logo</label>
@@ -44,6 +59,7 @@ const HostForm = () => {
               />
             </div>
           </div>
+          {/* email */}
           <div className="col-lg-6 col-12 p-2">
             <div className="input-field">
               <label htmlFor="email">Email Address</label>
@@ -55,6 +71,7 @@ const HostForm = () => {
               />
             </div>
           </div>
+          {/* mobile number */}
           <div className="col-lg-6 col-12 p-2">
             <div className="input-field">
               <label htmlFor="phone">Mobile Number</label>
@@ -66,6 +83,7 @@ const HostForm = () => {
               />
             </div>
           </div>
+          {/* user Name */}
           <div className="col-lg-6 col-12 p-2">
             <div className="input-field">
               <label htmlFor="userName">Username</label>
@@ -77,14 +95,64 @@ const HostForm = () => {
               />
             </div>
           </div>
+          {/* password */}
           <div className="col-lg-6 col-12 p-2">
             <div className="input-field">
               <label htmlFor="password">Password</label>
+              <div className="pass-group">
+                <input
+                  placeholder="************"
+                  type={showPass ? "text" : "password"} // Corrected the type based on showPass state
+                  id="password"
+                  name="password"
+                />
+                <button onClick={() => setShowPass(!showPass)}>
+                  <i
+                    className={`fa-regular ${!showPass
+                      ? "fa-eye-slash"
+                      : "fa-eye"}`}
+                  />
+                </button>
+              </div>
+            </div>
+          </div>
+          {/* Commercial Name */}
+          <div className="col-lg-6 col-12 p-2">
+            <div className="input-field">
+              <label htmlFor="commercialName">Commercial Name</label>
               <input
-                placeholder="************"
-                type="password"
-                id="password"
-                name="password"
+                placeholder="EX: luxury "
+                type="text"
+                id="commercialName"
+                name="commercialName"
+              />
+            </div>
+          </div>
+          {/* Commercial registration Type */}
+          <div className="col-lg-6 col-12 p-2">
+            <div className="input-field">
+              <label htmlFor="commercialRegistrationType">
+                Commercial registration Type
+              </label>
+              <select
+                name="commercialRegistrationType"
+                id="commercialRegistrationType"
+              >
+                <option value="freelancer">freelancer</option>
+              </select>
+            </div>
+          </div>
+          {/*Commercial registration Number*/}
+          <div className="col-lg-6 col-12 p-2">
+            <div className="input-field">
+              <label htmlFor="commercialName">
+                Commercial registration Number
+              </label>
+              <input
+                placeholder="XXXX XXXX XXXX XXXX"
+                type="text"
+                id="commercialName"
+                name="commercialName"
               />
             </div>
           </div>
@@ -99,18 +167,14 @@ const HostForm = () => {
               />
             </div>
           </div>
-          <div className="col-lg-6 col-12 p-2">
-            <div className="input-field">
-              <label htmlFor="commercialRegistrationType">
-                Commercial registration Type
-              </label>
-              <select className="wide">
-                <option value="india">India</option>
-                <option value="italy">Italy</option>
-                <option value="spain">Spain</option>
-                <option value="france">France</option>
-                <option value="brazil">Brazil</option>
-              </select>
+          <div className="col-12 p-2">
+            <div className="buttons">
+              <button className="back" onClick={handleBackButtonClick}>
+                <i className="fa-light fa-arrow-left" />
+              </button>
+              <button type="submit" className="log">
+                Confirm
+              </button>
             </div>
           </div>
         </div>

@@ -39,7 +39,8 @@ const Regiester = () => {
         </div>
         {formSelecton === "" &&
           <RegiestrUserTypeSelection setFormSelection={setFormSelection} />}
-        {formSelecton === "host" && <HostForm />}
+        {formSelecton === "host" &&
+          <HostForm setFormSelection={setFormSelection} />}
         {formSelecton === "agent" && <AgentForm />}
         {formSelecton === "service provider" && <ServiceProvider />}
       </div>
