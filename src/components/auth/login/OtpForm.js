@@ -37,24 +37,24 @@ const OtpForm = ({
   const handleSubmit = async e => {
     setLoading(true);
     e.preventDefault();
-    await axios
-      .request(requestOptions)
-      .then(() => {
-        dispatch(setIsAuth(true));
-        navigate("/");
-      })
-      .catch(err => {
-        if (
-          err.response &&
-          err.response.data &&
-          err.response.data.otp &&
-          err.response.data.otp.length > 0
-        ) {
-          const errorMessage = err.response.data.otp[0];
-          toast.error(errorMessage);
-        }
-      })
-      .finally(() => setLoading(false));
+    try {
+      const response = await axios.request(requestOptions);
+      dispatch(setIsAuth(true));
+      navigate("/");
+      toast.success(`Welcome Back @${response.data.user.username}`);
+    } catch (error) {
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.otp &&
+        error.response.data.otp.length > 0
+      ) {
+        const errorMessage = error.response.data.otp[0];
+        toast.error(errorMessage);
+      }
+    } finally {
+      setLoading(false);
+    }
   };
   return (
     <div className="form-container">

@@ -31,12 +31,10 @@ const EmailForm = ({
     setLoading(true);
     e.preventDefault();
     try {
-      const response = await axios.request(requestOptions);
-      console.log("Response:", response);
+      await axios.request(requestOptions);
       SetShowOtpForm(true);
       setShowLoginForm(false);
     } catch (error) {
-      console.error("Error:", error);
       if (
         error.response &&
         error.response.data &&
