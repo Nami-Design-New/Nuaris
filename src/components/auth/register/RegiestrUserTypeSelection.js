@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import handWave from "../../../assets/images/waving-hand.svg";
-import { Link } from 'react-router-dom';
 
-const RegiestrUserTypeSelection = ({ setUserTypeSelected }) => {
+const RegiestrUserTypeSelection = ({ setFormSelection }) => {
   const [activeType, setActiveType] = useState("host");
   const handleSetType = type => {
     setActiveType(type);
-    setUserTypeSelected(type);
+  };
+  const handleOpenForm = () => {
+    setFormSelection(activeType);
   };
 
   return (
@@ -16,7 +17,7 @@ const RegiestrUserTypeSelection = ({ setUserTypeSelected }) => {
       </h2>
       <p className="sub-head">Please select the user type.</p>
       <div className="selection-grid">
-        {["host", "agent", "service provide"].map(type =>
+        {["host", "agent", "service provider"].map(type =>
           <button
             key={type}
             className={`select ${activeType === type ? "active" : ""}`}
@@ -26,7 +27,9 @@ const RegiestrUserTypeSelection = ({ setUserTypeSelected }) => {
           </button>
         )}
       </div>
-      <Link to={"/Register-Host"} className="next">Next</Link>
+      <button className="next" onClick={handleOpenForm}>
+        Next
+      </button>
     </div>
   );
 };

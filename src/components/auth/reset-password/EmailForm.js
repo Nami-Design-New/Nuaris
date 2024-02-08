@@ -1,20 +1,10 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "../../../util/axios";
 
-const EmailForm = ({
-  setShowLoginForm,
-  SetShowOtpForm,
-  formData,
-  setFormData
-}) => {
+const EmailForm = ({ formData, setFormData, setShowOtp }) => {
   const [loading, setLoading] = useState(false);
-
-  const handleBackButtonClick = e => {
-    e.preventDefault();
-    setShowLoginForm(false);
-    setFormData({});
-  };
 
   const headersList = {
     Accept: "application/json",
@@ -32,8 +22,7 @@ const EmailForm = ({
     e.preventDefault();
     try {
       await axios.request(requestOptions);
-      SetShowOtpForm(true);
-      setShowLoginForm(false);
+      setShowOtp(true);
     } catch (error) {
       if (
         error.response &&
@@ -42,8 +31,8 @@ const EmailForm = ({
         error.response.data.email.length > 0
       ) {
         const errorMessage = error.response.data.email[0];
-        setFormData({ ...formData, email: '' });
         toast.error(errorMessage);
+        setFormData({ ...formData, email: '' });
       }
     } finally {
       setLoading(false);
@@ -53,25 +42,26 @@ const EmailForm = ({
   return (
     <form onSubmit={handleSubmit}>
       <input
-        type="email"
         name="email"
         id="email"
+        type="email"
         placeholder="EX: mail@mail.com"
-        value={formData.email}
         required
+        value={formData.email}
         onChange={e => setFormData({ ...formData, email: e.target.value })}
       />
       <div className="buttons">
-        <button className="back" onClick={handleBackButtonClick}>
+        <Link to="/Login" className="back">
           <i className="fa-light fa-arrow-left" />
-        </button>
+        </Link>
         <button
           style={{ opacity: loading ? 0.7 : 1 }}
           disabled={loading}
           type="submit"
           className="log"
         >
-          Login <i className={loading ? "fa-solid fa-spinner fa-spin" : ""} />
+          Send Code{" "}
+          <i className={loading ? "fa-solid fa-spinner fa-spin" : ""} />
         </button>
       </div>
     </form>

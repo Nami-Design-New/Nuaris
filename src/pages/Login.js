@@ -14,7 +14,7 @@ const Login = () => {
   const [userTypeSelected, setUserTypeSelected] = useState("host");
 
   return (
-    <div className="auth-section">
+    <section className="auth-section">
       <div className="left-side">
         <div className="form-header">
           <div className="logo">
@@ -54,7 +54,7 @@ const Login = () => {
         className="right-side"
         style={{ backgroundImage: `url(${loginImage})` }}
       />
-    </div>
+    </section>
   );
 };
 

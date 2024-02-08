@@ -59,7 +59,7 @@ const UserNameForm = ({ setShowLoginForm }) => {
         required
         onChange={e => setFormData({ ...formData, password: e.target.value })}
       />
-      <Link to={"/reset-password"}>Forget Password ?</Link>
+      <Link to={"/Reset-Password"}>Forget Password ?</Link>
       <div className="buttons">
         <button className="back" onClick={handleBackButtonClick}>
           <i className="fa-light fa-arrow-left" />

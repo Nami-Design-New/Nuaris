@@ -1,20 +1,15 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
 import axios from "../../../util/axios";
 
-const EmailForm = ({
+const PhoneForm = ({
   setShowLoginForm,
   SetShowOtpForm,
   formData,
   setFormData
 }) => {
   const [loading, setLoading] = useState(false);
-
-  const handleBackButtonClick = e => {
-    e.preventDefault();
-    setShowLoginForm(false);
-    setFormData({});
-  };
 
   const headersList = {
     Accept: "application/json",
@@ -31,10 +26,12 @@ const EmailForm = ({
     setLoading(true);
     e.preventDefault();
     try {
-      await axios.request(requestOptions);
+      const response = await axios.request(requestOptions);
+      console.log("Response:", response);
       SetShowOtpForm(true);
       setShowLoginForm(false);
     } catch (error) {
+      console.error("Error:", error);
       if (
         error.response &&
         error.response.data &&
@@ -42,7 +39,6 @@ const EmailForm = ({
         error.response.data.email.length > 0
       ) {
         const errorMessage = error.response.data.email[0];
-        setFormData({ ...formData, email: '' });
         toast.error(errorMessage);
       }
     } finally {
@@ -53,18 +49,15 @@ const EmailForm = ({
   return (
     <form onSubmit={handleSubmit}>
       <input
-        type="email"
-        name="email"
-        id="email"
-        placeholder="EX: mail@mail.com"
-        value={formData.email}
+        type="tel"
+        placeholder="EX: +455 567888 555"
         required
-        onChange={e => setFormData({ ...formData, email: e.target.value })}
+        onChange={e => setFormData({ ...formData, mobile: e.target.value })}
       />
       <div className="buttons">
-        <button className="back" onClick={handleBackButtonClick}>
+        <Link to="/Login" className="back">
           <i className="fa-light fa-arrow-left" />
-        </button>
+        </Link>
         <button
           style={{ opacity: loading ? 0.7 : 1 }}
           disabled={loading}
@@ -78,4 +71,4 @@ const EmailForm = ({
   );
 };
 
-export default EmailForm;
+export default PhoneForm;

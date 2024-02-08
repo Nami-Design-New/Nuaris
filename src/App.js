@@ -8,6 +8,7 @@ import { store } from "./redux/store";
 import { Provider } from "react-redux";
 import { ToastContainer } from "react-toastify";
 import Regiester from "./pages/Regiester";
+import ResetPassword from "./pages/ResetPassword";
 
 const App = () => {
   return (
@@ -17,6 +18,7 @@ const App = () => {
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/Register" element={<Regiester />} />
+          <Route path="/Reset-Password" element={<ResetPassword />} />
           <Route path="/" element={<Home />} />
         </Routes>
       </Provider>

@@ -15,6 +15,7 @@ const LoginForm = ({
   const [formType, setFormType] = useState("userNameAndPassword");
 
   let formComponent;
+  
   if (formType === "userNameAndPassword") {
     formComponent = <UserNameForm setShowLoginForm={setShowLoginForm} />;
   } else if (formType === "email") {
