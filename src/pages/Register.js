@@ -3,11 +3,11 @@ import { Link } from "react-router-dom";
 import logoH from "../assets/images/logoH.svg";
 import regiesterImage from "../assets/images/regiester-image.jpeg";
 import RegiestrUserTypeSelection from "../components/auth/register/RegiestrUserTypeSelection";
-import HostForm from "./../components/auth/register/HostForm";
-import AgentForm from "./../components/auth/register/AgentForm";
-import ServiceProvider from "./../components/auth/register/ServiceProvider";
+import HostForm from "../components/auth/register/HostForm";
+import AgentForm from "../components/auth/register/AgentForm";
+import ServiceProvider from "../components/auth/register/ServiceProvider";
 
-const Regiester = () => {
+const Register = () => {
   const [formSelecton, setFormSelection] = useState("");
 
   let title;
@@ -52,4 +52,4 @@ const Regiester = () => {
   );
 };
 
-export default Regiester;
+export default Register;

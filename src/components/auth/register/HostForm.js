@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import ReactFlagsSelect from "react-flags-select";
+import { State } from "country-state-city";
 
 // filepond
 import { FilePond, registerPlugin } from "react-filepond";
@@ -10,16 +11,16 @@ import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
 registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
 
 const HostForm = ({ setFormSelection }) => {
-  const [selectedCountry, setSelectedCountry] = useState("AE");
+  const [selectedCountry, setSelectedCountry] = useState(null);
   const [showPass, setShowPass] = useState(false);
-  const [cities, setCities] = useState({
-    AE: ["Dubai", "Abu Dhabi", "Sharjah"],
-    // Add more countries and their respective cities here
-  });
+  const [cityForCountry, setCityForCountry] = useState(null);
 
-  const handleSelectCountry = (countryCode) => {
+  function handleSelectCountry(countryCode) {
     setSelectedCountry(countryCode);
-  };
+    const statesObj = State.getStatesOfCountry(countryCode);
+    const statesName = statesObj.map((state) => state.name);
+    setCityForCountry(statesName);
+  }
 
   const handleBackButtonClick = (e) => {
     e.preventDefault();
@@ -85,7 +86,7 @@ const HostForm = ({ setFormSelection }) => {
                   <ReactFlagsSelect
                     searchable={false}
                     selectedSize={false}
-                    onSelect={handleSelectCountry}
+                    onSelect={(code) => setSelectedCountry(code)}
                     selected={selectedCountry}
                     defaultCountry="AE"
                   />
@@ -184,11 +185,12 @@ const HostForm = ({ setFormSelection }) => {
               <label htmlFor="companyLocation">
                 Company Location. (Country)
               </label>
-
               <ReactFlagsSelect
                 searchable={true}
                 selectedSize={false}
-                onSelect={handleSelectCountry}
+                onSelect={(code) => {
+                  handleSelectCountry(code);
+                }}
                 selected={selectedCountry}
                 defaultCountry="AE"
               />
@@ -199,12 +201,15 @@ const HostForm = ({ setFormSelection }) => {
             <div className="input-field">
               <label htmlFor="city">Company Location (City)</label>
               <select name="city" id="city">
-                {cities[selectedCountry] &&
-                  cities[selectedCountry].map((city, index) => (
+                {cityForCountry ? (
+                  cityForCountry.map((city, index) => (
                     <option key={index} value={city}>
                       {city}
                     </option>
-                  ))}
+                  ))
+                ) : (
+                  <option value={""}>Please select a country</option>
+                )}
               </select>
             </div>
           </div>

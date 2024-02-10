@@ -1,14 +1,16 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useCookies } from "react-cookie";
 
 const ProtectedRoute = ({ children }) => {
+  const [cookies] = useCookies();
   const navigate = useNavigate();
-  const isAuth = useSelector((state) => state.auth.isAuth);
+  const hasCookie = cookies.token;
+  
   useEffect(() => {
-    if (!isAuth) navigate("/login");
-  }, [isAuth, navigate]);
-  return isAuth ? children : null;
+    if (!hasCookie) navigate("/login");
+  }, [hasCookie, navigate]);
+  return hasCookie ? children : null;
 };
 
-export default ProtectedRoute;
+export default ProtectedRoute;
