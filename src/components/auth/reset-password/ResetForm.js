@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import EmailForm from "./EmailForm";
 import PhoneForm from "./PhoneForm";
 
-const ResetForm = ({ setShowOtp, formData, setFormData }) => {
+const ResetForm = ({ setResetPasswordStep, formData, setFormData }) => {
   const [formType, setFormType] = useState("email");
 
   let formComponent;
@@ -11,11 +11,17 @@ const ResetForm = ({ setShowOtp, formData, setFormData }) => {
       <EmailForm
         formData={formData}
         setFormData={setFormData}
-        setShowOtp={setShowOtp}
+        setResetPasswordStep={setResetPasswordStep}
       />
     );
   } else {
-    formComponent = <PhoneForm formData={formData} setFormData={setFormData} />;
+    formComponent = (
+      <PhoneForm
+        formData={formData}
+        setFormData={setFormData}
+        setResetPasswordStep={setResetPasswordStep}
+      />
+    );
   }
 
   return (

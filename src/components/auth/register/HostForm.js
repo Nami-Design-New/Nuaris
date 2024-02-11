@@ -1,28 +1,22 @@
-import { useState } from "react";
+import React, { useState } from "react";
+import SelectField from "./../../ui/SelectField";
+import InputField from "../../ui/InputField";
+import PasswordField from "../../ui/PasswordField";
+import LogoUploadField from "./../../ui/LogoUploadField";
 import ReactFlagsSelect from "react-flags-select";
 import { State } from "country-state-city";
 
-// filepond
-import { FilePond, registerPlugin } from "react-filepond";
-import "filepond/dist/filepond.min.css";
-import FilePondPluginImageExifOrientation from "filepond-plugin-image-exif-orientation";
-import FilePondPluginImagePreview from "filepond-plugin-image-preview";
-import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
-registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
-
 const HostForm = ({ setFormSelection }) => {
   const [selectedCountry, setSelectedCountry] = useState(null);
-  const [showPass, setShowPass] = useState(false);
   const [cityForCountry, setCityForCountry] = useState(null);
 
   function handleSelectCountry(countryCode) {
     setSelectedCountry(countryCode);
     const statesObj = State.getStatesOfCountry(countryCode);
-    const statesName = statesObj.map((state) => state.name);
+    const statesName = statesObj.map(state => state.name);
     setCityForCountry(statesName);
   }
-
-  const handleBackButtonClick = (e) => {
+  const handleBackButtonClick = e => {
     e.preventDefault();
     setFormSelection("");
   };
@@ -31,53 +25,32 @@ const HostForm = ({ setFormSelection }) => {
     <div className="regiesteration-form">
       <div className="container p-0">
         <div className="row m-0">
-          {/* First Name , Last Name */}
-          <div className="col-lg-6 col-12 p-2">
-            <div className="input-field mb-3">
-              <label htmlFor="firstName">First Name</label>
-              <input
-                type="text"
-                placeholder="Ex: mahmoud"
-                id="firstName"
-                name="firstName"
-              />
-            </div>
-            <div className="input-field">
-              <label htmlFor="lastName">Family Name</label>
-              <input
-                type="text"
-                placeholder="Ex: mahmoud"
-                id="lastName"
-                name="lastName"
-              />
-            </div>
+          <div className="col-lg-6 col-12 p-2 d-flex flex-column gap-3">
+            <InputField
+              htmlFor="firstName"
+              label="First Name"
+              placeholder="Ex: mahmoud"
+              id="firstName"
+            />
+            <InputField
+              htmlFor="lastName"
+              label="Family Name"
+              placeholder="Ex: mahmoud"
+              id="lastName"
+            />
           </div>
-          {/* Logo */}
           <div className="col-lg-6 col-12 p-2">
-            <div className="input-field">
-              <label htmlFor="logo">Upload Your Logo</label>
-              <FilePond
-                stylePanelLayout="compact"
-                acceptedFileTypes={["image/*"]}
-                labelIdle="LOGO"
-                id="logo"
-                stylePanelAspectRatio="0.5"
-              />
-            </div>
+            <LogoUploadField htmlFor="logo" label="Upload Your Logo" />
           </div>
-          {/* email */}
           <div className="col-lg-6 col-12 p-2">
-            <div className="input-field">
-              <label htmlFor="email">Email Address</label>
-              <input
-                placeholder="EX: mail@mail.com"
-                type="email"
-                id="email"
-                name="email"
-              />
-            </div>
+            <InputField
+              htmlFor="email"
+              label="Email Address"
+              placeholder="EX: mail@mail.com"
+              type="email"
+              id="email"
+            />
           </div>
-          {/* mobile number */}
           <div className="col-lg-6 col-12 p-2">
             <div className="input-field">
               <label htmlFor="phone">Mobile Number</label>
@@ -86,7 +59,7 @@ const HostForm = ({ setFormSelection }) => {
                   <ReactFlagsSelect
                     searchable={false}
                     selectedSize={false}
-                    onSelect={(code) => setSelectedCountry(code)}
+                    onSelect={code => setSelectedCountry(code)}
                     selected={selectedCountry}
                     defaultCountry="AE"
                   />
@@ -100,86 +73,47 @@ const HostForm = ({ setFormSelection }) => {
               </div>
             </div>
           </div>
-          {/* user Name */}
           <div className="col-lg-6 col-12 p-2">
-            <div className="input-field">
-              <label htmlFor="userName">Username</label>
-              <input
-                placeholder="EX: mahmoudgmal"
-                type="text"
-                id="userName"
-                name="userName"
-              />
-            </div>
+            <InputField
+              htmlFor="userName"
+              label="Username"
+              placeholder="EX: mahmoudgmal"
+              id="userName"
+            />
           </div>
-          {/* password */}
           <div className="col-lg-6 col-12 p-2">
-            <div className="input-field">
-              <label htmlFor="password">Password</label>
-              <div className="pass-group">
-                <input
-                  placeholder="************"
-                  type={showPass ? "text" : "password"}
-                  id="password"
-                  name="password"
-                />
-                <button onClick={() => setShowPass(!showPass)}>
-                  <i
-                    className={`fa-regular ${
-                      !showPass ? "fa-eye-slash" : "fa-eye"
-                    }`}
-                  />
-                </button>
-              </div>
-            </div>
+            <PasswordField htmlFor="password" label="Password" />
           </div>
-          {/* Commercial Name */}
           <div className="col-lg-6 col-12 p-2">
-            <div className="input-field">
-              <label htmlFor="commercialName">Commercial Name</label>
-              <input
-                placeholder="EX: luxury "
-                type="text"
-                id="commercialName"
-                name="commercialName"
-              />
-            </div>
+            <InputField
+              htmlFor="commercialName"
+              label="Commercial Name"
+              placeholder="EX: luxury "
+              id="commercialName"
+            />
           </div>
-          {/* Commercial registration Type */}
           <div className="col-lg-6 col-12 p-2">
-            <div className="input-field">
-              <label htmlFor="commercialRegistrationType">
-                Commercial registration Type
-              </label>
-              <select
-                name="commercialRegistrationType"
-                id="commercialRegistrationType"
-              >
-                <option value="freelancer">Freelancer</option>
-                <option value="soleProprietorship">Sole Proprietorship</option>
-                <option value="partnership">Partnership</option>
-                <option value="limitedLiabilityCompany">
-                  Limited Liability Company
-                </option>
-                <option value="corporation">Corporation</option>
-              </select>
-            </div>
+            <SelectField
+              htmlFor="commercialRegistrationType"
+              label="Commercial registration Type"
+              options={[
+                "Freelancer",
+                "Sole Proprietorship",
+                "Partnership",
+                "Limited Liability Company",
+                "Corporation"
+              ]}
+              id="commercialRegistrationType"
+            />
           </div>
-          {/*Commercial registration Number*/}
           <div className="col-lg-6 col-12 p-2">
-            <div className="input-field">
-              <label htmlFor="commercialRegistrationNumber">
-                Commercial registration Number
-              </label>
-              <input
-                placeholder="XXXX XXXX XXXX XXXX"
-                type="text"
-                id="commercialRegistrationNumber"
-                name="commercialRegistrationNumber"
-              />
-            </div>
+            <InputField
+              htmlFor="commercialRegistrationNumber"
+              label="Commercial registration Number"
+              placeholder="XXXX XXXX XXXX XXXX"
+              id="commercialRegistrationNumber"
+            />
           </div>
-          {/* Company Location. (Country) */}
           <div className="col-lg-6 col-12 p-2">
             <div className="input-field">
               <label htmlFor="companyLocation">
@@ -188,7 +122,7 @@ const HostForm = ({ setFormSelection }) => {
               <ReactFlagsSelect
                 searchable={true}
                 selectedSize={false}
-                onSelect={(code) => {
+                onSelect={code => {
                   handleSelectCountry(code);
                 }}
                 selected={selectedCountry}
@@ -196,24 +130,20 @@ const HostForm = ({ setFormSelection }) => {
               />
             </div>
           </div>
-          {/* Company Location. (City) */}
           <div className="col-lg-6 col-12 p-2">
             <div className="input-field">
               <label htmlFor="city">Company Location (City)</label>
               <select name="city" id="city">
-                {cityForCountry ? (
-                  cityForCountry.map((city, index) => (
-                    <option key={index} value={city}>
-                      {city}
-                    </option>
-                  ))
-                ) : (
-                  <option value={""}>Please select a country</option>
-                )}
+                {cityForCountry
+                  ? cityForCountry.map((city, index) =>
+                      <option key={index} value={city}>
+                        {city}
+                      </option>
+                    )
+                  : <option value={""}>Please select a country</option>}
               </select>
             </div>
           </div>
-          {/* long : Lat */}
           <div className="col-lg-6 col-12 p-2">
             <div className="input-field">
               <label htmlFor="companyLocation">
@@ -221,11 +151,10 @@ const HostForm = ({ setFormSelection }) => {
               </label>
               <div className="searchMapGroup">
                 <span>Search on Map</span>
-                <button></button>
+                <button />
               </div>
             </div>
           </div>
-          {/* end fields */}
           <div className="col-12 p-2 mt-3">
             <div className="buttons">
               <button className="back" onClick={handleBackButtonClick}>

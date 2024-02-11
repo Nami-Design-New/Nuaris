@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "../../../util/axios";
 
-const EmailForm = ({ formData, setFormData, setShowOtp }) => {
+const EmailForm = ({ formData, setFormData, setResetPasswordStep }) => {
   const [loading, setLoading] = useState(false);
 
   const headersList = {
@@ -12,7 +12,7 @@ const EmailForm = ({ formData, setFormData, setShowOtp }) => {
   };
   const requestOptions = {
     method: "POST",
-    url: "/users/send-otp/",
+    url: "/users/forgot-password/",
     headers: headersList,
     data: formData
   };
@@ -22,7 +22,7 @@ const EmailForm = ({ formData, setFormData, setShowOtp }) => {
     e.preventDefault();
     try {
       await axios.request(requestOptions);
-      setShowOtp(true);
+      setResetPasswordStep("s2");
     } catch (error) {
       if (
         error.response &&

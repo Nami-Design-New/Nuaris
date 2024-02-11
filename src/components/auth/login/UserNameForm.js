@@ -8,35 +8,32 @@ const UserNameForm = ({ setShowLoginForm }) => {
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({});
   const [cookies, setCookie] = useCookies(["token"]);
-
   const navigate = useNavigate();
   const form = useRef(null);
 
-  const handleBackButtonClick = (e) => {
+  const handleBackButtonClick = e => {
     e.preventDefault();
     setShowLoginForm(false);
   };
 
   const headersList = {
     Accept: "application/json",
-    "Content-Type": "application/json",
+    "Content-Type": "application/json"
   };
-
   const requestOptions = {
     method: "POST",
     url: "/users/login/",
     headers: headersList,
-    data: formData,
+    data: formData
   };
-
-  const handleSubmit = async (e) => {
+  const handleSubmit = async e => {
     setLoading(true);
     e.preventDefault();
     try {
       const res = await axios.request(requestOptions);
       setCookie("token", res.data.access_token, {
         path: "/",
-        secure: true,
+        secure: true
       });
       toast.success(`Welcome Back @${formData.username}`);
       navigate("/");
@@ -55,13 +52,13 @@ const UserNameForm = ({ setShowLoginForm }) => {
         type="text"
         name="userName"
         placeholder="Username"
-        onChange={(e) => setFormData({ ...formData, username: e.target.value })}
+        onChange={e => setFormData({ ...formData, username: e.target.value })}
       />
       <input
         type="password"
         placeholder="Password"
         required
-        onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+        onChange={e => setFormData({ ...formData, password: e.target.value })}
       />
       <Link to={"/reset-password"}>Forget Password ?</Link>
       <div className="buttons">
@@ -74,8 +71,7 @@ const UserNameForm = ({ setShowLoginForm }) => {
           type="submit"
           className="log"
         >
-          Login
-          <i className={loading ? "fa-solid fa-spinner fa-spin" : ""} />
+          Login <i className={loading ? "fa-solid fa-spinner fa-spin" : ""} />
         </button>
       </div>
     </form>

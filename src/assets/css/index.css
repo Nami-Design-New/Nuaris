@@ -584,8 +584,8 @@ a {
 }
 
 .ReactFlagsSelect-module_selectBtn__19wW7 {
-  border: 1px solid #f2f2f2;
-  background: #f8f8f8;
+  border: 1px solid #f2f2f2 !important;
+  background: #f8f8f8 !important;
   height: 54px;
   box-shadow: none;
   outline: none;

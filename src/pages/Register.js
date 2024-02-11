@@ -41,8 +41,10 @@ const Register = () => {
           <RegiestrUserTypeSelection setFormSelection={setFormSelection} />}
         {formSelecton === "host" &&
           <HostForm setFormSelection={setFormSelection} />}
-        {formSelecton === "agent" && <AgentForm />}
-        {formSelecton === "service provider" && <ServiceProvider />}
+        {formSelecton === "agent" &&
+          <AgentForm setFormSelection={setFormSelection} />}
+        {formSelecton === "service provider" &&
+          <ServiceProvider setFormSelection={setFormSelection} />}
       </div>
       <div
         className="right-side"

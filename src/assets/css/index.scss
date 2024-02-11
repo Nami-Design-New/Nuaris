@@ -552,8 +552,8 @@ $transation: 0.4s ease-in-out;
   }
 }
 .ReactFlagsSelect-module_selectBtn__19wW7 {
-  border: 1px solid $inputStroke;
-  background: $inputBG;
+  border: 1px solid $inputStroke !important;
+  background: $inputBG !important;
   height: 54px;
   box-shadow: none;
   outline: none;

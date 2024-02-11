@@ -56,6 +56,7 @@ const OtpForm = ({
       setLoading(false);
     }
   };
+  
   return (
     <div className="form-container">
       <form onSubmit={handleSubmit}>
