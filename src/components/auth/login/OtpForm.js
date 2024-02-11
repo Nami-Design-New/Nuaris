@@ -3,8 +3,7 @@ import handWave from "../../../assets/images/waving-hand.svg";
 import axios from "../../../util/axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { setIsAuth } from "../../../redux/slices/authSlice";
+import { useCookies } from "react-cookie";
 import Otpcontainer from "../../../shared/Otpcontainer";
 
 const OtpForm = ({
@@ -14,16 +13,14 @@ const OtpForm = ({
   setShowLoginForm
 }) => {
   const [loading, setLoading] = useState(false);
+  const [cookies, setCookie] = useCookies(["token"]);
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-
   const handleBackButtonClick = e => {
     e.preventDefault();
     setShowLoginForm(true);
     SetShowOtpForm(false);
     setFormData({});
   };
-
   const headersList = {
     Accept: "application/json",
     "Content-Type": "application/json"
@@ -34,12 +31,16 @@ const OtpForm = ({
     headers: headersList,
     data: formData
   };
+
   const handleSubmit = async e => {
     setLoading(true);
     e.preventDefault();
     try {
       const response = await axios.request(requestOptions);
-      dispatch(setIsAuth(true));
+      setCookie("token", response.data.access_token, {
+        path: "/",
+        secure: true
+      });
       navigate("/");
       toast.success(`Welcome Back @${response.data.user.username}`);
     } catch (error) {
@@ -56,7 +57,7 @@ const OtpForm = ({
       setLoading(false);
     }
   };
-  
+
   return (
     <div className="form-container">
       <form onSubmit={handleSubmit}>

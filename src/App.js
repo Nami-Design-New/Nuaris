@@ -5,6 +5,9 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import ResetPassword from "./pages/ResetPassword";
+import HostDashboard from "./pages/HostDashboard";
+import AgentDashboard from "./pages/AgentDashboard";
+import ServicesProviderDashboard from "./pages/ServicesProviderDashboard";
 
 import { store } from "./redux/store";
 import { Provider } from "react-redux";
@@ -21,6 +24,12 @@ const App = () => {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/reset-password" element={<ResetPassword />} />
+            <Route path="/host-dashboard" element={<HostDashboard />} />
+            <Route path="/agent-dashboard" element={<AgentDashboard />} />
+            <Route
+              path="/service-provider-dashboard"
+              element={<ServicesProviderDashboard />}
+            />
             <Route path="/" element={<Home />} />
           </Routes>
         </Provider>

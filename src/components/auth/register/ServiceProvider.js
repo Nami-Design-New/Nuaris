@@ -2,45 +2,103 @@ import React, { useState } from "react";
 import SelectField from "./../../ui/SelectField";
 import InputField from "../../ui/InputField";
 import PasswordField from "../../ui/PasswordField";
+import LogoUploadField from "./../../ui/LogoUploadField";
 import ReactFlagsSelect from "react-flags-select";
+import axios from "../../../util/axios";
+import { toast } from "react-toastify";
 import { State } from "country-state-city";
-import LogoUploadField from "../../ui/LogoUploadField";
+import { useNavigate } from "react-router";
 
-const ServiceProvider = ({ setFormSelection }) => {
+const AgentForm = ({ setFormSelection }) => {
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [cityForCountry, setCityForCountry] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [formData, setFormData] = useState({
+    role: "serviceProvider",
+    registration_type: "Company",
+    lat: "30.044420",
+    lng: "31.235712",
+    company_core: []
+  });
+  const navigate = useNavigate();
+
   function handleSelectCountry(countryCode) {
     setSelectedCountry(countryCode);
     const statesObj = State.getStatesOfCountry(countryCode);
     const statesName = statesObj.map(state => state.name);
     setCityForCountry(statesName);
+    setFormData({ ...formData, country: countryCode });
   }
   const handleBackButtonClick = e => {
     e.preventDefault();
     setFormSelection("");
   };
 
+  const headersList = {
+    Accept: "application/json",
+    "Content-Type": "application/json"
+  };
+  const requestOptions = {
+    method: "POST",
+    url: "/users/",
+    headers: headersList,
+    data: formData
+  };
+
+  const handleSubmit = async e => {
+    setLoading(true);
+    e.preventDefault();
+    try {
+      await axios.request(requestOptions);
+      toast.success(`Welcome @${formData.username}`);
+      navigate("/service-provider-dashboard");
+    } catch (error) {
+      if (error.response && error.response.data) {
+        const errors = error.response.data;
+        Object.keys(errors).forEach(field => {
+          errors[field].forEach(message => {
+            toast.error(`${field}: ${message}`);
+          });
+        });
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
-    <div className="regiesteration-form">
+    <form onSubmit={handleSubmit} className="regiesteration-form">
       <div className="container p-0">
         <div className="row m-0">
+          {/* first and last name */}
           <div className="col-lg-6 col-12 p-2 d-flex flex-column gap-3">
             <InputField
-              htmlFor="firstName"
+              htmlFor="first_name"
               label="First Name"
               placeholder="Ex: mahmoud"
               id="firstName"
+              formData={formData}
+              setFormData={setFormData}
             />
             <InputField
-              htmlFor="lastName"
+              htmlFor="last_name"
               label="Family Name"
               placeholder="Ex: mahmoud"
               id="lastName"
+              formData={formData}
+              setFormData={setFormData}
             />
           </div>
+          {/* logo */}
           <div className="col-lg-6 col-12 p-2">
-            <LogoUploadField htmlFor="logo" label="Upload Your Logo" />
+            <LogoUploadField
+              htmlFor="logo"
+              label="Upload Your Logo"
+              formData={formData}
+              setFormData={setFormData}
+            />
           </div>
+          {/* email */}
           <div className="col-lg-6 col-12 p-2">
             <InputField
               htmlFor="email"
@@ -48,8 +106,11 @@ const ServiceProvider = ({ setFormSelection }) => {
               placeholder="EX: mail@mail.com"
               type="email"
               id="email"
+              formData={formData}
+              setFormData={setFormData}
             />
           </div>
+          {/* phone number */}
           <div className="col-lg-6 col-12 p-2">
             <div className="input-field">
               <label htmlFor="phone">Mobile Number</label>
@@ -72,47 +133,112 @@ const ServiceProvider = ({ setFormSelection }) => {
               </div>
             </div>
           </div>
+          {/* username */}
           <div className="col-lg-6 col-12 p-2">
             <InputField
-              htmlFor="userName"
+              htmlFor="username"
               label="Username"
               placeholder="EX: mahmoudgmal"
               id="userName"
+              formData={formData}
+              setFormData={setFormData}
             />
           </div>
+          {/* password */}
           <div className="col-lg-6 col-12 p-2">
-            <PasswordField htmlFor="password" label="Password" />
+            <PasswordField
+              htmlFor="password"
+              label="Password"
+              formData={formData}
+              setFormData={setFormData}
+            />
           </div>
+          {/* commercial name */}
           <div className="col-lg-6 col-12 p-2">
             <InputField
-              htmlFor="commercialName"
+              htmlFor="commercial_name"
               label="Commercial Name"
               placeholder="EX: luxury "
               id="commercialName"
+              formData={formData}
+              setFormData={setFormData}
             />
           </div>
-          <div className="col-lg-6 col-12 p-2">
-            <SelectField
-              htmlFor="commercialRegistrationType"
-              label="Commercial registration Type"
-              options={[
-                "Freelancer",
-                "Sole Proprietorship",
-                "Partnership",
-                "Limited Liability Company",
-                "Corporation"
-              ]}
-              id="commercialRegistrationType"
-            />
-          </div>
+          {/* Commercial registration Number */}
           <div className="col-lg-6 col-12 p-2">
             <InputField
-              htmlFor="commercialRegistrationNumber"
+              htmlFor="registration_number"
+              type="number"
               label="Commercial registration Number"
               placeholder="XXXX XXXX XXXX XXXX"
               id="commercialRegistrationNumber"
+              formData={formData}
+              setFormData={setFormData}
             />
           </div>
+          {/* Company core */}
+          <div className="col-lg-6 col-12 p-2">
+            <div className="check-field">
+              <label htmlFor="company_core">
+                Company core <span>( you can choose both )</span>
+              </label>
+              <div className="inputs">
+                <label htmlFor="products">
+                  <input
+                    type="checkbox"
+                    name="core"
+                    id="products"
+                    onChange={() => {
+                      setFormData(prevState => ({
+                        ...prevState,
+                        company_core: prevState.company_core.includes(
+                          "products"
+                        )
+                          ? prevState.company_core.filter(
+                              item => item !== "products"
+                            )
+                          : [...prevState.company_core, "products"]
+                      }));
+                    }}
+                  />
+                  <span>products</span>
+                </label>
+                <label htmlFor="services">
+                  <input
+                    type="checkbox"
+                    name="core"
+                    id="services"
+                    onChange={() => {
+                      setFormData(prevState => ({
+                        ...prevState,
+                        company_core: prevState.company_core.includes(
+                          "services"
+                        )
+                          ? prevState.company_core.filter(
+                              item => item !== "services"
+                            )
+                          : [...prevState.company_core, "services"]
+                      }));
+                    }}
+                  />
+                  <span>services</span>
+                </label>
+              </div>
+            </div>
+          </div>
+          {/* Company major business lines */}
+          <div className="col-lg-6 col-12 p-2">
+            <InputField
+              htmlFor="business_lines"
+              label="Company major business lines"
+              placeholder="Write here"
+              type="text"
+              id="businessLines"
+              formData={formData}
+              setFormData={setFormData}
+            />
+          </div>
+          {/* country */}
           <div className="col-lg-6 col-12 p-2">
             <div className="input-field">
               <label htmlFor="companyLocation">
@@ -129,10 +255,17 @@ const ServiceProvider = ({ setFormSelection }) => {
               />
             </div>
           </div>
-          <div className="col-12 p-2">
+          {/* City */}
+          <div className="col-lg-6 col-12 p-2">
             <div className="input-field">
               <label htmlFor="city">Company Location (City)</label>
-              <select name="city" id="city">
+              <select
+                name="city"
+                id="city"
+                onChange={e => {
+                  setFormData({ ...formData, city: e.target.value });
+                }}
+              >
                 {cityForCountry
                   ? cityForCountry.map((city, index) =>
                       <option key={index} value={city}>
@@ -143,20 +276,38 @@ const ServiceProvider = ({ setFormSelection }) => {
               </select>
             </div>
           </div>
+          {/* longitude latitude */}
+          <div className="col-12 p-2">
+            <div className="input-field">
+              <label htmlFor="companyLocation">
+                Company Location. (map) ( optional )
+              </label>
+              <div className="searchMapGroup">
+                <span>Search on Map</span>
+                <button />
+              </div>
+            </div>
+          </div>
           <div className="col-12 p-2 mt-3">
             <div className="buttons">
               <button className="back" onClick={handleBackButtonClick}>
                 <i className="fa-light fa-arrow-left" />
               </button>
-              <button type="submit" className="log">
-                Confirm
+              <button
+                style={{ opacity: loading ? 0.7 : 1 }}
+                disabled={loading}
+                type="submit"
+                className="log"
+              >
+                Confirm{" "}
+                <i className={loading ? "fa-solid fa-spinner fa-spin" : ""} />
               </button>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </form>
   );
 };
 
-export default ServiceProvider;
+export default AgentForm;

@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 
-const PasswordField = ({ htmlFor, label }) => {
+const PasswordField = ({ htmlFor, label, formData, setFormData }) => {
   const [showPass, setShowPass] = useState(false);
+  const handleInputType = e => {
+    e.preventDefault();
+    setShowPass(!showPass);
+  };
   return (
     <div className="input-field">
       <label htmlFor={htmlFor}>
@@ -13,8 +17,11 @@ const PasswordField = ({ htmlFor, label }) => {
           type={showPass ? "text" : "password"}
           id={htmlFor}
           name={htmlFor}
+          onChange={e => {
+            setFormData({ ...formData, [htmlFor]: e.target.value });
+          }}
         />
-        <button onClick={() => setShowPass(!showPass)}>
+        <button onClick={handleInputType}>
           <i
             className={`fa-regular ${!showPass ? "fa-eye-slash" : "fa-eye"}`}
           />

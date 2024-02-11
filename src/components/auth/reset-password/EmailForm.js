@@ -3,7 +3,12 @@ import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "../../../util/axios";
 
-const EmailForm = ({ formData, setFormData, setResetPasswordStep }) => {
+const EmailForm = ({
+  formData,
+  setFormData,
+  setResetPasswordStep,
+  setOtpFromResponse
+}) => {
   const [loading, setLoading] = useState(false);
 
   const headersList = {
@@ -21,8 +26,11 @@ const EmailForm = ({ formData, setFormData, setResetPasswordStep }) => {
     setLoading(true);
     e.preventDefault();
     try {
-      await axios.request(requestOptions);
+      const res = await axios.request(requestOptions);
       setResetPasswordStep("s2");
+      const message = res.data.message;
+      const otp = message.match(/\d{6}$/);
+      setOtpFromResponse(otp[0]);
     } catch (error) {
       if (
         error.response &&
@@ -32,7 +40,7 @@ const EmailForm = ({ formData, setFormData, setResetPasswordStep }) => {
       ) {
         const errorMessage = error.response.data.email[0];
         toast.error(errorMessage);
-        setFormData({ ...formData, email: '' });
+        setFormData({ ...formData, email: "" });
       }
     } finally {
       setLoading(false);

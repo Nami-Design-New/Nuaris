@@ -3,7 +3,12 @@ import axios from "../../../util/axios";
 import Otpcontainer from "./../../../shared/Otpcontainer";
 import { toast } from "react-toastify";
 
-const OtpForm = ({ formData, setFormData, setResetPasswordStep }) => {
+const OtpForm = ({
+  formData,
+  setFormData,
+  setResetPasswordStep,
+  otpFromResponse
+}) => {
   const [loading, setLoading] = useState(false);
 
   const handleBackButtonClick = e => {
@@ -12,34 +17,13 @@ const OtpForm = ({ formData, setFormData, setResetPasswordStep }) => {
     setFormData({ ...formData, email: "" });
   };
 
-  const headersList = {
-    Accept: "application/json",
-    "Content-Type": "application/json"
-  };
-  const requestOptions = {
-    method: "POST",
-    url: "/users/login-otp/",
-    headers: headersList,
-    data: formData
-  };
-
   const handleSubmit = async e => {
     setLoading(true);
     e.preventDefault();
-    try {
-      const response = await axios.request(requestOptions);
-
-    } catch (error) {
-      if (
-        error.response &&
-        error.response.data &&
-        error.response.data.otp &&
-        error.response.data.otp.length > 0
-      ) {
-        const errorMessage = error.response.data.otp[0];
-        toast.error(errorMessage);
-      }
-    } finally {
+    if (otpFromResponse === formData.otp) {
+      setResetPasswordStep("s3");
+    } else {
+      toast.error("OTP Incorrect");
       setLoading(false);
     }
   };
