@@ -5,10 +5,12 @@ import { toast } from "react-toastify";
 import { useCookies } from "react-cookie";
 import SubmitButton from "./../../ui/SubmitButton";
 
-const UserNameForm = ({ setShowLoginForm }) => {
+const UserNameForm = ({ setShowLoginForm, userTypeSelected }) => {
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({});
   const [cookies, setCookie] = useCookies(["token"]);
+  const [rolecookie, setRoleCookie] = useCookies(["role"]);
+
   const navigate = useNavigate();
   const form = useRef(null);
 
@@ -37,6 +39,25 @@ const UserNameForm = ({ setShowLoginForm }) => {
         secure: true
       });
       toast.success(`Welcome Back @${formData.username}`);
+      if (userTypeSelected === "host") {
+        navigate("/host-dashboard");
+        setRoleCookie("role", "host", {
+          path: "/",
+          secure: true
+        });
+      } else if (userTypeSelected === "agent") {
+        navigate("/agent-dashboard");
+        setRoleCookie("role", "agent", {
+          path: "/",
+          secure: true
+        });
+      } else if (userTypeSelected === "service provider") {
+        navigate("/service-provider-dashboard");
+        setRoleCookie("role", "service_provider", {
+          path: "/",
+          secure: true
+        });
+      }
       navigate("/");
     } catch (error) {
       toast.error("Incorrect username or password");

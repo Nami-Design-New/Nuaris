@@ -1,11 +1,12 @@
-import React from 'react'
+import React from "react";
+import ProtectedRoute from "./../components/ProtectedRoute";
 
 const ServicesProviderDashboard = () => {
   return (
-    <div>
-    ServicesProviderDashboard
-    </div>
-  )
-}
+    <ProtectedRoute>
+      <div>ServicesProviderDashboard</div>
+    </ProtectedRoute>
+  );
+};
 
 export default ServicesProviderDashboard;

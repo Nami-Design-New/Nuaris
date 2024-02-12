@@ -1,9 +1,12 @@
-import React from 'react'
+import React from "react";
+import ProtectedRoute from "../components/ProtectedRoute";
 
 const AgentDashboard = () => {
   return (
-    <div>AgentDashboard</div>
-  )
-}
+    <ProtectedRoute>
+      <div>AgentDashboard</div>
+    </ProtectedRoute>
+  );
+};
 
-export default AgentDashboard
+export default AgentDashboard;

@@ -1,12 +1,7 @@
-import { ProtectedRoute } from "../components";
+import React from "react";
+
 const Home = () => {
-  return (
-    <ProtectedRoute>
-      <div>
-        <h1>home</h1>
-      </div>
-    </ProtectedRoute>
-  );
+  return <div>Home</div>;
 };
 
 export default Home;
