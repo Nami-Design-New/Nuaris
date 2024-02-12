@@ -617,6 +617,59 @@ a {
   border-color: #006980;
 }
 
+.modal-header {
+  border-bottom: 0;
+}
+.modal-header .btn-close {
+  box-shadow: none !important;
+  background-image: url("../images/close.svg");
+}
+.modal-header h6 {
+  color: #0d0d0d;
+  margin-bottom: 0;
+}
+
+.modal-body {
+  padding-top: 0;
+}
+.modal-body .input-field {
+  width: 100%;
+}
+.modal-body .input-field input {
+  height: 54px;
+  width: 100%;
+  border: 1px solid #f2f2f2;
+  background: #f8f8f8;
+  padding: 12px 16px;
+  border-radius: 8px;
+  outline: none;
+  color: #0d0d0d;
+}
+.modal-body .input-field input::-moz-placeholder {
+  color: #aaaaaa;
+}
+.modal-body .input-field input::placeholder {
+  color: #aaaaaa;
+}
+.modal-body button {
+  border: none;
+  background: none;
+  outline: none;
+  width: 100%;
+  height: 54px;
+  background: #006980;
+  color: #fff;
+  border-radius: 8px;
+}
+.modal-body button:hover {
+  background: #006980;
+}
+.modal-body .map {
+  position: relative;
+  height: 300px;
+  width: 100%;
+}
+
 .filepond--root .filepond--credits[style] {
   display: none !important;
 }
