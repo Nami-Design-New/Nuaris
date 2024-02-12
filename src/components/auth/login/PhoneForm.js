@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import axios from "../../../util/axios";
+import SubmitButton from "./../../ui/SubmitButton";
 
 const PhoneForm = ({
   setShowLoginForm,
@@ -63,14 +64,7 @@ const PhoneForm = ({
         <button className="back" onClick={handleBackButtonClick}>
           <i className="fa-light fa-arrow-left" />
         </button>
-        <button
-          style={{ opacity: loading ? 0.7 : 1 }}
-          disabled={loading}
-          type="submit"
-          className="log"
-        >
-          Login <i className={loading ? "fa-solid fa-spinner fa-spin" : ""} />
-        </button>
+        <SubmitButton loading={loading} name="Login" />
       </div>
     </form>
   );

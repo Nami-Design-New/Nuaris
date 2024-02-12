@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import Otpcontainer from "../../../shared/Otpcontainer";
+import SubmitButton from "./../../ui/SubmitButton";
 
 const OtpForm = ({
   formData,
@@ -77,15 +78,7 @@ const OtpForm = ({
           <button className="back" onClick={handleBackButtonClick}>
             <i className="fa-light fa-arrow-left" />
           </button>
-          <button
-            style={{ opacity: loading ? 0.7 : 1 }}
-            disabled={loading}
-            type="submit"
-            className="log"
-          >
-            Confirm{" "}
-            <i className={loading ? "fa-solid fa-spinner fa-spin" : ""} />
-          </button>
+          <SubmitButton loading={loading} name="Confirm" />
         </div>
       </form>
     </div>

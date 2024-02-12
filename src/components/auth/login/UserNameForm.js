@@ -3,6 +3,7 @@ import axios from "../../../util/axios";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useCookies } from "react-cookie";
+import SubmitButton from "./../../ui/SubmitButton";
 
 const UserNameForm = ({ setShowLoginForm }) => {
   const [loading, setLoading] = useState(false);
@@ -65,14 +66,7 @@ const UserNameForm = ({ setShowLoginForm }) => {
         <button className="back" onClick={handleBackButtonClick}>
           <i className="fa-light fa-arrow-left" />
         </button>
-        <button
-          style={{ opacity: loading ? 0.7 : 1 }}
-          disabled={loading}
-          type="submit"
-          className="log"
-        >
-          Login <i className={loading ? "fa-solid fa-spinner fa-spin" : ""} />
-        </button>
+        <SubmitButton loading={loading} name="Login" />
       </div>
     </form>
   );

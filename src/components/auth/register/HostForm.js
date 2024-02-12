@@ -37,7 +37,7 @@ const HostForm = ({ setFormSelection }) => {
   }
   /* form Submit Register  */
   const headersList = {
-    Accept: "application/json",
+    Accept: "*/*",
     "Content-Type": "multipart/form-data"
   };
   const requestOptions = {
@@ -245,14 +245,12 @@ const HostForm = ({ setFormSelection }) => {
             />
           </div>
           {/* map modal */}
-          {
-            <MapModal
-              showModal={showModal}
-              setShowModal={setShowModal}
-              setFormData={setFormData}
-              formData={formData}
-            />
-          }
+          <MapModal
+            showModal={showModal}
+            setShowModal={setShowModal}
+            setFormData={setFormData}
+            formData={formData}
+          />
           <div className="col-12 p-2 mt-3">
             <div className="buttons">
               <BackButton setFormSelection={setFormSelection} />

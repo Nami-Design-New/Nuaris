@@ -8,7 +8,6 @@ import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
 registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
 
 const LogoUploadField = ({ htmlFor, label, formData, setFormData }) => {
-  
   const handleFileChange = files => {
     if (files && files.length > 0) {
       setFormData({ ...formData, logo: files[0].file });
@@ -20,11 +19,11 @@ const LogoUploadField = ({ htmlFor, label, formData, setFormData }) => {
   return (
     <div className="input-field">
       <label htmlFor={htmlFor}>
-        {label}
+        {label} <span>(PNG or JPG)</span>
       </label>
       <FilePond
         stylePanelLayout="compact"
-        acceptedFileTypes={["image/*"]}
+        acceptedFileTypes={["image/png, image/jpeg"]}
         labelIdle="LOGO"
         id={htmlFor}
         stylePanelAspectRatio="0.415"

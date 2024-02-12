@@ -1,25 +1,27 @@
 import React, { useState } from "react";
+// ui
 import SelectField from "./../../ui/SelectField";
 import InputField from "../../ui/InputField";
 import PasswordField from "../../ui/PasswordField";
 import LogoUploadField from "./../../ui/LogoUploadField";
+import BackButton from "./../../ui/BackButton";
+import SubmitButton from "../../ui/SubmitButton";
 import ReactFlagsSelect from "react-flags-select";
+
 import axios from "../../../util/axios";
 import { toast } from "react-toastify";
 import { State } from "country-state-city";
 import { useNavigate } from "react-router";
 
 const AgentForm = ({ setFormSelection }) => {
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    role: "agent",
+    registration_type: "Company"
+  });
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [cityForCountry, setCityForCountry] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [formData, setFormData] = useState({
-    role: "agent",
-    registration_type: "Company",
-    lat: "30.044420",
-    lng: "31.235712"
-  });
-  const navigate = useNavigate();
 
   function handleSelectCountry(countryCode) {
     setSelectedCountry(countryCode);
@@ -28,14 +30,10 @@ const AgentForm = ({ setFormSelection }) => {
     setCityForCountry(statesName);
     setFormData({ ...formData, country: countryCode });
   }
-  const handleBackButtonClick = e => {
-    e.preventDefault();
-    setFormSelection("");
-  };
-
+  /* form Submit Register  */
   const headersList = {
-    Accept: "application/json",
-    "Content-Type": "application/json"
+    Accept: "*/*",
+    "Content-Type": "multipart/form-data"
   };
   const requestOptions = {
     method: "POST",
@@ -43,14 +41,13 @@ const AgentForm = ({ setFormSelection }) => {
     headers: headersList,
     data: formData
   };
-
   const handleSubmit = async e => {
     setLoading(true);
     e.preventDefault();
     try {
       await axios.request(requestOptions);
       toast.success(`Welcome @${formData.username}`);
-      navigate("/agent-dashboard");
+      navigate("/host-dashboard");
     } catch (error) {
       if (error.response && error.response.data) {
         const errors = error.response.data;
@@ -213,7 +210,9 @@ const AgentForm = ({ setFormSelection }) => {
           {/* City */}
           <div className="col-12 p-2">
             <div className="input-field">
-              <label htmlFor="city">Company Location (City)</label>
+              <label htmlFor="city">
+                Company Location <span>(City)</span>
+              </label>
               <select
                 name="city"
                 id="city"
@@ -233,18 +232,8 @@ const AgentForm = ({ setFormSelection }) => {
           </div>
           <div className="col-12 p-2 mt-3">
             <div className="buttons">
-              <button className="back" onClick={handleBackButtonClick}>
-                <i className="fa-light fa-arrow-left" />
-              </button>
-              <button
-                style={{ opacity: loading ? 0.7 : 1 }}
-                disabled={loading}
-                type="submit"
-                className="log"
-              >
-                Confirm{" "}
-                <i className={loading ? "fa-solid fa-spinner fa-spin" : ""} />
-              </button>
+              <BackButton setFormSelection={setFormSelection} />
+              <SubmitButton loading={loading} name="Confirm" />
             </div>
           </div>
         </div>

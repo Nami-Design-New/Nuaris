@@ -1,26 +1,33 @@
 import React, { useState } from "react";
-import SelectField from "./../../ui/SelectField";
+// ui
 import InputField from "../../ui/InputField";
 import PasswordField from "../../ui/PasswordField";
 import LogoUploadField from "./../../ui/LogoUploadField";
+import MapModal from "./../../ui/MapModal";
+import BackButton from "./../../ui/BackButton";
+import SubmitButton from "../../ui/SubmitButton";
 import ReactFlagsSelect from "react-flags-select";
+import MapLocationField from "../../ui/MapLocationField";
+
 import axios from "../../../util/axios";
 import { toast } from "react-toastify";
 import { State } from "country-state-city";
 import { useNavigate } from "react-router";
 
-const AgentForm = ({ setFormSelection }) => {
-  const [selectedCountry, setSelectedCountry] = useState(null);
-  const [cityForCountry, setCityForCountry] = useState(null);
-  const [loading, setLoading] = useState(false);
+const ServiceProvider = ({ setFormSelection }) => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    role: "serviceProvider",
+    role: "support_user",
     registration_type: "Company",
     lat: "30.044420",
-    lng: "31.235712",
-    company_core: []
+    lng: "31.235712"
   });
-  const navigate = useNavigate();
+  const [selectedCountry, setSelectedCountry] = useState(null);
+  const [cityForCountry, setCityForCountry] = useState(null);
+  const [checkedProducts, setCheckedProducts] = useState(false);
+  const [checkedServices, setCheckedServices] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   function handleSelectCountry(countryCode) {
     setSelectedCountry(countryCode);
@@ -29,14 +36,34 @@ const AgentForm = ({ setFormSelection }) => {
     setCityForCountry(statesName);
     setFormData({ ...formData, country: countryCode });
   }
-  const handleBackButtonClick = e => {
-    e.preventDefault();
-    setFormSelection("");
+  const handleProductsChange = e => {
+    setCheckedProducts(e.target.checked);
+    if (checkedProducts) {
+      checkedServices === true
+        ? setFormData({ ...formData, business_core: "services" })
+        : setFormData({ ...formData, business_core: "" });
+    } else {
+      checkedServices === true
+        ? setFormData({ ...formData, business_core: "both" })
+        : setFormData({ ...formData, business_core: "products" });
+    }
   };
-
+  const handleServicesChange = e => {
+    setCheckedServices(e.target.checked);
+    if (checkedServices) {
+      checkedProducts === true
+        ? setFormData({ ...formData, business_core: "products" })
+        : setFormData({ ...formData, business_core: "" });
+    } else {
+      checkedProducts === true
+        ? setFormData({ ...formData, business_core: "both" })
+        : setFormData({ ...formData, business_core: "services" });
+    }
+  };
+  /* form Submit Register  */
   const headersList = {
-    Accept: "application/json",
-    "Content-Type": "application/json"
+    Accept: "*/*",
+    "Content-Type": "multipart/form-data"
   };
   const requestOptions = {
     method: "POST",
@@ -44,14 +71,13 @@ const AgentForm = ({ setFormSelection }) => {
     headers: headersList,
     data: formData
   };
-
   const handleSubmit = async e => {
     setLoading(true);
     e.preventDefault();
     try {
       await axios.request(requestOptions);
       toast.success(`Welcome @${formData.username}`);
-      navigate("/service-provider-dashboard");
+      navigate("/host-dashboard");
     } catch (error) {
       if (error.response && error.response.data) {
         const errors = error.response.data;
@@ -188,18 +214,8 @@ const AgentForm = ({ setFormSelection }) => {
                     type="checkbox"
                     name="core"
                     id="products"
-                    onChange={() => {
-                      setFormData(prevState => ({
-                        ...prevState,
-                        company_core: prevState.company_core.includes(
-                          "products"
-                        )
-                          ? prevState.company_core.filter(
-                              item => item !== "products"
-                            )
-                          : [...prevState.company_core, "products"]
-                      }));
-                    }}
+                    onChange={handleProductsChange}
+                    checked={checkedProducts}
                   />
                   <span>products</span>
                 </label>
@@ -208,18 +224,8 @@ const AgentForm = ({ setFormSelection }) => {
                     type="checkbox"
                     name="core"
                     id="services"
-                    onChange={() => {
-                      setFormData(prevState => ({
-                        ...prevState,
-                        company_core: prevState.company_core.includes(
-                          "services"
-                        )
-                          ? prevState.company_core.filter(
-                              item => item !== "services"
-                            )
-                          : [...prevState.company_core, "services"]
-                      }));
-                    }}
+                    onChange={handleServicesChange}
+                    checked={checkedServices}
                   />
                   <span>services</span>
                 </label>
@@ -258,7 +264,9 @@ const AgentForm = ({ setFormSelection }) => {
           {/* City */}
           <div className="col-lg-6 col-12 p-2">
             <div className="input-field">
-              <label htmlFor="city">Company Location (City)</label>
+              <label htmlFor="city">
+                Company Location <span>(City)</span>
+              </label>
               <select
                 name="city"
                 id="city"
@@ -278,30 +286,24 @@ const AgentForm = ({ setFormSelection }) => {
           </div>
           {/* longitude latitude */}
           <div className="col-12 p-2">
-            <div className="input-field">
-              <label htmlFor="companyLocation">
-                Company Location. (map) ( optional )
-              </label>
-              <div className="searchMapGroup">
-                <span>Search on Map</span>
-                <button />
-              </div>
-            </div>
+            <MapLocationField
+              htmlFor="companyLocationOnMap"
+              label="Company Location"
+              hint="(on map)"
+              setShowModal={setShowModal}
+            />
           </div>
+          {/* map modal */}
+          <MapModal
+            showModal={showModal}
+            setShowModal={setShowModal}
+            setFormData={setFormData}
+            formData={formData}
+          />
           <div className="col-12 p-2 mt-3">
             <div className="buttons">
-              <button className="back" onClick={handleBackButtonClick}>
-                <i className="fa-light fa-arrow-left" />
-              </button>
-              <button
-                style={{ opacity: loading ? 0.7 : 1 }}
-                disabled={loading}
-                type="submit"
-                className="log"
-              >
-                Confirm{" "}
-                <i className={loading ? "fa-solid fa-spinner fa-spin" : ""} />
-              </button>
+              <BackButton setFormSelection={setFormSelection} />
+              <SubmitButton loading={loading} name="Confirm" />
             </div>
           </div>
         </div>
@@ -310,4 +312,4 @@ const AgentForm = ({ setFormSelection }) => {
   );
 };
 
-export default AgentForm;
+export default ServiceProvider;
