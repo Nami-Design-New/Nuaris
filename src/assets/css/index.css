@@ -709,4 +709,24 @@ a {
 }
 .ReactFlagsSelect-module_filterBox__3m8EU input {
   margin: 0;
+}
+
+.mapSearchInput {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  height: 54px;
+  width: calc(100% - 16px);
+  border: 1px solid #f2f2f2;
+  background: #fff;
+  padding: 12px 16px;
+  border-radius: 8px;
+  outline: none;
+  color: #0d0d0d;
+}
+.mapSearchInput::-moz-placeholder {
+  color: #aaaaaa;
+}
+.mapSearchInput::placeholder {
+  color: #aaaaaa;
 }/*# sourceMappingURL=index.css.map */

@@ -1,62 +1,44 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import MapContainer from "./MapContainer";
+import MapWithMarker from "./MapWithMarker";
 
 const MapModal = ({ showModal, setShowModal, setFormData, formData }) => {
-  const [markerPosition, setMarkerPosition] = useState({
-    lat: formData.lat,
-    lng: formData.lng
-  });
+  const [mapLoaded, setMapLoaded] = useState(false);
 
-  const handleConfirm = () => {
-    setShowModal(false);
-  };
-
-  const handleMarkerDragEnd = coord => {
-    setMarkerPosition({ lat: coord.latLng.lat(), lng: coord.latLng.lng() });
-    setFormData({
-      ...formData,
-      lat: coord.latLng.lat().toFixed(6),
-      lng: coord.latLng.lng().toFixed(6)
-    });
-  };
-
-  // const handlePlaceSelected = place => {
-  //   const lat = place.geometry.location.lat();
-  //   const lng = place.geometry.location.lng();
-  //   setMarkerPosition({ lat, lng });
-  //   setFormData({ ...formData, lat, lng });
-  // };
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyD_N1k4WKCdiZqCIjjgO0aaKz1Y19JqYqw&libraries=places&callback=initMap`;
+    script.async = true;
+    script.defer = true;
+    script.onload = () => setMapLoaded(true);
+    document.head.appendChild(script);
+    return () => {
+      document.head.removeChild(script);
+    };
+  }, []);
 
   return (
     <Modal
       show={showModal}
-      onHide={handleConfirm}
+      onHide={() => setShowModal(false)}
       size="lg"
       aria-labelledby="contained-modal-title-vcenter"
       centered
     >
       <Modal.Header closeButton>
-        <h6>Company Location. (map)</h6>
+        <h6>Company Location (Map)</h6>
       </Modal.Header>
       <Modal.Body>
         <div className="row m-0">
           <div className="col-12 p-0 mb-2">
-            <div className="input-field">
-              <input placeholder="Search on Map" />
-            </div>
-          </div>
-          <div className="col-12 p-0 mb-2">
             <div className="map">
-              <MapContainer
-                onMarkerDragEnd={handleMarkerDragEnd}
-                markerPosition={markerPosition}
-              />
+              {mapLoaded &&
+                <MapWithMarker formData={formData} setFormData={setFormData} />}
             </div>
           </div>
           <div className="col-12 p-0">
-            <Button onClick={handleConfirm}>Confirm</Button>
+            <Button onClick={() => setShowModal(false)}>Confirm</Button>
           </div>
         </div>
       </Modal.Body>

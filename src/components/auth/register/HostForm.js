@@ -20,8 +20,8 @@ const HostForm = ({ setFormSelection }) => {
   const [formData, setFormData] = useState({
     role: "host",
     registration_type: "Company",
-    lat: "30.044420",
-    lng: "31.235712"
+    lat: 30.04442,
+    lng: 31.235712
   });
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [cityForCountry, setCityForCountry] = useState(null);

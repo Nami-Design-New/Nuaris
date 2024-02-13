@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@react-google-maps/api": "^2.19.3",
     "@reduxjs/toolkit": "^2.0.1",
     "axios": "^1.6.2",
     "bootstrap": "^5.3.2",
@@ -10,7 +11,6 @@
     "filepond": "^4.30.6",
     "filepond-plugin-image-exif-orientation": "^1.0.11",
     "filepond-plugin-image-preview": "^4.6.12",
-    "google-maps-react": "^2.0.6",
     "jquery-nice-select": "^1.1.0",
     "react": "^18.2.0",
     "react-bootstrap": "^2.10.1",
@@ -20,6 +20,7 @@
     "react-dom": "^18.2.0",
     "react-filepond": "^7.1.2",
     "react-flags-select": "^2.2.3",
+    "react-geocode": "^1.0.0-alpha.1",
     "react-google-places-autocomplete": "^4.0.1",
     "react-redux": "^9.0.4",
     "react-router-dom": "^6.21.0",
