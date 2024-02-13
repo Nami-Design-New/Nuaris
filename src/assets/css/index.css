@@ -807,9 +807,9 @@ a {
 
 .main_wrap {
   transition: 0.4s ease-in-out;
-  padding: 0 16px;
+  padding-right: 16px;
   width: calc(100% - 80px);
-  margin-left: 100px;
+  margin-left: 80px;
   height: 100%;
 }
 .main_wrap.expand {
@@ -988,6 +988,10 @@ footer .inner_footer {
 }
 footer .inner_footer h6 {
   margin: 0;
+  color: #0d0d0d;
+}
+footer .inner_footer h6 a {
+  color: #006980;
 }
 footer .links {
   display: flex;

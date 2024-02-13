@@ -5,7 +5,7 @@ import InputField from "../../ui/form-elements/InputField";
 import PasswordField from "../../ui/form-elements/PasswordField";
 import LogoUploadField from "./../../ui/form-elements/LogoUploadField";
 import MapModal from "./../../ui/map-modal/MapModal";
-import BackButton from './../../ui/form-elements/BackButton';
+import BackButton from "./../../ui/form-elements/BackButton";
 import SubmitButton from "./../../ui/form-elements/SubmitButton";
 import ReactFlagsSelect from "react-flags-select";
 import MapLocationField from "./../../ui/form-elements/MapLocationField";
@@ -16,12 +16,13 @@ import { State } from "country-state-city";
 import { useNavigate } from "react-router";
 
 const HostForm = ({ setFormSelection }) => {
+  const [serchedPlace, setSerchedPlace] = useState("Search on Map");
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     role: "host",
     registration_type: "Company",
     lat: 30.04442,
-    lng: 31.235712
+    lng: 31.235712,
   });
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [cityForCountry, setCityForCountry] = useState(null);
@@ -31,22 +32,22 @@ const HostForm = ({ setFormSelection }) => {
   function handleSelectCountry(countryCode) {
     setSelectedCountry(countryCode);
     const statesObj = State.getStatesOfCountry(countryCode);
-    const statesName = statesObj.map(state => state.name);
+    const statesName = statesObj.map((state) => state.name);
     setCityForCountry(statesName);
     setFormData({ ...formData, country: countryCode });
   }
   /* form Submit Register  */
   const headersList = {
     Accept: "*/*",
-    "Content-Type": "multipart/form-data"
+    "Content-Type": "multipart/form-data",
   };
   const requestOptions = {
     method: "POST",
     url: "/users/",
     headers: headersList,
-    data: formData
+    data: formData,
   };
-  const handleSubmit = async e => {
+  const handleSubmit = async (e) => {
     setLoading(true);
     e.preventDefault();
     try {
@@ -56,8 +57,8 @@ const HostForm = ({ setFormSelection }) => {
     } catch (error) {
       if (error.response && error.response.data) {
         const errors = error.response.data;
-        Object.keys(errors).forEach(field => {
-          errors[field].forEach(message => {
+        Object.keys(errors).forEach((field) => {
+          errors[field].forEach((message) => {
             toast.error(`${field}: ${message}`);
           });
         });
@@ -120,7 +121,7 @@ const HostForm = ({ setFormSelection }) => {
                   <ReactFlagsSelect
                     searchable={false}
                     selectedSize={false}
-                    onSelect={code => setSelectedCountry(code)}
+                    onSelect={(code) => setSelectedCountry(code)}
                     selected={selectedCountry}
                     defaultCountry="AE"
                   />
@@ -176,7 +177,7 @@ const HostForm = ({ setFormSelection }) => {
                 "Sole Proprietorship",
                 "Partnership",
                 "Limited Liability Company",
-                "Corporation"
+                "Corporation",
               ]}
               formData={formData}
               setFormData={setFormData}
@@ -204,7 +205,7 @@ const HostForm = ({ setFormSelection }) => {
               <ReactFlagsSelect
                 searchable={true}
                 selectedSize={false}
-                onSelect={code => {
+                onSelect={(code) => {
                   handleSelectCountry(code);
                 }}
                 selected={selectedCountry}
@@ -221,17 +222,19 @@ const HostForm = ({ setFormSelection }) => {
               <select
                 name="city"
                 id="city"
-                onChange={e => {
+                onChange={(e) => {
                   setFormData({ ...formData, city: e.target.value });
                 }}
               >
-                {cityForCountry
-                  ? cityForCountry.map((city, index) =>
-                      <option key={index} value={city}>
-                        {city}
-                      </option>
-                    )
-                  : <option value={""}>Please select a country</option>}
+                {cityForCountry ? (
+                  cityForCountry.map((city, index) => (
+                    <option key={index} value={city}>
+                      {city}
+                    </option>
+                  ))
+                ) : (
+                  <option value={""}>Please select a country</option>
+                )}
               </select>
             </div>
           </div>
@@ -241,6 +244,7 @@ const HostForm = ({ setFormSelection }) => {
               htmlFor="companyLocationOnMap"
               label="Company Location"
               hint="(on map)"
+              name={serchedPlace}
               setShowModal={setShowModal}
             />
           </div>
@@ -250,6 +254,7 @@ const HostForm = ({ setFormSelection }) => {
             setShowModal={setShowModal}
             setFormData={setFormData}
             formData={formData}
+            setSerchedPlace={setSerchedPlace}
           />
           <div className="col-12 p-2 mt-3">
             <div className="buttons">

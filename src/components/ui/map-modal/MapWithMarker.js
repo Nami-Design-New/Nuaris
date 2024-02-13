@@ -1,10 +1,10 @@
 import React, { useState, useRef, useEffect } from "react";
 import { GoogleMap, Marker, StandaloneSearchBox } from "@react-google-maps/api";
 
-const MapWithMarker = ({ formData, setFormData }) => {
+const MapWithMarker = ({ formData, setFormData, setSerchedPlace }) => {
   const [markerPosition, setMarkerPosition] = useState({
     lat: Number(formData.lat),
-    lng: Number(formData.lng)
+    lng: Number(formData.lng),
   });
   const [searchInput, setSearchInput] = useState("");
   const searchBox = useRef(null);
@@ -13,22 +13,23 @@ const MapWithMarker = ({ formData, setFormData }) => {
     reverseGeocodeMarkerPosition();
   }, []);
 
-  const handleMarkerDragEnd = coord => {
+  const handleMarkerDragEnd = (coord) => {
     setMarkerPosition(coord);
     setFormData({
       ...formData,
       lat: coord.lat.toFixed(6),
-      lng: coord.lng.toFixed(6)
+      lng: coord.lng.toFixed(6),
     });
-    reverseGeocodeMarkerPosition();
+    reverseGeocodeMarkerPosition(coord); // Pass the dragged position
   };
 
-  const reverseGeocodeMarkerPosition = () => {
+  const reverseGeocodeMarkerPosition = (position) => {
     const geocoder = new window.google.maps.Geocoder();
-    geocoder.geocode({ location: markerPosition }, (results, status) => {
+    geocoder.geocode({ location: position }, (results, status) => {
       if (status === "OK") {
         if (results[0]) {
           setSearchInput(results[0].formatted_address);
+          setSerchedPlace(results[0].formatted_address); // Set searched place
         } else {
           console.error("No results found");
         }
@@ -44,19 +45,20 @@ const MapWithMarker = ({ formData, setFormData }) => {
       const selectedPlace = places[0];
       const position = {
         lat: selectedPlace.geometry.location.lat(),
-        lng: selectedPlace.geometry.location.lng()
+        lng: selectedPlace.geometry.location.lng(),
       };
       setMarkerPosition(position);
       setFormData({
         ...formData,
         lat: position.lat.toFixed(6),
-        lng: position.lng.toFixed(6)
+        lng: position.lng.toFixed(6),
       });
       setSearchInput(selectedPlace.name);
+      setSerchedPlace(selectedPlace.name);
     }
   };
 
-  const handleInputChange = event => {
+  const handleInputChange = (event) => {
     setSearchInput(event.target.value);
   };
 
@@ -69,15 +71,15 @@ const MapWithMarker = ({ formData, setFormData }) => {
       <Marker
         position={markerPosition}
         draggable={true}
-        onDragEnd={e => {
+        onDragEnd={(e) => {
           handleMarkerDragEnd({
             lat: e.latLng.lat(),
-            lng: e.latLng.lng()
+            lng: e.latLng.lng(),
           });
         }}
       />
       <StandaloneSearchBox
-        onLoad={ref => (searchBox.current = ref)}
+        onLoad={(ref) => (searchBox.current = ref)}
         onPlacesChanged={handlePlaceSelect}
       >
         <input

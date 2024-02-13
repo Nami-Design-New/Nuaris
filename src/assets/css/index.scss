@@ -592,7 +592,7 @@ $transation: 0.4s ease-in-out;
   border-bottom: 0;
   .btn-close {
     box-shadow: none !important;
-    background-image: url('../images/close.svg');
+    background-image: url("../images/close.svg");
   }
   h6 {
     color: $dark;
@@ -688,7 +688,7 @@ $transation: 0.4s ease-in-out;
 }
 .side_bar {
   width: 80px;
-  transition: width .4s ease-in-out;
+  transition: width 0.4s ease-in-out;
   background: $white;
   position: fixed;
   top: 0;
@@ -761,9 +761,9 @@ $transation: 0.4s ease-in-out;
 }
 .main_wrap {
   transition: $transation;
-  padding: 0 16px;
+  padding-right: 16px;
   width: calc(100% - 80px);
-  margin-left: 100px;
+  margin-left: 80px;
   &.expand {
     width: calc(100% - 280px);
     margin-left: 280px;
@@ -930,6 +930,10 @@ footer {
     @include space-between();
     h6 {
       margin: 0;
+      color: $dark;
+      a {
+        color: $main;
+      }
     }
   }
   .links {
