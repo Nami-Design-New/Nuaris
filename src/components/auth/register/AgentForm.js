@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 // ui
-import SelectField from "./../../ui/SelectField";
-import InputField from "../../ui/InputField";
-import PasswordField from "../../ui/PasswordField";
-import LogoUploadField from "./../../ui/LogoUploadField";
-import BackButton from "./../../ui/BackButton";
-import SubmitButton from "../../ui/SubmitButton";
+import SelectField from "./../../ui/form-elements/SelectField";
+import InputField from "../../ui/form-elements/InputField";
+import PasswordField from "../../ui/form-elements/PasswordField";
+import LogoUploadField from "./../../ui/form-elements/LogoUploadField";
+import BackButton from "./../../ui/form-elements/BackButton";
+import SubmitButton from "./../../ui/form-elements/SubmitButton";
 import ReactFlagsSelect from "react-flags-select";
 
 import axios from "../../../util/axios";

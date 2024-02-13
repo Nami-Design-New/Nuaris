@@ -61,6 +61,7 @@ a {
 $main: #006980;
 $main25: #bfd5d8;
 $main10: #ebf3f5;
+$dashboardBg: #f7fafb;
 $dark: #0d0d0d;
 $border: #dddddd;
 $inputBG: #f8f8f8;
@@ -683,5 +684,159 @@ $transation: 0.4s ease-in-out;
   color: $dark;
   &::placeholder {
     color: $inputHint;
+  }
+}
+.side_bar {
+  width: 80px;
+  transition: width .4s ease-in-out;
+
+  background: $white;
+  position: fixed;
+  top: 0;
+  left: 0;
+  gap: 24px;
+  height: 100%;
+  display: flex;
+  padding: 24px 16px;
+  flex-direction: column;
+  .logo_wrapper {
+    width: 100%;
+    .logo {
+      display: none ;
+      width: 100%;
+      object-fit: contain ;
+          height: 60px;
+          transition: none;
+
+    }
+    .fav {
+      display: block;
+      width: 100%;
+      height: 60px;
+          transition: none;
+
+
+    }
+  }
+  &.expand {
+    width: 280px;
+    .logo_wrapper .logo {
+      display: block;
+    }
+    .logo_wrapper .fav {
+      display: none;
+    }
+  }
+  .navigation_menu {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    overflow-y: scroll;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    .nav_item {
+      width: 100%;
+      a {
+        border-radius: 8px;
+        padding: 10px 16px;
+        display: flex;
+        align-items: center;
+        width: 100%;
+        gap: 12px;
+        color: $text;
+        transition: $transation;
+        img {
+          max-width: 22px;
+          filter: grayscale(1);
+        }
+        &.active,
+        &:hover {
+          background: $main10;
+          color: $main;
+          img {
+            filter: grayscale(0);
+          }
+        }
+      }
+    }
+  }
+}
+.main_wrap {
+  background: $dashboardBg;
+  transition: $transation;
+  width: calc(100% - 80px);
+  margin-left: 100px;
+  &.expand {
+    width: calc(100% - 280px);
+    margin-left: 280px;
+  }
+  height: 100%;
+  nav {
+    height: 80px;
+    width: 100%;
+    background: $white;
+    display: flex;
+    .links {
+      flex: 1;
+      ul {
+        display: flex;
+        height: 100%;
+        li {
+          height: 100%;
+          @include centerFlex();
+          padding: 0 12px;
+          height: 100%;
+          a {
+            color: $dark;
+            font-weight: 500;
+            transition: $transation;
+            &.active {
+              color: $main;
+            }
+            &:hover {
+              color: $main;
+            }
+          }
+          .menuToggler {
+            width: 26px;
+            height: 16px;
+            @include clearInput();
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            span {
+              transition: $transation;
+              width: 100%;
+              height: 2px;
+              display: block;
+              background-color: $main;
+              background: $main;
+              &:nth-child(1) {
+                width: 60%;
+              }
+              &:nth-child(3) {
+                width: 60%;
+              }
+            }
+            &.expand {
+              span {
+                background: $dark;
+                &:nth-child(1) {
+                  width: 100%;
+                }
+                &:nth-child(3) {
+                  width: 100%;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    .settings {
+      flex: 1;
+    }
   }
 }

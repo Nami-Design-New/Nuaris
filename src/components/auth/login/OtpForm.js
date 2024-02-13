@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import Otpcontainer from "../../../shared/Otpcontainer";
-import SubmitButton from "./../../ui/SubmitButton";
+import SubmitButton from "./../../ui/form-elements/SubmitButton";
 
 const OtpForm = ({
   formData,

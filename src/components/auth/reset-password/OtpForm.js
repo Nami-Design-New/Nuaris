@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import axios from "../../../util/axios";
 import Otpcontainer from "./../../../shared/Otpcontainer";
 import { toast } from "react-toastify";
-import SubmitButton from "./../../ui/SubmitButton";
+import SubmitButton from "./../../ui/form-elements/SubmitButton";
 
 const OtpForm = ({
   formData,

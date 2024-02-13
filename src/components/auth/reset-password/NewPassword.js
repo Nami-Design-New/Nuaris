@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "../../../util/axios";
 import { useNavigate } from "react-router";
-import SubmitButton from "./../../ui/SubmitButton";
+import SubmitButton from "./../../ui/form-elements/SubmitButton";
 
 const NewPassword = ({ formData, setFormData }) => {
   const [loading, setLoading] = useState(false);

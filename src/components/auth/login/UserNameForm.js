@@ -3,7 +3,7 @@ import axios from "../../../util/axios";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useCookies } from "react-cookie";
-import SubmitButton from "./../../ui/SubmitButton";
+import SubmitButton from "./../../ui/form-elements/SubmitButton";
 
 const UserNameForm = ({ setShowLoginForm, userTypeSelected }) => {
   const [loading, setLoading] = useState(false);
@@ -37,7 +37,7 @@ const UserNameForm = ({ setShowLoginForm, userTypeSelected }) => {
         secure: true
       });
       toast.success(`Welcome Back @${formData.username}`);
-      navigate("/");
+      navigate("/host-form");
     } catch (error) {
       toast.error("Incorrect username or password");
       form.current.reset();

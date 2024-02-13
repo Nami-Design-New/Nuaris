@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 // ui
-import InputField from "../../ui/InputField";
-import PasswordField from "../../ui/PasswordField";
-import LogoUploadField from "./../../ui/LogoUploadField";
-import MapModal from "./../../ui/MapModal";
-import BackButton from "./../../ui/BackButton";
-import SubmitButton from "../../ui/SubmitButton";
+import InputField from "../../ui/form-elements/InputField";
+import PasswordField from "../../ui/form-elements/PasswordField";
+import LogoUploadField from "./../../ui/form-elements/LogoUploadField";
+import MapModal from "./../../ui/map-modal/MapModal";
+import BackButton from "./../../ui/form-elements/BackButton";
+import SubmitButton from "./../../ui/form-elements/SubmitButton";
 import ReactFlagsSelect from "react-flags-select";
-import MapLocationField from "../../ui/MapLocationField";
+import MapLocationField from "./../../ui/form-elements/MapLocationField";
 
 import axios from "../../../util/axios";
 import { toast } from "react-toastify";
