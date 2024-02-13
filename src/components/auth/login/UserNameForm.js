@@ -37,7 +37,7 @@ const UserNameForm = ({ setShowLoginForm, userTypeSelected }) => {
         secure: true
       });
       toast.success(`Welcome Back @${formData.username}`);
-      navigate("/host-form");
+      navigate("/host-dashboard");
     } catch (error) {
       toast.error("Incorrect username or password");
       form.current.reset();

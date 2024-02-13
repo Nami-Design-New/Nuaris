@@ -689,7 +689,6 @@ $transation: 0.4s ease-in-out;
 .side_bar {
   width: 80px;
   transition: width .4s ease-in-out;
-
   background: $white;
   position: fixed;
   top: 0;
@@ -697,25 +696,21 @@ $transation: 0.4s ease-in-out;
   gap: 24px;
   height: 100%;
   display: flex;
-  padding: 24px 16px;
+  padding: 24px 16px 0 16px;
   flex-direction: column;
   .logo_wrapper {
     width: 100%;
     .logo {
-      display: none ;
-      width: 100%;
-      object-fit: contain ;
-          height: 60px;
-          transition: none;
-
+      display: none;
+      object-fit: contain;
+      height: 60px;
+      transition: none;
     }
     .fav {
       display: block;
       width: 100%;
       height: 60px;
-          transition: none;
-
-
+      transition: none;
     }
   }
   &.expand {
@@ -740,12 +735,13 @@ $transation: 0.4s ease-in-out;
       width: 100%;
       a {
         border-radius: 8px;
-        padding: 10px 16px;
+        padding: 10px 13px;
         display: flex;
         align-items: center;
         width: 100%;
-        gap: 12px;
+        gap: 14px;
         color: $text;
+        white-space: nowrap;
         transition: $transation;
         img {
           max-width: 22px;
@@ -764,8 +760,8 @@ $transation: 0.4s ease-in-out;
   }
 }
 .main_wrap {
-  background: $dashboardBg;
   transition: $transation;
+  padding: 0 16px;
   width: calc(100% - 80px);
   margin-left: 100px;
   &.expand {
@@ -789,6 +785,7 @@ $transation: 0.4s ease-in-out;
           padding: 0 12px;
           height: 100%;
           a {
+            line-height: 48px;
             color: $dark;
             font-weight: 500;
             transition: $transation;
@@ -837,6 +834,113 @@ $transation: 0.4s ease-in-out;
     }
     .settings {
       flex: 1;
+      display: flex;
+      justify-content: end;
+      ul {
+        height: 100%;
+        display: flex;
+        gap: 12px;
+        li {
+          position: relative;
+          @include centerFlex();
+          a {
+            background: $inputStroke;
+            @include centerFlex();
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            img {
+              height: 20px;
+            }
+          }
+          &.notification {
+            a {
+              background: $main10;
+            }
+          }
+          .number {
+            top: 18px;
+            right: 5px;
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: #006980;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            border-radius: 50%;
+          }
+          .dropdownButton {
+            height: 48px;
+            border: 1px solid $inputStroke;
+            background: $white;
+            border-radius: 24px;
+            display: flex;
+            cursor: pointer;
+            .avatar {
+              width: 48px;
+              height: 48px;
+              border-radius: 50%;
+              border: 1px solid $inputStroke;
+              overflow: hidden;
+              border-left: 0;
+              img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+              }
+            }
+            .name {
+              @include centerFlex();
+              padding: 0 18px 0 12px;
+              h6 {
+                color: $dark;
+                margin: 0;
+                display: flex;
+                gap: 4px;
+                i {
+                  transform: translateY(2px);
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  .main_wrapper {
+    min-height: calc(100vh - 180px);
+    background: $dashboardBg;
+    border-radius: 24px;
+  }
+}
+footer {
+  height: 100px;
+  background: $white;
+  display: flex;
+  align-items: center;
+  .inner_footer {
+    height: 52px;
+    background: $inputBG;
+    border-radius: 40px;
+    padding: 16px 24px;
+    width: 100%;
+    @include space-between();
+    h6 {
+      margin: 0;
+    }
+  }
+  .links {
+    display: flex;
+    gap: 12px;
+    a {
+      color: $dark;
+      transition: $transation;
+      &:hover {
+        color: $main;
+      }
     }
   }
 }

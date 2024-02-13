@@ -1,5 +1,8 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import settingsIcon from "../../../assets/images/settings.svg";
+import notificationIcon from "../../../assets/images/notification.svg";
+import avatar from "../../../assets/images/avatar.png";
 
 const NavBar = ({ setSideBarOpen, sideBarOpen }) => {
   return (
@@ -32,7 +35,33 @@ const NavBar = ({ setSideBarOpen, sideBarOpen }) => {
           </li>
         </ul>
       </div>
-      <div className="settings" />
+      <div className="settings">
+        <ul>
+          <li>
+            <NavLink to="/host-dashboard/settings">
+              <img src={settingsIcon} alt="setting-icon" />
+            </NavLink>
+          </li>
+          <li className="notification">
+            <NavLink to="/host-dashboard/settings">
+              <img src={notificationIcon} alt="notification-icon" />
+              <span className="number">3</span>
+            </NavLink>
+          </li>
+          <li className="profile">
+            <div className="dropdownButton">
+              <div className="avatar">
+                <img src={avatar} alt="avatar" />
+              </div>
+              <div className="name">
+                <h6>
+                  Amwaj Al Bahar <i className="fa-regular fa-angle-right" />
+                </h6>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
     </nav>
   );
 };
