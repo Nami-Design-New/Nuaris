@@ -454,9 +454,21 @@ a {
   border-right: 0 !important;
   border-radius: 4px 0 0 4px !important;
 }
-.form-ui .input-field .phone-group {
+.form-ui .input-field .phone-group .PhoneInput {
   display: flex;
-  gap: 8px;
+  gap: 12px;
+}
+.form-ui .input-field .phone-group .PhoneInput .PhoneInputCountryIcon {
+  position: relative;
+}
+.form-ui .input-field .phone-group .PhoneInput .PhoneInputCountryIconImg {
+  width: 18px;
+  position: absolute;
+  top: -33px;
+  left: 8px;
+}
+.form-ui .input-field .phone-group .PhoneInput select {
+  padding: 12px 6px 12px 30px;
 }
 .form-ui .input-field .phone-group .phone-code {
   height: 54px;

@@ -23,6 +23,7 @@
     "react-flags-select": "^2.2.3",
     "react-geocode": "^1.0.0-alpha.1",
     "react-google-places-autocomplete": "^4.0.1",
+    "react-phone-number-input": "^3.3.9",
     "react-redux": "^9.0.4",
     "react-router-dom": "^6.21.0",
     "react-scripts": "5.0.1",

@@ -440,8 +440,22 @@ $transation: 0.4s ease-in-out;
       }
     }
     .phone-group {
-      display: flex;
-      gap: 8px;
+      .PhoneInput {
+        display: flex;
+        gap: 12px;
+        .PhoneInputCountryIcon {
+          position: relative;
+        }
+        .PhoneInputCountryIconImg {
+          width: 18px;
+          position: absolute;
+          top: -33px;
+          left: 8px;
+        }
+        select {
+          padding: 12px 6px 12px 30px;
+        }
+      }
       .phone-code {
         height: 54px;
         border-radius: 4px;
