@@ -53,7 +53,7 @@ const HostForm = ({ setFormSelection }) => {
     try {
       await axios.request(requestOptions);
       toast.success(`Welcome @${formData.username}`);
-      navigate("/host-dashboard");
+      navigate("/login");
     } catch (error) {
       if (error.response && error.response.data) {
         const errors = error.response.data;
@@ -69,7 +69,7 @@ const HostForm = ({ setFormSelection }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="regiesteration-form">
+    <form onSubmit={handleSubmit} className="form-ui">
       <div className="container p-0">
         <div className="row m-0">
           {/* first and last name */}

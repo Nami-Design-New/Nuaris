@@ -1,4 +1,3 @@
-// InviteUser.js
 import React from "react";
 import PageHeader from "./PageHeader";
 import { Link } from "react-router-dom";
@@ -20,8 +19,8 @@ const InviteUser = () => {
               Create New Group Permissions
             </Link>
             <Link
-              to="/host-dashboard/create-employee"
-              className="boton "
+              to="/host-dashboard/invite-user/create-user"
+              className="boton"
             >
               Create a User (employee)
             </Link>

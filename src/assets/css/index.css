@@ -427,18 +427,18 @@ a {
   color: #006980;
 }
 
-.regiesteration-form {
+.form-ui {
   width: 100%;
 }
-.regiesteration-form .input-field {
+.form-ui .input-field {
   width: 100%;
   display: flex;
   flex-direction: column;
 }
-.regiesteration-form .input-field .pass-group {
+.form-ui .input-field .pass-group {
   display: flex;
 }
-.regiesteration-form .input-field .pass-group button {
+.form-ui .input-field .pass-group button {
   border: none;
   background: none;
   outline: none;
@@ -450,23 +450,23 @@ a {
   border-radius: 0 4px 4px 0 !important;
   color: #aaaaaa;
 }
-.regiesteration-form .input-field .pass-group input {
+.form-ui .input-field .pass-group input {
   border-right: 0 !important;
   border-radius: 4px 0 0 4px !important;
 }
-.regiesteration-form .input-field .phone-group {
+.form-ui .input-field .phone-group {
   display: flex;
   gap: 8px;
 }
-.regiesteration-form .input-field .phone-group .phone-code {
+.form-ui .input-field .phone-group .phone-code {
   height: 54px;
   border-radius: 4px;
 }
-.regiesteration-form .input-field .searchMapGroup {
+.form-ui .input-field .searchMapGroup {
   gap: 8px;
   display: flex;
 }
-.regiesteration-form .input-field .searchMapGroup button {
+.form-ui .input-field .searchMapGroup button {
   width: 60px;
   height: 54px;
   border-radius: 8px;
@@ -475,7 +475,7 @@ a {
   outline: none;
   background-image: url(../images/mapIcon.svg);
 }
-.regiesteration-form .input-field .searchMapGroup span {
+.form-ui .input-field .searchMapGroup span {
   width: 100%;
   height: 54px;
   outline: none;
@@ -484,8 +484,8 @@ a {
   background: #f8f8f8;
   padding: 8px 16px;
 }
-.regiesteration-form .input-field input,
-.regiesteration-form .input-field select {
+.form-ui .input-field input,
+.form-ui .input-field select {
   width: 100%;
   height: 54px;
   outline: none;
@@ -494,36 +494,36 @@ a {
   background: #f8f8f8;
   padding: 12px 16px;
 }
-.regiesteration-form .input-field label {
+.form-ui .input-field label {
   color: #0d0d0d;
   font-weight: 500;
 }
-.regiesteration-form .input-field label span {
+.form-ui .input-field label span {
   font-size: 12px;
   color: #777777;
 }
-.regiesteration-form .input-field select {
+.form-ui .input-field select {
   color: #0d0d0d;
   cursor: pointer;
 }
-.regiesteration-form .check-field {
+.form-ui .check-field {
   width: 100%;
   display: flex;
   flex-direction: column;
 }
-.regiesteration-form .check-field label {
+.form-ui .check-field label {
   color: #0d0d0d;
   font-weight: 500;
 }
-.regiesteration-form .check-field label span {
+.form-ui .check-field label span {
   font-size: 14px;
   color: #777777;
 }
-.regiesteration-form .check-field .inputs {
+.form-ui .check-field .inputs {
   display: flex;
   gap: 8px;
 }
-.regiesteration-form .check-field .inputs label {
+.form-ui .check-field .inputs label {
   flex: 1;
   height: 54px;
   border-radius: 4px;
@@ -531,7 +531,7 @@ a {
   cursor: pointer;
   overflow: hidden;
 }
-.regiesteration-form .check-field .inputs label input {
+.form-ui .check-field .inputs label input {
   background: #ebf3f5;
   cursor: pointer;
   -webkit-appearance: none;
@@ -540,13 +540,13 @@ a {
   width: 100%;
   height: 100%;
 }
-.regiesteration-form .check-field .inputs label input:checked {
+.form-ui .check-field .inputs label input:checked {
   background-color: #006980;
 }
-.regiesteration-form .check-field .inputs label input:checked + span {
+.form-ui .check-field .inputs label input:checked + span {
   color: #fff;
 }
-.regiesteration-form .check-field .inputs label span {
+.form-ui .check-field .inputs label span {
   color: #006980;
   position: absolute;
   top: 50%;
@@ -554,10 +554,10 @@ a {
   transform: translate(-50%, -50%);
   font-size: 16px !important;
 }
-.regiesteration-form input[type=number]::-webkit-outer-spin-button {
+.form-ui input[type=number]::-webkit-outer-spin-button {
   display: none;
 }
-.regiesteration-form input[type=number]::-webkit-inner-spin-button {
+.form-ui input[type=number]::-webkit-inner-spin-button {
   display: none;
 }
 
@@ -733,7 +733,6 @@ a {
 
 .side_bar {
   width: 80px;
-  transition: width 0.4s ease-in-out;
   background: #fff;
   position: fixed;
   top: 0;
@@ -743,6 +742,7 @@ a {
   display: flex;
   padding: 24px 16px 0 16px;
   flex-direction: column;
+  transition: 0.4s ease-in-out;
 }
 .side_bar .logo_wrapper {
   width: 100%;
@@ -803,6 +803,15 @@ a {
 }
 .side_bar .navigation_menu .nav_item a.active img, .side_bar .navigation_menu .nav_item a:hover img {
   filter: grayscale(0);
+}
+@media (max-width: 768px) {
+  .side_bar {
+    width: 280px;
+    left: -280px;
+  }
+  .side_bar.expand {
+    left: 0;
+  }
 }
 
 .main_wrap {
@@ -881,6 +890,14 @@ a {
 }
 .main_wrap nav .links ul li .menuToggler.expand span:nth-child(3) {
   width: 100%;
+}
+@media (max-width: 768px) {
+  .main_wrap nav .links ul li {
+    display: none;
+  }
+  .main_wrap nav .links ul li:first-child {
+    display: flex;
+  }
 }
 .main_wrap nav .settings {
   flex: 1;
@@ -973,6 +990,7 @@ a {
   position: absolute;
   box-shadow: 0px 2px 15px -3px rgba(0, 0, 0, 0.0705882353);
   top: 100%;
+  z-index: 9;
   width: 320px;
   border-radius: 24px;
   display: flex;
@@ -994,6 +1012,7 @@ a {
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  position: relative;
 }
 .main_wrap nav .settings .profile_dropdown .account_owner .avatar {
   overflow: hidden;
@@ -1001,6 +1020,23 @@ a {
   height: 80px;
   border-radius: 50%;
   border: 1px solid #f2f2f2;
+}
+.main_wrap nav .settings .profile_dropdown .account_owner .avatar .edit {
+  width: 25px;
+  height: 25px;
+  border-radius: 12px;
+  border: 1px solid #f2f2f2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  right: 102px;
+  bottom: 56px;
+}
+.main_wrap nav .settings .profile_dropdown .account_owner .avatar .edit img {
+  height: 12px;
+  -o-object-fit: contain;
+     object-fit: contain;
 }
 .main_wrap nav .settings .profile_dropdown .account_owner .avatar img {
   width: 100%;
@@ -1109,6 +1145,9 @@ a {
 .main_wrap .main_wrapper .page_header h5 a {
   color: #006980;
 }
+.main_wrap .main_wrapper .page_header h5 small {
+  font-size: 12px;
+}
 .main_wrap .main_wrapper .inner_card {
   background: #fff;
   padding: 24px;
@@ -1124,6 +1163,16 @@ a {
   color: #0d0d0d;
   font-size: 20px;
   margin: 0;
+}
+@media (max-width: 768px) {
+  .main_wrap {
+    width: 100%;
+    margin-left: 0;
+  }
+  .main_wrap.expand {
+    width: 100%;
+    margin-left: 0;
+  }
 }
 
 footer {
