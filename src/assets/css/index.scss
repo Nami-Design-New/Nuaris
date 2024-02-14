@@ -68,6 +68,7 @@ $inputBG: #f8f8f8;
 $inputHint: #aaaaaa;
 $text: #777777;
 $white: #fff;
+$JumbotronHead: #4f4f4f;
 $inputStroke: #f2f2f2;
 $transation: 0.4s ease-in-out;
 
@@ -834,6 +835,7 @@ $transation: 0.4s ease-in-out;
     }
     .settings {
       flex: 1;
+      position: relative;
       display: flex;
       justify-content: end;
       ul {
@@ -902,6 +904,127 @@ $transation: 0.4s ease-in-out;
                 gap: 4px;
                 i {
                   transform: translateY(2px);
+                  transition: $transation;
+                }
+                &.animate {
+                  i {
+                    transform: translateY(2px) rotate(90deg);
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      .profile_dropdown {
+        position: absolute;
+        box-shadow: 0px 2px 15px -3px #00000012;
+        top: 100%;
+        width: 320px;
+        border-radius: 24px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        background: $white;
+        height: 0;
+        overflow: hidden;
+        padding: 0;
+        &.open {
+          padding: 16px;
+          height: fit-content;
+        }
+        .account_owner {
+          gap: 12px;
+          @include centerFlex();
+          flex-direction: column;
+          .avatar {
+            overflow: hidden;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 1px solid $inputStroke;
+            img {
+              width: 100%;
+              height: 100%;
+              object-fit: cover;
+            }
+          }
+        }
+        .account_welcoming {
+          width: 100%;
+          h6 {
+            color: $dark;
+            margin: 0;
+            text-align: center;
+          }
+          span {
+            color: $text;
+            width: 100%;
+            display: block;
+            text-align: center;
+            line-height: 24px;
+          }
+        }
+        .manage_invite {
+          display: flex;
+          flex-direction: column;
+          .link {
+            display: flex;
+            gap: 8px;
+            a,
+            h6 {
+              font-weight: 600;
+              font-size: 15px;
+              color: $dark;
+              cursor: pointer;
+            }
+          }
+        }
+        .select_frame {
+          background: $main10;
+          padding: 8px;
+          border-radius: 16px;
+          display: flex;
+          gap: 8px;
+          flex-direction: column;
+          .accounts {
+            padding: 12px;
+            border-radius: 12px;
+            padding: 12px;
+            background: $white;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            .acc {
+              display: flex;
+              gap: 12px;
+              .avatar {
+                width: 52px;
+                height: 52px;
+                border-radius: 50%;
+                border-radius: 50%;
+                border: 1px solid $inputStroke;
+                overflow: hidden;
+                img {
+                  width: 100%;
+                  height: 100%;
+                  object-fit: cover;
+                  object-position: center;
+                }
+              }
+              .type_mail {
+                display: flex;
+                justify-content: center;
+                flex-direction: column;
+                h6 {
+                  color: $dark;
+                  font-size: 16px;
+                  margin: 0;
+                  font-weight: 600;
+                }
+                span {
+                  color: $text;
+                  line-height: 24px;
                 }
               }
             }
@@ -914,6 +1037,38 @@ $transation: 0.4s ease-in-out;
     min-height: calc(100vh - 180px);
     background: $dashboardBg;
     border-radius: 24px;
+    padding: 32px;
+    .page_header {
+      h1 {
+        color: $JumbotronHead;
+        font-size: 32px;
+        font-weight: 500;
+        margin: 0;
+      }
+      h5 {
+        font-size: 16px;
+        color: $JumbotronHead;
+        a {
+          color: $main;
+        }
+      }
+    }
+    .inner_card {
+      background: $white;
+      padding: 24px;
+      background: $white;
+      border-radius: 24px;
+      .card_header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        h3 {
+          color: $dark;
+          font-size: 20px;
+          margin: 0;
+        }
+      }
+    }
   }
 }
 footer {
@@ -946,5 +1101,19 @@ footer {
         color: $main;
       }
     }
+  }
+}
+.boton {
+  @include clearInput();
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  color: $white;
+  background: $main;
+  border-radius: 12px;
+  &.transparent {
+    background: $white;
+    border: 1px solid $main;
+    color: $main;
   }
 }

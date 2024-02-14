@@ -9,6 +9,7 @@ const UserNameForm = ({ setShowLoginForm, userTypeSelected }) => {
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({});
   const [cookies, setCookie] = useCookies(["token"]);
+  const [idCookie, setIdCookie] = useCookies(["id"]);
   const navigate = useNavigate();
   const form = useRef(null);
 
@@ -32,8 +33,15 @@ const UserNameForm = ({ setShowLoginForm, userTypeSelected }) => {
     e.preventDefault();
     try {
       const res = await axios.request(requestOptions);
+      localStorage.setItem("user", JSON.stringify(res.data));
       setCookie("token", res.data.access_token, {
         path: "/",
+        expires: new Date(new Date().getTime() + 6 * 60 * 60 * 1000),
+        secure: true
+      });
+      setCookie("id", res.data.user.id, {
+        path: "/",
+        expires: new Date(new Date().getTime() + 6 * 60 * 60 * 1000),
         secure: true
       });
       toast.success(`Welcome Back @${formData.username}`);

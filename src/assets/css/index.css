@@ -884,6 +884,7 @@ a {
 }
 .main_wrap nav .settings {
   flex: 1;
+  position: relative;
   display: flex;
   justify-content: end;
 }
@@ -963,11 +964,166 @@ a {
 }
 .main_wrap nav .settings ul li .dropdownButton .name h6 i {
   transform: translateY(2px);
+  transition: 0.4s ease-in-out;
+}
+.main_wrap nav .settings ul li .dropdownButton .name h6.animate i {
+  transform: translateY(2px) rotate(90deg);
+}
+.main_wrap nav .settings .profile_dropdown {
+  position: absolute;
+  box-shadow: 0px 2px 15px -3px rgba(0, 0, 0, 0.0705882353);
+  top: 100%;
+  width: 320px;
+  border-radius: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: #fff;
+  height: 0;
+  overflow: hidden;
+  padding: 0;
+}
+.main_wrap nav .settings .profile_dropdown.open {
+  padding: 16px;
+  height: -moz-fit-content;
+  height: fit-content;
+}
+.main_wrap nav .settings .profile_dropdown .account_owner {
+  gap: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.main_wrap nav .settings .profile_dropdown .account_owner .avatar {
+  overflow: hidden;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 1px solid #f2f2f2;
+}
+.main_wrap nav .settings .profile_dropdown .account_owner .avatar img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+.main_wrap nav .settings .profile_dropdown .account_welcoming {
+  width: 100%;
+}
+.main_wrap nav .settings .profile_dropdown .account_welcoming h6 {
+  color: #0d0d0d;
+  margin: 0;
+  text-align: center;
+}
+.main_wrap nav .settings .profile_dropdown .account_welcoming span {
+  color: #777777;
+  width: 100%;
+  display: block;
+  text-align: center;
+  line-height: 24px;
+}
+.main_wrap nav .settings .profile_dropdown .manage_invite {
+  display: flex;
+  flex-direction: column;
+}
+.main_wrap nav .settings .profile_dropdown .manage_invite .link {
+  display: flex;
+  gap: 8px;
+}
+.main_wrap nav .settings .profile_dropdown .manage_invite .link a,
+.main_wrap nav .settings .profile_dropdown .manage_invite .link h6 {
+  font-weight: 600;
+  font-size: 15px;
+  color: #0d0d0d;
+  cursor: pointer;
+}
+.main_wrap nav .settings .profile_dropdown .select_frame {
+  background: #ebf3f5;
+  padding: 8px;
+  border-radius: 16px;
+  display: flex;
+  gap: 8px;
+  flex-direction: column;
+}
+.main_wrap nav .settings .profile_dropdown .select_frame .accounts {
+  padding: 12px;
+  border-radius: 12px;
+  padding: 12px;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.main_wrap nav .settings .profile_dropdown .select_frame .accounts .acc {
+  display: flex;
+  gap: 12px;
+}
+.main_wrap nav .settings .profile_dropdown .select_frame .accounts .acc .avatar {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border-radius: 50%;
+  border: 1px solid #f2f2f2;
+  overflow: hidden;
+}
+.main_wrap nav .settings .profile_dropdown .select_frame .accounts .acc .avatar img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  -o-object-position: center;
+     object-position: center;
+}
+.main_wrap nav .settings .profile_dropdown .select_frame .accounts .acc .type_mail {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+.main_wrap nav .settings .profile_dropdown .select_frame .accounts .acc .type_mail h6 {
+  color: #0d0d0d;
+  font-size: 16px;
+  margin: 0;
+  font-weight: 600;
+}
+.main_wrap nav .settings .profile_dropdown .select_frame .accounts .acc .type_mail span {
+  color: #777777;
+  line-height: 24px;
 }
 .main_wrap .main_wrapper {
   min-height: calc(100vh - 180px);
   background: #f7fafb;
   border-radius: 24px;
+  padding: 32px;
+}
+.main_wrap .main_wrapper .page_header h1 {
+  color: #4f4f4f;
+  font-size: 32px;
+  font-weight: 500;
+  margin: 0;
+}
+.main_wrap .main_wrapper .page_header h5 {
+  font-size: 16px;
+  color: #4f4f4f;
+}
+.main_wrap .main_wrapper .page_header h5 a {
+  color: #006980;
+}
+.main_wrap .main_wrapper .inner_card {
+  background: #fff;
+  padding: 24px;
+  background: #fff;
+  border-radius: 24px;
+}
+.main_wrap .main_wrapper .inner_card .card_header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.main_wrap .main_wrapper .inner_card .card_header h3 {
+  color: #0d0d0d;
+  font-size: 20px;
+  margin: 0;
 }
 
 footer {
@@ -1002,5 +1158,22 @@ footer .links a {
   transition: 0.4s ease-in-out;
 }
 footer .links a:hover {
+  color: #006980;
+}
+
+.boton {
+  border: none;
+  background: none;
+  outline: none;
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #fff;
+  background: #006980;
+  border-radius: 12px;
+}
+.boton.transparent {
+  background: #fff;
+  border: 1px solid #006980;
   color: #006980;
 }/*# sourceMappingURL=index.css.map */

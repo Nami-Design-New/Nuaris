@@ -17,6 +17,7 @@
     "react-cookie": "^7.0.2",
     "react-country-region-selector": "^3.6.1",
     "react-country-state-city": "^1.1.0",
+    "react-data-table-component": "^7.6.2",
     "react-dom": "^18.2.0",
     "react-filepond": "^7.1.2",
     "react-flags-select": "^2.2.3",
