@@ -21,7 +21,7 @@ const InputField = ({
         name={id}
         required
         onChange={e => {
-          setFormData({ ...formData, [htmlFor]: e.target.value }); 
+          setFormData({ ...formData, [htmlFor]: e.target.value });
         }}
       />
     </div>

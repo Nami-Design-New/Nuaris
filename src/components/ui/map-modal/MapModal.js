@@ -8,7 +8,7 @@ const MapModal = ({
   setShowModal,
   setFormData,
   formData,
-  setSerchedPlace,
+  setSerchedPlace
 }) => {
   const [mapLoaded, setMapLoaded] = useState(false);
 
@@ -39,13 +39,12 @@ const MapModal = ({
         <div className="row m-0">
           <div className="col-12 p-0 mb-2">
             <div className="map">
-              {mapLoaded && (
+              {mapLoaded &&
                 <MapWithMarker
                   formData={formData}
                   setFormData={setFormData}
                   setSerchedPlace={setSerchedPlace}
-                />
-              )}
+                />}
             </div>
           </div>
           <div className="col-12 p-0">

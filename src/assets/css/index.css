@@ -447,12 +447,12 @@ a {
   border: 1px solid #f2f2f2;
   background: #f8f8f8;
   border-left: 0;
-  border-radius: 0 4px 4px 0 !important;
+  border-radius: 0 12px 12px 0 !important;
   color: #aaaaaa;
 }
 .form-ui .input-field .pass-group input {
   border-right: 0 !important;
-  border-radius: 4px 0 0 4px !important;
+  border-radius: 12px 0 0 12px !important;
 }
 .form-ui .input-field .phone-group .PhoneInput {
   display: flex;
@@ -462,10 +462,10 @@ a {
   position: relative;
 }
 .form-ui .input-field .phone-group .PhoneInput .PhoneInputCountryIconImg {
-  width: 18px;
+  width: 20px;
   position: absolute;
   top: -33px;
-  left: 8px;
+  left: 10px;
 }
 .form-ui .input-field .phone-group .PhoneInput select {
   padding: 12px 6px 12px 30px;
@@ -481,7 +481,7 @@ a {
 .form-ui .input-field .searchMapGroup button {
   width: 60px;
   height: 54px;
-  border-radius: 8px;
+  border-radius: 12px;
   border: none;
   background: none;
   outline: none;
@@ -490,9 +490,10 @@ a {
 .form-ui .input-field .searchMapGroup span {
   width: 100%;
   height: 54px;
+  overflow: hidden;
   outline: none;
   border: 1px solid #f2f2f2;
-  border-radius: 4px;
+  border-radius: 12px;
   background: #f8f8f8;
   padding: 8px 16px;
 }
@@ -502,7 +503,7 @@ a {
   height: 54px;
   outline: none;
   border: 1px solid #f2f2f2;
-  border-radius: 4px;
+  border-radius: 12px;
   background: #f8f8f8;
   padding: 12px 16px;
 }
@@ -538,7 +539,7 @@ a {
 .form-ui .check-field .inputs label {
   flex: 1;
   height: 54px;
-  border-radius: 4px;
+  border-radius: 12px;
   position: relative;
   cursor: pointer;
   overflow: hidden;
@@ -579,7 +580,7 @@ a {
   justify-content: space-between;
 }
 .otp-container .otp-input {
-  border-radius: 4px;
+  border-radius: 12px;
   flex: 1;
   max-width: 70px;
   height: 80px !important;
@@ -653,7 +654,7 @@ a {
   border: 1px solid #f2f2f2;
   background: #f8f8f8;
   padding: 12px 16px;
-  border-radius: 8px;
+  border-radius: 12px;
   outline: none;
   color: #0d0d0d;
 }
@@ -688,7 +689,7 @@ a {
 
 .filepond--panel-root {
   background: #f8f8f8;
-  border-radius: 4px;
+  border-radius: 12px;
   border: 1px solid #f2f2f2;
 }
 
@@ -711,6 +712,7 @@ a {
   border: 1px solid #f2f2f2 !important;
   background: #f8f8f8 !important;
   height: 54px;
+  border-radius: 12px;
   box-shadow: none;
   outline: none;
   color: #aaaaaa;
@@ -732,7 +734,7 @@ a {
   border: 1px solid #f2f2f2;
   background: #fff;
   padding: 12px 16px;
-  border-radius: 8px;
+  border-radius: 12px;
   outline: none;
   color: #0d0d0d;
 }
@@ -1237,4 +1239,8 @@ footer .links a:hover {
   background: #fff;
   border: 1px solid #006980;
   color: #006980;
+}
+
+.Toastify__toast-body > div:last-child {
+  line-height: 24px;
 }/*# sourceMappingURL=index.css.map */

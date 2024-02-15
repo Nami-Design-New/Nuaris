@@ -12,12 +12,12 @@ import axios from "../../../util/axios";
 import { toast } from "react-toastify";
 import { State } from "country-state-city";
 import { useNavigate } from "react-router";
+import PhoneField from "../../ui/form-elements/PhoneField";
 
 const AgentForm = ({ setFormSelection }) => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    role: "agent",
-    registration_type: "Company"
+    role: "agent"
   });
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [cityForCountry, setCityForCountry] = useState(null);
@@ -108,26 +108,11 @@ const AgentForm = ({ setFormSelection }) => {
           </div>
           {/* phone number */}
           <div className="col-lg-6 col-12 p-2">
-            <div className="input-field">
-              <label htmlFor="phone">Mobile Number</label>
-              <div className="phone-group">
-                <div className="phone-code">
-                  <ReactFlagsSelect
-                    searchable={false}
-                    selectedSize={false}
-                    onSelect={code => setSelectedCountry(code)}
-                    selected={selectedCountry}
-                    defaultCountry="AE"
-                  />
-                </div>
-                <input
-                  placeholder="0XXXXXXXXX"
-                  type="tel"
-                  id="phone"
-                  name="phone"
-                />
-              </div>
-            </div>
+            <PhoneField
+              formData={formData}
+              setFormData={setFormData}
+              id="mobile_number"
+            />
           </div>
           {/* username */}
           <div className="col-lg-6 col-12 p-2">
@@ -160,11 +145,11 @@ const AgentForm = ({ setFormSelection }) => {
               setFormData={setFormData}
             />
           </div>
-          {/* Commercial registration Type */}
+          {/* Licnce Type */}
           <div className="col-lg-6 col-12 p-2">
             <SelectField
-              htmlFor="registration_type"
-              label="Commercial registration Type"
+              htmlFor="licence_type"
+              label="Licence Type"
               options={[
                 "Freelancer",
                 "Company",
@@ -175,17 +160,17 @@ const AgentForm = ({ setFormSelection }) => {
               ]}
               formData={formData}
               setFormData={setFormData}
-              id="commercialRegistrationType"
+              id="licenceType"
             />
           </div>
-          {/* Commercial registration Number */}
+          {/* Licenece Number */}
           <div className="col-lg-6 col-12 p-2">
             <InputField
-              htmlFor="registration_number"
+              htmlFor="licence_number"
               type="number"
-              label="Commercial registration Number"
+              label="License Number"
               placeholder="XXXX XXXX XXXX XXXX"
-              id="commercialRegistrationNumber"
+              id="licenseNumber"
               formData={formData}
               setFormData={setFormData}
             />

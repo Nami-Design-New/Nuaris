@@ -13,6 +13,7 @@ import axios from "../../../util/axios";
 import { toast } from "react-toastify";
 import { State } from "country-state-city";
 import { useNavigate } from "react-router";
+import PhoneField from "../../ui/form-elements/PhoneField";
 
 const ServiceProvider = ({ setFormSelection }) => {
   const navigate = useNavigate();
@@ -91,7 +92,7 @@ const ServiceProvider = ({ setFormSelection }) => {
       setLoading(false);
     }
   };
-  
+
   return (
     <form onSubmit={handleSubmit} className="form-ui">
       <div className="container p-0">
@@ -138,26 +139,7 @@ const ServiceProvider = ({ setFormSelection }) => {
           </div>
           {/* phone number */}
           <div className="col-lg-6 col-12 p-2">
-            <div className="input-field">
-              <label htmlFor="phone">Mobile Number</label>
-              <div className="phone-group">
-                <div className="phone-code">
-                  <ReactFlagsSelect
-                    searchable={false}
-                    selectedSize={false}
-                    onSelect={code => setSelectedCountry(code)}
-                    selected={selectedCountry}
-                    defaultCountry="AE"
-                  />
-                </div>
-                <input
-                  placeholder="0XXXXXXXXX"
-                  type="tel"
-                  id="phone"
-                  name="phone"
-                />
-              </div>
-            </div>
+            <PhoneField formData={formData} setFormData={setFormData} id="mobile_number"/>
           </div>
           {/* username */}
           <div className="col-lg-6 col-12 p-2">

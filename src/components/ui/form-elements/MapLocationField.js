@@ -1,7 +1,7 @@
 import React from "react";
 
 const MapLocationField = ({ htmlFor, label, hint, setShowModal, name }) => {
-  const handleShowModal = (e) => {
+  const handleShowModal = e => {
     e.preventDefault();
     setShowModal(true);
   };
@@ -11,7 +11,9 @@ const MapLocationField = ({ htmlFor, label, hint, setShowModal, name }) => {
         {label} <span>{hint}</span>
       </label>
       <div className="searchMapGroup">
-        <span>{name}</span>
+        <span>
+          {name}
+        </span>
         <button onClick={handleShowModal} />
       </div>
     </div>

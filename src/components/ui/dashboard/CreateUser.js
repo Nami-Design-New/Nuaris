@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import PageHeader from "./PageHeader";
 import NameField from "./../form-elements/NameField";
-import SelectField from "../form-elements/SelectField";
 import ReactFlagsSelect from "react-flags-select";
 import InputField from "../form-elements/InputField";
 import PhoneField from "../form-elements/PhoneField";
@@ -12,50 +11,44 @@ import SubmitButton from "../form-elements/SubmitButton";
 
 const CreateUser = () => {
   const [selectedCountry, setSelectedCountry] = useState(null);
-  const user = useSelector((state) => state.user.user);
+  const positions = useSelector(state => state.positions.positions);
+  const user = useSelector(state => state.user.user);
   const [formData, setFormData] = useState({});
   const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    if (user) {
-      setFormData({ ...formData, parent: user.id });
-    }
-  }, [user]);
-
-  const backLinks = [
-    { name: "Dashboard", to: "/host-dashboard" },
-    { name: "Invite User", to: "/host-dashboard/invite-user" },
-  ];
-  const headersList = {
-    Accept: "application/json",
-    "Content-Type": "application/json",
-  };
-  const requestOptions = {
-    method: "POST",
-    url: "/users/invite-user/",
-    headers: headersList,
-    data: formData,
-  };
-  const handleSubmit = async (e) => {
-    setLoading(true);
-    e.preventDefault();
-    try {
-      await axios.request(requestOptions);
-      toast.success("invitation sent successfully");
-    } catch (error) {
-      if (error.response && error.response.data) {
-        const errors = error.response.data;
-        Object.keys(errors).forEach((field) => {
-          errors[field].forEach((message) => {
-            toast.error(`${field}: ${message}`);
-          });
-        });
+  const form = useRef(null);
+  useEffect(
+    () => {
+      if (user) {
+        setFormData(prevFormData => ({
+          ...prevFormData,
+          parent: Number(user.id)
+        }));
       }
+    },
+    [user]
+  );
+  const handleSubmit = async e => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      await axios.post("/users/invite-user/", formData);
+      toast.success("Invitation sent successfully");
+      form.current.reset();
+    } catch (error) {
+      toast.error("An error occurred while sending the invitation");
+      form.current.reset();
     } finally {
       setLoading(false);
     }
   };
-
+  const handleCountrySelect = code => {
+    setSelectedCountry(code);
+    setFormData(prevFormData => ({ ...prevFormData, nationality: code }));
+  };
+  const backLinks = [
+    { name: "Dashboard", to: "/host-dashboard" },
+    { name: "Invite User", to: "/host-dashboard/invite-user" }
+  ];
   return (
     <React.Fragment>
       <PageHeader
@@ -64,28 +57,37 @@ const CreateUser = () => {
         hint="(employee)"
       />
       <div className="inner_card">
-        <form onSubmit={handleSubmit} className="row m-0 form-ui">
+        <form onSubmit={handleSubmit} ref={form} className="row m-0 form-ui">
           <div className="col-lg-4  col-12 p-2">
             <NameField formData={formData} setFormData={setFormData} />
           </div>
           <div className="col-lg-4  col-12 p-2">
-            <SelectField
-              htmlFor="position"
-              label="Position"
-              options={[
-                "Admin",
-                "Supervisor",
-                "Operator",
-                "Financial",
-                "Yacht Management",
-                "Marketing and Promotions",
-                "Analytics and Reporting",
-                "Customer Interaction",
-              ]}
-              formData={formData}
-              setFormData={setFormData}
-              id="position"
-            />
+            <div className="input-field">
+              <label htmlFor="positions">Positions</label>
+              <select
+                name="positions"
+                id="positions"
+                required
+                onChange={e => {
+                  const selectedOptionId = e.target.options[
+                    e.target.selectedIndex
+                  ].getAttribute("id");
+                  setFormData({
+                    ...formData,
+                    position: Number(selectedOptionId)
+                  });
+                }}
+              >
+                <option value="select" disabled selected>
+                  Select
+                </option>
+                {positions.map(option =>
+                  <option key={option.id} id={option.id} value={option.name}>
+                    {option.name}
+                  </option>
+                )}
+              </select>
+            </div>
           </div>
           <div className="col-lg-4  col-12 p-2">
             <div className="input-field">
@@ -93,10 +95,7 @@ const CreateUser = () => {
               <ReactFlagsSelect
                 searchable={true}
                 selectedSize={false}
-                onSelect={(code) => {
-                  setSelectedCountry(code);
-                  setFormData({ ...formData, nationality: code });
-                }}
+                onSelect={handleCountrySelect}
                 selected={selectedCountry}
                 defaultCountry="AE"
               />
@@ -114,10 +113,14 @@ const CreateUser = () => {
             />
           </div>
           <div className="col-lg-6 col-12 p-2">
-            <PhoneField formData={formData} setFormData={setFormData} />
+            <PhoneField
+              formData={formData}
+              setFormData={setFormData}
+              id="phone_number"
+            />
           </div>
-          <div className="col-12 p-2 d-flex">
-            <SubmitButton loading={loading} name="Create" />
+          <div className="col-12 p-2 d-flex justify-content-end">
+            <SubmitButton loading={loading} name="Create" className="w-25" />
           </div>
         </form>
       </div>

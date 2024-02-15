@@ -10,10 +10,14 @@ const SelectField = ({ htmlFor, label, options, formData, setFormData }) => {
         name={htmlFor}
         id={htmlFor}
         required
+        value={formData[htmlFor]}
         onChange={e => {
           setFormData({ ...formData, [htmlFor]: e.target.value });
         }}
       >
+        <option value="select" disabled>
+          select
+        </option>
         {options.map((option, index) =>
           <option key={index} value={option}>
             {option}

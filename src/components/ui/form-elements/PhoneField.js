@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import PhoneInput from "react-phone-number-input";
 
-const PhoneField = ({ formData, setFormData }) => {
+const PhoneField = ({ formData, setFormData , id }) => {
   const [phoneNumber, setPhoneNumber] = useState();
 
-  const handlePhoneNumberChange = (value) => {
+  const handlePhoneNumberChange = value => {
     setPhoneNumber(value);
-    setFormData({ ...formData, phone_number: value });
+    setFormData({ ...formData, [id]: value });
   };
 
   return (
@@ -17,8 +17,8 @@ const PhoneField = ({ formData, setFormData }) => {
           placeholder="Enter phone number"
           value={phoneNumber}
           onChange={handlePhoneNumberChange}
-          countryOptionsOrder={["AE", "SA", "GB", "IN"]}
-          defaultCountry="AE"
+          countryOptionsOrder={["SA", "AE", "GB", "IN"]}
+          defaultCountry="SA"
           id="phone"
           name="phone"
         />

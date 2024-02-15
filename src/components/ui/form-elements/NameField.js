@@ -11,7 +11,7 @@ const NameField = ({ setFormData, formData }) => {
           id="firstName"
           name="firstName"
           required
-          onChange={(e) => {
+          onChange={e => {
             setFormData({ ...formData, first_name: e.target.value });
           }}
         />
@@ -21,7 +21,7 @@ const NameField = ({ setFormData, formData }) => {
           id="lastName"
           name="lastName"
           required
-          onChange={(e) => {
+          onChange={e => {
             setFormData({ ...formData, last_name: e.target.value });
           }}
         />
