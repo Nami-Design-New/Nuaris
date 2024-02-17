@@ -66,7 +66,8 @@ $dark: #0d0d0d;
 $border: #dddddd;
 $inputBG: #f8f8f8;
 $inputHint: #aaaaaa;
-$text: #777777;
+$gray: #777777;
+$text: #666b88;
 $white: #fff;
 $JumbotronHead: #4f4f4f;
 $inputStroke: #f2f2f2;
@@ -175,7 +176,7 @@ $transation: 0.4s ease-in-out;
       .sub-head {
         font-size: 18px;
         font-weight: 400;
-        color: $text;
+        color: $gray;
         margin-bottom: 12px;
         line-height: 26px;
         span {
@@ -309,7 +310,7 @@ $transation: 0.4s ease-in-out;
       }
     }
     p {
-      color: $text;
+      color: $gray;
       line-height: 28px;
       text-align: center;
       font-size: 20px;
@@ -497,7 +498,7 @@ $transation: 0.4s ease-in-out;
       font-weight: 500;
       span {
         font-size: 12px;
-        color: $text;
+        color: $gray;
       }
     }
     select {
@@ -514,7 +515,7 @@ $transation: 0.4s ease-in-out;
       font-weight: 500;
       span {
         font-size: 14px;
-        color: $text;
+        color: $gray;
       }
     }
     .inputs {
@@ -528,6 +529,7 @@ $transation: 0.4s ease-in-out;
         cursor: pointer;
         overflow: hidden;
         input {
+          transition: $transation;
           background: $main10;
           cursor: pointer;
           appearance: none;
@@ -717,25 +719,23 @@ $transation: 0.4s ease-in-out;
   transition: $transation;
   .logo_wrapper {
     width: 100%;
-    .logo {
-      display: none;
+    img {
       object-fit: contain;
-      height: 60px;
-      transition: none;
+      height: 43px;
     }
-    .fav {
-      display: block;
-      width: 100%;
-      height: 60px;
-      transition: none;
+    .logo-lg {
+      display: none;
+    }
+    .logo-sm {
+      display: inline-block;
     }
   }
   &.expand {
     width: 280px;
-    .logo_wrapper .logo {
-      display: block;
+    .logo_wrapper .logo-lg {
+      display: inline-block;
     }
-    .logo_wrapper .fav {
+    .logo_wrapper .logo-sm {
       display: none;
     }
   }
@@ -757,7 +757,7 @@ $transation: 0.4s ease-in-out;
         align-items: center;
         width: 100%;
         gap: 14px;
-        color: $text;
+        color: $gray;
         white-space: nowrap;
         transition: $transation;
         img {
@@ -1003,7 +1003,7 @@ $transation: 0.4s ease-in-out;
             text-align: center;
           }
           span {
-            color: $text;
+            color: $gray;
             width: 100%;
             display: block;
             text-align: center;
@@ -1068,7 +1068,7 @@ $transation: 0.4s ease-in-out;
                   font-weight: 600;
                 }
                 span {
-                  color: $text;
+                  color: $gray;
                   line-height: 24px;
                 }
               }
@@ -1083,6 +1083,8 @@ $transation: 0.4s ease-in-out;
     background: $dashboardBg;
     border-radius: 24px;
     padding: 32px;
+    display: flex;
+    flex-direction: column;
     .page_header {
       h1 {
         color: $JumbotronHead;
@@ -1106,6 +1108,9 @@ $transation: 0.4s ease-in-out;
       padding: 24px;
       background: $white;
       border-radius: 24px;
+      gap: 24px;
+      display: flex;
+      flex-direction: column;
       .card_header {
         display: flex;
         align-items: center;
@@ -1115,6 +1120,22 @@ $transation: 0.4s ease-in-out;
           font-size: 20px;
           margin: 0;
         }
+      }
+    }
+    .comming_soon {
+      width: 100%;
+      height: 100%;
+      @include centerFlex();
+      flex-direction: column;
+      margin: auto;
+      gap: 24px;
+      img {
+        height: 240px;
+      }
+      h1 {
+        font-size: 28px;
+        color: $main;
+        margin: 0;
       }
     }
   }
@@ -1175,4 +1196,67 @@ footer {
 }
 .Toastify__toast-body > div:last-child {
   line-height: 24px;
+}
+// tables
+tbody,
+td,
+tfoot,
+th,
+thead,
+tr {
+  padding: 16px 8px;
+}
+thead {
+  border-bottom: 1px solid $inputStroke !important;
+}
+tr {
+  border-bottom: 1px solid $inputStroke !important;
+  &:last-child {
+    border: 0 !important;
+  }
+}
+.p-column-title {
+  color: $text;
+  font-size: 16px;
+  font-weight: 400;
+}
+.actions_cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  button {
+    @include clearInput();
+    @include centerFlex();
+    width: 25px;
+    height: 25px;
+  }
+}
+th:last-child .p-column-header-content {
+  justify-content: center;
+}
+.p-datatable .p-datatable-thead > tr > th {
+  background: none !important;
+}
+.p-paginator-bottom {
+  gap: 4px;
+  border-bottom: 0 !important;
+}
+.p-dropdown-label {
+  padding: 0px 8px 0;
+}
+.p-dropdown .p-dropdown-trigger {
+  width: 2rem;
+  svg {
+    width: 12px;
+  }
+}
+.p-dropdown {
+  box-shadow: none !important;
+}
+.p-dropdown-panel .p-dropdown-items .p-dropdown-item {
+  padding: 0 8px !important;
+}
+.p-paginator-element {
+  border-radius: 50%;
 }

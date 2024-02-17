@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-
 import logoH from "../assets/images/logoH.svg";
 import loginImage from "../assets/images/login-image.png";
-
 import LoginForm from "../components/auth/login/LoginForm";
 import UserTypeSelection from "../components/auth/login/UserTypeSelection";
 import OtpForm from "./../components/auth/login/OtpForm";
@@ -28,28 +26,30 @@ const Login = () => {
             <Link to={"/Register"}>Create Account</Link>
           </h6>
         </div>
-        {!showLoginForm &&
-          !showOtpForm &&
+        {!showLoginForm && !showOtpForm && (
           <UserTypeSelection
             setShowLoginForm={setShowLoginForm}
             setUserTypeSelected={setUserTypeSelected}
-          />}
-        {showLoginForm &&
-          !showOtpForm &&
+          />
+        )}
+        {showLoginForm && !showOtpForm && (
           <LoginForm
             userTypeSelected={userTypeSelected}
             setShowLoginForm={setShowLoginForm}
             SetShowOtpForm={SetShowOtpForm}
             formData={formData}
             setFormData={setFormData}
-          />}
-        {showOtpForm &&
+          />
+        )}
+        {showOtpForm && (
           <OtpForm
             formData={formData}
             setFormData={setFormData}
+            userTypeSelected={userTypeSelected}
             setShowLoginForm={setShowLoginForm}
             SetShowOtpForm={SetShowOtpForm}
-          />}
+          />
+        )}
       </div>
       <div
         className="right-side"

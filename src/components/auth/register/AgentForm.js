@@ -1,58 +1,59 @@
 import React, { useState } from "react";
-// ui
-import SelectField from "./../../ui/form-elements/SelectField";
-import InputField from "../../ui/form-elements/InputField";
-import PasswordField from "../../ui/form-elements/PasswordField";
-import LogoUploadField from "./../../ui/form-elements/LogoUploadField";
-import BackButton from "./../../ui/form-elements/BackButton";
-import SubmitButton from "./../../ui/form-elements/SubmitButton";
-import ReactFlagsSelect from "react-flags-select";
-
 import axios from "../../../util/axios";
 import { toast } from "react-toastify";
 import { State } from "country-state-city";
 import { useNavigate } from "react-router";
+import ReactFlagsSelect from "react-flags-select";
+// ui elements
+import InputField from "../../ui/form-elements/InputField";
 import PhoneField from "../../ui/form-elements/PhoneField";
+import BackButton from "./../../ui/form-elements/BackButton";
+import SelectField from "./../../ui/form-elements/SelectField";
+import PasswordField from "../../ui/form-elements/PasswordField";
+import SubmitButton from "./../../ui/form-elements/SubmitButton";
+import LogoUploadField from "./../../ui/form-elements/LogoUploadField";
 
 const AgentForm = ({ setFormSelection }) => {
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({
-    role: "agent"
-  });
-  const [selectedCountry, setSelectedCountry] = useState(null);
-  const [cityForCountry, setCityForCountry] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [cityForCountry, setCityForCountry] = useState(null);
+  const [selectedCountry, setSelectedCountry] = useState(null);
+  const [formData, setFormData] = useState({
+    role: "agent",
+  });
 
+  // get cities for each country
   function handleSelectCountry(countryCode) {
     setSelectedCountry(countryCode);
-    const statesObj = State.getStatesOfCountry(countryCode);
-    const statesName = statesObj.map(state => state.name);
-    setCityForCountry(statesName);
+    const citiesArray = State.getStatesOfCountry(countryCode);
+    const citiesNames = citiesArray.map((city) => city.name);
+    setCityForCountry(citiesNames);
     setFormData({ ...formData, country: countryCode });
   }
-  /* form Submit Register  */
+
+  /* form Submit requirments [Host Register] */
   const headersList = {
     Accept: "*/*",
-    "Content-Type": "multipart/form-data"
+    "Content-Type": "multipart/form-data",
   };
   const requestOptions = {
     method: "POST",
     url: "/users/",
     headers: headersList,
-    data: formData
+    data: formData,
   };
-  const handleSubmit = async e => {
+  const handleSubmit = async (e) => {
     setLoading(true);
     e.preventDefault();
     try {
       await axios.request(requestOptions);
-      toast.success(`Welcome @${formData.username}`);
+      toast.success("Account created successfully");
       navigate("/login");
     } catch (error) {
       if (error.response && error.response.data) {
         const errors = error.response.data;
-        Object.keys(errors).forEach(field => {
-          errors[field].forEach(message => {
+        Object.keys(errors).forEach((field) => {
+          errors[field].forEach((message) => {
             toast.error(`${field}: ${message}`);
           });
         });
@@ -150,14 +151,7 @@ const AgentForm = ({ setFormSelection }) => {
             <SelectField
               htmlFor="licence_type"
               label="Licence Type"
-              options={[
-                "Freelancer",
-                "Company",
-                "Sole Proprietorship",
-                "Partnership",
-                "Limited Liability Company",
-                "Corporation"
-              ]}
+              options={["Freelancer", "Tour Guide"]}
               formData={formData}
               setFormData={setFormData}
               id="licenceType"
@@ -184,7 +178,7 @@ const AgentForm = ({ setFormSelection }) => {
               <ReactFlagsSelect
                 searchable={true}
                 selectedSize={false}
-                onSelect={code => {
+                onSelect={(code) => {
                   handleSelectCountry(code);
                 }}
                 selected={selectedCountry}
@@ -201,17 +195,19 @@ const AgentForm = ({ setFormSelection }) => {
               <select
                 name="city"
                 id="city"
-                onChange={e => {
+                onChange={(e) => {
                   setFormData({ ...formData, city: e.target.value });
                 }}
               >
-                {cityForCountry
-                  ? cityForCountry.map((city, index) =>
-                      <option key={index} value={city}>
-                        {city}
-                      </option>
-                    )
-                  : <option value={""}>Please select a country</option>}
+                {cityForCountry ? (
+                  cityForCountry.map((city, index) => (
+                    <option key={index} value={city}>
+                      {city}
+                    </option>
+                  ))
+                ) : (
+                  <option value={""}>Please select a country</option>
+                )}
               </select>
             </div>
           </div>

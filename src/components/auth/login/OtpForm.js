@@ -11,39 +11,56 @@ const OtpForm = ({
   formData,
   setFormData,
   SetShowOtpForm,
-  setShowLoginForm
+  userTypeSelected,
+  setShowLoginForm,
 }) => {
   const [loading, setLoading] = useState(false);
-  const [cookies, setCookie] = useCookies(["token"]);
+  const [cookie, setCookie] = useCookies(["token"]);
   const navigate = useNavigate();
-  const handleBackButtonClick = e => {
+
+  const handleBackButtonClick = (e) => {
     e.preventDefault();
     setShowLoginForm(true);
     SetShowOtpForm(false);
     setFormData({});
   };
+
   const headersList = {
     Accept: "application/json",
-    "Content-Type": "application/json"
+    "Content-Type": "application/json",
   };
   const requestOptions = {
     method: "POST",
     url: "/users/login-otp/",
     headers: headersList,
-    data: formData
+    data: formData,
   };
-
-  const handleSubmit = async e => {
+  const handleSubmit = async (e) => {
     setLoading(true);
     e.preventDefault();
     try {
-      const response = await axios.request(requestOptions);
-      setCookie("token", response.data.access_token, {
+      const res = await axios.request(requestOptions);
+      toast.success(`Welcome Back @${res.data.user.username}`);
+      setCookie("token", res.data.access_token, {
         path: "/",
-        secure: true
+        expires: new Date(new Date().getTime() + 6 * 60 * 60 * 1000),
+        secure: true,
       });
-      navigate("/");
-      toast.success(`Welcome Back @${response.data.user.username}`);
+      setCookie("id", res.data.user.id, {
+        path: "/",
+        expires: new Date(new Date().getTime() + 6 * 60 * 60 * 1000),
+        secure: true,
+      });
+      // navigation
+      if (userTypeSelected === "host") {
+        navigate("/host-dashboard");
+      } else if (userTypeSelected === "agent") {
+        navigate("/agent-dashboard");
+      } else if (userTypeSelected === "service provider") {
+        navigate("/service-provider-dashboard");
+      } else {
+        navigate("/employee-choose-host");
+      }
     } catch (error) {
       if (
         error.response &&

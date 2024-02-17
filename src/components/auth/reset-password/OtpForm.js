@@ -7,17 +7,17 @@ const OtpForm = ({
   formData,
   setFormData,
   setResetPasswordStep,
-  otpFromResponse
+  otpFromResponse,
 }) => {
   const [loading, setLoading] = useState(false);
 
-  const handleBackButtonClick = e => {
+  const handleBackButtonClick = (e) => {
     e.preventDefault();
     setResetPasswordStep("s1");
     setFormData({ ...formData, email: "" });
   };
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e) => {
     setLoading(true);
     e.preventDefault();
     if (otpFromResponse === formData.otp) {

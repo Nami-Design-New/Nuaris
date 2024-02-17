@@ -9,8 +9,8 @@ import ServiceProvider from "../components/auth/register/ServiceProvider";
 
 const Register = () => {
   const [formSelecton, setFormSelection] = useState("");
-
   let title;
+
   if (formSelecton === "host") {
     title = "Host";
   } else if (formSelecton === "agent") {
@@ -28,23 +28,26 @@ const Register = () => {
           <div className="logo">
             <img src={logoH} alt="logo" />
             <span />
-            <h1>
-              {title}
-            </h1>
+            <h1>{title}</h1>
           </div>
-          {formSelecton === "" &&
+          {formSelecton === "" && (
             <h6>
               You already have an Account ? <Link to={"/Login"}>Login</Link>
-            </h6>}
+            </h6>
+          )}
         </div>
-        {formSelecton === "" &&
-          <RegiestrUserTypeSelection setFormSelection={setFormSelection} />}
-        {formSelecton === "host" &&
-          <HostForm setFormSelection={setFormSelection} />}
-        {formSelecton === "agent" &&
-          <AgentForm setFormSelection={setFormSelection} />}
-        {formSelecton === "service provider" &&
-          <ServiceProvider setFormSelection={setFormSelection} />}
+        {formSelecton === "" && (
+          <RegiestrUserTypeSelection setFormSelection={setFormSelection} />
+        )}
+        {formSelecton === "host" && (
+          <HostForm setFormSelection={setFormSelection} />
+        )}
+        {formSelecton === "agent" && (
+          <AgentForm setFormSelection={setFormSelection} />
+        )}
+        {formSelecton === "service provider" && (
+          <ServiceProvider setFormSelection={setFormSelection} />
+        )}
       </div>
       <div
         className="right-side"

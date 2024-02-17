@@ -1,33 +1,30 @@
 import React, { useState, useEffect, useRef } from "react";
-import PageHeader from "./PageHeader";
-import NameField from "./../form-elements/NameField";
+import PageHeader from "../layout/PageHeader";
+import NameField from "../../ui/form-elements/NameField";
 import ReactFlagsSelect from "react-flags-select";
-import InputField from "../form-elements/InputField";
-import PhoneField from "../form-elements/PhoneField";
+import InputField from "../../ui/form-elements/InputField";
+import PhoneField from "../../ui/form-elements/PhoneField";
 import { useSelector } from "react-redux";
 import axios from "../../../util/axios";
 import { toast } from "react-toastify";
-import SubmitButton from "../form-elements/SubmitButton";
+import SubmitButton from "../../ui/form-elements/SubmitButton";
 
 const CreateUser = () => {
   const [selectedCountry, setSelectedCountry] = useState(null);
-  const positions = useSelector(state => state.positions.positions);
-  const user = useSelector(state => state.user.user);
+  const positions = useSelector((state) => state.positions.positions);
+  const user = useSelector((state) => state.user.user);
   const [formData, setFormData] = useState({});
   const [loading, setLoading] = useState(false);
   const form = useRef(null);
-  useEffect(
-    () => {
-      if (user) {
-        setFormData(prevFormData => ({
-          ...prevFormData,
-          parent: Number(user.id)
-        }));
-      }
-    },
-    [user]
-  );
-  const handleSubmit = async e => {
+  useEffect(() => {
+    if (user) {
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        parent: Number(user.id),
+      }));
+    }
+  }, [user]);
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     try {
@@ -41,13 +38,13 @@ const CreateUser = () => {
       setLoading(false);
     }
   };
-  const handleCountrySelect = code => {
+  const handleCountrySelect = (code) => {
     setSelectedCountry(code);
-    setFormData(prevFormData => ({ ...prevFormData, nationality: code }));
+    setFormData((prevFormData) => ({ ...prevFormData, nationality: code }));
   };
   const backLinks = [
     { name: "Dashboard", to: "/host-dashboard" },
-    { name: "Invite User", to: "/host-dashboard/invite-user" }
+    { name: "Invite User", to: "/host-dashboard/invite-user" },
   ];
   return (
     <React.Fragment>
@@ -68,24 +65,23 @@ const CreateUser = () => {
                 name="positions"
                 id="positions"
                 required
-                onChange={e => {
-                  const selectedOptionId = e.target.options[
-                    e.target.selectedIndex
-                  ].getAttribute("id");
+                onChange={(e) => {
+                  const selectedOptionId =
+                    e.target.options[e.target.selectedIndex].getAttribute("id");
                   setFormData({
                     ...formData,
-                    position: Number(selectedOptionId)
+                    position: Number(selectedOptionId),
                   });
                 }}
               >
                 <option value="select" disabled selected>
                   Select
                 </option>
-                {positions.map(option =>
+                {positions.map((option) => (
                   <option key={option.id} id={option.id} value={option.name}>
                     {option.name}
                   </option>
-                )}
+                ))}
               </select>
             </div>
           </div>

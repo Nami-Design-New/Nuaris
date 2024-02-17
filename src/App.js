@@ -25,9 +25,9 @@ const App = () => {
             <Route path="/register" element={<Register />} />
             <Route path="/reset-password" element={<ResetPassword />} />
             <Route path="/host-dashboard/*" element={<HostDashboard />} />
-            <Route path="/agent-dashboard" element={<AgentDashboard />} />
+            <Route path="/agent-dashboard/*" element={<AgentDashboard />} />
             <Route
-              path="/service-provider-dashboard"
+              path="/service-provider-dashboard/*"
               element={<ServicesProviderDashboard />}
             />
             <Route path="/" element={<Home />} />

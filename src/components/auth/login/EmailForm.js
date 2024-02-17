@@ -7,11 +7,11 @@ const EmailForm = ({
   setShowLoginForm,
   SetShowOtpForm,
   formData,
-  setFormData
+  setFormData,
 }) => {
   const [loading, setLoading] = useState(false);
 
-  const handleBackButtonClick = e => {
+  const handleBackButtonClick = (e) => {
     e.preventDefault();
     setShowLoginForm(false);
     setFormData({});
@@ -19,16 +19,15 @@ const EmailForm = ({
 
   const headersList = {
     Accept: "application/json",
-    "Content-Type": "application/json"
+    "Content-Type": "application/json",
   };
   const requestOptions = {
     method: "POST",
     url: "/users/send-otp/",
     headers: headersList,
-    data: formData
+    data: formData,
   };
-
-  const handleSubmit = async e => {
+  const handleSubmit = async (e) => {
     setLoading(true);
     e.preventDefault();
     try {
@@ -60,7 +59,7 @@ const EmailForm = ({
         placeholder="EX: mail@mail.com"
         value={formData.email}
         required
-        onChange={e => setFormData({ ...formData, email: e.target.value })}
+        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
       />
       <div className="buttons">
         <button className="back" onClick={handleBackButtonClick}>

@@ -545,6 +545,7 @@ a {
   overflow: hidden;
 }
 .form-ui .check-field .inputs label input {
+  transition: 0.4s ease-in-out;
   background: #ebf3f5;
   cursor: pointer;
   -webkit-appearance: none;
@@ -761,26 +762,24 @@ a {
 .side_bar .logo_wrapper {
   width: 100%;
 }
-.side_bar .logo_wrapper .logo {
-  display: none;
+.side_bar .logo_wrapper img {
   -o-object-fit: contain;
      object-fit: contain;
-  height: 60px;
-  transition: none;
+  height: 43px;
 }
-.side_bar .logo_wrapper .fav {
-  display: block;
-  width: 100%;
-  height: 60px;
-  transition: none;
+.side_bar .logo_wrapper .logo-lg {
+  display: none;
+}
+.side_bar .logo_wrapper .logo-sm {
+  display: inline-block;
 }
 .side_bar.expand {
   width: 280px;
 }
-.side_bar.expand .logo_wrapper .logo {
-  display: block;
+.side_bar.expand .logo_wrapper .logo-lg {
+  display: inline-block;
 }
-.side_bar.expand .logo_wrapper .fav {
+.side_bar.expand .logo_wrapper .logo-sm {
   display: none;
 }
 .side_bar .navigation_menu {
@@ -1145,6 +1144,8 @@ a {
   background: #f7fafb;
   border-radius: 24px;
   padding: 32px;
+  display: flex;
+  flex-direction: column;
 }
 .main_wrap .main_wrapper .page_header h1 {
   color: #4f4f4f;
@@ -1167,6 +1168,9 @@ a {
   padding: 24px;
   background: #fff;
   border-radius: 24px;
+  gap: 24px;
+  display: flex;
+  flex-direction: column;
 }
 .main_wrap .main_wrapper .inner_card .card_header {
   display: flex;
@@ -1176,6 +1180,24 @@ a {
 .main_wrap .main_wrapper .inner_card .card_header h3 {
   color: #0d0d0d;
   font-size: 20px;
+  margin: 0;
+}
+.main_wrap .main_wrapper .comming_soon {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin: auto;
+  gap: 24px;
+}
+.main_wrap .main_wrapper .comming_soon img {
+  height: 240px;
+}
+.main_wrap .main_wrapper .comming_soon h1 {
+  font-size: 28px;
+  color: #006980;
   margin: 0;
 }
 @media (max-width: 768px) {
@@ -1243,4 +1265,83 @@ footer .links a:hover {
 
 .Toastify__toast-body > div:last-child {
   line-height: 24px;
+}
+
+tbody,
+td,
+tfoot,
+th,
+thead,
+tr {
+  padding: 16px 8px;
+}
+
+thead {
+  border-bottom: 1px solid #f2f2f2 !important;
+}
+
+tr {
+  border-bottom: 1px solid #f2f2f2 !important;
+}
+tr:last-child {
+  border: 0 !important;
+}
+
+.p-column-title {
+  color: #666b88;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.actions_cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.actions_cell button {
+  border: none;
+  background: none;
+  outline: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 25px;
+  height: 25px;
+}
+
+th:last-child .p-column-header-content {
+  justify-content: center;
+}
+
+.p-datatable .p-datatable-thead > tr > th {
+  background: none !important;
+}
+
+.p-paginator-bottom {
+  gap: 4px;
+  border-bottom: 0 !important;
+}
+
+.p-dropdown-label {
+  padding: 0px 8px 0;
+}
+
+.p-dropdown .p-dropdown-trigger {
+  width: 2rem;
+}
+.p-dropdown .p-dropdown-trigger svg {
+  width: 12px;
+}
+
+.p-dropdown {
+  box-shadow: none !important;
+}
+
+.p-dropdown-panel .p-dropdown-items .p-dropdown-item {
+  padding: 0 8px !important;
+}
+
+.p-paginator-element {
+  border-radius: 50%;
 }/*# sourceMappingURL=index.css.map */

@@ -1,43 +1,57 @@
 import React, { useState } from "react";
-// ui
-import InputField from "../../ui/form-elements/InputField";
-import PasswordField from "../../ui/form-elements/PasswordField";
-import LogoUploadField from "./../../ui/form-elements/LogoUploadField";
-import MapModal from "./../../ui/map-modal/MapModal";
-import BackButton from "./../../ui/form-elements/BackButton";
-import SubmitButton from "./../../ui/form-elements/SubmitButton";
-import ReactFlagsSelect from "react-flags-select";
-import MapLocationField from "./../../ui/form-elements/MapLocationField";
-
 import axios from "../../../util/axios";
 import { toast } from "react-toastify";
 import { State } from "country-state-city";
 import { useNavigate } from "react-router";
+import ReactFlagsSelect from "react-flags-select";
+// ui elements
+import MapModal from "./../../ui/map-modal/MapModal";
+import InputField from "../../ui/form-elements/InputField";
 import PhoneField from "../../ui/form-elements/PhoneField";
+import BackButton from "./../../ui/form-elements/BackButton";
+import PasswordField from "../../ui/form-elements/PasswordField";
+import SubmitButton from "./../../ui/form-elements/SubmitButton";
+import LogoUploadField from "./../../ui/form-elements/LogoUploadField";
+import MapLocationField from "./../../ui/form-elements/MapLocationField";
 
 const ServiceProvider = ({ setFormSelection }) => {
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({
-    role: "support_user",
-    registration_type: "Company",
-    lat: "30.044420",
-    lng: "31.235712"
-  });
+  const [cities, setCities] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [cityForCountry, setCityForCountry] = useState(null);
   const [checkedProducts, setCheckedProducts] = useState(false);
   const [checkedServices, setCheckedServices] = useState(false);
-  const [showModal, setShowModal] = useState(false);
-  const [loading, setLoading] = useState(false);
-
+  const [serchedPlace, setSerchedPlace] = useState("Search on Map");
+  const [formData, setFormData] = useState({
+    registration_type: "Company",
+    role: "support_user",
+    lat: "30.044420",
+    lng: "31.235712",
+  });
+  // get cities for each country
   function handleSelectCountry(countryCode) {
     setSelectedCountry(countryCode);
-    const statesObj = State.getStatesOfCountry(countryCode);
-    const statesName = statesObj.map(state => state.name);
-    setCityForCountry(statesName);
+    const citiesArray = State.getStatesOfCountry(countryCode);
+    const citiesNames = citiesArray.map((city) => city.name);
+    setCities(citiesArray);
+    setCityForCountry(citiesNames);
     setFormData({ ...formData, country: countryCode });
   }
-  const handleProductsChange = e => {
+  //get lat lng of selected city
+  const handleSelectCity = (cityName) => {
+    const selectedCity = cities.find((city) => city.name === cityName);
+    if (selectedCity) {
+      setFormData({
+        ...formData,
+        city: cityName,
+        lat: selectedCity.latitude,
+        lng: selectedCity.longitude,
+      });
+    }
+  };
+  const handleProductsChange = (e) => {
     setCheckedProducts(e.target.checked);
     if (checkedProducts) {
       checkedServices === true
@@ -49,7 +63,7 @@ const ServiceProvider = ({ setFormSelection }) => {
         : setFormData({ ...formData, business_core: "products" });
     }
   };
-  const handleServicesChange = e => {
+  const handleServicesChange = (e) => {
     setCheckedServices(e.target.checked);
     if (checkedServices) {
       checkedProducts === true
@@ -64,26 +78,26 @@ const ServiceProvider = ({ setFormSelection }) => {
   /* form Submit Register  */
   const headersList = {
     Accept: "*/*",
-    "Content-Type": "multipart/form-data"
+    "Content-Type": "multipart/form-data",
   };
   const requestOptions = {
     method: "POST",
     url: "/users/",
     headers: headersList,
-    data: formData
+    data: formData,
   };
-  const handleSubmit = async e => {
+  const handleSubmit = async (e) => {
     setLoading(true);
     e.preventDefault();
     try {
       await axios.request(requestOptions);
-      toast.success(`Welcome @${formData.username}`);
+      toast.success("Account created successfully");
       navigate("/login");
     } catch (error) {
       if (error.response && error.response.data) {
         const errors = error.response.data;
-        Object.keys(errors).forEach(field => {
-          errors[field].forEach(message => {
+        Object.keys(errors).forEach((field) => {
+          errors[field].forEach((message) => {
             toast.error(`${field}: ${message}`);
           });
         });
@@ -139,7 +153,11 @@ const ServiceProvider = ({ setFormSelection }) => {
           </div>
           {/* phone number */}
           <div className="col-lg-6 col-12 p-2">
-            <PhoneField formData={formData} setFormData={setFormData} id="mobile_number"/>
+            <PhoneField
+              formData={formData}
+              setFormData={setFormData}
+              id="mobile_number"
+            />
           </div>
           {/* username */}
           <div className="col-lg-6 col-12 p-2">
@@ -172,12 +190,12 @@ const ServiceProvider = ({ setFormSelection }) => {
               setFormData={setFormData}
             />
           </div>
-          {/* Commercial registration Number */}
+          {/* registration number */}
           <div className="col-lg-6 col-12 p-2">
             <InputField
               htmlFor="registration_number"
               type="number"
-              label="Commercial registration Number"
+              label="Registration Number"
               placeholder="XXXX XXXX XXXX XXXX"
               id="commercialRegistrationNumber"
               formData={formData}
@@ -235,11 +253,10 @@ const ServiceProvider = ({ setFormSelection }) => {
               <ReactFlagsSelect
                 searchable={true}
                 selectedSize={false}
-                onSelect={code => {
+                selected={selectedCountry}
+                onSelect={(code) => {
                   handleSelectCountry(code);
                 }}
-                selected={selectedCountry}
-                defaultCountry="AE"
               />
             </div>
           </div>
@@ -252,17 +269,17 @@ const ServiceProvider = ({ setFormSelection }) => {
               <select
                 name="city"
                 id="city"
-                onChange={e => {
-                  setFormData({ ...formData, city: e.target.value });
-                }}
+                onChange={(e) => handleSelectCity(e.target.value)}
               >
-                {cityForCountry
-                  ? cityForCountry.map((city, index) =>
-                      <option key={index} value={city}>
-                        {city}
-                      </option>
-                    )
-                  : <option value={""}>Please select a country</option>}
+                {cityForCountry ? (
+                  cityForCountry.map((city, index) => (
+                    <option key={index} value={city}>
+                      {city}
+                    </option>
+                  ))
+                ) : (
+                  <option value={""}>Please select a country</option>
+                )}
               </select>
             </div>
           </div>
@@ -272,6 +289,7 @@ const ServiceProvider = ({ setFormSelection }) => {
               htmlFor="companyLocationOnMap"
               label="Company Location"
               hint="(on map)"
+              name={serchedPlace}
               setShowModal={setShowModal}
             />
           </div>
@@ -281,6 +299,7 @@ const ServiceProvider = ({ setFormSelection }) => {
             setShowModal={setShowModal}
             setFormData={setFormData}
             formData={formData}
+            setSerchedPlace={setSerchedPlace}
           />
           <div className="col-12 p-2 mt-3">
             <div className="buttons">

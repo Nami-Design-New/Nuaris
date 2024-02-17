@@ -6,7 +6,7 @@ const ResetForm = ({
   setResetPasswordStep,
   formData,
   setFormData,
-  setOtpFromResponse
+  setOtpFromResponse,
 }) => {
   const [formType, setFormType] = useState("email");
 

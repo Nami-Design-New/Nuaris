@@ -10,10 +10,9 @@ const LoginForm = ({
   setShowLoginForm,
   SetShowOtpForm,
   formData,
-  setFormData
+  setFormData,
 }) => {
   const [formType, setFormType] = useState("userNameAndPassword");
-
   let formComponent;
 
   if (formType === "userNameAndPassword") {

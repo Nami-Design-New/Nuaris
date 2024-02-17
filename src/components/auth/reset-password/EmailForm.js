@@ -8,22 +8,22 @@ const EmailForm = ({
   formData,
   setFormData,
   setResetPasswordStep,
-  setOtpFromResponse
+  setOtpFromResponse,
 }) => {
   const [loading, setLoading] = useState(false);
 
   const headersList = {
     Accept: "application/json",
-    "Content-Type": "application/json"
+    "Content-Type": "application/json",
   };
   const requestOptions = {
     method: "POST",
     url: "/users/forgot-password/",
     headers: headersList,
-    data: formData
+    data: formData,
   };
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e) => {
     setLoading(true);
     e.preventDefault();
     try {
@@ -57,7 +57,7 @@ const EmailForm = ({
         placeholder="EX: mail@mail.com"
         required
         value={formData.email}
-        onChange={e => setFormData({ ...formData, email: e.target.value })}
+        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
       />
       <div className="buttons">
         <Link to="/Login" className="back">

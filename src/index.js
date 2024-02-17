@@ -11,6 +11,10 @@ import "../node_modules/bootstrap/dist/js/bootstrap.bundle.min";
 import "../node_modules/react-toastify/dist/ReactToastify.css";
 /*---------- app style global -----*/
 import "./assets/css/index.css";
+/*---------------- primereact -----------------*/
+import "primereact/resources/themes/saga-blue/theme.css";
+import "primereact/resources/primereact.min.css";
+import "primeicons/primeicons.css";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

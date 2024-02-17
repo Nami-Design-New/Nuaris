@@ -4,7 +4,7 @@ import handWave from "../../../assets/images/waving-hand.svg";
 const UserTypeSelection = ({ setShowLoginForm, setUserTypeSelected }) => {
   const [activeType, setActiveType] = useState("host");
 
-  const handleSetType = type => {
+  const handleSetType = (type) => {
     setActiveType(type);
     setUserTypeSelected(type);
   };
@@ -16,7 +16,7 @@ const UserTypeSelection = ({ setShowLoginForm, setUserTypeSelected }) => {
       </h2>
       <p className="sub-head">Please select the user type.</p>
       <div className="selection-grid">
-        {["host", "agent", "service provider", "employee"].map(type => (
+        {["host", "agent", "service provider", "employee"].map((type) => (
           <button
             key={type}
             className={`select ${activeType === type ? "active" : ""}`}

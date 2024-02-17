@@ -11,19 +11,20 @@ const NewPassword = ({ formData, setFormData }) => {
 
   const headersList = {
     Accept: "application/json",
-    "Content-Type": "application/json"
+    "Content-Type": "application/json",
   };
   const requestOptions = {
     method: "POST",
     url: "/users/password-reset/",
     headers: headersList,
-    data: formData
+    data: formData,
   };
-  const handleSubmit = async e => {
+  const handleSubmit = async (e) => {
     setLoading(true);
     e.preventDefault();
     try {
       await axios.request(requestOptions);
+      toast.success("Password Reset Successful");
       navigate("/Login");
     } catch (error) {
       if (
@@ -49,7 +50,9 @@ const NewPassword = ({ formData, setFormData }) => {
           type="password"
           placeholder="New Password"
           required
-          onChange={e => setFormData({ ...formData, password: e.target.value })}
+          onChange={(e) =>
+            setFormData({ ...formData, password: e.target.value })
+          }
         />
         <div className="buttons">
           <Link to="/Login" className="back">
