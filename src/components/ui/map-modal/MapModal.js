@@ -8,7 +8,7 @@ const MapModal = ({
   setShowModal,
   setFormData,
   formData,
-  setSerchedPlace
+  setSerchedPlace,
 }) => {
   const [mapLoaded, setMapLoaded] = useState(false);
 

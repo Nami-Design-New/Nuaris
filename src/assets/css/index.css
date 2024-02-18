@@ -867,6 +867,8 @@ a {
   width: 100%;
   background: #fff;
   display: flex;
+  position: sticky;
+  top: 0;
 }
 .main_wrap nav .links {
   flex: 1;
@@ -1383,6 +1385,7 @@ th:last-child .p-column-header-content {
   border: none;
   background: none;
   outline: none;
+  height: 44px;
   border: 1px solid #0d0d0d;
   color: #0d0d0d;
 }
@@ -1391,7 +1394,12 @@ th:last-child .p-column-header-content {
 }
 .deleteModal .confirm {
   background: #ff3a29;
+  height: 44px;
 }
 .deleteModal .confirm:hover {
   background: #ff3a29;
+}
+
+.p-datatable {
+  position: unset;
 }/*# sourceMappingURL=index.css.map */

@@ -7,7 +7,7 @@ const InputField = ({
   type = "text",
   id,
   formData,
-  setFormData
+  setFormData,
 }) => {
   return (
     <div className="input-field">

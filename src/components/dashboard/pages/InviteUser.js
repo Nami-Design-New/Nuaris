@@ -6,9 +6,8 @@ import { Link } from "react-router-dom";
 import { DataTable } from "primereact/datatable";
 import { Button } from "primereact/button";
 import { Column } from "primereact/column";
-
 import { useSelector } from "react-redux";
-import DeleteGroupModal from './../layout/DeleteGroupModal';
+import DeleteGroupModal from "./../layout/DeleteGroupModal";
 
 const InviteUser = () => {
   const [tableData, setTableData] = useState([]);

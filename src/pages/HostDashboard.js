@@ -18,6 +18,7 @@ import InviteUser from "../components/dashboard/pages/InviteUser";
 import CreateUser from "../components/dashboard/pages/CreateUser";
 import Permissions from "./../components/dashboard/pages/Permissions";
 import CreatePermission from "../components/dashboard/pages/CreatePermission";
+import EditPermissions from "../components/dashboard/pages/EditPermissions";
 
 const HostDashboard = () => {
   const [sideBarOpen, setSideBarOpen] = useState(false);
@@ -28,8 +29,8 @@ const HostDashboard = () => {
     () => {
       const fetchUserData = async () => {
         try {
-          dispatch(setUser(userFromCookies));
-          if (userFromCookies.subuser_set) {
+          if (userFromCookies && userFromCookies.subuser_set) {
+            dispatch(setUser(userFromCookies));
             const subUserIds = userFromCookies.subuser_set.map(user => user.id);
             const fetchedSubUsers = await Promise.all(
               subUserIds.map(async id => {
@@ -60,10 +61,9 @@ const HostDashboard = () => {
         { endpoint: "/positions/", sliceSetter: setPositions },
         { endpoint: `/users/`, sliceSetter: setAllusers },
         { endpoint: "/groups/", sliceSetter: setPermissionsGroups },
-        { endpoint: "/permissions/", sliceSetter: setPermissions }
+        { endpoint: "/permissions/", sliceSetter: setPermissions },
       ];
       if (userFromCookies) {
-        fetchData("/users/", setUser(userFromCookies));
         fetchDataSets.forEach(({ endpoint, sliceSetter }) => {
           fetchData(endpoint, sliceSetter);
         });
@@ -83,7 +83,11 @@ const HostDashboard = () => {
             <Route path="/NSSM" element={<Nssm />} />
             <Route path="/invite-user/" element={<InviteUser />} />
             <Route path="/invite-user/create-user" element={<CreateUser />} />
-            <Route path="/invite-user/permissions" element={<Permissions />} />
+            <Route path="/invite-user/permissions" element={<Permissions />} />9
+            <Route
+              path="/invite-user/edit-permissions/:permissionId"
+              element={<EditPermissions />}
+            />
             <Route
               path="/invite-user/permissions/create-permissions"
               element={<CreatePermission />}

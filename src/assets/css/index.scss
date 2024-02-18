@@ -820,6 +820,8 @@ $transation: 0.4s ease-in-out;
     width: 100%;
     background: $white;
     display: flex;
+    position: sticky;
+    top: 0;
     .links {
       flex: 1;
       ul {
@@ -1294,6 +1296,7 @@ th:last-child .p-column-header-content {
   }
   .cancel {
     @include clearInput();
+    height: 44px;
     border: 1px solid $dark;
     color: $dark;
     &:hover {
@@ -1302,8 +1305,12 @@ th:last-child .p-column-header-content {
   }
   .confirm {
     background: #ff3a29;
+    height: 44px;
     &:hover {
       background: #ff3a29;
     }
   }
+}
+.p-datatable {
+  position: unset;
 }

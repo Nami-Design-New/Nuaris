@@ -3,19 +3,20 @@ import PageHeader from "../layout/PageHeader";
 import deleteIcon from "../../../assets/images/delete.svg";
 import editIcon from "../../../assets/images/edit.svg";
 import DeleteGroupModal from "./../layout/DeleteGroupModal";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { DataTable } from "primereact/datatable";
 import { Button } from "primereact/button";
 import { Column } from "primereact/column";
 import { useSelector } from "react-redux";
 
 const Permissions = () => {
-  const [tableData, setTableData] = useState([]);
   const [row, setRow] = useState({});
+  const [tableData, setTableData] = useState([]);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const navigate = useNavigate();
   const groups = useSelector(
     state => state.permissionsGroups.permissionsGroups
   );
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
   useEffect(
     () => {
       setTableData(groups);
@@ -24,7 +25,7 @@ const Permissions = () => {
   );
   const backLinks = [
     { name: "Dashboard", to: "/host-dashboard" },
-    { name: "Invite User", to: "/host-dashboard/invite-user" }
+    { name: "Invite User", to: "/host-dashboard/invite-user" },
   ];
   // Actions ui
   const actionTemplate = rowData => {
@@ -41,8 +42,9 @@ const Permissions = () => {
   };
   // edit and delete
   const editRow = rowData => {
-    console.log("Editing row:", rowData);
+    navigate(`/host-dashboard/invite-user/edit-permissions/${rowData.id}`);
   };
+
   const deleteRow = rowData => {
     setShowDeleteModal(true);
     setRow(rowData);

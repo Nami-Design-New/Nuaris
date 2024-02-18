@@ -8,11 +8,11 @@ import { useSelector } from "react-redux";
 
 const NavBar = ({ setSideBarOpen, sideBarOpen }) => {
   const [profileDropDown, setProfileDropDown] = useState(false);
-  const user = useSelector((state) => state.user.user);
-  const subUsers = useSelector((state) => state.users.users);
+  const user = useSelector(state => state.user.user);
+  const subUsers = useSelector(state => state.users.users);
 
   return (
-    <nav className={`${sideBarOpen === true ? "expand" : ""}`}>
+    <nav>
       <div className="links">
         <ul>
           <li>

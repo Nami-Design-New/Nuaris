@@ -12,20 +12,22 @@ import CheckFieldGroup from "../../ui/form-elements/CheckFieldGroup";
 
 const CreateUser = () => {
   const [selectedCountry, setSelectedCountry] = useState(null);
+  const [formData, setFormData] = useState({});
+  const [loading, setLoading] = useState(false);
+  const [showAssignGroups, setShowAssignGroups] = useState(false);
   const positions = useSelector(state => state.positions.positions);
   const permissionsGroups = useSelector(
     state => state.permissionsGroups.permissionsGroups
   );
   const user = useSelector(state => state.user.user);
-  const [formData, setFormData] = useState({});
-  const [loading, setLoading] = useState(false);
+
   const form = useRef(null);
   useEffect(
     () => {
       if (user) {
         setFormData(prevFormData => ({
           ...prevFormData,
-          parent: Number(user.subuser_set[0].id)
+          parent: Number(user.subuser_set[0].id),
         }));
       }
     },
@@ -51,7 +53,7 @@ const CreateUser = () => {
   };
   const backLinks = [
     { name: "Dashboard", to: "/host-dashboard" },
-    { name: "Invite User", to: "/host-dashboard/invite-user" }
+    { name: "Invite User", to: "/host-dashboard/invite-user" },
   ];
   return (
     <React.Fragment>
@@ -78,7 +80,7 @@ const CreateUser = () => {
                   ].getAttribute("id");
                   setFormData({
                     ...formData,
-                    position: Number(selectedOptionId)
+                    position: Number(selectedOptionId),
                   });
                 }}
               >
@@ -128,26 +130,29 @@ const CreateUser = () => {
           </div>
         </form>
       </div>
-      <div className="inner_card mt-4">
-        <form action="" className="row m-0 form-ui">
-          <div className="col-12 p-2">
-            <h6 className="simiLabel">Assign Group Permissions to employee</h6>
-          </div>
-          {permissionsGroups.map(g =>
-            <div className="col-lg-4 col-md-6 col-12 p-2">
-              <CheckFieldGroup
-                key={g.id}
-                label={g.name}
-                name={g.name}
-                id={g.id}
-              />
+      {showAssignGroups &&
+        <div className="inner_card mt-4">
+          <form action="" className="row m-0 form-ui">
+            <div className="col-12 p-2">
+              <h6 className="simiLabel">
+                Assign Group Permissions to employee
+              </h6>
             </div>
-          )}
-          <div className="col-12 p-2 d-flex justify-content-end">
-            <SubmitButton loading={loading} name="Create" className="w-25" />
-          </div>
-        </form>
-      </div>
+            {permissionsGroups.map(g =>
+              <div className="col-lg-4 col-md-6 col-12 p-2">
+                <CheckFieldGroup
+                  key={g.id}
+                  label={g.name}
+                  name={g.name}
+                  id={g.id}
+                />
+              </div>
+            )}
+            <div className="col-12 p-2 d-flex justify-content-end">
+              <SubmitButton loading={loading} name="Create" className="w-25" />
+            </div>
+          </form>
+        </div>}
     </React.Fragment>
   );
 };
