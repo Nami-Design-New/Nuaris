@@ -8,23 +8,30 @@ import { useSelector } from "react-redux";
 import axios from "../../../util/axios";
 import { toast } from "react-toastify";
 import SubmitButton from "../../ui/form-elements/SubmitButton";
+import CheckFieldGroup from "../../ui/form-elements/CheckFieldGroup";
 
 const CreateUser = () => {
   const [selectedCountry, setSelectedCountry] = useState(null);
-  const positions = useSelector((state) => state.positions.positions);
-  const user = useSelector((state) => state.user.user);
+  const positions = useSelector(state => state.positions.positions);
+  const permissionsGroups = useSelector(
+    state => state.permissionsGroups.permissionsGroups
+  );
+  const user = useSelector(state => state.user.user);
   const [formData, setFormData] = useState({});
   const [loading, setLoading] = useState(false);
   const form = useRef(null);
-  useEffect(() => {
-    if (user) {
-      setFormData((prevFormData) => ({
-        ...prevFormData,
-        parent: Number(user.id),
-      }));
-    }
-  }, [user]);
-  const handleSubmit = async (e) => {
+  useEffect(
+    () => {
+      if (user) {
+        setFormData(prevFormData => ({
+          ...prevFormData,
+          parent: Number(user.subuser_set[0].id)
+        }));
+      }
+    },
+    [user]
+  );
+  const handleSubmit = async e => {
     e.preventDefault();
     setLoading(true);
     try {
@@ -38,13 +45,13 @@ const CreateUser = () => {
       setLoading(false);
     }
   };
-  const handleCountrySelect = (code) => {
+  const handleCountrySelect = code => {
     setSelectedCountry(code);
-    setFormData((prevFormData) => ({ ...prevFormData, nationality: code }));
+    setFormData(prevFormData => ({ ...prevFormData, nationality: code }));
   };
   const backLinks = [
     { name: "Dashboard", to: "/host-dashboard" },
-    { name: "Invite User", to: "/host-dashboard/invite-user" },
+    { name: "Invite User", to: "/host-dashboard/invite-user" }
   ];
   return (
     <React.Fragment>
@@ -65,23 +72,24 @@ const CreateUser = () => {
                 name="positions"
                 id="positions"
                 required
-                onChange={(e) => {
-                  const selectedOptionId =
-                    e.target.options[e.target.selectedIndex].getAttribute("id");
+                onChange={e => {
+                  const selectedOptionId = e.target.options[
+                    e.target.selectedIndex
+                  ].getAttribute("id");
                   setFormData({
                     ...formData,
-                    position: Number(selectedOptionId),
+                    position: Number(selectedOptionId)
                   });
                 }}
               >
                 <option value="select" disabled selected>
                   Select
                 </option>
-                {positions.map((option) => (
+                {positions.map(option =>
                   <option key={option.id} id={option.id} value={option.name}>
                     {option.name}
                   </option>
-                ))}
+                )}
               </select>
             </div>
           </div>
@@ -115,6 +123,26 @@ const CreateUser = () => {
               id="phone_number"
             />
           </div>
+          <div className="col-12 p-2 d-flex justify-content-end">
+            <SubmitButton loading={loading} name="Create" className="w-25" />
+          </div>
+        </form>
+      </div>
+      <div className="inner_card mt-4">
+        <form action="" className="row m-0 form-ui">
+          <div className="col-12 p-2">
+            <h6 className="simiLabel">Assign Group Permissions to employee</h6>
+          </div>
+          {permissionsGroups.map(g =>
+            <div className="col-lg-4 col-md-6 col-12 p-2">
+              <CheckFieldGroup
+                key={g.id}
+                label={g.name}
+                name={g.name}
+                id={g.id}
+              />
+            </div>
+          )}
           <div className="col-12 p-2 d-flex justify-content-end">
             <SubmitButton loading={loading} name="Create" className="w-25" />
           </div>

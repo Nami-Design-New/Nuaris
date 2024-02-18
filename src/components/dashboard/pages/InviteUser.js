@@ -8,20 +8,23 @@ import { Button } from "primereact/button";
 import { Column } from "primereact/column";
 
 import { useSelector } from "react-redux";
-import DeleteModal from "../layout/DeleteModal";
+import DeleteGroupModal from './../layout/DeleteGroupModal';
 
 const InviteUser = () => {
   const [tableData, setTableData] = useState([]);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const allUsers = useSelector((state) => state.allUsers.allUsers);
+  const allUsers = useSelector(state => state.allUsers.allUsers);
   const backLinks = [{ name: "Dashboard", to: "/host-dashboard" }];
 
-  useEffect(() => {
-    setTableData(allUsers);
-  }, [allUsers]);
+  useEffect(
+    () => {
+      setTableData(allUsers);
+    },
+    [allUsers]
+  );
 
   // Actions ui
-  const actionTemplate = (rowData) => {
+  const actionTemplate = rowData => {
     return (
       <div className="actions_cell">
         <Button onClick={() => deleteRow(rowData)}>
@@ -34,10 +37,10 @@ const InviteUser = () => {
     );
   };
   // edit and delete
-  const editRow = (rowData) => {
+  const editRow = rowData => {
     console.log("Editing row:", rowData);
   };
-  const deleteRow = (rowData) => {
+  const deleteRow = rowData => {
     setShowDeleteModal(true);
     console.log("Deleting row:", rowData);
   };
@@ -80,7 +83,7 @@ const InviteUser = () => {
           </DataTable>
         </div>
       </div>
-      <DeleteModal
+      <DeleteGroupModal
         showDeleteModal={showDeleteModal}
         setShowDeleteModal={setShowDeleteModal}
       />

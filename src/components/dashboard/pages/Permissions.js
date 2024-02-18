@@ -1,21 +1,53 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PageHeader from "../layout/PageHeader";
+import deleteIcon from "../../../assets/images/delete.svg";
+import editIcon from "../../../assets/images/edit.svg";
+import DeleteGroupModal from "./../layout/DeleteGroupModal";
 import { Link } from "react-router-dom";
 import { DataTable } from "primereact/datatable";
+import { Button } from "primereact/button";
 import { Column } from "primereact/column";
+import { useSelector } from "react-redux";
 
 const Permissions = () => {
+  const [tableData, setTableData] = useState([]);
+  const [row, setRow] = useState({});
+  const groups = useSelector(
+    state => state.permissionsGroups.permissionsGroups
+  );
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  useEffect(
+    () => {
+      setTableData(groups);
+    },
+    [groups]
+  );
   const backLinks = [
     { name: "Dashboard", to: "/host-dashboard" },
-    { name: "Invite User", to: "/host-dashboard/invite-user" },
+    { name: "Invite User", to: "/host-dashboard/invite-user" }
   ];
-  const staticData = [
-    { id: 1, name: "John Doe", age: 30, city: "New York" },
-    { id: 2, name: "Jane Smith", age: 25, city: "Los Angeles" },
-    { id: 3, name: "Michael Johnson", age: 35, city: "Chicago" },
-    { id: 4, name: "Emily Davis", age: 28, city: "San Francisco" },
-    { id: 5, name: "William Brown", age: 32, city: "Seattle" },
-  ];
+  // Actions ui
+  const actionTemplate = rowData => {
+    return (
+      <div className="actions_cell">
+        <Button onClick={() => deleteRow(rowData)}>
+          <img src={deleteIcon} alt="delete" />
+        </Button>
+        <Button onClick={() => editRow(rowData)}>
+          <img src={editIcon} alt="edit" />
+        </Button>
+      </div>
+    );
+  };
+  // edit and delete
+  const editRow = rowData => {
+    console.log("Editing row:", rowData);
+  };
+  const deleteRow = rowData => {
+    setShowDeleteModal(true);
+    setRow(rowData);
+  };
+
   return (
     <React.Fragment>
       <PageHeader name="Permissions" backLinks={backLinks} />
@@ -32,14 +64,17 @@ const Permissions = () => {
           </div>
         </div>
         <div className="table-container">
-          <DataTable value={staticData}>
-            <Column field="username" header="User Name" sortable={true}/>
-            <Column field="position" header="Position" />
-            <Column field="age" header="Age" />
-            <Column field="city" header="City" />
+          <DataTable value={tableData}>
+            <Column field="name" header="Permission Name" />
+            <Column header="Actions" body={actionTemplate} />
           </DataTable>
         </div>
       </div>
+      <DeleteGroupModal
+        showDeleteModal={showDeleteModal}
+        setShowDeleteModal={setShowDeleteModal}
+        row={row}
+      />
     </React.Fragment>
   );
 };
