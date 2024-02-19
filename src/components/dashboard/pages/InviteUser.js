@@ -12,14 +12,14 @@ import DeleteGroupModal from "./../layout/DeleteGroupModal";
 const InviteUser = () => {
   const [tableData, setTableData] = useState([]);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const allUsers = useSelector(state => state.allUsers.allUsers);
+  const employees = useSelector(state => state.employees.employees);
   const backLinks = [{ name: "Dashboard", to: "/host-dashboard" }];
 
   useEffect(
     () => {
-      setTableData(allUsers);
+      setTableData(employees);
     },
-    [allUsers]
+    [employees]
   );
 
   // Actions ui

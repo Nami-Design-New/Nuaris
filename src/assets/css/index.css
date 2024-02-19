@@ -869,6 +869,7 @@ a {
   display: flex;
   position: sticky;
   top: 0;
+  z-index: 99;
 }
 .main_wrap nav .links {
   flex: 1;

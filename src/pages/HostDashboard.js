@@ -5,7 +5,7 @@ import ProtectedRoute from "../components/ProtectedRoute";
 import { useUserFromCookies } from "../hooks/UserAuthed";
 import { useDispatch } from "react-redux";
 import { setPositions } from "../redux/slices/positions";
-import { setAllusers } from "../redux/slices/usersSlice";
+import { setEmployess } from "../redux/slices/employeesSlice";
 import { setUser } from "../redux/slices/authenticatedUserSlice";
 import { setPermissionsGroups } from "../redux/slices/permissionsGroups";
 import { setUsers } from "../redux/slices/subSetUsers";
@@ -59,9 +59,12 @@ const HostDashboard = () => {
       };
       const fetchDataSets = [
         { endpoint: "/positions/", sliceSetter: setPositions },
-        { endpoint: `/users/`, sliceSetter: setAllusers },
+        {
+          endpoint: `/users/?user_id=${userFromCookies?.subuser_set[0].id}`,
+          sliceSetter: setEmployess
+        },
         { endpoint: "/groups/", sliceSetter: setPermissionsGroups },
-        { endpoint: "/permissions/", sliceSetter: setPermissions },
+        { endpoint: "/permissions/", sliceSetter: setPermissions }
       ];
       if (userFromCookies) {
         fetchDataSets.forEach(({ endpoint, sliceSetter }) => {

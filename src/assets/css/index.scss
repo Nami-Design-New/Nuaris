@@ -822,6 +822,7 @@ $transation: 0.4s ease-in-out;
     display: flex;
     position: sticky;
     top: 0;
+    z-index: 99;
     .links {
       flex: 1;
       ul {

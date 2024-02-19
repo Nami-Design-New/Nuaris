@@ -20,14 +20,14 @@ const CreateUser = () => {
     state => state.permissionsGroups.permissionsGroups
   );
   const user = useSelector(state => state.user.user);
-
   const form = useRef(null);
+
   useEffect(
     () => {
       if (user) {
         setFormData(prevFormData => ({
           ...prevFormData,
-          parent: Number(user.subuser_set[0].id),
+          parent: Number(user.subuser_set[0].id)
         }));
       }
     },
@@ -40,6 +40,7 @@ const CreateUser = () => {
       await axios.post("/users/invite-user/", formData);
       toast.success("Invitation sent successfully");
       form.current.reset();
+      setShowAssignGroups(true)
     } catch (error) {
       toast.error("An error occurred while sending the invitation");
       form.current.reset();
@@ -53,7 +54,7 @@ const CreateUser = () => {
   };
   const backLinks = [
     { name: "Dashboard", to: "/host-dashboard" },
-    { name: "Invite User", to: "/host-dashboard/invite-user" },
+    { name: "Invite User", to: "/host-dashboard/invite-user" }
   ];
   return (
     <React.Fragment>
@@ -80,7 +81,7 @@ const CreateUser = () => {
                   ].getAttribute("id");
                   setFormData({
                     ...formData,
-                    position: Number(selectedOptionId),
+                    position: Number(selectedOptionId)
                   });
                 }}
               >

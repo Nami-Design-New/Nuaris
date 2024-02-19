@@ -24,7 +24,7 @@ const EditPermissions = () => {
       if (permissionsGroup) {
         setFormData({
           name: permissionsGroup.name,
-          permissions: permissionsGroup.permissions,
+          permissions: permissionsGroup.permissions
         });
       }
     },
@@ -46,7 +46,7 @@ const EditPermissions = () => {
   const backLinks = [
     { name: "Dashboard", to: "/host-dashboard" },
     { name: "Invite User", to: "/host-dashboard/invite-user" },
-    { name: "Permissions", to: "/host-dashboard/invite-user/permissions" },
+    { name: "Permissions", to: "/host-dashboard/invite-user/permissions" }
   ];
   return (
     <React.Fragment>
