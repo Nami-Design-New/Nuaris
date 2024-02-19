@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { toast } from "react-toastify";
 import axios from "../../../util/axios";
 import SubmitButton from "./../../ui/form-elements/SubmitButton";
+import FormBackButton from "../../ui/form-elements/FormBackButton";
 
 const EmailForm = ({
   setShowLoginForm,
@@ -62,9 +63,7 @@ const EmailForm = ({
         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
       />
       <div className="buttons">
-        <button className="back" onClick={handleBackButtonClick}>
-          <i className="fa-light fa-arrow-left" />
-        </button>
+        <FormBackButton onClick={handleBackButtonClick} />
         <SubmitButton loading={loading} name="Login" />
       </div>
     </form>

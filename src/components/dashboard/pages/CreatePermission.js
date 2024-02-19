@@ -11,29 +11,44 @@ import { setPermissionsGroups } from "../../../redux/slices/permissionsGroups";
 const CreatePermission = () => {
   const dispatch = useDispatch();
   const formRef = useRef(null);
-  const permissions = useSelector(state => state.permissions.permissions);
+  const permissions = useSelector((state) => state.permissions.permissions);
   const permissionsGroups = useSelector(
-    state => state.permissionsGroups.permissionsGroups
+    (state) => state.permissionsGroups.permissionsGroups
   );
   const [formData, setFormData] = useState({ permissions: [] });
   const [loading, setLoading] = useState(false);
   const backLinks = [
     { name: "Dashboard", to: "/host-dashboard" },
-    { name: "Invite User", to: "/host-dashboard/invite-user" },
-    { name: "Permissions", to: "/host-dashboard/invite-user/permissions" }
+    { name: "Invite User", to: "/dashboard/invite-user" },
+    { name: "Permissions", to: "/dashboard/invite-user/permissions" },
   ];
+
+  const handleAddPermission = (e) => {
+    const checked = e.target.checked;
+    if (checked) {
+      setFormData({
+        ...formData,
+        permissions: [...formData.permissions, e.target.value],
+      });
+    } else {
+      const filteredPermessions = formData.permissions.filter(
+        (group) => group !== e.target.value
+      );
+      setFormData({ ...formData, permissions: filteredPermessions });
+    }
+  };
 
   const headersList = {
     Accept: "application/json",
-    "Content-Type": "application/json"
+    "Content-Type": "application/json",
   };
   const requestOptions = {
     method: "POST",
     url: "/groups/",
     headers: headersList,
-    data: formData
+    data: formData,
   };
-  const handleSubmit = async e => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     try {
@@ -47,6 +62,7 @@ const CreatePermission = () => {
       setLoading(false);
     }
   };
+
   return (
     <React.Fragment>
       <PageHeader name="Create Permissions" backLinks={backLinks} />
@@ -65,18 +81,17 @@ const CreatePermission = () => {
           <div className="col-12 p-2">
             <h6 className="simiLabel">Assign Group Permissions to employee</h6>
           </div>
-          {permissions.map(p =>
+          {permissions.map((p) => (
             <div className="col-lg-4 col-md-6 col-12 p-2">
               <CheckFieldPermissions
                 key={p.id}
                 label={p.codename}
                 name={p.name}
                 id={p.id}
-                formData={formData}
-                setFormData={setFormData}
+                onChange={() => handleAddPermission(p.id)}
               />
             </div>
-          )}
+          ))}
           <div className="col-12 p-2 d-flex justify-content-end">
             <SubmitButton loading={loading} name="Create" className="w-25" />
           </div>

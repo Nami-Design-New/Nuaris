@@ -15,20 +15,17 @@ const Permissions = () => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const navigate = useNavigate();
   const groups = useSelector(
-    state => state.permissionsGroups.permissionsGroups
+    (state) => state.permissionsGroups.permissionsGroups
   );
-  useEffect(
-    () => {
-      setTableData(groups);
-    },
-    [groups]
-  );
+  useEffect(() => {
+    setTableData(groups);
+  }, [groups]);
   const backLinks = [
     { name: "Dashboard", to: "/host-dashboard" },
-    { name: "Invite User", to: "/host-dashboard/invite-user" },
+    { name: "Invite User", to: "/dashboard/invite-user" },
   ];
   // Actions ui
-  const actionTemplate = rowData => {
+  const actionTemplate = (rowData) => {
     return (
       <div className="actions_cell">
         <Button onClick={() => deleteRow(rowData)}>
@@ -41,11 +38,11 @@ const Permissions = () => {
     );
   };
   // edit and delete
-  const editRow = rowData => {
-    navigate(`/host-dashboard/invite-user/edit-permissions/${rowData.id}`);
+  const editRow = (rowData) => {
+    navigate(`/dashboard/invite-user/edit-permissions/${rowData.id}`);
   };
 
-  const deleteRow = rowData => {
+  const deleteRow = (rowData) => {
     setShowDeleteModal(true);
     setRow(rowData);
   };
@@ -58,7 +55,7 @@ const Permissions = () => {
           <h3>Permissions</h3>
           <div className="buttons">
             <Link
-              to="/host-dashboard/invite-user/permissions/create-permissions"
+              to="/dashboard/invite-user/permissions/create-permissions"
               className="boton"
             >
               Create Permissions

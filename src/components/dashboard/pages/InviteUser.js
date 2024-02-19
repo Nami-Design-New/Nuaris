@@ -12,18 +12,15 @@ import DeleteGroupModal from "./../layout/DeleteGroupModal";
 const InviteUser = () => {
   const [tableData, setTableData] = useState([]);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const employees = useSelector(state => state.employees.employees);
+  const employees = useSelector((state) => state.employees.employees);
   const backLinks = [{ name: "Dashboard", to: "/host-dashboard" }];
 
-  useEffect(
-    () => {
-      setTableData(employees);
-    },
-    [employees]
-  );
+  useEffect(() => {
+    setTableData(employees);
+  }, [employees]);
 
   // Actions ui
-  const actionTemplate = rowData => {
+  const actionTemplate = (rowData) => {
     return (
       <div className="actions_cell">
         <Button onClick={() => deleteRow(rowData)}>
@@ -36,10 +33,10 @@ const InviteUser = () => {
     );
   };
   // edit and delete
-  const editRow = rowData => {
+  const editRow = (rowData) => {
     console.log("Editing row:", rowData);
   };
-  const deleteRow = rowData => {
+  const deleteRow = (rowData) => {
     setShowDeleteModal(true);
     console.log("Deleting row:", rowData);
   };
@@ -52,15 +49,12 @@ const InviteUser = () => {
           <h3>Users (employee) / Permissions</h3>
           <div className="buttons">
             <Link
-              to="/host-dashboard/invite-user/permissions"
+              to="/dashboard/invite-user/permissions"
               className="boton transparent"
             >
               Create New Group Permissions
             </Link>
-            <Link
-              to="/host-dashboard/invite-user/create-user"
-              className="boton"
-            >
+            <Link to="/dashboard/invite-user/create-user" className="boton">
               Create a User (employee)
             </Link>
           </div>
