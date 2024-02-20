@@ -1273,7 +1273,7 @@ footer .links a:hover {
   color: #006980;
 }
 
-.boton {
+.button {
   border: none;
   background: none;
   outline: none;
@@ -1283,8 +1283,30 @@ footer .links a:hover {
   color: #fff;
   background: #006980;
   border-radius: 12px;
+  transition: background 0.3s;
 }
-.boton.transparent {
+.button:hover {
+  background: rgba(0, 105, 128, 0.8);
+}
+.button.success {
+  background: #34b53a;
+}
+.button.success:hover {
+  background: rgba(52, 181, 58, 0.8);
+}
+.button.danger {
+  background: #dc3545;
+}
+.button.danger:hover {
+  background: rgba(220, 53, 69, 0.8);
+}
+.button.disabled {
+  background: #777777;
+}
+.button.disabled:hover {
+  background: rgba(119, 119, 119, 0.8);
+}
+.button.transparent {
   background: #fff;
   border: 1px solid #006980;
   color: #006980;
@@ -1403,4 +1425,117 @@ th:last-child .p-column-header-content {
 
 .p-datatable {
   position: unset;
+}
+
+/*
+  notes:
+  - i will only add styles here so we dont have conflicts
+  - any edited styles in the file will start with: FOX -> (date)
+  and end with: END OF (date)
+*/
+.route_path {
+  font-weight: 500;
+  display: flex;
+  gap: 8px;
+}
+.route_path a {
+  font-size: 16px;
+  color: #006980;
+}
+.route_path a.disabled {
+  color: #4f4f4f;
+}
+.route_path span {
+  font-weight: 400;
+}
+.route_path small {
+  font-size: 12px;
+}
+
+.flex-header {
+  display: flex;
+  width: 100%;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.fleet-grid {
+  margin-top: 20px;
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  width: 100%;
+}
+.fleet-grid .fleet-card {
+  position: relative;
+  background-color: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+}
+.fleet-grid .fleet-card .badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 999;
+}
+.fleet-grid .fleet-card .image-container {
+  overflow: hidden;
+  border-radius: 12px;
+  max-height: 200px;
+  display: flex;
+}
+.fleet-grid .fleet-card .image-container:hover img {
+  scale: 1.1;
+}
+.fleet-grid .fleet-card .image-container img {
+  max-width: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  transition: 1s ease-out;
+}
+.fleet-grid .fleet-card .card-content {
+  padding: 16px;
+  padding-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+}
+.fleet-grid .fleet-card .card-content h3 {
+  font-size: 20px;
+}
+.fleet-grid .fleet-card .card-content p {
+  font-size: 16px;
+  font-weight: 500;
+  margin: 0;
+  color: #0d0d0d;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.fleet-grid .fleet-card .card-content p img {
+  width: 16px;
+}
+.fleet-grid .fleet-card .card-content p span {
+  font-weight: 400;
+  font-size: 15px;
+  color: #777777;
+}
+
+.badge {
+  font-weight: 400;
+  border-radius: 12px;
+  padding: 4px 8px;
+  color: #fff;
+  background-color: #777777;
+  cursor: default;
+  font-size: 12px;
+  text-transform: capitalize;
+}
+.badge.success {
+  background-color: #34b53a;
+}
+.badge.danger {
+  background-color: #dc3545;
+}
+.badge.idle {
+  background-color: #777777;
 }/*# sourceMappingURL=index.css.map */
