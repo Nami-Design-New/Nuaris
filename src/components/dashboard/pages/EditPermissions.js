@@ -40,7 +40,6 @@ const EditPermissions = () => {
       toast.error("Failed to update permissions group");
     }
   };
-
   return (
     <React.Fragment>
       <PageHeader name="Edit Permissions" />

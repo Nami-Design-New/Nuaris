@@ -8,8 +8,8 @@ import { useSelector } from "react-redux";
 
 const NavBar = ({ setSideBarOpen, sideBarOpen }) => {
   const [profileDropDown, setProfileDropDown] = useState(false);
-  const user = useSelector(state => state.user.user);
-  const subUsers = useSelector(state => state.users.users);
+  const user = useSelector((state) => state.user.user);
+  const subUsers = useSelector((state) => state.users.users);
 
   return (
     <nav>
@@ -29,13 +29,13 @@ const NavBar = ({ setSideBarOpen, sideBarOpen }) => {
             <NavLink to="/host-dashboard">DashBoard</NavLink>
           </li>
           <li>
-            <NavLink to="/host-dashboard/live-tracker">live tracker</NavLink>
+            <NavLink to="/dashboard/live-tracker">live tracker</NavLink>
           </li>
           <li>
-            <NavLink to="/host-dashboard/NSSM">NSSM</NavLink>
+            <NavLink to="/dashboard/NSSM">NSSM</NavLink>
           </li>
           <li>
-            <NavLink to="/host-dashboard/Bookings-scheduling">
+            <NavLink to="/dashboard/Bookings-scheduling">
               Bookings & scheduling
             </NavLink>
           </li>
@@ -44,12 +44,12 @@ const NavBar = ({ setSideBarOpen, sideBarOpen }) => {
       <div className="settings">
         <ul>
           <li>
-            <NavLink to="/host-dashboard/settings">
+            <NavLink to="/dashboard/settings">
               <img src={settingsIcon} alt="setting-icon" />
             </NavLink>
           </li>
           <li className="notification">
-            <NavLink to="/host-dashboard/settings">
+            <NavLink to="/dashboard/settings">
               <img src={notificationIcon} alt="notification-icon" />
               <span className="number">3</span>
             </NavLink>

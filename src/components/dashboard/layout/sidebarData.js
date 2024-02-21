@@ -3,68 +3,68 @@ const sidebarData = [
     path: "/host-dashboard",
     icon: require("../../../assets/images/Dashboard.svg").default,
     alt: "dash-board-icon",
-    label: "Dashboard"
+    label: "Dashboard",
   },
   {
-    path: "/host-dashboard/fleet",
+    path: "/dashboard/fleet",
     icon: require("../../../assets/images/Fleet.svg").default,
     alt: "fleet-icon",
-    label: "Fleet"
+    label: "Fleet",
   },
   {
-    path: "/host-dashboard/add-ones",
+    path: "/dashboard/add-ones",
     icon: require("../../../assets/images/AddOns.svg").default,
     alt: "add-ones-icon",
-    label: "Add Ons"
+    label: "Add Ons",
   },
   {
-    path: "/host-dashboard/trip-packages",
+    path: "/dashboard/trip-packages",
     icon: require("../../../assets/images/TripPackages.svg").default,
     alt: "trip-packages-icon",
-    label: "Trip Packages"
+    label: "Trip Packages",
   },
   {
-    path: "/host-dashboard/clients",
+    path: "/dashboard/clients",
     icon: require("../../../assets/images/Clients.svg").default,
     alt: "client-icon",
-    label: "Clients"
+    label: "Clients",
   },
   {
-    path: "/host-dashboard/reports",
+    path: "/dashboard/reports",
     icon: require("../../../assets/images/Reports.svg").default,
     alt: "reports-icon",
-    label: "Reports"
+    label: "Reports",
   },
   {
-    path: "/host-dashboard/packages",
+    path: "/dashboard/packages",
     icon: require("../../../assets/images/packages.svg").default,
     alt: "packages-icon",
-    label: "Packages"
+    label: "Packages",
   },
   {
-    path: "/host-dashboard/complaint",
+    path: "/dashboard/complaint",
     icon: require("../../../assets/images/complaint.svg").default,
     alt: "complaint-icon",
-    label: "Complaint"
+    label: "Complaint",
   },
   {
-    path: "/host-dashboard/rating",
+    path: "/dashboard/rating",
     icon: require("../../../assets/images/Rating.svg").default,
     alt: "rating-icon",
-    label: "Rating"
+    label: "Rating",
   },
   {
-    path: "/host-dashboard/host-settings",
+    path: "/dashboard/host-settings",
     icon: require("../../../assets/images/Hostsettings.svg").default,
     alt: "host-settings-icon",
-    label: "Host settings"
+    label: "Host settings",
   },
   {
-    path: "/host-dashboard/questions-settings",
+    path: "/dashboard/questions-settings",
     icon: require("../../../assets/images/QuestionsSettings.svg").default,
     alt: "questions-settings-icon",
-    label: "Questions Settings"
-  }
+    label: "Questions Settings",
+  },
 ];
 
 export default sidebarData;

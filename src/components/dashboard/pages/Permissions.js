@@ -36,7 +36,9 @@ const Permissions = () => {
   };
   // edit and delete
   const editRow = (rowData) => {
-    navigate(`/host-dashboard/invite-user/edit-permissions/${rowData.id}`);
+
+    navigate(`/dashboard/invite-user/edit-permissions/${rowData.id}`);
+
   };
 
   const deleteRow = (rowData) => {
@@ -52,7 +54,7 @@ const Permissions = () => {
           <h3>Permissions</h3>
           <div className="buttons">
             <Link
-              to="/host-dashboard/invite-user/permissions/create-permissions"
+              to="/dashboard/invite-user/permissions/create-permissions"
               className="boton"
             >
               Create Permissions

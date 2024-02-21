@@ -18,6 +18,21 @@ const CreatePermission = () => {
   const [formData, setFormData] = useState({ permissions: [] });
   const [loading, setLoading] = useState(false);
 
+  const handleAddPermission = (e) => {
+    const checked = e.target.checked;
+    if (checked) {
+      setFormData({
+        ...formData,
+        permissions: [...formData.permissions, e.target.value],
+      });
+    } else {
+      const filteredPermessions = formData.permissions.filter(
+        (group) => group !== e.target.value
+      );
+      setFormData({ ...formData, permissions: filteredPermessions });
+    }
+  };
+
   const headersList = {
     Accept: "application/json",
     "Content-Type": "application/json",
@@ -42,6 +57,7 @@ const CreatePermission = () => {
       setLoading(false);
     }
   };
+
   return (
     <React.Fragment>
       <PageHeader name="Create Permissions" />
@@ -67,8 +83,7 @@ const CreatePermission = () => {
                 label={p.codename}
                 name={p.name}
                 id={p.id}
-                formData={formData}
-                setFormData={setFormData}
+                onChange={() => handleAddPermission(p.id)}
               />
             </div>
           ))}

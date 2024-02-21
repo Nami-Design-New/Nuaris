@@ -58,15 +58,13 @@ const ProfileDropMenu = ({
       <div className="manage_invite">
         <div className="link" onClick={() => setProfileDropDown(false)}>
           <img src={invite} alt="invite-user" />
-          <Link to="/host-dashboard/invite-user">
+          <Link to="/dashboard/invite-user">
             invite user ( employee ) / Permissions
           </Link>
         </div>
         <div className="link" onClick={() => setProfileDropDown(false)}>
           <img src={manage} alt="manage-account" />
-          <Link to="/host-dashboard/manage-account">
-            Manage Your Nuaris Account
-          </Link>
+          <Link to="/dashboard/manage-account">Manage Your Nuaris Account</Link>
         </div>
       </div>
       {/* switch users */}

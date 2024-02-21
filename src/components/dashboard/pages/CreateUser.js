@@ -12,13 +12,15 @@ import CheckFieldGroup from "../../ui/form-elements/CheckFieldGroup";
 
 const CreateUser = () => {
   const [selectedCountry, setSelectedCountry] = useState(null);
-  const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState({ groups: [] });
   const [loading, setLoading] = useState(false);
   const [showAssignGroups, setShowAssignGroups] = useState(false);
+
   const positions = useSelector((state) => state.positions.positions);
   const permissionsGroups = useSelector(
     (state) => state.permissionsGroups.permissionsGroups
   );
+
   const user = useSelector((state) => state.user.user);
   const form = useRef(null);
 
@@ -26,10 +28,27 @@ const CreateUser = () => {
     if (user) {
       setFormData((prevFormData) => ({
         ...prevFormData,
-        parent: Number(user.subuser_set[0].id),
+        parent: Number(user.subuser_set[0]?.id),
       }));
     }
   }, [user]);
+
+  const handleAddGroup = (e) => {
+    const checked = e.target.checked;
+    if (checked) {
+      setFormData({
+        ...formData,
+        groups: [...formData.groups, e.target.value],
+      });
+    } else {
+      const filteredGroups = formData.groups.filter(
+        (group) => group !== e.target.value
+      );
+      setFormData({ ...formData, groups: filteredGroups });
+    }
+  };
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -62,6 +81,7 @@ const CreateUser = () => {
             <div className="input-field">
               <label htmlFor="positions">Positions</label>
               <select
+                defaultValue={"select"}
                 name="positions"
                 id="positions"
                 required
@@ -74,7 +94,7 @@ const CreateUser = () => {
                   });
                 }}
               >
-                <option value="select" disabled selected>
+                <option value="select" disabled>
                   Select
                 </option>
                 {positions.map((option) => (
@@ -135,6 +155,7 @@ const CreateUser = () => {
                   label={g.name}
                   name={g.name}
                   id={g.id}
+                  onChange={handleAddGroup}
                 />
               </div>
             ))}

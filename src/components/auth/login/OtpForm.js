@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import Otpcontainer from "../../../shared/Otpcontainer";
 import SubmitButton from "./../../ui/form-elements/SubmitButton";
+import FormBackButton from "../../ui/form-elements/FormBackButton";
 
 const OtpForm = ({
   formData,
@@ -15,7 +16,7 @@ const OtpForm = ({
   setShowLoginForm,
 }) => {
   const [loading, setLoading] = useState(false);
-  const [cookie, setCookie] = useCookies(["token"]);
+  const [, setCookie] = useCookies(["token"]);
   const navigate = useNavigate();
 
   const handleBackButtonClick = (e) => {
@@ -92,9 +93,7 @@ const OtpForm = ({
           <h6>Resend the code</h6>
         </div>
         <div className="buttons">
-          <button className="back" onClick={handleBackButtonClick}>
-            <i className="fa-light fa-arrow-left" />
-          </button>
+          <FormBackButton onClick={handleBackButtonClick} />
           <SubmitButton loading={loading} name="Confirm" />
         </div>
       </form>

@@ -14,6 +14,7 @@ const InviteUser = () => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const employees = useSelector((state) => state.employees.employees);
 
+
   useEffect(() => {
     setTableData(employees);
   }, [employees]);
@@ -48,15 +49,13 @@ const InviteUser = () => {
           <h3>Users (employee) / Permissions</h3>
           <div className="buttons">
             <Link
-              to="/host-dashboard/invite-user/permissions"
-              className="button transparent"
+              to="permissions"
+              className="boton transparent"
             >
               Create New Group Permissions
             </Link>
-            <Link
-              to="/host-dashboard/invite-user/create-user"
-              className="button"
-            >
+            <Link to="create-user" className="boton">
+
               Create a User (employee)
             </Link>
           </div>

@@ -4,11 +4,12 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useCookies } from "react-cookie";
 import SubmitButton from "./../../ui/form-elements/SubmitButton";
+import FormBackButton from "../../ui/form-elements/FormBackButton";
 
 const UserNameForm = ({ setShowLoginForm, userTypeSelected }) => {
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({});
-  const [cookie, setCookie] = useCookies(["token"]);
+  const [, setCookie] = useCookies(["token"]);
   const navigate = useNavigate();
   const form = useRef(null);
 
@@ -39,6 +40,11 @@ const UserNameForm = ({ setShowLoginForm, userTypeSelected }) => {
         secure: true,
       });
       setCookie("id", res.data.user.id, {
+        path: "/",
+        expires: new Date(new Date().getTime() + 6 * 60 * 60 * 1000),
+        secure: true,
+      });
+      setCookie("id", res.data.user?.role, {
         path: "/",
         expires: new Date(new Date().getTime() + 6 * 60 * 60 * 1000),
         secure: true,
@@ -78,9 +84,7 @@ const UserNameForm = ({ setShowLoginForm, userTypeSelected }) => {
       />
       <Link to={"/reset-password"}>Forget Password ?</Link>
       <div className="buttons">
-        <button className="back" onClick={handleBackButtonClick}>
-          <i className="fa-light fa-arrow-left" />
-        </button>
+        <FormBackButton onClick={handleBackButtonClick} />
         <SubmitButton loading={loading} name="Login" />
       </div>
     </form>
