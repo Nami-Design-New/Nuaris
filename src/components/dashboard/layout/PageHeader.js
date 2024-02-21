@@ -6,7 +6,7 @@ const PageHeader = ({ name, hint }) => {
   const currentRoute = capitalizedRoutes[capitalizedRoutes.length - 1];
   return (
     <div className="page_header">
-      <h1>{name || currentRoute}</h1>
+      <h1 className="">{name || currentRoute}</h1>
       <RoutePath hint={hint || ""} />
     </div>
   );

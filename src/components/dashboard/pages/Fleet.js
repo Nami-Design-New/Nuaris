@@ -4,7 +4,7 @@ import FleetCardsGrid from "../layout/fleet/FleetCardsGrid";
 
 export default function Fleet() {
   return (
-    <section>
+    <section className="section-main-content">
       <header className="flex-header">
         <PageHeader />
         <Link to="add-yacht" className="button success">
