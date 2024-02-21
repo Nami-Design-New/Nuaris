@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import axios from "../util/axios";
-import ProtectedRoute from "../components/ProtectedRoute";
+
 import { useUserFromCookies } from "../hooks/UserAuthed";
 import { useDispatch } from "react-redux";
 import { setPositions } from "../redux/slices/positions";
@@ -77,7 +77,7 @@ const HostDashboard = () => {
   }, [userFromCookies, dispatch]);
 
   return (
-    <ProtectedRoute>
+    <React.Fragment>
       <SideBar sideBarOpen={sideBarOpen} />
       <div className={`main_wrap ${sideBarOpen ? "expand" : ""}`}>
         <NavBar setSideBarOpen={setSideBarOpen} sideBarOpen={sideBarOpen} />
@@ -100,7 +100,7 @@ const HostDashboard = () => {
         </main>
         <Footer />
       </div>
-    </ProtectedRoute>
+    </React.Fragment>
   );
 };
 

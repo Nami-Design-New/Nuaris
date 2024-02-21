@@ -1,6 +1,6 @@
 const sidebarData = [
   {
-    path: "/host-dashboard",
+    path: "/dashboard",
     icon: require("../../../assets/images/Dashboard.svg").default,
     alt: "dash-board-icon",
     label: "Dashboard",

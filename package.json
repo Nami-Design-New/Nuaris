@@ -21,6 +21,7 @@
     "react-filepond": "^7.1.2",
     "react-flags-select": "^2.2.3",
     "react-geocode": "^1.0.0-alpha.1",
+    "react-jwt": "^1.2.0",
     "react-phone-number-input": "^3.3.9",
     "react-redux": "^9.0.4",
     "react-router-dom": "^6.21.0",

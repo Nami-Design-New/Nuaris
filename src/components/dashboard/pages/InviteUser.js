@@ -50,12 +50,11 @@ const InviteUser = () => {
           <div className="buttons">
             <Link
               to="permissions"
-              className="boton transparent"
+              className="button transparent"
             >
               Create New Group Permissions
             </Link>
-            <Link to="create-user" className="boton">
-
+            <Link to="create-user" className="button">
               Create a User (employee)
             </Link>
           </div>
