@@ -26,7 +26,7 @@ const NavBar = ({ setSideBarOpen, sideBarOpen }) => {
             </button>
           </li>
           <li>
-            <NavLink to="/host-dashboard">DashBoard</NavLink>
+            <NavLink to="/dashboard">DashBoard</NavLink>
           </li>
           <li>
             <NavLink to="/dashboard/live-tracker">live tracker</NavLink>

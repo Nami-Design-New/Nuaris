@@ -55,7 +55,7 @@ const Permissions = () => {
           <div className="buttons">
             <Link
               to="/dashboard/invite-user/permissions/create-permissions"
-              className="boton"
+              className="button"
             >
               Create Permissions
             </Link>

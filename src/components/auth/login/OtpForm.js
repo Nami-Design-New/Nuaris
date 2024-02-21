@@ -52,16 +52,6 @@ const OtpForm = ({
         expires: new Date(new Date().getTime() + 6 * 60 * 60 * 1000),
         secure: true,
       });
-      // navigation
-      if (userTypeSelected === "host") {
-        navigate("/host-dashboard");
-      } else if (userTypeSelected === "agent") {
-        navigate("/agent-dashboard");
-      } else if (userTypeSelected === "service provider") {
-        navigate("/service-provider-dashboard");
-      } else {
-        navigate("/employee-choose-host");
-      }
     } catch (error) {
       if (
         error.response &&

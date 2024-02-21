@@ -8,18 +8,18 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function Dashboard() {
-  const [cookies] = useCookies();
-  // const role = cookies.role;
-  const idExist = cookies.id;
-  const navigate = useNavigate();
+  // const [cookies] = useCookies();
+  // // const role = cookies.role;
+  // const idExist = cookies.id;
+  // const navigate = useNavigate();
 
-  useEffect(() => {
-    if (!idExist) {
-      navigate("/login");
-    }
-  }, [idExist, navigate]);
+  // useEffect(() => {
+  //   if (!idExist) {
+  //     navigate("/login");
+  //   }
+  // }, [idExist, navigate]);
 
-  const user = useUserFromCookies();
+  // const user = useUserFromCookies();
 
   // TODO: remove
   const role = "host";
