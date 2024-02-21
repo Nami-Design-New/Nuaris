@@ -19,6 +19,7 @@ import CreateUser from "../components/dashboard/pages/CreateUser";
 import Permissions from "./../components/dashboard/pages/Permissions";
 import CreatePermission from "../components/dashboard/pages/CreatePermission";
 import EditPermissions from "../components/dashboard/pages/EditPermissions";
+import Fleet from "../components/dashboard/pages/Fleet";
 
 const HostDashboard = () => {
   const [sideBarOpen, setSideBarOpen] = useState(false);
@@ -59,7 +60,9 @@ const HostDashboard = () => {
     const fetchDataSets = [
       { endpoint: "/positions/", sliceSetter: setPositions },
       {
+
         endpoint: `/users/?user_id=${userFromCookies?.subuser_set[0]?.id}`,
+
         sliceSetter: setEmployess,
       },
       { endpoint: "/groups/", sliceSetter: setPermissionsGroups },
@@ -84,6 +87,7 @@ const HostDashboard = () => {
             <Route path="/invite-user/" element={<InviteUser />} />
             <Route path="/invite-user/create-user" element={<CreateUser />} />
             <Route path="/invite-user/permissions" element={<Permissions />} />9
+            <Route path="/fleet" element={<Fleet />} />
             <Route
               path="/invite-user/edit-permissions/:permissionId"
               element={<EditPermissions />}

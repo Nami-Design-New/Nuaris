@@ -48,6 +48,7 @@ const CreateUser = () => {
     }
   };
 
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -67,17 +68,10 @@ const CreateUser = () => {
     setSelectedCountry(code);
     setFormData((prevFormData) => ({ ...prevFormData, nationality: code }));
   };
-  const backLinks = [
-    { name: "Dashboard", to: "/host-dashboard" },
-    { name: "Invite User", to: "/dashboard/invite-user" },
-  ];
+
   return (
     <React.Fragment>
-      <PageHeader
-        name="Create a User"
-        backLinks={backLinks}
-        hint="(employee)"
-      />
+      <PageHeader name="Create a User" hint="(employee)" />
       <div className="inner_card">
         <form onSubmit={handleSubmit} ref={form} className="row m-0 form-ui">
           <div className="col-lg-4  col-12 p-2">

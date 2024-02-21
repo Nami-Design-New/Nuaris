@@ -40,14 +40,9 @@ const EditPermissions = () => {
       toast.error("Failed to update permissions group");
     }
   };
-  const backLinks = [
-    { name: "Dashboard", to: "/host-dashboard" },
-    { name: "Invite User", to: "/dashboard/invite-user" },
-    { name: "Permissions", to: "/dashboard/invite-user/permissions" },
-  ];
   return (
     <React.Fragment>
-      <PageHeader name="Edit Permissions" backLinks={backLinks} />
+      <PageHeader name="Edit Permissions" />
       <div className="inner_card">
         <form className="row m-0 form-ui" onSubmit={handleSubmit}>
           <div className="col-12 p-2 mb-2">

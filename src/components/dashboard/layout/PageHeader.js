@@ -1,24 +1,13 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import useRoutes from "../../../hooks/useRoutes";
+import RoutePath from "./RoutePath";
 
-const PageHeader = ({ name, backLinks, hint }) => {
+const PageHeader = ({ name, hint }) => {
+  const { capitalizedRoutes } = useRoutes();
+  const currentRoute = capitalizedRoutes[capitalizedRoutes.length - 1];
   return (
     <div className="page_header">
-      <h1>
-        {name}
-      </h1>
-      <h5>
-        {backLinks.map((link, index) =>
-          <span key={index}>
-            <Link to={link.to}>{link.name}</Link> / {" "}
-          </span>
-        )}
-        {name}{" "}
-        {hint &&
-          <small>
-            {hint}
-          </small>}
-      </h5>
+      <h1>{name || currentRoute}</h1>
+      <RoutePath hint={hint || ""} />
     </div>
   );
 };

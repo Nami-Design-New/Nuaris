@@ -13,7 +13,7 @@ const InviteUser = () => {
   const [tableData, setTableData] = useState([]);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const employees = useSelector((state) => state.employees.employees);
-  const backLinks = [{ name: "Dashboard", to: "/host-dashboard" }];
+
 
   useEffect(() => {
     setTableData(employees);
@@ -43,18 +43,19 @@ const InviteUser = () => {
 
   return (
     <React.Fragment>
-      <PageHeader name="invite user" backLinks={backLinks} />
+      <PageHeader name="invite user" />
       <div className="inner_card">
         <div className="card_header">
           <h3>Users (employee) / Permissions</h3>
           <div className="buttons">
             <Link
-              to="/dashboard/invite-user/permissions"
+              to="permissions"
               className="boton transparent"
             >
               Create New Group Permissions
             </Link>
-            <Link to="/dashboard/invite-user/create-user" className="boton">
+            <Link to="create-user" className="boton">
+
               Create a User (employee)
             </Link>
           </div>

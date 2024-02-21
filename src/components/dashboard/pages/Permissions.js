@@ -20,10 +20,7 @@ const Permissions = () => {
   useEffect(() => {
     setTableData(groups);
   }, [groups]);
-  const backLinks = [
-    { name: "Dashboard", to: "/host-dashboard" },
-    { name: "Invite User", to: "/dashboard/invite-user" },
-  ];
+
   // Actions ui
   const actionTemplate = (rowData) => {
     return (
@@ -39,7 +36,9 @@ const Permissions = () => {
   };
   // edit and delete
   const editRow = (rowData) => {
+
     navigate(`/dashboard/invite-user/edit-permissions/${rowData.id}`);
+
   };
 
   const deleteRow = (rowData) => {
@@ -49,7 +48,7 @@ const Permissions = () => {
 
   return (
     <React.Fragment>
-      <PageHeader name="Permissions" backLinks={backLinks} />
+      <PageHeader />
       <div className="inner_card">
         <div className="card_header">
           <h3>Permissions</h3>

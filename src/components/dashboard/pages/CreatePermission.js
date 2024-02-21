@@ -17,11 +17,6 @@ const CreatePermission = () => {
   );
   const [formData, setFormData] = useState({ permissions: [] });
   const [loading, setLoading] = useState(false);
-  const backLinks = [
-    { name: "Dashboard", to: "/host-dashboard" },
-    { name: "Invite User", to: "/dashboard/invite-user" },
-    { name: "Permissions", to: "/dashboard/invite-user/permissions" },
-  ];
 
   const handleAddPermission = (e) => {
     const checked = e.target.checked;
@@ -65,7 +60,7 @@ const CreatePermission = () => {
 
   return (
     <React.Fragment>
-      <PageHeader name="Create Permissions" backLinks={backLinks} />
+      <PageHeader name="Create Permissions" />
       <div className="inner_card">
         <form className="row m-0 form-ui" onSubmit={handleSubmit} ref={formRef}>
           <div className="col-12 p-2 mb-2">

@@ -59,6 +59,7 @@ a {
 }
 /*color pallete*/
 $main: #006980;
+$mainLight: #006980cc;
 $main25: #bfd5d8;
 $main10: #ebf3f5;
 $dashboardBg: #f7fafb;
@@ -67,10 +68,16 @@ $border: #dddddd;
 $inputBG: #f8f8f8;
 $inputHint: #aaaaaa;
 $gray: #777777;
+$grayLight: #777777cc;
 $text: #666b88;
 $white: #fff;
 $JumbotronHead: #4f4f4f;
 $inputStroke: #f2f2f2;
+$success: #34b53a;
+$successLight: #34b53acc;
+$danger: #dc3545;
+$dangerLight: #dc3545cc;
+$borderRadius: 12px;
 $transation: 0.4s ease-in-out;
 
 .auth-section {
@@ -1205,7 +1212,7 @@ footer {
     }
   }
 }
-.boton {
+.button {
   @include clearInput();
   padding: 8px 16px;
   font-size: 14px;
@@ -1213,6 +1220,30 @@ footer {
   color: $white;
   background: $main;
   border-radius: 12px;
+  // FOX -> 20/2
+  transition: background 0.3s;
+  &:hover {
+    background: $mainLight;
+  }
+  &.success {
+    background: $success;
+    &:hover {
+      background: $successLight;
+    }
+  }
+  &.danger {
+    background: $danger;
+    &:hover {
+      background: $dangerLight;
+    }
+  }
+  &.disabled {
+    background: $gray;
+    &:hover {
+      background: $grayLight;
+    }
+  }
+  // END OF -> 20/2
   &.transparent {
     background: $white;
     border: 1px solid $main;
@@ -1315,3 +1346,121 @@ th:last-child .p-column-header-content {
 .p-datatable {
   position: unset;
 }
+
+// FOX GLOBALS =================================================
+/*
+  notes:
+  - i will only add styles here so we dont have conflicts
+  - any edited styles in the file will start with: FOX -> (date)
+  and end with: END OF (date)
+*/
+
+.route_path {
+  font-weight: 500;
+  display: flex;
+  gap: 8px;
+  a {
+    font-size: 16px;
+    color: $main;
+  }
+  a.disabled {
+    color: $JumbotronHead;
+  }
+  span {
+    font-weight: 400;
+  }
+  small {
+    font-size: 12px;
+  }
+}
+
+.flex-header {
+  display: flex;
+  width: 100%;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.fleet-grid {
+  margin-top: 20px;
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  width: 100%;
+  .fleet-card {
+    position: relative;
+    background-color: $white;
+    border-radius: $borderRadius;
+    overflow: hidden;
+    .badge {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      z-index: 999;
+    }
+    .image-container {
+      overflow: hidden;
+      border-radius: $borderRadius;
+      max-height: 200px;
+      display: flex;
+      &:hover {
+        img {
+          scale: 1.1;
+        }
+      }
+      img {
+        max-width: 100%;
+        object-fit: cover;
+        transition: 1s ease-out;
+      }
+    }
+    .card-content {
+      padding: 16px;
+      padding-bottom: 20px;
+      display: flex;
+      flex-direction: column;
+      h3 {
+        font-size: 20px;
+      }
+      p {
+        font-size: 16px;
+        font-weight: 500;
+        margin: 0;
+        color: $dark;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        img {
+          width: 16px;
+        }
+        span {
+          font-weight: 400;
+          font-size: 15px;
+          color: $gray;
+        }
+      }
+    }
+  }
+}
+
+.badge {
+  font-weight: 400;
+  border-radius: $borderRadius;
+  padding: 4px 8px;
+  color: $white;
+  background-color: $gray;
+  cursor: default;
+  font-size: 12px;
+  text-transform: capitalize;
+  &.success {
+    background-color: $success;
+  }
+  &.danger {
+    background-color: $danger;
+  }
+  &.idle {
+    background-color: $gray;
+  }
+}
+
+// END OF FOX STUFF
