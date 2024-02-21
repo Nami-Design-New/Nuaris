@@ -18,7 +18,7 @@ const SideBar = ({ sideBarOpen }) => {
       <ul className="navigation_menu">
         {sidebarData.map((item, index) => (
           <li className="nav_item" key={index} title={item.label}>
-            <NavLink to={item.path}>
+            <NavLink end to={item.path}>
               <img src={item.icon} alt={item.alt} />
               {item.label}
             </NavLink>

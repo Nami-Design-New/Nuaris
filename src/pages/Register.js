@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import logoH from "../assets/images/logoH.svg";
 import regiesterImage from "../assets/images/regiester-image.jpeg";
@@ -9,17 +9,19 @@ import ServiceProvider from "../components/auth/register/ServiceProvider";
 
 const Register = () => {
   const [formSelecton, setFormSelection] = useState("");
-  let title;
+  const [title, setTitle] = useState("");
 
-  if (formSelecton === "host") {
-    title = "Host";
-  } else if (formSelecton === "agent") {
-    title = "Agent";
-  } else if (formSelecton === "service provider") {
-    title = "Service Provider";
-  } else {
-    title = "Register";
-  }
+  useEffect(() => {
+    if (formSelecton === "host") {
+      setTitle("Host");
+    } else if (formSelecton === "agent") {
+      setTitle("Agent");
+    } else if (formSelecton === "service provider") {
+      setTitle("Service Provider");
+    } else {
+      setTitle("Register");
+    }
+  }, [formSelecton]);
 
   return (
     <section className="auth-section">

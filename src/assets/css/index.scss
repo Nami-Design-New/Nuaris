@@ -1381,63 +1381,55 @@ th:last-child .p-column-header-content {
   justify-content: space-between;
 }
 
-.fleet-grid {
-  margin-top: 20px;
-  display: grid;
-  gap: 12px;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  width: 100%;
-  .fleet-card {
-    position: relative;
-    background-color: $white;
-    border-radius: $borderRadius;
+.fleet-card {
+  position: relative;
+  background-color: $white;
+  border-radius: $borderRadius;
+  overflow: hidden;
+  .badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+  }
+  .image-container {
     overflow: hidden;
-    .badge {
-      position: absolute;
-      top: 10px;
-      left: 10px;
-      z-index: 999;
-    }
-    .image-container {
-      overflow: hidden;
-      border-radius: $borderRadius;
-      max-height: 200px;
-      display: flex;
-      &:hover {
-        img {
-          scale: 1.1;
-        }
-      }
+    border-radius: $borderRadius;
+    max-height: 200px;
+    display: flex;
+    &:hover {
       img {
-        max-width: 100%;
-        object-fit: cover;
-        transition: 1s ease-out;
+        scale: 1.1;
       }
     }
-    .card-content {
-      padding: 16px;
-      padding-bottom: 20px;
+    img {
+      max-width: 100%;
+      object-fit: cover;
+      transition: 1s ease-out;
+    }
+  }
+  .card-content {
+    padding: 16px;
+    padding-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    h3 {
+      font-size: 20px;
+    }
+    p {
+      font-size: 16px;
+      font-weight: 500;
+      margin: 0;
+      color: $dark;
       display: flex;
-      flex-direction: column;
-      h3 {
-        font-size: 20px;
+      align-items: center;
+      gap: 8px;
+      img {
+        width: 16px;
       }
-      p {
-        font-size: 16px;
-        font-weight: 500;
-        margin: 0;
-        color: $dark;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        img {
-          width: 16px;
-        }
-        span {
-          font-weight: 400;
-          font-size: 15px;
-          color: $gray;
-        }
+      span {
+        font-weight: 400;
+        font-size: 15px;
+        color: $gray;
       }
     }
   }
@@ -1452,6 +1444,7 @@ th:last-child .p-column-header-content {
   cursor: default;
   font-size: 12px;
   text-transform: capitalize;
+  z-index: 1;
   &.success {
     background-color: $success;
   }
@@ -1461,6 +1454,12 @@ th:last-child .p-column-header-content {
   &.idle {
     background-color: $gray;
   }
+}
+
+.section-main-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 // END OF FOX STUFF

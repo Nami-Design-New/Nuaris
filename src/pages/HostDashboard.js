@@ -60,7 +60,6 @@ const HostDashboard = () => {
     const fetchDataSets = [
       { endpoint: "/positions/", sliceSetter: setPositions },
       {
-
         endpoint: `/users/?user_id=${userFromCookies?.subuser_set[0]?.id}`,
 
         sliceSetter: setEmployess,

@@ -23,7 +23,7 @@ const Login = () => {
           </div>
           <h6>
             You don’t have an Account ?{" "}
-            <Link to={"/Register"}>Create Account</Link>
+            <Link to={"/register"}>Create Account</Link>
           </h6>
         </div>
         {!showLoginForm && !showOtpForm && (
