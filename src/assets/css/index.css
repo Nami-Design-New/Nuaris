@@ -1490,26 +1490,34 @@ th:last-child .p-column-header-content {
   padding-bottom: 20px;
   display: flex;
   flex-direction: column;
+  gap: 8px;
 }
 .fleet-card .card-content h3 {
   font-size: 20px;
+  line-height: 25px;
 }
 .fleet-card .card-content p {
   font-size: 16px;
-  font-weight: 500;
+  font-weight: 400;
   margin: 0;
   color: #0d0d0d;
   display: flex;
   align-items: center;
+  line-height: 20px;
   gap: 8px;
 }
 .fleet-card .card-content p img {
   width: 16px;
 }
+.fleet-card .card-content p img.fleet_image {
+  width: 300px;
+  height: 200px;
+}
 .fleet-card .card-content p span {
   font-weight: 400;
   font-size: 15px;
   color: #777777;
+  line-height: inherit;
 }
 
 .badge {

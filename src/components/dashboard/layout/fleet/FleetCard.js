@@ -1,16 +1,22 @@
 import { Link } from "react-router-dom";
-import locationIcon from "../../../../assets/images/Clients.svg";
-import passengersIcon from "../../../../assets/images/TripPackages.svg";
-import captainIcon from "../../../../assets/images/manageAccount.svg";
+import locationIcon from "../../../../assets/images/pin.svg";
+import passengersIcon from "../../../../assets/images/crowd.svg";
+import captainIcon from "../../../../assets/images/captain.svg";
 import Badge from "../../../ui/Badge";
+import fleetImage from "../../../../assets/images/fleet.png";
 
 export default function FleetCard({ fleet }) {
   return (
     <article className="fleet-card">
       <Badge state={1} content={fleet?.state || "available"} />
 
-      <Link to={""} className="image-container">
-        <img src="/images/fleet.png" alt="flee" />
+      <Link to={fleet?.id || ""} className="image-container">
+        <img
+          loading="lazy"
+          className="fleet_image"
+          src={fleetImage}
+          alt="flee"
+        />
       </Link>
 
       <div className="card-content">
