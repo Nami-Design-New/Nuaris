@@ -1,5 +1,4 @@
 /**
- *
  * @param {word} string
  * @returns capitalized a word
  */

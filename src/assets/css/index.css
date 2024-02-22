@@ -1427,6 +1427,71 @@ th:last-child .p-column-header-content {
   position: unset;
 }
 
+.fleet_side_bar {
+  width: 100%;
+  border-radius: 24px;
+  background: #fff;
+  gap: 24px;
+  height: 100%;
+  display: flex;
+  padding: 24px 16px;
+  flex-direction: column;
+  transition: 0.4s ease-in-out;
+}
+.fleet_side_bar .navigation_menu {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  overflow-y: scroll;
+}
+.fleet_side_bar .navigation_menu::-webkit-scrollbar {
+  display: none;
+}
+.fleet_side_bar .navigation_menu .nav_item {
+  width: 100%;
+}
+.fleet_side_bar .navigation_menu .nav_item a {
+  border-radius: 8px;
+  padding: 10px 13px;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 14px;
+  color: #0d0d0d;
+  white-space: nowrap;
+  transition: 0.4s ease-in-out;
+}
+.fleet_side_bar .navigation_menu .nav_item a img {
+  max-width: 22px;
+}
+.fleet_side_bar .navigation_menu .nav_item a.active, .fleet_side_bar .navigation_menu .nav_item a:hover {
+  background: #ebf3f5;
+  color: #006980;
+}
+
+.feet_form__wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.feet_form__wrapper .wizard_tabs {
+  position: relative;
+  padding: 16px 24px;
+  background: #fff;
+  border-radius: 24px;
+}
+.feet_form__wrapper .wizard_tabs::after {
+  content: "";
+  width: calc(100% - 48px);
+  height: 1px;
+  background: #aaaaaa;
+  left: 24px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
 /*
   notes:
   - i will only add styles here so we dont have conflicts
@@ -1464,6 +1529,7 @@ th:last-child .p-column-header-content {
   background-color: #fff;
   border-radius: 12px;
   overflow: hidden;
+  display: block;
 }
 .fleet-card .badge {
   position: absolute;
@@ -1493,6 +1559,7 @@ th:last-child .p-column-header-content {
   gap: 8px;
 }
 .fleet-card .card-content h3 {
+  color: #006980;
   font-size: 20px;
   line-height: 25px;
 }
@@ -1518,6 +1585,13 @@ th:last-child .p-column-header-content {
   font-size: 15px;
   color: #777777;
   line-height: inherit;
+}
+.fleet-card .card-content .crew_gender {
+  display: flex;
+  gap: 8px;
+}
+.fleet-card .card-content .crew_gender img {
+  height: 24px;
 }
 
 .badge {

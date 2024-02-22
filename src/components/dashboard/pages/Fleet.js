@@ -7,8 +7,8 @@ export default function Fleet() {
     <section className="section-main-content">
       <header className="flex-header">
         <PageHeader />
-        <Link to="add-yacht" className="button success">
-          Add a New Yacht/boat
+        <Link to="add-yacht/main-info" className="button success">
+          Add a New Yacht / boat
         </Link>
       </header>
       <FleetCardsGrid />

@@ -11,23 +11,27 @@ const EditPermissions = () => {
   const [formData, setFormData] = useState({ name: "", permissions: [] });
   const [loading, setLoading] = useState(false);
   const { permissionId } = useParams();
-  const permissions = useSelector((state) => state.permissions.permissions);
+  const permissions = useSelector(state => state.permissions.permissions);
   const permissionsGroups = useSelector(
-    (state) => state.permissionsGroups.permissionsGroups
+    state => state.permissionsGroups.permissionsGroups
   );
 
-  useEffect(() => {
-    const permissionsGroup = permissionsGroups.find(
-      (p) => p.id === parseInt(permissionId)
-    );
-    if (permissionsGroup) {
-      setFormData({
-        name: permissionsGroup.name,
-        permissions: permissionsGroup.permissions,
-      });
-    }
-  }, [permissionId, permissionsGroups]);
-  const handleSubmit = async (e) => {
+  useEffect(
+    () => {
+      const permissionsGroup = permissionsGroups.find(
+        p => p.id === parseInt(permissionId)
+      );
+      if (permissionsGroup) {
+        setFormData({
+          name: permissionsGroup.name,
+          permissions: permissionsGroup.permissions
+        });
+      }
+    },
+    [permissionId, permissionsGroups]
+  );
+
+  const handleSubmit = async e => {
     e.preventDefault();
     try {
       setLoading(true);
@@ -40,6 +44,7 @@ const EditPermissions = () => {
       toast.error("Failed to update permissions group");
     }
   };
+
   return (
     <React.Fragment>
       <PageHeader name="Edit Permissions" />
@@ -55,7 +60,7 @@ const EditPermissions = () => {
                 name="groupOfPermissionsName"
                 value={formData.name}
                 required
-                onChange={(e) => {
+                onChange={e => {
                   setFormData({ ...formData, name: e.target.value });
                 }}
               />
@@ -64,7 +69,7 @@ const EditPermissions = () => {
           <div className="col-12 p-2">
             <h6 className="simiLabel">Assign Group Permissions to employee</h6>
           </div>
-          {permissions.map((p) => (
+          {permissions.map(p =>
             <div className="col-lg-4 col-md-6 col-12 p-2" key={p.id}>
               <CheckFieldPermissions
                 label={p.codename}
@@ -74,7 +79,7 @@ const EditPermissions = () => {
                 setFormData={setFormData}
               />
             </div>
-          ))}
+          )}
           <div className="col-12 p-2 d-flex justify-content-end">
             <SubmitButton loading={loading} name="Confirm" className="w-25" />
           </div>
