@@ -1530,6 +1530,7 @@ th:last-child .p-column-header-content {
   border-radius: 12px;
   overflow: hidden;
   display: block;
+  width: 100%;
 }
 .fleet-card .badge {
   position: absolute;
@@ -1537,9 +1538,10 @@ th:last-child .p-column-header-content {
   left: 10px;
 }
 .fleet-card .image-container {
+  width: 100%;
   overflow: hidden;
   border-radius: 12px;
-  max-height: 200px;
+  height: 200px;
   display: flex;
 }
 .fleet-card .image-container:hover img {
