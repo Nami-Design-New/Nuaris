@@ -47,6 +47,13 @@ ul {
 a {
   text-decoration: none;
 }
+// FOX => 23/2
+button {
+  border: none;
+  background-color: unset;
+}
+// FOX => 23/2
+
 ::-webkit-scrollbar {
   width: 4px;
 }
@@ -1427,6 +1434,7 @@ th:last-child .p-column-header-content {
   }
   a.disabled {
     color: $JumbotronHead;
+    cursor: default;
   }
   span {
     font-weight: 400;
@@ -1440,6 +1448,25 @@ th:last-child .p-column-header-content {
   width: 100%;
   align-items: flex-end;
   justify-content: space-between;
+  .utility-buttons {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    a,
+    button {
+      color: $dark;
+      display: flex;
+      align-items: center;
+      font-size: 16px;
+      font-weight: 500;
+      gap: 10px;
+      padding: 12px;
+      img {
+        width: 20px;
+        height: 20px;
+      }
+    }
+  }
 }
 .fleet-card {
   position: relative;
@@ -1537,5 +1564,160 @@ th:last-child .p-column-header-content {
   display: flex;
   flex-direction: column;
   gap: 20px;
+}
+.fleet-media-swiper {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  .badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+  }
+  .carousel {
+    .carousel-item {
+      height: 400px;
+    }
+    .carousel-indicators {
+      margin: 0;
+      width: max-content;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      left: 12px;
+      bottom: 5px;
+      button {
+        border-radius: 50%;
+        width: 11px;
+        height: 11px;
+        background-color: $white;
+        opacity: 30%;
+        margin: 0;
+        transition: opacity 0.3s;
+        &.active {
+          opacity: 100%;
+        }
+      }
+    }
+  }
+  img {
+    max-width: 100%;
+    object-fit: cover;
+    height: 100%;
+  }
+}
+
+.map-card {
+  padding: 4px;
+  border-radius: 12px;
+  overflow: hidden;
+  background-color: $white;
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  .content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    img {
+      height: 24px;
+      width: 24px;
+    }
+    .text {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      text-transform: capitalize;
+      span {
+        color: $gray;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 18px;
+      }
+      p {
+        font-size: 16px;
+        font-weight: 400;
+        color: $dark;
+        line-height: 18px;
+        margin: 0;
+      }
+    }
+  }
+  .map {
+    background-color: $border;
+    width: 100%;
+    border-radius: 12px;
+    flex: 1;
+  }
+}
+.fleet-page-second-row {
+  background-color: $white;
+  border-radius: 24px;
+  padding: 24px;
+  gap: 12px;
+  display: flex;
+  flex-direction: column;
+  color: $dark;
+  .fleet_tag {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    img {
+      width: 24px;
+      height: 24px;
+    }
+    p {
+      margin: 0;
+      font-weight: 700;
+      font-size: 24px;
+      line-height: 29px;
+      color: $dark;
+    }
+  }
+  .fleet-info-minicard {
+    padding: 12px;
+    gap: 12px;
+    background-color: $main10;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .crew_gender {
+      display: flex;
+      gap: 8px;
+      img {
+        height: 24px;
+      }
+    }
+    .content {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-transform: capitalize;
+      .text {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        span {
+          font-size: 14px;
+          line-height: 18px;
+          font-weight: 400;
+          color: $gray;
+        }
+        p {
+          font-size: 16px;
+          line-height: 18px;
+          font-weight: 500;
+          color: $dark;
+          margin: 0;
+        }
+      }
+    }
+    img {
+      width: 24px;
+      height: 24px;
+    }
+  }
 }
 // END OF FOX STUFF
