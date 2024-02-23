@@ -1804,4 +1804,24 @@ th:last-child .p-column-header-content {
 .fleet-page-second-row .fleet-info-minicard img {
   width: 24px;
   height: 24px;
+}
+
+.stars_rate {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.stars_rate .stars {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.stars_rate .stars span {
+  color: #777777;
+  font-size: 16px;
+  margin: 0;
+}
+.stars_rate .stars img {
+  width: 20px;
+  height: 20px;
 }/*# sourceMappingURL=index.css.map */

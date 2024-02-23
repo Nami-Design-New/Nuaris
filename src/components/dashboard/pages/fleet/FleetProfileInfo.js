@@ -12,7 +12,10 @@ export default function FleetProfileInfo({ fleet }) {
       <div className="row container mx-auto">
         <div className="fleet-page-second-row">
           <div className="d-flex align-items-center justify-content-between">
-            <StarsRate />
+            <StarsRate
+              rate={fleet?.rating}
+              reviewsCount={fleet?.reviewsCount}
+            />
             <div className="fleet_tag">
               <img src={hashIcon} alt="hash" /> <p>{fleet?.tag || "564231"}</p>
             </div>

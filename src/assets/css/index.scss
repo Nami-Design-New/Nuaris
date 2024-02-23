@@ -1720,4 +1720,23 @@ th:last-child .p-column-header-content {
     }
   }
 }
+.stars_rate {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  .stars {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    span {
+      color: $gray;
+      font-size: 16px;
+      margin: 0;
+    }
+    img {
+      width: 20px;
+      height: 20px;
+    }
+  }
+}
 // END OF FOX STUFF
