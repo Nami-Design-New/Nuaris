@@ -4,6 +4,8 @@ import editIcon from "../../../../assets/images/edit.svg";
 import shareIcon from "../../../../assets/images/share.svg";
 import FleetProfileInfo from "./FleetProfileInfo";
 import FleetProfileMedia from "./FleetProfileMedia";
+import FleetProfileTabs from "./FleetProfileTabs";
+import FleetVesselLogbook from "./FleetVesselLogbook";
 
 export default function FleetProfile() {
   const { fleetId } = useParams();
@@ -31,6 +33,8 @@ export default function FleetProfile() {
 
       <FleetProfileMedia fleet={fleet} />
       <FleetProfileInfo fleet={fleet} />
+      <FleetProfileTabs fleet={fleet} />
+      <FleetVesselLogbook />
     </section>
   );
 }

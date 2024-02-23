@@ -39,7 +39,7 @@ export default function FleetMediaSwiper({ media }) {
   return (
     <article className="fleet-media-swiper">
       <Badge state={1} content={"available"} />
-      <Carousel controls={false}>
+      <Carousel fade controls={false}>
         {/* {carouselContent} */}
         {/* TODO: Remove below content */}
         <Carousel.Item>
