@@ -1687,6 +1687,7 @@ th:last-child .p-column-header-content {
 }
 .fleet-media-swiper img {
   max-width: 100%;
+  width: 100%;
   -o-object-fit: cover;
      object-fit: cover;
   height: 100%;
@@ -1738,32 +1739,23 @@ th:last-child .p-column-header-content {
   overflow: hidden;
 }
 
-.fleet-page-second-row {
-  background-color: #fff;
-  border-radius: 24px;
-  padding: 24px;
-  gap: 12px;
-  display: flex;
-  flex-direction: column;
-  color: #0d0d0d;
-}
-.fleet-page-second-row .fleet_tag {
+.fleet-info-row .fleet_tag {
   display: flex;
   align-items: center;
   gap: 8px;
 }
-.fleet-page-second-row .fleet_tag img {
+.fleet-info-row .fleet_tag img {
   width: 24px;
   height: 24px;
 }
-.fleet-page-second-row .fleet_tag p {
+.fleet-info-row .fleet_tag p {
   margin: 0;
   font-weight: 700;
   font-size: 24px;
   line-height: 29px;
   color: #0d0d0d;
 }
-.fleet-page-second-row .fleet-info-minicard {
+.fleet-info-row .fleet-info-minicard {
   padding: 12px;
   gap: 12px;
   background-color: #ebf3f5;
@@ -1772,38 +1764,38 @@ th:last-child .p-column-header-content {
   align-items: center;
   justify-content: space-between;
 }
-.fleet-page-second-row .fleet-info-minicard .crew_gender {
+.fleet-info-row .fleet-info-minicard .crew_gender {
   display: flex;
   gap: 8px;
 }
-.fleet-page-second-row .fleet-info-minicard .crew_gender img {
+.fleet-info-row .fleet-info-minicard .crew_gender img {
   height: 24px;
 }
-.fleet-page-second-row .fleet-info-minicard .content {
+.fleet-info-row .fleet-info-minicard .content {
   display: flex;
   align-items: center;
   gap: 12px;
   text-transform: capitalize;
 }
-.fleet-page-second-row .fleet-info-minicard .content .text {
+.fleet-info-row .fleet-info-minicard .content .text {
   display: flex;
   flex-direction: column;
   gap: 2px;
 }
-.fleet-page-second-row .fleet-info-minicard .content .text span {
+.fleet-info-row .fleet-info-minicard .content .text span {
   font-size: 14px;
   line-height: 18px;
   font-weight: 400;
   color: #777777;
 }
-.fleet-page-second-row .fleet-info-minicard .content .text p {
+.fleet-info-row .fleet-info-minicard .content .text p {
   font-size: 16px;
   line-height: 18px;
   font-weight: 500;
   color: #0d0d0d;
   margin: 0;
 }
-.fleet-page-second-row .fleet-info-minicard img {
+.fleet-info-row .fleet-info-minicard img {
   width: 24px;
   height: 24px;
 }

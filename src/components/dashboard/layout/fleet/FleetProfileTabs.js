@@ -2,7 +2,7 @@ import { Tab, Tabs } from "react-bootstrap";
 
 export default function FleetProfileTabs({ fleet }) {
   return (
-    <div className="row container mx-auto fleet-part">
+    <div className="fleet-part">
       <Tabs>
         <Tab eventKey="description" title="Description">
           <p>

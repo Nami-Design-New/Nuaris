@@ -1604,6 +1604,7 @@ th:last-child .p-column-header-content {
   }
   img {
     max-width: 100%;
+    width: 100%;
     object-fit: cover;
     height: 100%;
   }
@@ -1654,14 +1655,7 @@ th:last-child .p-column-header-content {
     overflow: hidden;
   }
 }
-.fleet-page-second-row {
-  background-color: $white;
-  border-radius: 24px;
-  padding: 24px;
-  gap: 12px;
-  display: flex;
-  flex-direction: column;
-  color: $dark;
+.fleet-info-row {
   .fleet_tag {
     display: flex;
     align-items: center;

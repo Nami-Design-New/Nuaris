@@ -9,8 +9,8 @@ import hashIcon from "../../../../assets/images/hash.svg";
 export default function FleetProfileInfo({ fleet }) {
   return (
     <>
-      <div className="row container mx-auto">
-        <div className="fleet-page-second-row">
+      <div className="fleet-part">
+        <div className="fleet-info-row">
           <div className="d-flex align-items-center justify-content-between">
             <StarsRate
               rate={fleet?.rating}
