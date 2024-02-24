@@ -9,20 +9,18 @@ import female from "../../../../assets/images/female.svg";
 
 export default function FleetCard({ fleet }) {
   return (
-    <Link className="fleet-card" to={fleet?.id || ""}>
+    <Link className="fleet-card" to={fleet?.id || "1"}>
       <Badge state={1} content={fleet?.state || "available"} />
       <div className="image-container">
         <img
           loading="lazy"
           className="fleet_image"
           src={fleetImage}
-          alt="flee"
+          alt="fleet"
         />
       </div>
       <div className="card-content">
-        <h3>
-          {fleet?.fleetName || "Santa Maria"}
-        </h3>
+        <h3>{fleet?.fleetName || "Santa Maria"}</h3>
         <p className="card-location">
           <img src={locationIcon} alt="location pin" />{" "}
           {fleet?.location || "Riyadh, Saudi Arabia"}
@@ -43,11 +41,9 @@ export default function FleetCard({ fleet }) {
         </div>
         <p className="card-location">
           <img src={locationIcon} alt="location pin" /> {fleet?.price || "100"}$
-          {(fleet?.pricePer &&
-            <span>
-              / {fleet?.pricePer}
-            </span>) ||
-            <span>/ hour</span>}
+          {(fleet?.pricePer && <span>/ {fleet?.pricePer}</span>) || (
+            <span>/ hour</span>
+          )}
         </p>
       </div>
     </Link>
