@@ -9,7 +9,7 @@ import RateModal from "../RateModal";
 import { useState } from "react";
 
 export default function FleetProfileInfo({ fleet }) {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <>

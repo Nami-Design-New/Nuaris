@@ -1862,9 +1862,33 @@ th:last-child .p-column-header-content {
   line-height: 22px;
   color: #666b88;
 }
-.tab-content * {
+.tab-content span {
+  font-weight: 500;
+  color: #0d0d0d;
+  margin: 0 2px;
+}
+.tab-content .bold-list > li {
+  font-weight: 500;
+  color: #0d0d0d;
+}
+.tab-content ol {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.tab-content ol.alpha {
+  list-style: lower-alpha;
+}
+.tab-content h5 {
+  font-weight: 500;
+  color: #0d0d0d;
+}
+.tab-content li {
   line-height: 22px;
-  margin: 0;
+}
+.tab-content p {
+  line-height: 22px;
+  margin-bottom: 0;
 }
 
 .coming-soon {

@@ -1777,9 +1777,35 @@ th:last-child .p-column-header-content {
   font-size: 16px;
   line-height: 22px;
   color: $text;
-  * {
+  span {
+    font-weight: 500;
+    color: $dark;
+    margin: 0 2px;
+  }
+  .bold-list {
+    & > li {
+      font-weight: 500;
+      color: $dark;
+    }
+  }
+  ol {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    &.alpha {
+      list-style: lower-alpha;
+    }
+  }
+  h5 {
+    font-weight: 500;
+    color: $dark;
+  }
+  li {
     line-height: 22px;
-    margin: 0;
+  }
+  p {
+    line-height: 22px;
+    margin-bottom: 0;
   }
 }
 .coming-soon {
