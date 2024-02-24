@@ -10,15 +10,18 @@ export default function RoutePath({ currentName, hint }) {
       {routes.map((route, i) => {
         const isLast = i === routes.length - 1;
         return (
-          <React.Fragment>
-            <Link className={isLast && "disabled"} to={route.to}>
+          <React.Fragment key={route.name}>
+            <Link className={isLast ? "disabled" : ""} to={route.to}>
               {isLast && currentName ? currentName : route.name}
             </Link>
             {!isLast && <span> / </span>}
           </React.Fragment>
         );
       })}
-      {hint && <small> {hint}</small>}
+      {hint &&
+        <small>
+          {" "}{hint}
+        </small>}
     </div>
   );
 }

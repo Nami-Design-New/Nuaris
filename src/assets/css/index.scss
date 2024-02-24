@@ -1122,7 +1122,7 @@ $transation: 0.4s ease-in-out;
     min-height: calc(100vh - 180px);
     background: $dashboardBg;
     border-radius: 24px;
-    padding: 32px;
+    padding: 32px 24px;
     display: flex;
     flex-direction: column;
     .page_header {
@@ -1449,6 +1449,7 @@ th:last-child .p-column-header-content {
   width: 100%;
   align-items: flex-end;
   justify-content: space-between;
+  padding: 0 8px;
   .utility-buttons {
     display: flex;
     align-items: center;
@@ -1565,7 +1566,7 @@ th:last-child .p-column-header-content {
 .section-main-content {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 12px;
 }
 .fleet-media-swiper {
   position: relative;
@@ -1609,7 +1610,6 @@ th:last-child .p-column-header-content {
     height: 100%;
   }
 }
-
 .map-card {
   padding: 4px;
   border-radius: 12px;
@@ -1655,68 +1655,6 @@ th:last-child .p-column-header-content {
     overflow: hidden;
   }
 }
-.fleet-info-row {
-  .fleet_tag {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    img {
-      width: 24px;
-      height: 24px;
-    }
-    p {
-      margin: 0;
-      font-weight: 700;
-      font-size: 24px;
-      line-height: 29px;
-      color: $dark;
-    }
-  }
-  .fleet-info-minicard {
-    padding: 12px;
-    gap: 12px;
-    background-color: $main10;
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    .crew_gender {
-      display: flex;
-      gap: 8px;
-      img {
-        height: 24px;
-      }
-    }
-    .content {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      text-transform: capitalize;
-      .text {
-        display: flex;
-        flex-direction: column;
-        gap: 2px;
-        span {
-          font-size: 14px;
-          line-height: 18px;
-          font-weight: 400;
-          color: $gray;
-        }
-        p {
-          font-size: 16px;
-          line-height: 18px;
-          font-weight: 500;
-          color: $dark;
-          margin: 0;
-        }
-      }
-    }
-    img {
-      width: 24px;
-      height: 24px;
-    }
-  }
-}
 .stars_rate {
   display: flex;
   align-items: center;
@@ -1745,67 +1683,135 @@ th:last-child .p-column-header-content {
   color: $dark;
   h2 {
     color: $dark;
-    line-height: 25px;
-    font-size: 20px;
-    margin-bottom: 24px;
+    line-height: 35px;
+    font-size: 28px;
+    margin-bottom: 0;
   }
-}
-.nav-tabs {
-  .nav-link {
-    color: $dark;
-    font-size: 16px;
-    line-height: 20px;
-    font-weight: 400;
-    padding: 8px 12px;
-    border: 1px solid transparent;
-    &:hover {
-      border: 1px solid $main10;
+  .fleet-info-row {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    .fleet_tag {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      img {
+        width: 24px;
+        height: 24px;
+      }
+      p {
+        margin: 0;
+        font-weight: 700;
+        font-size: 24px;
+        line-height: 29px;
+        color: $dark;
+      }
     }
-    &.active {
-      border: 1px solid transparent;
-      color: $main;
-      border-bottom: 1px solid $main;
+    .fleet_details {
+      display: flex;
+      gap: 12px;
+    }
+    .fleet-info-minicard {
+      padding: 12px;
+      gap: 12px;
+      border-radius: 12px;
       background-color: $main10;
-      border-top-left-radius: 8px;
-      border-top-right-radius: 8px;
+      @include space-between();
+      width: 100%;
+      .crew_gender {
+        display: flex;
+        gap: 8px;
+        img {
+          height: 24px;
+        }
+      }
+      .content {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        text-transform: capitalize;
+        .text {
+          display: flex;
+          flex-direction: column;
+          gap: 2px;
+          span {
+            font-size: 14px;
+            line-height: 18px;
+            font-weight: 400;
+            color: $gray;
+          }
+          p {
+            font-size: 16px;
+            line-height: 18px;
+            font-weight: 500;
+            color: $dark;
+            margin: 0;
+          }
+        }
+      }
+      img {
+        width: 24px;
+        height: 24px;
+      }
     }
   }
-}
-.tab-content {
-  margin-top: 12px;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 22px;
-  color: $text;
-  span {
-    font-weight: 500;
-    color: $dark;
-    margin: 0 2px;
+  .nav-tabs {
+    .nav-link {
+      color: $dark;
+      font-size: 16px;
+      line-height: 20px;
+      font-weight: 400;
+      padding: 8px 12px;
+      border: 1px solid transparent;
+      &:hover {
+        border: 1px solid $main10;
+      }
+      &.active {
+        border: 1px solid transparent;
+        color: $main;
+        border-bottom: 1px solid $main;
+        background-color: $main10;
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
+      }
+    }
   }
-  .bold-list {
-    & > li {
+  .tab-content {
+    margin-top: 12px;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 22px;
+    color: $text;
+    span {
+      font-weight: 500;
+      color: $dark;
+      margin: 0 2px;
+    }
+    .bold-list {
+      & > li {
+        font-weight: 500;
+        color: $dark;
+      }
+    }
+    ol {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      &.alpha {
+        list-style: lower-alpha;
+      }
+    }
+    h5 {
       font-weight: 500;
       color: $dark;
     }
-  }
-  ol {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    &.alpha {
-      list-style: lower-alpha;
+    li {
+      line-height: 22px;
     }
-  }
-  h5 {
-    font-weight: 500;
-    color: $dark;
-  }
-  li {
-    line-height: 22px;
-  }
-  p {
-    line-height: 22px;
-    margin-bottom: 0;
+    p {
+      line-height: 24px;
+      margin-bottom: 0;
+    }
   }
 }
 .coming-soon {
@@ -1903,7 +1909,6 @@ th:last-child .p-column-header-content {
     font-weight: 400;
   }
 }
-
 .rate_cards {
   display: flex;
   flex-direction: column;

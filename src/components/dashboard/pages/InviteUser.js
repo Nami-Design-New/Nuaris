@@ -45,36 +45,44 @@ const InviteUser = () => {
 
   return (
     <React.Fragment>
-      <PageHeader name="Invite user" />
-      <div className="inner_card">
-        <div className="card_header">
-          <h3>Users (employee) / Permissions</h3>
-          <div className="buttons">
-            <Link to="permissions" className="button transparent">
-              Create New Group Permissions
-            </Link>
-            <Link to="create-user" className="button">
-              Create a User (employee)
-            </Link>
+      <section className="section-main-content">
+        <header className="flex-header">
+          <PageHeader name="Invite user" />
+        </header>
+        <div className="row m-0">
+          <div className="col-12 p-2">
+            <div className="inner_card">
+              <div className="card_header">
+                <h3>Users (employee) / Permissions</h3>
+                <div className="buttons">
+                  <Link to="permissions" className="button transparent">
+                    Create New Group Permissions
+                  </Link>
+                  <Link to="create-user" className="button">
+                    Create a User (employee)
+                  </Link>
+                </div>
+              </div>
+              <div className="table-container">
+                <DataTable
+                  value={tableData}
+                  paginator
+                  rows={5}
+                  rowsPerPageOptions={[5, 10, 25]}
+                  paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
+                  currentPageReportTemplate="{first} to {last} of {totalRecords}"
+                >
+                  <Column field="username" header="User Name" />
+                  <Column field="position" header="Position" />
+                  <Column field="mobile_number" header="Phone number" />
+                  <Column field="groups" header="Permission Groups Name" />
+                  <Column header="Actions" body={actionTemplate} />
+                </DataTable>
+              </div>
+            </div>
           </div>
         </div>
-        <div className="table-container">
-          <DataTable
-            value={tableData}
-            paginator
-            rows={5}
-            rowsPerPageOptions={[5, 10, 25]}
-            paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
-            currentPageReportTemplate="{first} to {last} of {totalRecords}"
-          >
-            <Column field="username" header="User Name" />
-            <Column field="position" header="Position" />
-            <Column field="mobile_number" header="Phone number" />
-            <Column field="groups" header="Permission Groups Name" />
-            <Column header="Actions" body={actionTemplate} />
-          </DataTable>
-        </div>
-      </div>
+      </section>
       <DeleteGroupModal
         showDeleteModal={showDeleteModal}
         setShowDeleteModal={setShowDeleteModal}

@@ -12,7 +12,7 @@ export default function FleetProfileInfo({ fleet }) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <>
+    <div className="col-12 p-2">
       <div className="fleet-part">
         <div className="fleet-info-row">
           <div className="d-flex align-items-center justify-content-between">
@@ -30,7 +30,7 @@ export default function FleetProfileInfo({ fleet }) {
 
           <h2 className="text-capitalize">{fleet?.name || "titanic"}</h2>
 
-          <div className="row">
+          <div className="fleet_details">
             <FleetInfoMiniCard
               icon={fleetIcon}
               title="boat type"
@@ -56,6 +56,6 @@ export default function FleetProfileInfo({ fleet }) {
           </div>
         </div>
       </div>
-    </>
+   </div>
   );
 }

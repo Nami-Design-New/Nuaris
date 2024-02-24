@@ -50,26 +50,34 @@ const Permissions = () => {
 
   return (
     <React.Fragment>
-      <PageHeader />
-      <div className="inner_card">
-        <div className="card_header">
-          <h3>Permissions</h3>
-          <div className="buttons">
-            <Link
-              to="/dashboard/invite-user/permissions/create-permissions"
-              className="button"
-            >
-              Create Permissions
-            </Link>
+      <section className="section-main-content">
+        <header className="flex-header">
+          <PageHeader />
+        </header>
+        <div className="row m-0">
+          <div className="col-12 p-2">
+            <div className="inner_card">
+              <div className="card_header">
+                <h3>Permissions</h3>
+                <div className="buttons">
+                  <Link
+                    to="/dashboard/invite-user/permissions/create-permissions"
+                    className="button"
+                  >
+                    Create Permissions
+                  </Link>
+                </div>
+              </div>
+              <div className="table-container">
+                <DataTable value={tableData}>
+                  <Column field="name" header="Permission Name" />
+                  <Column header="Actions" body={actionTemplate} />
+                </DataTable>
+              </div>
+            </div>
           </div>
         </div>
-        <div className="table-container">
-          <DataTable value={tableData}>
-            <Column field="name" header="Permission Name" />
-            <Column header="Actions" body={actionTemplate} />
-          </DataTable>
-        </div>
-      </div>
+      </section>
       <DeleteGroupModal
         showDeleteModal={showDeleteModal}
         setShowDeleteModal={setShowDeleteModal}

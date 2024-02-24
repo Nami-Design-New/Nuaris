@@ -46,46 +46,58 @@ const EditPermissions = () => {
   };
 
   return (
-    <React.Fragment>
-      <PageHeader name="Edit Permissions" />
-      <div className="inner_card">
-        <form className="row m-0 form-ui" onSubmit={handleSubmit}>
-          <div className="col-12 p-2 mb-2">
-            <div className="input-field">
-              <label htmlFor="name">Group & Permissions Name</label>
-              <input
-                placeholder="Write Here"
-                type="text"
-                id="groupOfPermissionsName"
-                name="groupOfPermissionsName"
-                value={formData.name}
-                required
-                onChange={e => {
-                  setFormData({ ...formData, name: e.target.value });
-                }}
-              />
-            </div>
+    <section className="section-main-content">
+      <header className="flex-header">
+        <PageHeader name="Edit Permissions" />
+      </header>
+      <div className="row m-0">
+        <div className="col-12 p-2">
+          <div className="inner_card">
+            <form className="row m-0 form-ui" onSubmit={handleSubmit}>
+              <div className="col-12 p-2 mb-2">
+                <div className="input-field">
+                  <label htmlFor="name">Group & Permissions Name</label>
+                  <input
+                    placeholder="Write Here"
+                    type="text"
+                    id="groupOfPermissionsName"
+                    name="groupOfPermissionsName"
+                    value={formData.name}
+                    required
+                    onChange={e => {
+                      setFormData({ ...formData, name: e.target.value });
+                    }}
+                  />
+                </div>
+              </div>
+              <div className="col-12 p-2">
+                <h6 className="simiLabel">
+                  Assign Group Permissions to employee
+                </h6>
+              </div>
+              {permissions.map(p =>
+                <div className="col-lg-4 col-md-6 col-12 p-2" key={p.id}>
+                  <CheckFieldPermissions
+                    label={p.codename}
+                    name={p.name}
+                    id={p.id}
+                    formData={formData}
+                    setFormData={setFormData}
+                  />
+                </div>
+              )}
+              <div className="col-12 p-2 d-flex justify-content-end">
+                <SubmitButton
+                  loading={loading}
+                  name="Confirm"
+                  className="w-25"
+                />
+              </div>
+            </form>
           </div>
-          <div className="col-12 p-2">
-            <h6 className="simiLabel">Assign Group Permissions to employee</h6>
-          </div>
-          {permissions.map(p =>
-            <div className="col-lg-4 col-md-6 col-12 p-2" key={p.id}>
-              <CheckFieldPermissions
-                label={p.codename}
-                name={p.name}
-                id={p.id}
-                formData={formData}
-                setFormData={setFormData}
-              />
-            </div>
-          )}
-          <div className="col-12 p-2 d-flex justify-content-end">
-            <SubmitButton loading={loading} name="Confirm" className="w-25" />
-          </div>
-        </form>
+        </div>
       </div>
-    </React.Fragment>
+    </section>
   );
 };
 

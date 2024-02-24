@@ -31,13 +31,11 @@ export default function FleetProfile() {
         </div>
       </header>
 
-      <div className="container">
-        <div className="row row-gap-4">
-          <FleetProfileMedia fleet={fleet} />
-          <FleetProfileInfo fleet={fleet} />
-          <FleetProfileTabs fleet={fleet} />
-          <FleetVesselLogbook />
-        </div>
+      <div className="row m-0">
+        <FleetProfileMedia fleet={fleet} />
+        <FleetProfileInfo fleet={fleet} />
+        <FleetProfileTabs fleet={fleet} />
+        <FleetVesselLogbook />
       </div>
     </section>
   );

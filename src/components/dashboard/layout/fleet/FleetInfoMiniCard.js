@@ -9,7 +9,6 @@ export default function FleetInfoMiniCard({
   crewGenders,
 }) {
   return (
-    <div className="col-12 col-md-6 col-lg-3 p-2">
       <div className="fleet-info-minicard">
         <div className="content">
           <img src={icon} alt="fleet" />
@@ -29,6 +28,5 @@ export default function FleetInfoMiniCard({
           </div>
         )}
       </div>
-    </div>
   );
 }

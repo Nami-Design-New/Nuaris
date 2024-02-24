@@ -29,7 +29,7 @@ const CreateUser = () => {
       if (user) {
         setFormData(prevFormData => ({
           ...prevFormData,
-          parent: Number(user.subuser_set[0]?.id)
+          parent: Number(user.id)
         }));
       }
     },
@@ -72,102 +72,126 @@ const CreateUser = () => {
   };
 
   return (
-    <React.Fragment>
-      <PageHeader name="Create a User" hint="(employee)" />
-      <div className="inner_card">
-        <form onSubmit={handleSubmit} ref={form} className="row m-0 form-ui">
-          <div className="col-lg-4  col-12 p-2">
-            <NameField formData={formData} setFormData={setFormData} />
-          </div>
-          <div className="col-lg-4  col-12 p-2">
-            <div className="input-field">
-              <label htmlFor="positions">Positions</label>
-              <select
-                defaultValue={"select"}
-                name="positions"
-                id="positions"
-                required
-                onChange={e => {
-                  const selectedOptionId = e.target.options[
-                    e.target.selectedIndex
-                  ].getAttribute("id");
-                  setFormData({
-                    ...formData,
-                    position: Number(selectedOptionId)
-                  });
-                }}
-              >
-                <option value="select" disabled>
-                  Select
-                </option>
-                {positions.map(option =>
-                  <option key={option.id} id={option.id} value={option.name}>
-                    {option.name}
-                  </option>
-                )}
-              </select>
-            </div>
-          </div>
-          <div className="col-lg-4  col-12 p-2">
-            <div className="input-field">
-              <label htmlFor="Nationality">Nationality</label>
-              <ReactFlagsSelect
-                searchable={true}
-                selectedSize={false}
-                onSelect={handleCountrySelect}
-                selected={selectedCountry}
-                defaultCountry="AE"
-              />
-            </div>
-          </div>
-          <div className="col-lg-6 col-12 p-2">
-            <InputField
-              htmlFor="email"
-              label="Email Address"
-              placeholder="EX: mail@mail.com"
-              type="email"
-              id="email"
-              formData={formData}
-              setFormData={setFormData}
-            />
-          </div>
-          <div className="col-lg-6 col-12 p-2">
-            <PhoneField
-              formData={formData}
-              setFormData={setFormData}
-              id="phone_number"
-            />
-          </div>
-          <div className="col-12 p-2 d-flex justify-content-end">
-            <SubmitButton loading={loading} name="Create" className="w-25" />
-          </div>
-        </form>
-      </div>
-      {showAssignGroups &&
-        <div className="inner_card mt-4">
-          <form action="" className="row m-0 form-ui">
-            <div className="col-12 p-2">
-              <h6 className="simiLabel">
-                Assign Group Permissions to employee
-              </h6>
-            </div>
-            {permissionsGroups.map(g =>
-              <div className="col-lg-4 col-md-6 col-12 p-2">
-                <CheckFieldGroup
-                  key={g.id}
-                  label={g.name}
-                  name={g.name}
-                  id={g.id}
-                  onChange={handleAddGroup}
+    <section className="section-main-content">
+      <header className="flex-header">
+        <PageHeader name="Create a User" hint="(employee)" />
+      </header>
+      <div className="row m-0">
+        <div className="col-12 p-2">
+          <div className="inner_card">
+            <form
+              onSubmit={handleSubmit}
+              ref={form}
+              className="row m-0 form-ui"
+            >
+              <div className="col-lg-4  col-12 p-2">
+                <NameField formData={formData} setFormData={setFormData} />
+              </div>
+              <div className="col-lg-4  col-12 p-2">
+                <div className="input-field">
+                  <label htmlFor="positions">Positions</label>
+                  <select
+                    defaultValue={"select"}
+                    name="positions"
+                    id="positions"
+                    required
+                    onChange={e => {
+                      const selectedOptionId = e.target.options[
+                        e.target.selectedIndex
+                      ].getAttribute("id");
+                      setFormData({
+                        ...formData,
+                        position: Number(selectedOptionId)
+                      });
+                    }}
+                  >
+                    <option value="select" disabled>
+                      Select
+                    </option>
+                    {positions.map(option =>
+                      <option
+                        key={option.id}
+                        id={option.id}
+                        value={option.name}
+                      >
+                        {option.name}
+                      </option>
+                    )}
+                  </select>
+                </div>
+              </div>
+              <div className="col-lg-4  col-12 p-2">
+                <div className="input-field">
+                  <label htmlFor="Nationality">Nationality</label>
+                  <ReactFlagsSelect
+                    searchable={true}
+                    selectedSize={false}
+                    onSelect={handleCountrySelect}
+                    selected={selectedCountry}
+                    defaultCountry="AE"
+                  />
+                </div>
+              </div>
+              <div className="col-lg-6 col-12 p-2">
+                <InputField
+                  htmlFor="email"
+                  label="Email Address"
+                  placeholder="EX: mail@mail.com"
+                  type="email"
+                  id="email"
+                  formData={formData}
+                  setFormData={setFormData}
                 />
               </div>
-            )}
-            <div className="col-12 p-2 d-flex justify-content-end">
-              <SubmitButton loading={loading} name="Create" className="w-25" />
+              <div className="col-lg-6 col-12 p-2">
+                <PhoneField
+                  formData={formData}
+                  setFormData={setFormData}
+                  id="phone_number"
+                />
+              </div>
+              <div className="col-12 p-2 d-flex justify-content-end">
+                <SubmitButton
+                  loading={loading}
+                  name="Create"
+                  className="w-25"
+                />
+              </div>
+            </form>
+          </div>
+        </div>
+        {showAssignGroups &&
+          <div className="col-12 p-2">
+            <div className="inner_card mt-4">
+              <form action="" className="row m-0 form-ui">
+                <div className="col-12 p-2">
+                  <h6 className="simiLabel">
+                    Assign Group Permissions to employee
+                  </h6>
+                </div>
+                {permissionsGroups.map(g =>
+                  <div className="col-lg-4 col-md-6 col-12 p-2">
+                    <CheckFieldGroup
+                      key={g.id}
+                      label={g.name}
+                      name={g.name}
+                      id={g.id}
+                      onChange={handleAddGroup}
+                    />
+                  </div>
+                )}
+                <div className="col-12 p-2 d-flex justify-content-end">
+                  <SubmitButton
+                    loading={loading}
+                    name="Create"
+                    className="w-25"
+                  />
+                </div>
+              </form>
             </div>
-          </form>
-        </div>}
-    </React.Fragment>
+          </div>}
+      </div>
+    </section>
   );
 };
 

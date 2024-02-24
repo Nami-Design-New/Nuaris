@@ -2,6 +2,7 @@ import { Tab, Tabs } from "react-bootstrap";
 
 export default function FleetProfileTabs({ fleet }) {
   return (
+    <div className="col-12 p-2">
     <div className="fleet-part">
       <Tabs>
         <Tab eventKey="description" title="Description">
@@ -22,7 +23,7 @@ export default function FleetProfileTabs({ fleet }) {
               .fill(0)
               .map((e, i) => {
                 return (
-                  <li>
+                  <li key={i}>
                     {e?.content ||
                       "Wind Conditions: Too little or too much wind can affect sailing."}
                   </li>
@@ -36,7 +37,7 @@ export default function FleetProfileTabs({ fleet }) {
               .fill(0)
               .map((e, i) => {
                 return (
-                  <li>
+                  <li key={i}>
                     {e?.content ||
                       "Captain: Oversees navigation, safety, and overall management."}
                   </li>
@@ -55,7 +56,7 @@ export default function FleetProfileTabs({ fleet }) {
                 .fill(0)
                 .map((e) => {
                   return (
-                    <li>
+                    <li key={Math.random()}>
                       {e?.content ||
                         "Personal Clothing and Gear: Suitable for the weather and activities planned."}
                     </li>
@@ -86,6 +87,7 @@ export default function FleetProfileTabs({ fleet }) {
           </p>
         </Tab>
       </Tabs>
+    </div>
     </div>
   );
 }

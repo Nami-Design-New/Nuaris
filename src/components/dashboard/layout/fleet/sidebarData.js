@@ -1,6 +1,6 @@
 const sidebarData = [
   {
-    path: "",
+    path: "main-info",
     icon: require("../../../../assets/images/info.svg").default,
     alt: "main-info",
     label: "Main Info",

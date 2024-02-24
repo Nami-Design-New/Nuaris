@@ -16,13 +16,13 @@ const AddYacht = () => {
       <header className="flex-header">
         <PageHeader name="Add a new yacht / boat" />
       </header>
-      <div className="row">
+      <div className="row m-0">
         <div className="col-lg-4 col-12 p-2">
           <SideBar />
         </div>
         <div className="col-lg-8 col-12 p-2">
           <Routes>
-            <Route path="/" element={<MainInfo />} />
+            <Route path="/main-info" element={<MainInfo />} />
             <Route path="/media-photos" element={<Media />} />
             <Route path="/boat-specification" element={<BoatSpecification />} />
             <Route path="/working-hours" element={<WorkingHours />} />
