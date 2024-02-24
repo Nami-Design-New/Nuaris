@@ -1575,6 +1575,7 @@ th:last-child .p-column-header-content {
 }
 .fleet-card .image-container img {
   max-width: 100%;
+  width: 100%;
   -o-object-fit: cover;
      object-fit: cover;
   transition: 1s ease-out;
