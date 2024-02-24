@@ -5,21 +5,28 @@ import walledIcon from "../../../../assets/images/wallet.svg";
 import captainIcon from "../../../../assets/images/captain.svg";
 import StarsRate from "../../../ui/StarsRate";
 import hashIcon from "../../../../assets/images/hash.svg";
+import RateModal from "../RateModal";
+import { useState } from "react";
 
 export default function FleetProfileInfo({ fleet }) {
+  const [isOpen, setIsOpen] = useState(true);
+
   return (
     <>
       <div className="fleet-part">
         <div className="fleet-info-row">
           <div className="d-flex align-items-center justify-content-between">
-            <StarsRate
-              rate={fleet?.rating}
-              reviewsCount={fleet?.reviewsCount}
-            />
+            <button onClick={() => setIsOpen(true)}>
+              <StarsRate
+                rate={fleet?.rating || "4.2"}
+                reviewsCount={fleet?.reviewsCount || "25"}
+              />
+            </button>
             <div className="fleet_tag">
               <img src={hashIcon} alt="hash" /> <p>{fleet?.tag || "564231"}</p>
             </div>
           </div>
+          <RateModal isOpen={isOpen} setIsOpen={setIsOpen} />
 
           <h2 className="text-capitalize">{fleet?.name || "titanic"}</h2>
 
