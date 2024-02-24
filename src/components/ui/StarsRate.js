@@ -1,7 +1,7 @@
 import starIcon from "../../assets/images/star.svg";
 import starFilledIcon from "../../assets/images/star-filled.svg";
 
-export default function StarsRate({ rate = 4.2, reviewsCount = "25" }) {
+export default function StarsRate({ rate, reviewsCount }) {
   return (
     <div className="stars_rate">
       <div className="stars">

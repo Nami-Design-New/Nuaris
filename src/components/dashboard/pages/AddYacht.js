@@ -22,7 +22,7 @@ const AddYacht = () => {
         </div>
         <div className="col-lg-8 col-12 p-2">
           <Routes>
-            <Route path="/main-info" element={<MainInfo />} />
+            <Route path="/" element={<MainInfo />} />
             <Route path="/media-photos" element={<Media />} />
             <Route path="/boat-specification" element={<BoatSpecification />} />
             <Route path="/working-hours" element={<WorkingHours />} />

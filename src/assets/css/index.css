@@ -1575,6 +1575,7 @@ th:last-child .p-column-header-content {
 }
 .fleet-card .image-container img {
   max-width: 100%;
+  width: 100%;
   -o-object-fit: cover;
      object-fit: cover;
   transition: 1s ease-out;
@@ -1686,6 +1687,7 @@ th:last-child .p-column-header-content {
 }
 .fleet-media-swiper img {
   max-width: 100%;
+  width: 100%;
   -o-object-fit: cover;
      object-fit: cover;
   height: 100%;
@@ -1737,32 +1739,23 @@ th:last-child .p-column-header-content {
   overflow: hidden;
 }
 
-.fleet-page-second-row {
-  background-color: #fff;
-  border-radius: 24px;
-  padding: 24px;
-  gap: 12px;
-  display: flex;
-  flex-direction: column;
-  color: #0d0d0d;
-}
-.fleet-page-second-row .fleet_tag {
+.fleet-info-row .fleet_tag {
   display: flex;
   align-items: center;
   gap: 8px;
 }
-.fleet-page-second-row .fleet_tag img {
+.fleet-info-row .fleet_tag img {
   width: 24px;
   height: 24px;
 }
-.fleet-page-second-row .fleet_tag p {
+.fleet-info-row .fleet_tag p {
   margin: 0;
   font-weight: 700;
   font-size: 24px;
   line-height: 29px;
   color: #0d0d0d;
 }
-.fleet-page-second-row .fleet-info-minicard {
+.fleet-info-row .fleet-info-minicard {
   padding: 12px;
   gap: 12px;
   background-color: #ebf3f5;
@@ -1771,38 +1764,38 @@ th:last-child .p-column-header-content {
   align-items: center;
   justify-content: space-between;
 }
-.fleet-page-second-row .fleet-info-minicard .crew_gender {
+.fleet-info-row .fleet-info-minicard .crew_gender {
   display: flex;
   gap: 8px;
 }
-.fleet-page-second-row .fleet-info-minicard .crew_gender img {
+.fleet-info-row .fleet-info-minicard .crew_gender img {
   height: 24px;
 }
-.fleet-page-second-row .fleet-info-minicard .content {
+.fleet-info-row .fleet-info-minicard .content {
   display: flex;
   align-items: center;
   gap: 12px;
   text-transform: capitalize;
 }
-.fleet-page-second-row .fleet-info-minicard .content .text {
+.fleet-info-row .fleet-info-minicard .content .text {
   display: flex;
   flex-direction: column;
   gap: 2px;
 }
-.fleet-page-second-row .fleet-info-minicard .content .text span {
+.fleet-info-row .fleet-info-minicard .content .text span {
   font-size: 14px;
   line-height: 18px;
   font-weight: 400;
   color: #777777;
 }
-.fleet-page-second-row .fleet-info-minicard .content .text p {
+.fleet-info-row .fleet-info-minicard .content .text p {
   font-size: 16px;
   line-height: 18px;
   font-weight: 500;
   color: #0d0d0d;
   margin: 0;
 }
-.fleet-page-second-row .fleet-info-minicard img {
+.fleet-info-row .fleet-info-minicard img {
   width: 24px;
   height: 24px;
 }
@@ -1869,9 +1862,33 @@ th:last-child .p-column-header-content {
   line-height: 22px;
   color: #666b88;
 }
-.tab-content * {
+.tab-content span {
+  font-weight: 500;
+  color: #0d0d0d;
+  margin: 0 2px;
+}
+.tab-content .bold-list > li {
+  font-weight: 500;
+  color: #0d0d0d;
+}
+.tab-content ol {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.tab-content ol.alpha {
+  list-style: lower-alpha;
+}
+.tab-content h5 {
+  font-weight: 500;
+  color: #0d0d0d;
+}
+.tab-content li {
   line-height: 22px;
-  margin: 0;
+}
+.tab-content p {
+  line-height: 22px;
+  margin-bottom: 0;
 }
 
 .coming-soon {
@@ -1882,4 +1899,106 @@ th:last-child .p-column-header-content {
   text-align: center;
   font-weight: 700;
   font-size: 41px;
+}
+
+.rate_modal {
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+.rate_modal .header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 29px;
+  padding: 12px 16px;
+  gap: 8px;
+}
+.rate_modal .header h2 {
+  margin: 0;
+}
+.rate_modal .header img {
+  width: 20px;
+  height: 20px;
+}
+.rate_modal .content {
+  height: 100%;
+  width: 100%;
+  max-width: 375px;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  border-top-right-radius: 24px;
+  border-bottom-right-radius: 24px;
+  padding: 12px 16px;
+}
+
+.stars_rate_modal {
+  border-radius: 20px;
+  padding: 8px 12px;
+  background-color: #ebf3f5;
+  width: -moz-max-content;
+  width: max-content;
+  font-size: 14px;
+  margin-bottom: 16px;
+}
+.stars_rate_modal img {
+  width: 16px !important;
+  height: 16px !important;
+}
+
+.rate_card {
+  padding: 12px;
+  gap: 16px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 12px;
+  background-color: #f8f8f8;
+}
+.rate_card .header {
+  display: flex;
+  align-items: flex-start;
+  gap: 4px;
+  justify-content: space-between;
+}
+.rate_card .header h3 {
+  color: #0d0d0d;
+  line-height: 20px;
+  font-size: 16px;
+  font-weight: 500;
+}
+.rate_card .header p {
+  line-height: 15px;
+  margin: 0;
+  font-size: 12px;
+  color: #666b88;
+  font-weight: 400;
+}
+.rate_card .header img {
+  height: 16px;
+  width: 16px;
+}
+.rate_card p {
+  line-height: 18px;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.rate_cards {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-height: 65vh;
+  overflow: scroll;
+  flex: 1;
+}
+.rate_cards::-webkit-scrollbar {
+  display: none;
 }/*# sourceMappingURL=index.css.map */
