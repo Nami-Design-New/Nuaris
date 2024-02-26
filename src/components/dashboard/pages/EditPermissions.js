@@ -11,27 +11,39 @@ const EditPermissions = () => {
   const [formData, setFormData] = useState({ name: "", permissions: [] });
   const [loading, setLoading] = useState(false);
   const { permissionId } = useParams();
-  const permissions = useSelector(state => state.permissions.permissions);
+  const permissions = useSelector((state) => state.permissions.permissions);
   const permissionsGroups = useSelector(
-    state => state.permissionsGroups.permissionsGroups
+    (state) => state.permissionsGroups.permissionsGroups
   );
 
-  useEffect(
-    () => {
-      const permissionsGroup = permissionsGroups.find(
-        p => p.id === parseInt(permissionId)
+  const handleAddPermission = (e, passedPermission) => {
+    const checked = e.target.checked;
+    if (checked) {
+      setFormData({
+        ...formData,
+        permissions: [...formData.permissions, passedPermission],
+      });
+    } else {
+      const filteredPermessions = formData.permissions.filter(
+        (permission) => permission.id !== passedPermission.id
       );
-      if (permissionsGroup) {
-        setFormData({
-          name: permissionsGroup.name,
-          permissions: permissionsGroup.permissions
-        });
-      }
-    },
-    [permissionId, permissionsGroups]
-  );
+      setFormData({ ...formData, permissions: filteredPermessions });
+    }
+  };
 
-  const handleSubmit = async e => {
+  useEffect(() => {
+    const permissionsGroup = permissionsGroups.find(
+      (p) => p.id === parseInt(permissionId)
+    );
+    if (permissionsGroup) {
+      setFormData({
+        name: permissionsGroup.name,
+        permissions: permissionsGroup.permissions,
+      });
+    }
+  }, [permissionId, permissionsGroups]);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       setLoading(true);
@@ -64,7 +76,7 @@ const EditPermissions = () => {
                     name="groupOfPermissionsName"
                     value={formData.name}
                     required
-                    onChange={e => {
+                    onChange={(e) => {
                       setFormData({ ...formData, name: e.target.value });
                     }}
                   />
@@ -75,17 +87,16 @@ const EditPermissions = () => {
                   Assign Group Permissions to employee
                 </h6>
               </div>
-              {permissions.map(p =>
+              {permissions.map((p) => (
                 <div className="col-lg-4 col-md-6 col-12 p-2" key={p.id}>
                   <CheckFieldPermissions
                     label={p.codename}
                     name={p.name}
                     id={p.id}
-                    formData={formData}
-                    setFormData={setFormData}
+                    onChange={(e) => handleAddPermission(e, p)}
                   />
                 </div>
-              )}
+              ))}
               <div className="col-12 p-2 d-flex justify-content-end">
                 <SubmitButton
                   loading={loading}

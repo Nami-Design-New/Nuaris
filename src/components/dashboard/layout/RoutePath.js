@@ -18,10 +18,7 @@ export default function RoutePath({ currentName, hint }) {
           </React.Fragment>
         );
       })}
-      {hint &&
-        <small>
-          {" "}{hint}
-        </small>}
+      {hint && <small> {hint}</small>}
     </div>
   );
 }

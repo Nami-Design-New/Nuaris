@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useCookies } from "react-cookie";
 import axios from "../util/axios";
 
+// TODO: delete
 export const useUserFromCookies = () => {
   const [cookies] = useCookies();
   const id = cookies.id;
