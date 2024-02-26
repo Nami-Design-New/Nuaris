@@ -7,13 +7,12 @@ import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
 
 registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
 
-const LogoUploadField = ({ htmlFor, label, formData, setFormData }) => {
+const LogoUploadField = ({ htmlFor, label, setFormData }) => {
   const handleFileChange = files => {
-    if (files && files.length > 0) {
-      setFormData({ ...formData, logo: files[0].file });
-    } else {
-      setFormData({ ...formData, logo: null });
-    }
+    setFormData(prevFormData => ({
+      ...prevFormData,
+      logo: files && files.length > 0 ? files[0].file : null
+    }));
   };
 
   return (
