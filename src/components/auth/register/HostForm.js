@@ -111,7 +111,6 @@ const HostForm = ({ setFormSelection }) => {
             <LogoUploadField
               htmlFor="logo"
               label="Upload Your Logo"
-              formData={formData}
               setFormData={setFormData}
             />
           </div>
