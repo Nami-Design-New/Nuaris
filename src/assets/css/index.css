@@ -1364,6 +1364,9 @@ tr:last-child {
   height: 25px;
   box-shadow: none !important;
 }
+.actions_cell button img {
+  height: 16px;
+}
 
 th:last-child .p-column-header-content {
   justify-content: end;
