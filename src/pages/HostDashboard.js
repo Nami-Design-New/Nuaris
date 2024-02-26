@@ -28,56 +28,53 @@ const HostDashboard = () => {
   const userFromCookies = useUserFromCookies();
   const dispatch = useDispatch();
 
-  useEffect(
-    () => {
-      const fetchUserData = async () => {
-        try {
-          if (userFromCookies && userFromCookies.subuser_set) {
-            dispatch(setUser(userFromCookies));
-            const subUserIds = userFromCookies.subuser_set.map(user => user.id);
-            const fetchedSubUsers = await Promise.all(
-              subUserIds.map(async id => {
-                try {
-                  const response = await axios.get(`/users/${id}/`);
-                  return response.data;
-                } catch (error) {
-                  console.error("Error fetching subuser:", error);
-                  return null;
-                }
-              })
-            );
-            dispatch(setUsers(fetchedSubUsers.filter(Boolean)));
-          }
-        } catch (error) {
-          console.error("Error fetching user data:", error);
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        if (userFromCookies && userFromCookies.subuser_set) {
+          dispatch(setUser(userFromCookies));
+          const subUserIds = userFromCookies.subuser_set.map((user) => user.id);
+          const fetchedSubUsers = await Promise.all(
+            subUserIds.map(async (id) => {
+              try {
+                const response = await axios.get(`/users/${id}/`);
+                return response.data;
+              } catch (error) {
+                console.error("Error fetching subuser:", error);
+                return;
+              }
+            })
+          );
+          dispatch(setUsers(fetchedSubUsers.filter(Boolean)));
         }
-      };
-      const fetchData = async (endpoint, sliceSetter) => {
-        try {
-          const response = await axios.get(endpoint);
-          dispatch(sliceSetter(response.data));
-        } catch (error) {
-          console.error(`Error fetching data from ${endpoint}:`, error);
-        }
-      };
-      const fetchDataSets = [
-        { endpoint: "/positions/", sliceSetter: setPositions },
-        {
-          endpoint: `/users/?user_id=${userFromCookies?.subuser_set[0]?.id}`,
-          sliceSetter: setEmployess
-        },
-        { endpoint: "/groups/", sliceSetter: setPermissionsGroups },
-        { endpoint: "/permissions/", sliceSetter: setPermissions }
-      ];
-      if (userFromCookies) {
-        fetchDataSets.forEach(({ endpoint, sliceSetter }) => {
-          fetchData(endpoint, sliceSetter);
-        });
+      } catch (error) {
+        console.error("Error fetching user data:", error);
       }
-      fetchUserData();
-    },
-    [userFromCookies, dispatch]
-  );
+    };
+    const fetchData = async (endpoint, sliceSetter) => {
+      try {
+        const response = await axios.get(endpoint);
+        dispatch(sliceSetter(response.data));
+      } catch (error) {
+        console.error(`Error fetching data from ${endpoint}:`, error);
+      }
+    };
+    const fetchDataSets = [
+      { endpoint: "/positions/", sliceSetter: setPositions },
+      {
+        endpoint: `/users/?user_id=${userFromCookies?.subuser_set[0]?.id}`,
+        sliceSetter: setEmployess,
+      },
+      { endpoint: "/groups/", sliceSetter: setPermissionsGroups },
+      { endpoint: "/permissions/", sliceSetter: setPermissions },
+    ];
+    if (userFromCookies) {
+      fetchDataSets.forEach(({ endpoint, sliceSetter }) => {
+        fetchData(endpoint, sliceSetter);
+      });
+    }
+    fetchUserData();
+  }, [userFromCookies, dispatch]);
 
   return (
     <React.Fragment>
@@ -101,6 +98,7 @@ const HostDashboard = () => {
             <Route path="/fleet" element={<Fleet />} />
             <Route path="/fleet/:fleetId" element={<FleetProfile />} />
             <Route path="/fleet/add-yacht/*" element={<AddYacht />} />
+            <Route path="*" element={<>404 page</>} />
           </Routes>
         </main>
         <Footer />

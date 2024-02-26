@@ -10,13 +10,14 @@ const UserNameForm = ({ setShowLoginForm, userTypeSelected }) => {
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({});
   const [, setCookie] = useCookies(["token"]);
-  const navigate = useNavigate();
   const form = useRef(null);
 
   const handleBackButtonClick = (e) => {
     e.preventDefault();
     setShowLoginForm(false);
   };
+
+  const navigate = useNavigate();
 
   const headersList = {
     Accept: "application/json",
@@ -39,16 +40,7 @@ const UserNameForm = ({ setShowLoginForm, userTypeSelected }) => {
         expires: new Date(new Date().getTime() + 6 * 60 * 60 * 1000),
         secure: true,
       });
-      setCookie("id", res.data.user.id, {
-        path: "/",
-        expires: new Date(new Date().getTime() + 6 * 60 * 60 * 1000),
-        secure: true,
-      });
-      setCookie("id", res.data.user?.role, {
-        path: "/",
-        expires: new Date(new Date().getTime() + 6 * 60 * 60 * 1000),
-        secure: true,
-      });
+      navigate("/dashboard");
     } catch (error) {
       toast.error("Incorrect username or password");
       form.current.reset();

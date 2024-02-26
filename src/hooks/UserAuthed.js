@@ -10,7 +10,7 @@ export const useUserFromCookies = () => {
 
   useEffect(() => {
     if (!id) {
-      return null;
+      return;
     }
     const getUser = async () => {
       try {
