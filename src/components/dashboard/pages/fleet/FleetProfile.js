@@ -6,6 +6,7 @@ import FleetProfileInfo from "../../layout/fleet/FleetProfileInfo";
 import FleetProfileMedia from "../../layout/fleet/FleetProfileMedia";
 import FleetProfileTabs from "../../layout/fleet/FleetProfileTabs";
 import FleetVesselLogbook from "../../layout/fleet/FleetVesselLogbook";
+import FleetProfileBooking from "../../layout/fleet/FleetProfileBooking";
 
 export default function FleetProfile() {
   const { fleetId } = useParams();
@@ -31,10 +32,11 @@ export default function FleetProfile() {
         </div>
       </header>
 
-      <div className="row m-0">
+      <div className="row gap-3 m-0">
         <FleetProfileMedia fleet={fleet} />
         <FleetProfileInfo fleet={fleet} />
         <FleetProfileTabs fleet={fleet} />
+        <FleetProfileBooking fleet={fleet} />
         <FleetVesselLogbook />
       </div>
     </section>

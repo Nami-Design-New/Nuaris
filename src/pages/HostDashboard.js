@@ -1,15 +1,5 @@
-import React, { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
-import axios from "../util/axios";
-
-import { useUserFromCookies } from "../hooks/UserAuthed";
-import { useDispatch } from "react-redux";
-import { setPositions } from "../redux/slices/positions";
-import { setEmployess } from "../redux/slices/employeesSlice";
-import { setUser } from "../redux/slices/authenticatedUserSlice";
-import { setPermissionsGroups } from "../redux/slices/permissionsGroups";
-import { setUsers } from "../redux/slices/subSetUsers";
-import { setPermissions } from "../redux/slices/permissions";
 import NavBar from "../components/dashboard/layout/NavBar";
 import Footer from "../components/dashboard/layout/Footer";
 import SideBar from "../components/dashboard/layout/SideBar";
@@ -22,65 +12,41 @@ import EditPermissions from "../components/dashboard/pages/EditPermissions";
 import Fleet from "../components/dashboard/pages/Fleet";
 import AddYacht from "../components/dashboard/pages/AddYacht";
 import FleetProfile from "../components/dashboard/pages/fleet/FleetProfile";
+import axios from "../util/axios";
+import { useDispatch, useSelector } from "react-redux";
+import { setPermissionsGroups } from "../redux/slices/permissionsGroups";
+import { setPermissions } from "../redux/slices/permissions";
+import { setEmployees } from "../redux/slices/employeesSlice";
+import { setPositions } from "../redux/slices/positions";
 
 const HostDashboard = () => {
   const [sideBarOpen, setSideBarOpen] = useState(false);
-  const userFromCookies = useUserFromCookies();
+  const authedUser = useSelector((state) => state.user.user);
   const dispatch = useDispatch();
 
-  useEffect(
-    () => {
-      const fetchUserData = async () => {
-        try {
-          if (userFromCookies && userFromCookies.subuser_set) {
-            dispatch(setUser(userFromCookies));
-            const subUserIds = userFromCookies.subuser_set.map(user => user.id);
-            const fetchedSubUsers = await Promise.all(
-              subUserIds.map(async id => {
-                try {
-                  const response = await axios.get(`/users/${id}/`);
-                  return response.data;
-                } catch (error) {
-                  console.error("Error fetching subuser:", error);
-                  return null;
-                }
-              })
-            );
-            dispatch(setUsers(fetchedSubUsers.filter(Boolean)));
-          }
-        } catch (error) {
-          console.error("Error fetching user data:", error);
-        }
-      };
-      const fetchData = async (endpoint, sliceSetter) => {
-        try {
-          const response = await axios.get(endpoint);
-          dispatch(sliceSetter(response.data));
-        } catch (error) {
-          console.error(`Error fetching data from ${endpoint}:`, error);
-        }
-      };
-      const fetchDataSets = [
-        { endpoint: "/positions/", sliceSetter: setPositions },
-        {
-          endpoint: `/users/?user_id=${userFromCookies?.subuser_set[0]?.id}`,
-          sliceSetter: setEmployess
-        },
-        { endpoint: "/groups/", sliceSetter: setPermissionsGroups },
-        { endpoint: "/permissions/", sliceSetter: setPermissions }
-      ];
-      if (userFromCookies) {
-        fetchDataSets.forEach(({ endpoint, sliceSetter }) => {
-          fetchData(endpoint, sliceSetter);
-        });
-      }
-      fetchUserData();
-    },
-    [userFromCookies, dispatch]
-  );
+  async function getAllData() {
+    const groups = axios.get("/groups");
+    const permissions = axios.get("/permissions");
+    const employees = axios.get(`/users/?id=${authedUser.id}`);
+    const positions = axios.get("/positions");
+
+    const [groupsData, permissionsData, employeesData, positionsData] =
+      await Promise.all([groups, permissions, employees, positions]);
+
+    dispatch(setPermissionsGroups(groupsData.data));
+    dispatch(setPermissions(permissionsData.data));
+    dispatch(setEmployees(employeesData.data));
+    dispatch(setPositions(positionsData.data));
+  }
+
+  useEffect(() => {
+    // fetch the required website data for redux store
+    getAllData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
-    <React.Fragment>
+    <>
       <SideBar sideBarOpen={sideBarOpen} />
       <div className={`main_wrap ${sideBarOpen ? "expand" : ""}`}>
         <NavBar setSideBarOpen={setSideBarOpen} sideBarOpen={sideBarOpen} />
@@ -101,11 +67,12 @@ const HostDashboard = () => {
             <Route path="/fleet" element={<Fleet />} />
             <Route path="/fleet/:fleetId" element={<FleetProfile />} />
             <Route path="/fleet/add-yacht/*" element={<AddYacht />} />
+            <Route path="*" element={<>404 page</>} />
           </Routes>
         </main>
         <Footer />
       </div>
-    </React.Fragment>
+    </>
   );
 };
 

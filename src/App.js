@@ -12,7 +12,6 @@ import { Provider } from "react-redux";
 import { ToastContainer } from "react-toastify";
 import { CookiesProvider } from "react-cookie";
 
-
 const App = () => {
   return (
     <main className="App">

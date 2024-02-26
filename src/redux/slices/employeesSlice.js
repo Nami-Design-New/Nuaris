@@ -3,14 +3,14 @@ import { createSlice } from "@reduxjs/toolkit";
 export const employees = createSlice({
   name: "employees",
   initialState: {
-    employees: []
+    employees: [],
   },
   reducers: {
-    setEmployess: (state, action) => {
+    setEmployees: (state, action) => {
       state.employees = action.payload;
-    }
-  }
+    },
+  },
 });
 
-export const { setEmployess } = employees.actions;
+export const { setEmployees } = employees.actions;
 export default employees.reducer;

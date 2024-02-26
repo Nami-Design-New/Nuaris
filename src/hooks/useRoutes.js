@@ -3,9 +3,11 @@ import capitalizeWord from "../util/capitalizeWord";
 
 export default function useRoutes() {
   const { pathname } = useLocation();
+  // TODO: remove params
+  // useParams
 
   // get an array of all visited routes
-  let filteredRoutes = pathname.split("/");
+  let filteredRoutes = pathname?.split("/");
   filteredRoutes = filteredRoutes.filter((e) => e !== "");
 
   // array of objects containing all links names and thier href
@@ -15,7 +17,7 @@ export default function useRoutes() {
   // replace - with a space and capitalize
   const capitalizedRoutes = filteredRoutes.map((route) => {
     return route
-      .split("-")
+      ?.split("-")
       .map((word) => capitalizeWord(word))
       .join(" ");
   });

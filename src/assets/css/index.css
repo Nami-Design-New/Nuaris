@@ -1772,7 +1772,7 @@ th:last-child .p-column-header-content {
   color: #0d0d0d;
   line-height: 35px;
   font-size: 28px;
-  margin-bottom: 0;
+  margin-bottom: 24px;
 }
 .fleet-part .fleet-info-row {
   display: flex;
