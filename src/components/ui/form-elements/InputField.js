@@ -6,13 +6,14 @@ const InputField = ({
   placeholder,
   type = "text",
   id,
+  hint,
   formData,
   setFormData,
 }) => {
   return (
     <div className="input-field">
       <label htmlFor={htmlFor}>
-        {label}
+        {label} {hint && <span className="hint">{hint}</span>}
       </label>
       <input
         placeholder={placeholder}
@@ -20,7 +21,7 @@ const InputField = ({
         id={id}
         name={id}
         required
-        onChange={e => {
+        onChange={(e) => {
           setFormData({ ...formData, [htmlFor]: e.target.value });
         }}
       />

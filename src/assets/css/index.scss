@@ -499,7 +499,8 @@ $transation: 0.4s ease-in-out;
       }
     }
     input,
-    select {
+    select,
+    textarea {
       width: 100%;
       height: 54px;
       outline: none;
@@ -507,6 +508,9 @@ $transation: 0.4s ease-in-out;
       border-radius: 12px;
       background: $inputBG;
       padding: 12px 16px;
+    }
+    textarea {
+      height: 152px;
     }
     label {
       color: $dark;
@@ -594,6 +598,29 @@ $transation: 0.4s ease-in-out;
         cursor: pointer;
       }
     }
+  }
+  .time-units {
+    display: flex;
+    gap: 8px;
+    .units {
+      width: 120px;
+    }
+  }
+  .save_btn {
+    @include clearInput();
+    height: 52px;
+    width: 200px;
+    background: $main;
+    color: $white;
+    border-radius: 12px;
+  }
+  .next_btn {
+    width: 74px;
+    @include clearInput();
+    height: 52px;
+    border: 1px solid $dark;
+    color: $dark;
+    border-radius: 12px;
   }
 }
 .otp-container {
@@ -1055,11 +1082,12 @@ $transation: 0.4s ease-in-out;
           flex-direction: column;
           .link {
             display: flex;
+            padding: 0 8px;
             gap: 8px;
             a,
             h6 {
               font-weight: 600;
-              font-size: 15px;
+              font-size: 14px;
               color: $dark;
               cursor: pointer;
             }
@@ -1228,7 +1256,6 @@ footer {
   color: $white;
   background: $main;
   border-radius: 12px;
-  // FOX -> 20/2
   transition: background 0.3s;
   &:hover {
     background: $mainLight;
@@ -1362,7 +1389,6 @@ th:last-child .p-column-header-content {
   border-radius: 24px;
   background: $white;
   gap: 24px;
-  height: 100%;
   display: flex;
   padding: 24px 16px;
   flex-direction: column;
@@ -1400,11 +1426,12 @@ th:last-child .p-column-header-content {
     }
   }
 }
-.feet_form__wrapper {
+.fleet_form__wrapper {
   display: flex;
   flex-direction: column;
   gap: 16px;
   .wizard_tabs {
+    @include space-between();
     position: relative;
     padding: 16px 24px;
     background: $white;
@@ -1416,11 +1443,59 @@ th:last-child .p-column-header-content {
       background: $inputHint;
       left: 24px;
       position: absolute;
-      top: 50%;
+      top: 52%;
       transform: translateY(-50%);
+    }
+    .wizard_tab {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      background: $white !important;
+      z-index: 3;
+      padding: 8px;
+      cursor: pointer;
+      .step_no {
+        transition: $transation;
+        font-weight: 500;
+        color: $dark;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        @include centerFlex();
+        border: 1px solid $dark;
+      }
+      h6 {
+        margin: 0;
+        font-weight: 500;
+        transition: $transation;
+      }
+      &.active,
+      &:hover {
+        .step_no {
+          border-color: $main;
+          background: $main10;
+          color: $main;
+        }
+        h6 {
+          color: $main;
+        }
+      }
+    }
+  }
+  .wizard_content {
+    padding: 16px;
+    background: $white;
+    border-radius: 24px;
+    .form-ui {
+      .form_title {
+        font-weight: 500;
+        color: $inputHint;
+        font-size: 16px;
+      }
     }
   }
 }
+
 // FOX GLOBALS =================================================
 /*
   notes:

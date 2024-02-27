@@ -15,7 +15,7 @@ const SelectField = ({ htmlFor, label, options, formData, setFormData }) => {
           setFormData({ ...formData, [htmlFor]: e.target.value });
         }}
       >
-        <option value="select" disabled>
+        <option value="select" selected disabled>
           select
         </option>
         {options.map((option, index) =>

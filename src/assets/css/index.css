@@ -503,7 +503,8 @@ button {
   padding: 8px 16px;
 }
 .form-ui .input-field input,
-.form-ui .input-field select {
+.form-ui .input-field select,
+.form-ui .input-field textarea {
   width: 100%;
   height: 54px;
   outline: none;
@@ -511,6 +512,9 @@ button {
   border-radius: 12px;
   background: #f8f8f8;
   padding: 12px 16px;
+}
+.form-ui .input-field textarea {
+  height: 152px;
 }
 .form-ui .input-field label {
   color: #0d0d0d;
@@ -602,6 +606,33 @@ button {
 }
 .form-ui .check_field .form-check label {
   cursor: pointer;
+}
+.form-ui .time-units {
+  display: flex;
+  gap: 8px;
+}
+.form-ui .time-units .units {
+  width: 120px;
+}
+.form-ui .save_btn {
+  border: none;
+  background: none;
+  outline: none;
+  height: 52px;
+  width: 200px;
+  background: #006980;
+  color: #fff;
+  border-radius: 12px;
+}
+.form-ui .next_btn {
+  width: 74px;
+  border: none;
+  background: none;
+  outline: none;
+  height: 52px;
+  border: 1px solid #0d0d0d;
+  color: #0d0d0d;
+  border-radius: 12px;
 }
 
 .otp-container {
@@ -1110,12 +1141,13 @@ button {
 }
 .main_wrap nav .settings .profile_dropdown .manage_invite .link {
   display: flex;
+  padding: 0 8px;
   gap: 8px;
 }
 .main_wrap nav .settings .profile_dropdown .manage_invite .link a,
 .main_wrap nav .settings .profile_dropdown .manage_invite .link h6 {
   font-weight: 600;
-  font-size: 15px;
+  font-size: 14px;
   color: #0d0d0d;
   cursor: pointer;
 }
@@ -1440,7 +1472,6 @@ th:last-child .p-column-header-content {
   border-radius: 24px;
   background: #fff;
   gap: 24px;
-  height: 100%;
   display: flex;
   padding: 24px 16px;
   flex-direction: column;
@@ -1478,26 +1509,73 @@ th:last-child .p-column-header-content {
   color: #006980;
 }
 
-.feet_form__wrapper {
+.fleet_form__wrapper {
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
-.feet_form__wrapper .wizard_tabs {
+.fleet_form__wrapper .wizard_tabs {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   position: relative;
   padding: 16px 24px;
   background: #fff;
   border-radius: 24px;
 }
-.feet_form__wrapper .wizard_tabs::after {
+.fleet_form__wrapper .wizard_tabs::after {
   content: "";
   width: calc(100% - 48px);
   height: 1px;
   background: #aaaaaa;
   left: 24px;
   position: absolute;
-  top: 50%;
+  top: 52%;
   transform: translateY(-50%);
+}
+.fleet_form__wrapper .wizard_tabs .wizard_tab {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  background: #fff !important;
+  z-index: 3;
+  padding: 8px;
+  cursor: pointer;
+}
+.fleet_form__wrapper .wizard_tabs .wizard_tab .step_no {
+  transition: 0.4s ease-in-out;
+  font-weight: 500;
+  color: #0d0d0d;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #0d0d0d;
+}
+.fleet_form__wrapper .wizard_tabs .wizard_tab h6 {
+  margin: 0;
+  font-weight: 500;
+  transition: 0.4s ease-in-out;
+}
+.fleet_form__wrapper .wizard_tabs .wizard_tab.active .step_no, .fleet_form__wrapper .wizard_tabs .wizard_tab:hover .step_no {
+  border-color: #006980;
+  background: #ebf3f5;
+  color: #006980;
+}
+.fleet_form__wrapper .wizard_tabs .wizard_tab.active h6, .fleet_form__wrapper .wizard_tabs .wizard_tab:hover h6 {
+  color: #006980;
+}
+.fleet_form__wrapper .wizard_content {
+  padding: 16px;
+  background: #fff;
+  border-radius: 24px;
+}
+.fleet_form__wrapper .wizard_content .form-ui .form_title {
+  font-weight: 500;
+  color: #aaaaaa;
+  font-size: 16px;
 }
 
 /*
