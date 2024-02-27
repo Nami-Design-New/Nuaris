@@ -5,9 +5,13 @@ import notificationIcon from "../../../assets/images/notification.svg";
 import fav from "../../../assets/images/fav.svg";
 import ProfileDropMenu from "./ProfileDropMenu";
 import { useSelector } from "react-redux";
+import NotificationModal from "./NotificationModal";
+import SettingsModal from "./SettingsModal";
 
 const NavBar = ({ setSideBarOpen, sideBarOpen }) => {
   const [profileDropDown, setProfileDropDown] = useState(false);
+  const [isNotificationOpen, setIsNotificationOpen] = useState(false);
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const user = useSelector((state) => state.user.user);
   const subUsers = useSelector((state) => state.users.users);
 
@@ -45,16 +49,24 @@ const NavBar = ({ setSideBarOpen, sideBarOpen }) => {
       </div>
       <div className="settings">
         <ul>
-          <li>
-            <NavLink to="/dashboard/settings">
+          <li className="settings-gear">
+            <NavLink
+              onClick={() => setIsSettingsOpen(!isSettingsOpen)}
+              to={null}
+            >
               <img src={settingsIcon} alt="setting-icon" />
             </NavLink>
+            <SettingsModal isOpen={isSettingsOpen} />
           </li>
           <li className="notification">
-            <NavLink to="/dashboard/settings">
+            <NavLink
+              onClick={() => setIsNotificationOpen(!isNotificationOpen)}
+              to={null}
+            >
               <img src={notificationIcon} alt="notification-icon" />
               <span className="number">3</span>
             </NavLink>
+            <NotificationModal isOpen={isNotificationOpen} />
           </li>
           <li className="profile">
             <div

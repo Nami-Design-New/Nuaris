@@ -7,7 +7,6 @@ import { useJwt } from "react-jwt";
 import { useNavigate } from "react-router-dom";
 import axios from "../../../util/axios";
 import { useState } from "react";
-import Login from "../../../pages/Login";
 import { useDispatch } from "react-redux";
 import { setUser } from "../../../redux/slices/authenticatedUserSlice";
 
@@ -28,6 +27,7 @@ export default function Dashboard() {
     const { id, subuser_set } = res?.data;
 
     const userRole = subuser_set?.map((e) => (e.id === id ? e.role : null))[0];
+
     setUserRole(userRole);
     dispatch(setUser(res?.data));
   }
