@@ -260,6 +260,7 @@ const HostForm = ({ setFormSelection }) => {
             showModal={showModal}
             setShowModal={setShowModal}
             setFormData={setFormData}
+            title="Company Location"
             formData={formData}
             setSerchedPlace={setSerchedPlace}
           />

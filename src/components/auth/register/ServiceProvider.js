@@ -308,6 +308,7 @@ const ServiceProvider = ({ setFormSelection }) => {
             setShowModal={setShowModal}
             setFormData={setFormData}
             formData={formData}
+            title="Company Location"
             setSerchedPlace={setSerchedPlace}
           />
           <div className="col-12 p-2 mt-3">

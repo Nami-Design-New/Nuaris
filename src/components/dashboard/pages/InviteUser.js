@@ -12,17 +12,14 @@ import DeleteGroupModal from "./../layout/DeleteGroupModal";
 const InviteUser = () => {
   const [tableData, setTableData] = useState([]);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const employees = useSelector(state => state.employees.employees);
+  const employees = useSelector((state) => state.employees.employees);
 
-  useEffect(
-    () => {
-      setTableData(employees);
-    },
-    [employees]
-  );
+  useEffect(() => {
+    setTableData(employees);
+  }, [employees]);
 
   // Actions ui
-  const actionTemplate = rowData => {
+  const actionTemplate = (rowData) => {
     return (
       <div className="actions_cell">
         <Button onClick={() => deleteRow(rowData)}>
@@ -35,10 +32,10 @@ const InviteUser = () => {
     );
   };
   // edit and delete
-  const editRow = rowData => {
+  const editRow = (rowData) => {
     console.log("Editing row:", rowData);
   };
-  const deleteRow = rowData => {
+  const deleteRow = (rowData) => {
     setShowDeleteModal(true);
     console.log("Deleting row:", rowData);
   };

@@ -15,24 +15,7 @@ const TimeWithUnit = ({
         {label} {hint && <span className="hint">{hint}</span>}
       </label>
       <div className="time-units">
-        <select
-          name={htmlFor}
-          id={htmlFor}
-          required
-          value={formData[htmlFor]}
-          onChange={(e) => {
-            setFormData({ ...formData, [htmlFor]: e.target.value });
-          }}
-        >
-          <option value="select" selected disabled>
-            select
-          </option>
-          {options.map((option, index) => (
-            <option key={index} value={option}>
-              {option}
-            </option>
-          ))}
-        </select>
+        <input type="number" placeholder="00" name="time" id="time" />
         <select className="units" name="units" id="units">
           {units.map((unit, index) => (
             <option key={index} value={unit}>

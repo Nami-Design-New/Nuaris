@@ -8,6 +8,7 @@ const MapModal = ({
   setShowModal,
   setFormData,
   formData,
+  title,
   setSerchedPlace,
 }) => {
   const [mapLoaded, setMapLoaded] = useState(false);
@@ -33,18 +34,19 @@ const MapModal = ({
       centered
     >
       <Modal.Header closeButton>
-        <h6>Company Location (Map)</h6>
+        <h6>{title}</h6>
       </Modal.Header>
       <Modal.Body>
         <div className="row m-0">
           <div className="col-12 p-0 mb-2">
             <div className="map">
-              {mapLoaded &&
+              {mapLoaded && (
                 <MapWithMarker
                   formData={formData}
                   setFormData={setFormData}
                   setSerchedPlace={setSerchedPlace}
-                />}
+                />
+              )}
             </div>
           </div>
           <div className="col-12 p-0">

@@ -1,8 +1,15 @@
 import React, { useState, useEffect } from "react";
 import ReactFlagsSelect from "react-flags-select";
 import { State } from "country-state-city";
+import MapLocationField from "../../../ui/form-elements/MapLocationField";
+import MapModal from "../../../ui/map-modal/MapModal";
 
 const LocationForm = ({ formData, setFormData, setForm }) => {
+  const [showModalVessel, setShowModalVessel] = useState(false);
+  const [showModalMeeting, setShowModalMeeting] = useState(false);
+  const [vesselLocation, setVesselLocation] = useState("Search on Map");
+  const [meetingLocation, setMeetingLocation] = useState("Search on Map");
+
   const [cities, setCities] = useState([]);
   const [cityForCountry, setCityForCountry] = useState(null);
   const [selectedCountry, setSelectedCountry] = useState("SA");
@@ -34,6 +41,14 @@ const LocationForm = ({ formData, setFormData, setForm }) => {
         lng: selectedCity.longitude,
       });
     }
+  };
+  const handleNext = (e) => {
+    e.preventDefault();
+    setForm("Crew");
+  };
+  const handleBack = (e) => {
+    e.preventDefault();
+    setForm("Main Info");
   };
 
   return (
@@ -79,7 +94,53 @@ const LocationForm = ({ formData, setFormData, setForm }) => {
             </select>
           </div>
         </div>
+        {/* vessel location lat & lng */}
+        <div className="col-12 p-2">
+          <MapLocationField
+            htmlFor="vesselLocationOnMap"
+            label="Vessel Location"
+            hint="(map)"
+            name={vesselLocation}
+            setShowModal={setShowModalVessel}
+          />
+        </div>
+        {/* meeting location lat & lng */}
+        <div className="col-12 p-2">
+          <MapLocationField
+            htmlFor="meetingLocation"
+            label="Meeting Location"
+            name={meetingLocation}
+            setShowModal={setShowModalMeeting}
+          />
+        </div>
+        <div className="col-12 p-2 pt-4 d-flex gap-3 ">
+          <button className="next_btn" onClick={handleBack}>
+            Back
+          </button>
+          <button className="save_btn ms-auto">Save</button>
+          <button className="next_btn" onClick={handleNext}>
+            Next
+          </button>
+        </div>
       </div>
+      {/* map modal vessel location */}
+      <MapModal
+        showModal={showModalVessel}
+        setShowModal={setShowModalVessel}
+        setFormData={setFormData}
+        formData={formData}
+        title="Vessel Location"
+        setSerchedPlace={setVesselLocation}
+      />
+      {/* map modal meeting location */}
+      <MapModal
+        showModal={showModalMeeting}
+        setShowModal={setShowModalMeeting}
+        setFormData={setFormData}
+        formData={formData}
+        title="Meeting Location"
+        setSerchedPlace={setMeetingLocation}
+      />
     </div>
   );
 };
