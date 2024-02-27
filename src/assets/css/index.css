@@ -2197,22 +2197,34 @@ th:last-child .p-column-header-content {
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 8px;
+  padding-left: 8px;
   cursor: pointer;
 }
 .radio label {
   cursor: pointer;
+  line-height: 18px;
 }
 .radio .check {
-  width: 11px;
+  line-height: 18px;
+  padding: 8px;
+  padding-left: 18px;
+  position: relative;
+}
+.radio .check::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
   height: 11px;
-  border-radius: 50%;
+  width: 11px;
   border: 1px solid #777777;
+  border-radius: 50%;
   transition: 0.3s;
 }
-.radio .check img {
-  width: 6px;
-  height: 6px;
+.radio input:checked + label .check::before {
+  background-color: #006980;
+  border-color: #006980;
 }
 .radio input {
   display: none;

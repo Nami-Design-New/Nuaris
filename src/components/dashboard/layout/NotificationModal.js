@@ -6,7 +6,7 @@ export default function NotificationModal({ isOpen }) {
   const variants = {
     open: {
       opacity: 1,
-      height: "unset",
+      height: "340px",
     },
     closed: {
       opacity: 0,

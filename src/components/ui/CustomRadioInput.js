@@ -1,9 +1,24 @@
-export default function CustomRadioInput({ label, name, onChange }) {
+export default function CustomRadioInput({
+  active,
+  label,
+  name,
+  value,
+  onChange,
+}) {
   return (
     <div className="radio">
-      <input checked type="radio" onChange={onChange} id={label} name={name} />
-      <div className="check"></div>
-      <label htmlFor={label}>{label}</label>
+      <input
+        type="radio"
+        onChange={onChange}
+        value={value}
+        id={label}
+        name={name}
+        checked={active === value}
+      />
+
+      <label htmlFor={label}>
+        <div className={`check`}>{label}</div>
+      </label>
     </div>
   );
 }

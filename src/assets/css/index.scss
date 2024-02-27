@@ -2101,22 +2101,35 @@ th:last-child .p-column-header-content {
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 8px;
+  padding-left: 8px;
   cursor: pointer;
   label {
     cursor: pointer;
+    line-height: 18px;
   }
   .check {
-    width: 11px;
-    height: 11px;
-    border-radius: 50%;
-    border: 1px solid $gray;
-    transition: 0.3s;
-    img {
-      width: 6px;
-      height: 6px;
-    }
+    line-height: 18px;
+    padding: 8px;
+    padding-left: 18px;
+    position: relative;
   }
+  .check::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 11px;
+    width: 11px;
+    border: 1px solid $gray;
+    border-radius: 50%;
+    transition: 0.3s;
+  }
+  input:checked + label .check::before {
+    background-color: $main;
+    border-color: $main;
+  }
+
   input {
     display: none;
     width: 16px;
