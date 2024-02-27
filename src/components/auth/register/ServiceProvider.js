@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "../../../util/axios";
 import { toast } from "react-toastify";
 import { State } from "country-state-city";
@@ -16,30 +16,39 @@ import MapLocationField from "./../../ui/form-elements/MapLocationField";
 
 const ServiceProvider = ({ setFormSelection }) => {
   const navigate = useNavigate();
-  const [cities, setCities] = useState([]);
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const [selectedCountry, setSelectedCountry] = useState(null);
+  const [cities, setCities] = useState([]);
   const [cityForCountry, setCityForCountry] = useState(null);
+  const [selectedCountry, setSelectedCountry] = useState("SA");
   const [checkedProducts, setCheckedProducts] = useState(false);
   const [checkedServices, setCheckedServices] = useState(false);
   const [serchedPlace, setSerchedPlace] = useState("Search on Map");
   const [formData, setFormData] = useState({
     registration_type: "Company",
     role: "support_user",
+    country: "SA",
+    city: "'Asir",
     lat: "30.044420",
     lng: "31.235712",
   });
-  // get cities for each country
-  function handleSelectCountry(countryCode) {
-    setSelectedCountry(countryCode);
+  const fetchCitiesForCountry = (countryCode) => {
     const citiesArray = State.getStatesOfCountry(countryCode);
     const citiesNames = citiesArray.map((city) => city.name);
     setCities(citiesArray);
     setCityForCountry(citiesNames);
     setFormData({ ...formData, country: countryCode });
-  }
-  //get lat lng of selected city
+  };
+  useEffect(() => {
+    fetchCitiesForCountry(selectedCountry);
+    // eslint-disable-next-line
+  }, []);
+  // Handle country selection
+  const handleSelectCountry = (countryCode) => {
+    setSelectedCountry(countryCode);
+    fetchCitiesForCountry(countryCode);
+  };
+  // Handle city selection
   const handleSelectCity = (cityName) => {
     const selectedCity = cities.find((city) => city.name === cityName);
     if (selectedCity) {

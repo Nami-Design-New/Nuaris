@@ -12,7 +12,7 @@ import CheckFieldGroup from "../../ui/form-elements/CheckFieldGroup";
 
 const CreateUser = () => {
   const [selectedCountry, setSelectedCountry] = useState(null);
-  const [formData, setFormData] = useState({ groups: [] });
+  const [formData, setFormData] = useState({ nationality: "SA" });
   const [loading, setLoading] = useState(false);
   const [showAssignGroups, setShowAssignGroups] = useState(false);
 
@@ -28,7 +28,7 @@ const CreateUser = () => {
     if (user) {
       setFormData((prevFormData) => ({
         ...prevFormData,
-        parent: user.id,
+        parent: Number(user.id),
       }));
     }
   }, [user]);
@@ -127,8 +127,7 @@ const CreateUser = () => {
                     searchable={true}
                     selectedSize={false}
                     onSelect={handleCountrySelect}
-                    selected={selectedCountry}
-                    defaultCountry="AE"
+                    selected={selectedCountry || "SA"}
                   />
                 </div>
               </div>
