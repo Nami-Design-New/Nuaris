@@ -37,8 +37,8 @@ const LocationForm = ({ formData, setFormData, setForm }) => {
       setFormData({
         ...formData,
         city: cityName,
-        lat: selectedCity.latitude,
-        lng: selectedCity.longitude,
+        lat: Number(selectedCity.latitude).toFixed(6),
+        lng: Number(selectedCity.longitude).toFixed(6),
       });
     }
   };
