@@ -1,6 +1,6 @@
 import { Form } from "react-bootstrap";
 
-const CheckFieldPermissions = ({ name, id, onChange }) => {
+const CheckField = ({ name, id, onChange }) => {
   return (
     <div className="check_field">
       <Form.Check type="switch" id={id} label={name} onChange={onChange} />
@@ -8,4 +8,4 @@ const CheckFieldPermissions = ({ name, id, onChange }) => {
   );
 };
 
-export default CheckFieldPermissions;
+export default CheckField;

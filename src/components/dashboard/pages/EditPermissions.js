@@ -2,10 +2,10 @@ import React, { useState, useEffect } from "react";
 import PageHeader from "../layout/PageHeader";
 import SubmitButton from "./../../ui/form-elements/SubmitButton";
 import { useSelector } from "react-redux";
-import CheckFieldPermissions from "./../../ui/form-elements/CheckFieldPermissions";
 import { useParams } from "react-router-dom";
 import axios from "../../../util/axios";
 import { toast } from "react-toastify";
+import CheckField from "../../ui/form-elements/CheckField";
 
 const EditPermissions = () => {
   const [formData, setFormData] = useState({ name: "", permissions: [] });
@@ -89,7 +89,7 @@ const EditPermissions = () => {
               </div>
               {permissions.map((p) => (
                 <div className="col-lg-4 col-md-6 col-12 p-2" key={p.id}>
-                  <CheckFieldPermissions
+                  <CheckField
                     label={p.codename}
                     name={p.name}
                     id={p.id}

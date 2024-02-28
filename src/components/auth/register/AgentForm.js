@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "../../../util/axios";
 import { toast } from "react-toastify";
 import { State } from "country-state-city";
@@ -16,20 +16,44 @@ import LogoUploadField from "./../../ui/form-elements/LogoUploadField";
 const AgentForm = ({ setFormSelection }) => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [cities, setCities] = useState([]);
   const [cityForCountry, setCityForCountry] = useState(null);
-  const [selectedCountry, setSelectedCountry] = useState(null);
+  const [selectedCountry, setSelectedCountry] = useState("SA");
   const [formData, setFormData] = useState({
     role: "agent",
+    country: "SA",
+    city: "'Asir",
   });
 
   // get cities for each country
-  function handleSelectCountry(countryCode) {
-    setSelectedCountry(countryCode);
+  const fetchCitiesForCountry = (countryCode) => {
     const citiesArray = State.getStatesOfCountry(countryCode);
     const citiesNames = citiesArray.map((city) => city.name);
+    setCities(citiesArray);
     setCityForCountry(citiesNames);
     setFormData({ ...formData, country: countryCode });
-  }
+  };
+  useEffect(() => {
+    fetchCitiesForCountry(selectedCountry);
+    // eslint-disable-next-line
+  }, []);
+  // Handle country selection
+  const handleSelectCountry = (countryCode) => {
+    setSelectedCountry(countryCode);
+    fetchCitiesForCountry(countryCode);
+  };
+  // Handle city selection
+  const handleSelectCity = (cityName) => {
+    const selectedCity = cities.find((city) => city.name === cityName);
+    if (selectedCity) {
+      setFormData({
+        ...formData,
+        city: cityName,
+        lat: selectedCity.latitude,
+        lng: selectedCity.longitude,
+      });
+    }
+  };
 
   /* form Submit requirments [Host Register] */
   const headersList = {
@@ -177,11 +201,10 @@ const AgentForm = ({ setFormSelection }) => {
               <ReactFlagsSelect
                 searchable={true}
                 selectedSize={false}
+                selected={selectedCountry}
                 onSelect={(code) => {
                   handleSelectCountry(code);
                 }}
-                selected={selectedCountry}
-                defaultCountry="AE"
               />
             </div>
           </div>
@@ -194,9 +217,7 @@ const AgentForm = ({ setFormSelection }) => {
               <select
                 name="city"
                 id="city"
-                onChange={(e) => {
-                  setFormData({ ...formData, city: e.target.value });
-                }}
+                onChange={(e) => handleSelectCity(e.target.value)}
               >
                 {cityForCountry ? (
                   cityForCountry.map((city, index) => (
@@ -205,7 +226,7 @@ const AgentForm = ({ setFormSelection }) => {
                     </option>
                   ))
                 ) : (
-                  <option value={""}>Please select a country</option>
+                  <option value={""}>Please select city</option>
                 )}
               </select>
             </div>

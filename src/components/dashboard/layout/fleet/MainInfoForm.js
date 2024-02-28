@@ -3,6 +3,7 @@ import InputField from "../../../ui/form-elements/InputField";
 import SelectField from "./../../../ui/form-elements/SelectField";
 import CommentField from "./../../../ui/form-elements/CommentField";
 import TimeWithUnit from "../../../ui/form-elements/TimeWithUnit";
+import FilesUpload from "../../../ui/form-elements/FilesUpload";
 
 const MainInfoForm = ({ formData, setFormData, setForm }) => {
   const handleNext = (e) => {
@@ -72,6 +73,14 @@ const MainInfoForm = ({ formData, setFormData, setForm }) => {
             setFormData={setFormData}
           />
         </div>
+        {/* Vessel License and registration */}
+        <div className="col-12 p-2">
+          <FilesUpload
+            htmlFor="files"
+            label="Vessel License and registration"
+            setFormData={setFormData}
+          />
+        </div>
         {/* license expiration date */}
         <div className="col-lg-6 col-12 p-2">
           <InputField
@@ -107,10 +116,10 @@ const MainInfoForm = ({ formData, setFormData, setForm }) => {
             setFormData={setFormData}
           />
         </div>
-        <div className="col-12 p-2 d-flex gap-3">
+        <div className="col-12 p-2 pt-4 d-flex gap-3">
           <button className="save_btn ms-auto">Save</button>
           <button className="next_btn" onClick={handleNext}>
-            next
+            Next
           </button>
         </div>
       </div>

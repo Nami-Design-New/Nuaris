@@ -528,6 +528,15 @@ button {
   color: #0d0d0d;
   cursor: pointer;
 }
+.form-ui .input-field.files .filepond--root .filepond--drop-label {
+  min-height: 100%;
+}
+.form-ui .input-field.files .filepond--root .filepond--drop-label label {
+  color: #aaaaaa !important;
+  font-size: 14px !important;
+  font-weight: 400 !important;
+  line-height: 18px !important;
+}
 .form-ui .check-field {
   width: 100%;
   display: flex;
@@ -1576,6 +1585,14 @@ th:last-child .p-column-header-content {
   font-weight: 500;
   color: #aaaaaa;
   font-size: 16px;
+}
+.fleet_form__wrapper .wizard_content .form-ui .member_card {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px;
+  background: #f8f8f8;
+  border-radius: 12px;
 }
 
 /*
