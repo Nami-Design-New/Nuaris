@@ -1013,6 +1013,9 @@ button {
 .main_wrap nav .settings ul li a img {
   height: 20px;
 }
+.main_wrap nav .settings ul li.notification {
+  position: relative;
+}
 .main_wrap nav .settings ul li.notification a {
   background: #ebf3f5;
 }
@@ -1595,12 +1598,6 @@ th:last-child .p-column-header-content {
   border-radius: 12px;
 }
 
-/*
-  notes:
-  - i will only add styles here so we dont have conflicts
-  - any edited styles in the file will start with: FOX -> (date)
-  and end with: END OF (date)
-*/
 .route_path {
   font-weight: 500;
   display: flex;
@@ -2107,4 +2104,147 @@ th:last-child .p-column-header-content {
 }
 .rate_cards::-webkit-scrollbar {
   display: none;
+}
+
+.modals {
+  position: absolute;
+  box-shadow: 0px 2px 15px -3px rgba(0, 0, 0, 0.0705882353);
+  top: 100%;
+  z-index: 9;
+  border-radius: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: #fff;
+  overflow: hidden;
+  padding: 16px;
+  transform-origin: top;
+}
+.modals .header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-weight: 500;
+  font-size: 16px;
+  color: #0d0d0d;
+}
+.modals .header p {
+  margin: 0;
+  line-height: 20px;
+}
+.modals .header a {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 18px;
+  color: #006980;
+  border: none;
+  background: none !important;
+  height: unset !important;
+}
+.modals .body {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.settings-gear {
+  position: relative;
+}
+
+.settings-modal {
+  width: 250px;
+}
+
+.notification-modal {
+  width: 320px;
+}
+.notification-modal .body {
+  max-height: 280px;
+  overflow: scroll;
+}
+.notification-modal .body::-webkit-scrollbar {
+  display: none;
+}
+.notification-modal .notification-card {
+  display: flex;
+  align-items: start;
+  gap: 8px;
+  padding: 8px 4px;
+  transition: background-color 0.3s;
+  cursor: pointer;
+}
+.notification-modal .notification-card:hover p {
+  color: #0d0d0d !important;
+}
+.notification-modal .notification-card .image {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.notification-modal .notification-card .image img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+.notification-modal .notification-card .content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.notification-modal .notification-card .content h3 {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 18px;
+  color: #0d0d0d;
+  margin: 0;
+}
+.notification-modal .notification-card .content p {
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 15px;
+  color: #666b88;
+  margin: 0;
+  transition: color 0.3s;
+}
+
+.radio {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-left: 8px;
+  cursor: pointer;
+}
+.radio label {
+  cursor: pointer;
+  line-height: 18px;
+}
+.radio .check {
+  line-height: 18px;
+  padding: 8px;
+  padding-left: 18px;
+  position: relative;
+}
+.radio .check::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 11px;
+  width: 11px;
+  border: 1px solid #777777;
+  border-radius: 50%;
+  transition: 0.3s;
+}
+.radio input:checked + label .check::before {
+  background-color: #006980;
+  border-color: #006980;
+}
+.radio input {
+  display: none;
+  width: 16px;
+  height: 16px;
 }/*# sourceMappingURL=index.css.map */

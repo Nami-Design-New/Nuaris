@@ -47,12 +47,10 @@ ul {
 a {
   text-decoration: none;
 }
-// FOX => 23/2
 button {
   border: none;
   background-color: unset;
 }
-// FOX => 23/2
 
 ::-webkit-scrollbar {
   width: 4px;
@@ -963,6 +961,7 @@ $transation: 0.4s ease-in-out;
             }
           }
           &.notification {
+            position: relative;
             a {
               background: $main10;
             }
@@ -1516,12 +1515,7 @@ th:last-child .p-column-header-content {
 }
 
 // FOX GLOBALS =================================================
-/*
-  notes:
-  - i will only add styles here so we dont have conflicts
-  - any edited styles in the file will start with: FOX -> (date)
-  and end with: END OF (date)
-*/
+
 .route_path {
   font-weight: 500;
   display: flex;
@@ -2017,4 +2011,147 @@ th:last-child .p-column-header-content {
     display: none;
   }
 }
-// END OF FOX STUFF
+
+.modals {
+  position: absolute;
+  box-shadow: 0px 2px 15px -3px #00000012;
+  top: 100%;
+  z-index: 9;
+  border-radius: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: $white;
+  overflow: hidden;
+  padding: 16px;
+  transform-origin: top;
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-weight: 500;
+    font-size: 16px;
+    color: $dark;
+    p {
+      margin: 0;
+      line-height: 20px;
+    }
+    a {
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 18px;
+      color: $main;
+      border: none;
+      background: none !important;
+      height: unset !important;
+    }
+  }
+  .body {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+}
+
+.settings-gear {
+  position: relative;
+}
+.settings-modal {
+  width: 250px;
+}
+.notification-modal {
+  width: 320px;
+
+  .body {
+    max-height: calc(70px * 4);
+    overflow: scroll;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+  .notification-card {
+    display: flex;
+    align-items: start;
+    gap: 8px;
+    padding: 8px 4px;
+    transition: background-color 0.3s;
+    cursor: pointer;
+    &:hover {
+      p {
+        color: $dark !important;
+      }
+    }
+    .image {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      overflow: hidden;
+      flex-shrink: 0;
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+    .content {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      h3 {
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 18px;
+        color: $dark;
+        margin: 0;
+      }
+      p {
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 15px;
+        color: $text;
+        margin: 0;
+        transition: color 0.3s;
+      }
+    }
+  }
+}
+
+.radio {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-left: 8px;
+  cursor: pointer;
+  label {
+    cursor: pointer;
+    line-height: 18px;
+  }
+  .check {
+    line-height: 18px;
+    padding: 8px;
+    padding-left: 18px;
+    position: relative;
+  }
+  .check::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 11px;
+    width: 11px;
+    border: 1px solid $gray;
+    border-radius: 50%;
+    transition: 0.3s;
+  }
+  input:checked + label .check::before {
+    background-color: $main;
+    border-color: $main;
+  }
+
+  input {
+    display: none;
+    width: 16px;
+    height: 16px;
+  }
+}
