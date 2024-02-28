@@ -1,13 +1,14 @@
 import React, { useRef, useState } from "react";
 import PageHeader from "../layout/PageHeader";
 import InputField from "../../ui/form-elements/InputField";
-import CheckFieldPermissions from "../../ui/form-elements/CheckFieldPermissions";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "../../../util/axios";
 import { toast } from "react-toastify";
 
 import SubmitButton from "./../../ui/form-elements/SubmitButton";
 import { setPermissionsGroups } from "../../../redux/slices/permissionsGroups";
+import CheckField from "../../ui/form-elements/CheckField";
+
 const CreatePermission = () => {
   const dispatch = useDispatch();
   const formRef = useRef(null);
@@ -88,7 +89,7 @@ const CreatePermission = () => {
               </div>
               {permissions.map((p) => (
                 <div className="col-lg-4 col-md-6 col-12 p-2">
-                  <CheckFieldPermissions
+                  <CheckField
                     key={p.id}
                     label={p.codename}
                     name={p.name}

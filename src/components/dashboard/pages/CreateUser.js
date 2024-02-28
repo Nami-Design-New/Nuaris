@@ -8,11 +8,11 @@ import { useSelector } from "react-redux";
 import axios from "../../../util/axios";
 import { toast } from "react-toastify";
 import SubmitButton from "../../ui/form-elements/SubmitButton";
-import CheckFieldGroup from "../../ui/form-elements/CheckFieldGroup";
+import CheckField from "../../ui/form-elements/CheckField";
 
 const CreateUser = () => {
   const [selectedCountry, setSelectedCountry] = useState(null);
-  const [formData, setFormData] = useState({ groups: [] });
+  const [formData, setFormData] = useState({ nationality: "SA" });
   const [loading, setLoading] = useState(false);
   const [showAssignGroups, setShowAssignGroups] = useState(false);
 
@@ -28,23 +28,23 @@ const CreateUser = () => {
     if (user) {
       setFormData((prevFormData) => ({
         ...prevFormData,
-        parent: user.id,
+        parent: Number(user.id),
       }));
     }
   }, [user]);
 
-  const handleAddGroup = (e) => {
+  const handleAddGroup = (e, passedGroupName) => {
     const checked = e.target.checked;
     if (checked) {
       setFormData({
         ...formData,
-        groups: [...formData.groups, e.target.value],
+        group: [...formData.group, passedGroupName],
       });
     } else {
-      const filteredGroups = formData.groups.filter(
-        (group) => group !== e.target.value
+      const filteredPermessions = formData.group.filter(
+        (permission) => permission.id !== passedGroupName.id
       );
-      setFormData({ ...formData, groups: filteredGroups });
+      setFormData({ ...formData, group: filteredPermessions });
     }
   };
 
@@ -52,15 +52,13 @@ const CreateUser = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      await axios.post("/users/invite-user", formData);
+      await axios.post("/users/invite-user/", formData);
       toast.success("Invitation sent successfully");
       form.current.reset();
       setShowAssignGroups(true);
     } catch (error) {
       console.log("error =>", error);
       toast.error("An error occurred while sending the invitation");
-      // TODO: RESET
-      // form.current.reset();
     } finally {
       setLoading(false);
     }
@@ -127,8 +125,7 @@ const CreateUser = () => {
                     searchable={true}
                     selectedSize={false}
                     onSelect={handleCountrySelect}
-                    selected={selectedCountry}
-                    defaultCountry="AE"
+                    selected={selectedCountry || "SA"}
                   />
                 </div>
               </div>
@@ -160,37 +157,37 @@ const CreateUser = () => {
             </form>
           </div>
         </div>
-        {showAssignGroups && (
-          <div className="col-12 p-2">
-            <div className="inner_card mt-4">
-              <form action="" className="row m-0 form-ui">
-                <div className="col-12 p-2">
-                  <h6 className="simiLabel">
-                    Assign Group Permissions to employee
-                  </h6>
-                </div>
-                {permissionsGroups.map((g) => (
-                  <div className="col-lg-4 col-md-6 col-12 p-2">
-                    <CheckFieldGroup
-                      key={g.id}
-                      label={g.name}
-                      name={g.name}
-                      id={g.id}
-                      onChange={handleAddGroup}
-                    />
-                  </div>
-                ))}
-                <div className="col-12 p-2 d-flex justify-content-end">
-                  <SubmitButton
-                    loading={loading}
-                    name="Create"
-                    className="w-25"
+        <div className="col-12 p-2">
+          <div className="inner_card mt-4">
+            <form action="" className="row m-0 form-ui">
+              <div className="col-12 p-2">
+                <h6 className="simiLabel">
+                  Assign Group Permissions to employee
+                </h6>
+              </div>
+              {permissionsGroups.map((g) => (
+                <div className="col-lg-4 col-md-6 col-12 p-2">
+                  <CheckField
+                    key={g.id}
+                    name={g.name}
+                    id={g.id}
+                    onChange={(e) => handleAddGroup(e, g?.id)}
                   />
                 </div>
-              </form>
-            </div>
+              ))}
+              <div className="col-12 p-2 d-flex justify-content-end">
+                <SubmitButton
+                  loading={loading}
+                  name="Confirm"
+                  className="w-25"
+                />
+              </div>
+            </form>
           </div>
-        )}
+        </div>
+        {/* {showAssignGroups && (
+          
+        )} */}
       </div>
     </section>
   );

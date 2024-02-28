@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "../../../util/axios";
 import { toast } from "react-toastify";
 import { State } from "country-state-city";
@@ -17,28 +17,38 @@ import MapLocationField from "./../../ui/form-elements/MapLocationField";
 
 const HostForm = ({ setFormSelection }) => {
   const navigate = useNavigate();
-  const [cities, setCities] = useState([]);
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [cities, setCities] = useState([]);
   const [cityForCountry, setCityForCountry] = useState(null);
-  const [selectedCountry, setSelectedCountry] = useState(null);
+  const [selectedCountry, setSelectedCountry] = useState("SA");
   const [serchedPlace, setSerchedPlace] = useState("Search on Map");
   const [formData, setFormData] = useState({
     registration_type: "Company",
+    country: "SA",
+    city: "'Asir",
     role: "host",
     lat: 30.04442,
     lng: 31.235712,
   });
-  // get cities for each country
-  function handleSelectCountry(countryCode) {
-    setSelectedCountry(countryCode);
+
+  const fetchCitiesForCountry = (countryCode) => {
     const citiesArray = State.getStatesOfCountry(countryCode);
     const citiesNames = citiesArray.map((city) => city.name);
     setCities(citiesArray);
     setCityForCountry(citiesNames);
     setFormData({ ...formData, country: countryCode });
-  }
-  //get lat lng of selected city
+  };
+  useEffect(() => {
+    fetchCitiesForCountry(selectedCountry);
+    // eslint-disable-next-line
+  }, []);
+  // Handle country selection
+  const handleSelectCountry = (countryCode) => {
+    setSelectedCountry(countryCode);
+    fetchCitiesForCountry(countryCode);
+  };
+  // Handle city selection
   const handleSelectCity = (cityName) => {
     const selectedCity = cities.find((city) => city.name === cityName);
     if (selectedCity) {
@@ -200,7 +210,7 @@ const HostForm = ({ setFormSelection }) => {
           <div className="col-lg-6 col-12 p-2">
             <div className="input-field">
               <label htmlFor="companyLocation">
-                Company Location. (Country)
+                Company Location. <span>(Country)</span>
               </label>
               <ReactFlagsSelect
                 searchable={true}
@@ -250,6 +260,7 @@ const HostForm = ({ setFormSelection }) => {
             showModal={showModal}
             setShowModal={setShowModal}
             setFormData={setFormData}
+            title="Company Location"
             formData={formData}
             setSerchedPlace={setSerchedPlace}
           />

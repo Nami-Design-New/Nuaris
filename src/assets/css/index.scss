@@ -522,6 +522,17 @@ $transation: 0.4s ease-in-out;
       color: $dark;
       cursor: pointer;
     }
+    &.files {
+      .filepond--root .filepond--drop-label {
+        min-height: 100%;
+        label {
+          color: $inputHint !important;
+          font-size: 14px !important;
+          font-weight: 400 !important;
+          line-height: 18px !important;
+        }
+      }
+    }
   }
   .check-field {
     width: 100%;
@@ -1490,6 +1501,14 @@ th:last-child .p-column-header-content {
         font-weight: 500;
         color: $inputHint;
         font-size: 16px;
+      }
+      .member_card {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        padding: 16px;
+        background: $inputBG;
+        border-radius: 12px;
       }
     }
   }

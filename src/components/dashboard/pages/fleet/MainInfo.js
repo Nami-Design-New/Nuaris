@@ -6,7 +6,10 @@ import PolicyForm from "../../layout/fleet/PolicyForm";
 
 const MainInfo = () => {
   const [form, setForm] = useState("Main Info");
-  const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState({
+    lat: 18.2206,
+    lng: 42.5047,
+  });
   let formComponent;
   if (form === "Main Info") {
     formComponent = (
