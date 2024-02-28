@@ -3,17 +3,22 @@ import Modal from "react-bootstrap/Modal";
 import axios from "../../../util/axios";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
-import { removePermissionGroup } from "../../../redux/slices/permissionsGroups";
 
-const DeleteGroupModal = ({ showDeleteModal, setShowDeleteModal, row }) => {
+const DeleteModal = ({
+  showDeleteModal,
+  setShowDeleteModal,
+  row,
+  sliceAction,
+  endPoint,
+}) => {
   const dispatch = useDispatch();
 
   const handelConfirm = async () => {
     if (row) {
       try {
-        await axios.delete(`groups/${row.id}/`);
+        await axios.delete(`${endPoint}/${row.id}/`);
         toast.success(`${row.name} group deleted successfully`);
-        dispatch(removePermissionGroup(row.id));
+        dispatch(sliceAction(row.id));
       } catch (error) {
         toast.error("An error occurred while deletion");
       } finally {
@@ -33,8 +38,9 @@ const DeleteGroupModal = ({ showDeleteModal, setShowDeleteModal, row }) => {
         <div className="row m-0 deleteModal">
           <div className="col-12 p-2">
             <p>
-              {`You are about to delete ${row &&
-                row.name}. When you continue, you cannot go
+              {`You are about to delete ${
+                row && row.name
+              }. When you continue, you cannot go
               back. Do you want to confirm the deletion?`}
             </p>
           </div>
@@ -45,7 +51,7 @@ const DeleteGroupModal = ({ showDeleteModal, setShowDeleteModal, row }) => {
             >
               Cancel
             </button>
-            <button className="confirm" onClick={handelConfirm}>
+            <button className="confirm red" onClick={handelConfirm}>
               Confirm
             </button>
           </div>
@@ -55,4 +61,4 @@ const DeleteGroupModal = ({ showDeleteModal, setShowDeleteModal, row }) => {
   );
 };
 
-export default DeleteGroupModal;
+export default DeleteModal;

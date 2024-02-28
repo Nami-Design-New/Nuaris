@@ -9,15 +9,39 @@ import CheckField from "../../ui/form-elements/CheckField";
 
 const EditPermissions = () => {
   const [formData, setFormData] = useState({ name: "", permissions: [] });
+  const [permissionMap, setPermissionMap] = useState([]);
   const [loading, setLoading] = useState(false);
+
   const { permissionId } = useParams();
   const permissions = useSelector((state) => state.permissions.permissions);
   const permissionsGroups = useSelector(
     (state) => state.permissionsGroups.permissionsGroups
   );
 
+  useEffect(() => {
+    const permissionsGroup = permissionsGroups.find(
+      (p) => p.id === parseInt(permissionId)
+    );
+    if (permissionsGroup) {
+      const permissionMap = permissionsGroup.permissions.reduce((acc, perm) => {
+        acc[perm.id] = true;
+        return acc;
+      }, {});
+      setPermissionMap(permissionMap);
+      setFormData({
+        name: permissionsGroup.name,
+        permissions: permissionsGroup.permissions,
+      });
+    }
+  }, [permissionId, permissionsGroups]);
+
   const handleAddPermission = (e, passedPermission) => {
     const checked = e.target.checked;
+    const updatedMap = {
+      ...permissionMap,
+      [passedPermission.id]: !permissionMap[passedPermission.id],
+    };
+    setPermissionMap(updatedMap);
     if (checked) {
       setFormData({
         ...formData,
@@ -30,18 +54,6 @@ const EditPermissions = () => {
       setFormData({ ...formData, permissions: filteredPermessions });
     }
   };
-
-  useEffect(() => {
-    const permissionsGroup = permissionsGroups.find(
-      (p) => p.id === parseInt(permissionId)
-    );
-    if (permissionsGroup) {
-      setFormData({
-        name: permissionsGroup.name,
-        permissions: permissionsGroup.permissions,
-      });
-    }
-  }, [permissionId, permissionsGroups]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -93,6 +105,7 @@ const EditPermissions = () => {
                     label={p.codename}
                     name={p.name}
                     id={p.id}
+                    checked={permissionMap[p.id] || false}
                     onChange={(e) => handleAddPermission(e, p)}
                   />
                 </div>
