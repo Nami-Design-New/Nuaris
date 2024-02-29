@@ -8,19 +8,16 @@ import { useSelector } from "react-redux";
 import axios from "../../../util/axios";
 import { toast } from "react-toastify";
 import SubmitButton from "../../ui/form-elements/SubmitButton";
-import CheckField from "../../ui/form-elements/CheckField";
+import AssignGroup from "../layout/AssignGroup";
 
 const CreateUser = () => {
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [formData, setFormData] = useState({ nationality: "SA" });
   const [loading, setLoading] = useState(false);
   const [showAssignGroups, setShowAssignGroups] = useState(false);
+  const [ivitedUserId, setIvitedUserId] = useState(null);
 
   const positions = useSelector((state) => state.positions.positions);
-  const permissionsGroups = useSelector(
-    (state) => state.permissionsGroups.permissionsGroups
-  );
-
   const user = useSelector((state) => state.user.user);
   const form = useRef(null);
 
@@ -33,29 +30,15 @@ const CreateUser = () => {
     }
   }, [user]);
 
-  const handleAddGroup = (e, passedGroupName) => {
-    const checked = e.target.checked;
-    if (checked) {
-      setFormData({
-        ...formData,
-        group: [...formData.group, passedGroupName],
-      });
-    } else {
-      const filteredPermessions = formData.group.filter(
-        (permission) => permission.id !== passedGroupName.id
-      );
-      setFormData({ ...formData, group: filteredPermessions });
-    }
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     try {
-      await axios.post("/users/invite-user/", formData);
+      const response = await axios.post("/users/invite-user/", formData);
       toast.success("Invitation sent successfully");
       form.current.reset();
       setShowAssignGroups(true);
+      setIvitedUserId(response?.data?.user?.id);
     } catch (error) {
       console.log("error =>", error);
       toast.error("An error occurred while sending the invitation");
@@ -157,37 +140,7 @@ const CreateUser = () => {
             </form>
           </div>
         </div>
-        <div className="col-12 p-2">
-          <div className="inner_card mt-4">
-            <form action="" className="row m-0 form-ui">
-              <div className="col-12 p-2">
-                <h6 className="simiLabel">
-                  Assign Group Permissions to employee
-                </h6>
-              </div>
-              {permissionsGroups.map((g) => (
-                <div className="col-lg-4 col-md-6 col-12 p-2">
-                  <CheckField
-                    key={g.id}
-                    name={g.name}
-                    id={g.id}
-                    onChange={(e) => handleAddGroup(e, g?.id)}
-                  />
-                </div>
-              ))}
-              <div className="col-12 p-2 d-flex justify-content-end">
-                <SubmitButton
-                  loading={loading}
-                  name="Confirm"
-                  className="w-25"
-                />
-              </div>
-            </form>
-          </div>
-        </div>
-        {/* {showAssignGroups && (
-          
-        )} */}
+        {showAssignGroups && <AssignGroup ivitedUserId={ivitedUserId} />}
       </div>
     </section>
   );
