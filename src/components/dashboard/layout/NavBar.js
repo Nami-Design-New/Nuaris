@@ -56,7 +56,10 @@ const NavBar = ({ setSideBarOpen, sideBarOpen }) => {
             >
               <img src={settingsIcon} alt="setting-icon" />
             </NavLink>
-            <SettingsModal isOpen={isSettingsOpen} />
+            <SettingsModal
+              setIsOpen={setIsSettingsOpen}
+              isOpen={isSettingsOpen}
+            />
           </li>
           <li className="notification">
             <NavLink
@@ -66,7 +69,10 @@ const NavBar = ({ setSideBarOpen, sideBarOpen }) => {
               <img src={notificationIcon} alt="notification-icon" />
               <span className="number">3</span>
             </NavLink>
-            <NotificationModal isOpen={isNotificationOpen} />
+            <NotificationModal
+              setIsOpen={setIsNotificationOpen}
+              isOpen={isNotificationOpen}
+            />
           </li>
           <li className="profile">
             <div

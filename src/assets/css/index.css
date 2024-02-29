@@ -1087,9 +1087,6 @@ button {
   background: #fff;
   height: 0;
   overflow: hidden;
-  padding: 0;
-}
-.main_wrap nav .settings .profile_dropdown.open {
   padding: 16px;
   height: -moz-fit-content;
   height: fit-content;
@@ -1596,6 +1593,71 @@ th:last-child .p-column-header-content {
   padding: 16px;
   background: #f8f8f8;
   border-radius: 12px;
+}
+.fleet_form__wrapper .wizard_content .form-ui .member_card .card_header {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 15px;
+  color: #006980;
+  margin: 0;
+}
+.fleet_form__wrapper .wizard_content .form-ui .member_card .card_row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.fleet_form__wrapper .wizard_content .form-ui .member_card .card_row div {
+  width: 100%;
+}
+.fleet_form__wrapper .wizard_content .form-ui .member_card input,
+.fleet_form__wrapper .wizard_content .form-ui .member_card .flag-select button {
+  background-color: #fff !important;
+}
+.fleet_form__wrapper .wizard_content .form-ui .member_card label {
+  font-weight: 500;
+}
+
+.gender_select {
+  display: flex;
+  flex-direction: column;
+}
+.gender_select .gender_card {
+  background-color: red;
+  display: flex;
+  gap: 8px;
+  background-color: #fff;
+  color: #0d0d0d;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  border: 1px solid #fff;
+  padding: 12px 16px;
+  transition: 0.3s;
+  cursor: pointer;
+  font-weight: 400 !important;
+  font-size: 14px;
+  width: 100%;
+}
+.gender_select .gender_card img {
+  height: 30px;
+  width: 30px;
+}
+.gender_select .gender_card:hover {
+  background-color: #ebf3f5;
+}
+.gender_select .gender_card.active {
+  border: 1px solid #006980;
+  background-color: #ebf3f5;
+}
+.gender_select > div {
+  display: flex;
+  gap: 8px;
+}
+.gender_select input {
+  visibility: hidden;
+}
+.gender_select label {
+  font-weight: 500;
 }
 
 .route_path {

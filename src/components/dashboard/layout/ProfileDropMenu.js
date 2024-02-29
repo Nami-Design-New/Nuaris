@@ -6,6 +6,7 @@ import addAcc from "../../../assets/images/addAcc.svg";
 import logout from "../../../assets/images/logout.svg";
 import fav from "../../../assets/images/fav.svg";
 import editIcon from "../../../assets/images/editIcon.svg";
+import { motion } from "framer-motion";
 
 const ProfileDropMenu = ({
   profileDropDown,
@@ -14,6 +15,18 @@ const ProfileDropMenu = ({
   setProfileDropDown,
 }) => {
   const dropdownRef = useRef(null);
+
+  // TODO: Fix expand glitch
+  const variants = {
+    open: {
+      opacity: 1,
+      height: "max-content",
+    },
+    closed: {
+      opacity: 0,
+      height: 0,
+    },
+  };
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -33,8 +46,11 @@ const ProfileDropMenu = ({
   }, [setProfileDropDown, dropdownRef]);
 
   return (
-    <div
-      className={`profile_dropdown ${profileDropDown ? "open" : ""}`}
+    <motion.div
+      variants={variants}
+      initial="closed"
+      animate={profileDropDown ? "open" : "closed"}
+      className={`profile_dropdown`}
       ref={dropdownRef}
     >
       {/* authed user */}
@@ -100,7 +116,7 @@ const ProfileDropMenu = ({
           )}
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
