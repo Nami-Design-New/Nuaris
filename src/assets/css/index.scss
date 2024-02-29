@@ -1532,6 +1532,31 @@ th:last-child .p-column-header-content {
     }
   }
 }
+.policy_form {
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    img {
+      width: 24px;
+      height: 24px;
+    }
+  }
+}
+.policy_cancel {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  & > div {
+    width: 100%;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    label {
+      min-width: max-content !important;
+    }
+  }
+}
 .gender_select {
   display: flex;
   flex-direction: column;

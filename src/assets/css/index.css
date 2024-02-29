@@ -1617,6 +1617,32 @@ th:last-child .p-column-header-content {
   font-weight: 500;
 }
 
+.policy_form .header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.policy_form .header img {
+  width: 24px;
+  height: 24px;
+}
+
+.policy_cancel {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.policy_cancel > div {
+  width: 100%;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.policy_cancel > div label {
+  min-width: -moz-max-content !important;
+  min-width: max-content !important;
+}
+
 .gender_select {
   display: flex;
   flex-direction: column;
