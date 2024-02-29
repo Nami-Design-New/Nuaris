@@ -53,6 +53,14 @@ const CreatePermission = () => {
       dispatch(setPermissionsGroups([...permissionsGroups, response.data]));
       formRef.current.reset();
     } catch (error) {
+      if (error.response && error.response.data) {
+        const errors = error.response.data;
+        Object.keys(errors).forEach((field) => {
+          errors[field].forEach((message) => {
+            toast.error(`${field}: ${message}`);
+          });
+        });
+      }
       console.log(error);
     } finally {
       setLoading(false);
@@ -88,9 +96,8 @@ const CreatePermission = () => {
                 </h6>
               </div>
               {permissions.map((p) => (
-                <div className="col-lg-4 col-md-6 col-12 p-2">
+                <div className="col-lg-4 col-md-6 col-12 p-2" key={p.id}>
                   <CheckField
-                    key={p.id}
                     label={p.codename}
                     name={p.name}
                     id={p.id}

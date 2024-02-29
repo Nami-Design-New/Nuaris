@@ -13,14 +13,12 @@ export const permissionsGroups = createSlice({
     removePermissionGroup: (state, action) => {
       const groupIdToRemove = action.payload;
       state.permissionsGroups = state.permissionsGroups.filter(
-        group => group.id !== groupIdToRemove
+        (group) => group.id !== groupIdToRemove
       );
     },
   },
 });
 
-export const {
-  setPermissionsGroups,
-  removePermissionGroup,
-} = permissionsGroups.actions;
+export const { setPermissionsGroups, removePermissionGroup } =
+  permissionsGroups.actions;
 export default permissionsGroups.reducer;

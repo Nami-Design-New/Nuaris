@@ -2,12 +2,13 @@ import React, { useEffect, useState } from "react";
 import PageHeader from "../layout/PageHeader";
 import deleteIcon from "../../../assets/images/delete.svg";
 import editIcon from "../../../assets/images/edit.svg";
-import DeleteGroupModal from "./../layout/DeleteGroupModal";
 import { Link, useNavigate } from "react-router-dom";
 import { DataTable } from "primereact/datatable";
 import { Button } from "primereact/button";
 import { Column } from "primereact/column";
 import { useSelector } from "react-redux";
+import DeleteModal from "../layout/DeleteModal";
+import { removePermissionGroup } from "../../../redux/slices/permissionsGroups";
 
 const Permissions = () => {
   const [row, setRow] = useState({});
@@ -75,10 +76,12 @@ const Permissions = () => {
           </div>
         </div>
       </section>
-      <DeleteGroupModal
+      <DeleteModal
+        row={row}
+        endPoint="groups"
         showDeleteModal={showDeleteModal}
         setShowDeleteModal={setShowDeleteModal}
-        row={row}
+        sliceAction={removePermissionGroup}
       />
     </React.Fragment>
   );

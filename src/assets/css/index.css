@@ -1465,10 +1465,16 @@ th:last-child .p-column-header-content {
   background: none;
 }
 .deleteModal .confirm {
-  background: #ff3a29;
+  background: #006980;
   height: 44px;
 }
 .deleteModal .confirm:hover {
+  background: #006980;
+}
+.deleteModal .confirm.red {
+  background: #ff3a29;
+}
+.deleteModal .confirm.red:hover {
   background: #ff3a29;
 }
 

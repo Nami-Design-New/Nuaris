@@ -7,9 +7,12 @@ import { DataTable } from "primereact/datatable";
 import { Button } from "primereact/button";
 import { Column } from "primereact/column";
 import { useSelector } from "react-redux";
-import DeleteGroupModal from "./../layout/DeleteGroupModal";
+import DeleteModal from "../layout/DeleteModal";
+import { removeEmployee } from "../../../redux/slices/employeesSlice";
+
 
 const InviteUser = () => {
+  const [row, setRow] = useState({});
   const [tableData, setTableData] = useState([]);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const employees = useSelector((state) => state.employees.employees);
@@ -37,7 +40,7 @@ const InviteUser = () => {
   };
   const deleteRow = (rowData) => {
     setShowDeleteModal(true);
-    console.log("Deleting row:", rowData);
+    setRow(rowData);
   };
 
   return (
@@ -64,8 +67,7 @@ const InviteUser = () => {
                 <DataTable
                   value={tableData}
                   paginator
-                  rows={5}
-                  rowsPerPageOptions={[5, 10, 25]}
+                  rows={10}
                   paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
                   currentPageReportTemplate="{first} to {last} of {totalRecords}"
                 >
@@ -80,9 +82,12 @@ const InviteUser = () => {
           </div>
         </div>
       </section>
-      <DeleteGroupModal
+      <DeleteModal
+        row={row}
+        endPoint="users"
         showDeleteModal={showDeleteModal}
         setShowDeleteModal={setShowDeleteModal}
+        sliceAction={removeEmployee}
       />
     </React.Fragment>
   );
