@@ -57,7 +57,7 @@ button {
   flex: 1;
   position: relative;
   background-size: cover;
-  transition: 0.4s ease-in-out;
+  transition: 0.3s ease-in-out;
   background-position: center left;
 }
 @media (max-width: 992px) {
@@ -184,7 +184,7 @@ button {
   font-size: 16px;
   font-weight: 600;
   color: #0d0d0d;
-  transition: 0.4s ease-in-out;
+  transition: 0.3s ease-in-out;
 }
 .auth-section .left-side .form-container .selection-grid .select.active {
   background: #006980;
@@ -216,7 +216,7 @@ button {
   position: relative;
   font-size: 16px;
   font-weight: 500;
-  transition: 0.4s ease-in-out;
+  transition: 0.3s ease-in-out;
   color: #0d0d0d;
 }
 .auth-section .left-side .form-container .tabs button::after {
@@ -228,7 +228,7 @@ button {
   transform: translateX(-50%);
   height: 2px;
   background: #006980;
-  transition: 0.4s ease-in-out;
+  transition: 0.3s ease-in-out;
 }
 .auth-section .left-side .form-container .tabs button.active {
   color: #006980;
@@ -342,7 +342,7 @@ button {
   position: relative;
   font-size: 16px;
   font-weight: 500;
-  transition: 0.4s ease-in-out;
+  transition: 0.3s ease-in-out;
   color: #0d0d0d;
 }
 .reset-section .reset-container .reset-form .tabs button::after {
@@ -354,7 +354,7 @@ button {
   transform: translateX(-50%);
   height: 2px;
   background: #006980;
-  transition: 0.4s ease-in-out;
+  transition: 0.3s ease-in-out;
 }
 .reset-section .reset-container .reset-form .tabs button.active {
   color: #006980;
@@ -416,7 +416,7 @@ button {
   border-radius: 12px;
   width: 70px;
   font-size: 18px;
-  transition: 0.4s ease-in-out;
+  transition: 0.3s ease-in-out;
 }
 .reset-section .reset-container .reset-form .back:hover {
   color: #006980;
@@ -563,7 +563,7 @@ button {
   overflow: hidden;
 }
 .form-ui .check-field .inputs label input {
-  transition: 0.4s ease-in-out;
+  transition: 0.3s ease-in-out;
   background: #ebf3f5;
   cursor: pointer;
   -webkit-appearance: none;
@@ -693,7 +693,7 @@ button {
   border-radius: 12px;
   width: 70px;
   font-size: 18px;
-  transition: 0.4s ease-in-out;
+  transition: 0.3s ease-in-out;
 }
 .back:hover {
   color: #006980;
@@ -826,7 +826,7 @@ button {
   display: flex;
   padding: 24px 16px 0 16px;
   flex-direction: column;
-  transition: 0.4s ease-in-out;
+  transition: 0.3s ease-in-out;
 }
 .side_bar .logo_wrapper {
   width: 100%;
@@ -873,7 +873,7 @@ button {
   gap: 14px;
   color: #777777;
   white-space: nowrap;
-  transition: 0.4s ease-in-out;
+  transition: 0.3s ease-in-out;
 }
 .side_bar .navigation_menu .nav_item a img {
   max-width: 22px;
@@ -897,7 +897,7 @@ button {
 }
 
 .main_wrap {
-  transition: 0.4s ease-in-out;
+  transition: 0.3s ease-in-out;
   padding-right: 16px;
   width: calc(100% - 80px);
   margin-left: 80px;
@@ -935,7 +935,7 @@ button {
   line-height: 48px;
   color: #0d0d0d;
   font-weight: 500;
-  transition: 0.4s ease-in-out;
+  transition: 0.2s;
 }
 .main_wrap nav .links ul li a.active {
   color: #006980;
@@ -954,7 +954,7 @@ button {
   justify-content: space-between;
 }
 .main_wrap nav .links ul li .menuToggler span {
-  transition: 0.4s ease-in-out;
+  transition: 0.3s ease-in-out;
   width: 100%;
   height: 2px;
   display: block;
@@ -1069,7 +1069,7 @@ button {
 }
 .main_wrap nav .settings ul li .dropdownButton .name h6 i {
   transform: translateY(2px);
-  transition: 0.4s ease-in-out;
+  transition: 0.3s ease-in-out;
 }
 .main_wrap nav .settings ul li .dropdownButton .name h6.animate i {
   transform: translateY(2px) rotate(90deg);
@@ -1316,7 +1316,7 @@ footer .links {
 }
 footer .links a {
   color: #0d0d0d;
-  transition: 0.4s ease-in-out;
+  transition: 0.3s ease-in-out;
 }
 footer .links a:hover {
   color: #006980;
@@ -1493,7 +1493,7 @@ th:last-child .p-column-header-content {
   display: flex;
   padding: 24px 16px;
   flex-direction: column;
-  transition: 0.4s ease-in-out;
+  transition: 0.3s ease-in-out;
 }
 .fleet_side_bar .navigation_menu {
   width: 100%;
@@ -1517,7 +1517,7 @@ th:last-child .p-column-header-content {
   gap: 14px;
   color: #0d0d0d;
   white-space: nowrap;
-  transition: 0.4s ease-in-out;
+  transition: 0.3s ease-in-out;
 }
 .fleet_side_bar .navigation_menu .nav_item a img {
   max-width: 22px;
@@ -1561,7 +1561,7 @@ th:last-child .p-column-header-content {
   cursor: pointer;
 }
 .fleet_form__wrapper .wizard_tabs .wizard_tab .step_no {
-  transition: 0.4s ease-in-out;
+  transition: 0.3s ease-in-out;
   font-weight: 500;
   color: #0d0d0d;
   width: 40px;
@@ -1575,7 +1575,7 @@ th:last-child .p-column-header-content {
 .fleet_form__wrapper .wizard_tabs .wizard_tab h6 {
   margin: 0;
   font-weight: 500;
-  transition: 0.4s ease-in-out;
+  transition: 0.3s ease-in-out;
 }
 .fleet_form__wrapper .wizard_tabs .wizard_tab.active .step_no, .fleet_form__wrapper .wizard_tabs .wizard_tab:hover .step_no {
   border-color: #006980;
