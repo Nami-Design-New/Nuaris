@@ -1384,10 +1384,16 @@ th:last-child .p-column-header-content {
     }
   }
   .confirm {
-    background: #ff3a29;
+    background: $main;
     height: 44px;
     &:hover {
+      background: $main;
+    }
+    &.red {
       background: #ff3a29;
+      &:hover {
+        background: #ff3a29;
+      }
     }
   }
 }
