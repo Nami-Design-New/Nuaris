@@ -84,7 +84,7 @@ $successLight: #34b53acc;
 $danger: #dc3545;
 $dangerLight: #dc3545cc;
 $borderRadius: 12px;
-$transation: 0.4s ease-in-out;
+$transation: 0.3s ease-in-out;
 
 .auth-section {
   width: 100%;
@@ -888,7 +888,7 @@ $transation: 0.4s ease-in-out;
             line-height: 48px;
             color: $dark;
             font-weight: 500;
-            transition: $transation;
+            transition: 0.2s;
             &.active {
               color: $main;
             }

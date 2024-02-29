@@ -24,9 +24,9 @@ export default function Dashboard() {
 
   async function getUser(userId) {
     const res = await axios.get(`/users/${userId}`);
-    const { id, subuser_set } = res?.data;
+    const { subuser_set } = res?.data;
 
-    const userRole = subuser_set?.map((e) => (e.id === id ? e.role : null))[0];
+    const userRole = subuser_set[0].role;
 
     setUserRole(userRole);
     dispatch(setUser(res?.data));
