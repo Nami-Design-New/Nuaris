@@ -9,6 +9,7 @@ const MainInfo = () => {
   const [formData, setFormData] = useState({
     lat: 18.2206,
     lng: 42.5047,
+    NumberOfCrew: 0,
   });
   let formComponent;
   if (form === "Main Info") {

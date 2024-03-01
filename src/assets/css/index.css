@@ -2342,4 +2342,23 @@ th:last-child .p-column-header-content {
   display: none;
   width: 16px;
   height: 16px;
+}
+
+.ReactFlagsSelect-module_selectOptions__3LNBJ {
+  font-size: 16px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  border: 0;
+  border-radius: 8px;
+}
+.ReactFlagsSelect-module_selectOptions__3LNBJ input {
+  height: 48px !important;
+  border-radius: 8px !important;
+}
+.ReactFlagsSelect-module_selectOptions__3LNBJ::-webkit-scrollbar {
+  display: none !important;
+}
+
+.ReactFlagsSelect-module_filterBox__3m8EU input {
+  border: 1px solid #f2f2f2;
+  width: 100%;
 }/*# sourceMappingURL=index.css.map */
