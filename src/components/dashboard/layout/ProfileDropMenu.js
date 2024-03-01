@@ -108,10 +108,15 @@ const ProfileDropMenu = ({
             <img src={addAcc} alt="add-account" />
             <Link to="/login">Add a new account</Link>
           </div>
-          {subUsers && subUsers.length > 0 && (
+          {subUsers && subUsers.length > 0 ? (
             <div className="link ps-2">
               <img src={logout} alt="logout" />
-              <h6>Logout from all accounts</h6>
+              <Link to={"/logout"}>Logout from all accounts</Link>
+            </div>
+          ) : (
+            <div className="link ps-2">
+              <img src={logout} alt="logout" />
+              <Link to={"/logout"}>Logout</Link>
             </div>
           )}
         </div>

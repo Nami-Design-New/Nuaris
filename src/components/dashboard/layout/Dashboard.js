@@ -12,35 +12,35 @@ import { setUser } from "../../../redux/slices/authenticatedUserSlice";
 
 export default function Dashboard() {
   const [cookies, , removeCookie] = useCookies();
-  const token = cookies.token;
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [userRole, setUserRole] = useState(null);
 
-  if (!token) navigate("/login");
-
-  const { decodedToken, isExpired } = useJwt(token);
+  const refreshToken = cookies?.refreshToken;
+  const { decodedToken, isExpired } = useJwt(refreshToken || "");
   const userId = decodedToken?.user_id;
 
   async function getUser(userId) {
+    // Important: prevent re-rendering if userRole is already set
+    if (userRole) return;
     const res = await axios.get(`/users/${userId}`);
+
     const { subuser_set } = res?.data;
 
-    const userRole = subuser_set[0].role;
-
-    setUserRole(userRole);
+    const requestRole = subuser_set[0].role;
+    setUserRole(requestRole);
     dispatch(setUser(res?.data));
   }
 
   // - if no userId redirect to login
   if (decodedToken && (!userId || isExpired)) {
-    removeCookie("token");
-    navigate("/login");
+    removeCookie("refreshToken");
+    return navigate("/login");
   } else if (decodedToken) {
     // - fetch user with id
     getUser(userId);
   } else {
-    navigate("/login");
+    return navigate("/login");
   }
 
   // - render dashboard based on user role
@@ -55,4 +55,6 @@ export default function Dashboard() {
   if (userRole === ROLES.SERVICE_PROVIDER) {
     return <UserSupport />;
   }
+
+  return null;
 }

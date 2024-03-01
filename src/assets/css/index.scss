@@ -1087,6 +1087,7 @@ $transation: 0.3s ease-in-out;
         .manage_invite {
           display: flex;
           flex-direction: column;
+          gap: 4px;
           .link {
             display: flex;
             padding: 0 8px;
