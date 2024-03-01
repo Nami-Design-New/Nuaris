@@ -34,14 +34,9 @@ const CreatePermission = () => {
     }
   };
 
-  const headersList = {
-    Accept: "application/json",
-    "Content-Type": "application/json",
-  };
   const requestOptions = {
     method: "POST",
     url: "/groups/",
-    headers: headersList,
     data: formData,
   };
   const handleSubmit = async (e) => {

@@ -8,22 +8,22 @@ const PhoneForm = ({
   setShowLoginForm,
   SetShowOtpForm,
   formData,
-  setFormData
+  setFormData,
 }) => {
   const [loading, setLoading] = useState(false);
 
   const headersList = {
     Accept: "application/json",
-    "Content-Type": "application/json"
+    "Content-Type": "application/json",
   };
   const requestOptions = {
     method: "POST",
     url: "/users/send-otp/",
     headers: headersList,
-    data: formData
+    data: formData,
   };
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e) => {
     setLoading(true);
     e.preventDefault();
     try {
@@ -53,7 +53,7 @@ const PhoneForm = ({
         type="tel"
         placeholder="EX: +455 567888 555"
         required
-        onChange={e => setFormData({ ...formData, mobile: e.target.value })}
+        onChange={(e) => setFormData({ ...formData, mobile: e.target.value })}
       />
       <div className="buttons">
         <Link to="/Login" className="back">

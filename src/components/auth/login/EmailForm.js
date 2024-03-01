@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
-import axios from "../../../util/axios";
 import SubmitButton from "./../../ui/form-elements/SubmitButton";
 import FormBackButton from "../../ui/form-elements/FormBackButton";
+import axios from "../../../util/axios";
 
 const EmailForm = ({
   setShowLoginForm,
@@ -18,16 +18,12 @@ const EmailForm = ({
     setFormData({});
   };
 
-  const headersList = {
-    Accept: "application/json",
-    "Content-Type": "application/json",
-  };
   const requestOptions = {
     method: "POST",
     url: "/users/send-otp/",
-    headers: headersList,
     data: formData,
   };
+
   const handleSubmit = async (e) => {
     setLoading(true);
     e.preventDefault();

@@ -18,14 +18,9 @@ const PhoneForm = ({
     setFormData({});
   };
 
-  const headersList = {
-    Accept: "application/json",
-    "Content-Type": "application/json",
-  };
   const requestOptions = {
     method: "POST",
     url: "/users/send-otp/",
-    headers: headersList,
     data: formData,
   };
 

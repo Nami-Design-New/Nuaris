@@ -49,6 +49,7 @@ const MainInfo = () => {
       <div className="wizard_tabs">
         {["Main Info", "Location", "Crew", "Policy"].map((fo, i) => (
           <div
+            key={i}
             className={`wizard_tab ${form === fo ? "active" : ""}`}
             onClick={() => setForm(fo)}
           >

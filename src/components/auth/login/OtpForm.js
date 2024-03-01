@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import handWave from "../../../assets/images/waving-hand.svg";
 import axios from "../../../util/axios";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import Otpcontainer from "../../../shared/Otpcontainer";
 import SubmitButton from "./../../ui/form-elements/SubmitButton";
@@ -17,7 +16,6 @@ const OtpForm = ({
 }) => {
   const [loading, setLoading] = useState(false);
   const [, setCookie] = useCookies(["token"]);
-  const navigate = useNavigate();
 
   const handleBackButtonClick = (e) => {
     e.preventDefault();
@@ -26,14 +24,9 @@ const OtpForm = ({
     setFormData({});
   };
 
-  const headersList = {
-    Accept: "application/json",
-    "Content-Type": "application/json",
-  };
   const requestOptions = {
     method: "POST",
     url: "/users/login-otp/",
-    headers: headersList,
     data: formData,
   };
   const handleSubmit = async (e) => {
