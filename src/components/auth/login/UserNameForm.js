@@ -42,7 +42,7 @@ const UserNameForm = ({ setShowLoginForm, userTypeSelected }) => {
       dispatch(setUser(res.data.user));
 
       // set refresh token in cookies
-      setCookie("refreshToken", res.data.access_token, {
+      setCookie("refreshToken", res.data.refresh_token, {
         path: "/",
         secure: true,
       });

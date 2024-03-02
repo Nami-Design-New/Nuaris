@@ -13,7 +13,7 @@ const NavBar = ({ setSideBarOpen, sideBarOpen }) => {
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const user = useSelector((state) => state.user.user);
-  const subUsers = useSelector((state) => state.users.users);
+  const subUsers = user.subuser_set;
 
   return (
     <nav>

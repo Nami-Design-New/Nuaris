@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import invite from "../../../assets/images/inviteUser.svg";
 import manage from "../../../assets/images/manageAccount.svg";
 import addAcc from "../../../assets/images/addAcc.svg";
@@ -7,6 +7,7 @@ import logout from "../../../assets/images/logout.svg";
 import fav from "../../../assets/images/fav.svg";
 import editIcon from "../../../assets/images/editIcon.svg";
 import { motion } from "framer-motion";
+import axios from "../../../util/axios";
 
 const ProfileDropMenu = ({
   profileDropDown,
@@ -15,6 +16,21 @@ const ProfileDropMenu = ({
   setProfileDropDown,
 }) => {
   const dropdownRef = useRef(null);
+  const multiAccounts = subUsers?.length > 1;
+  const filteredSubUsers = subUsers.filter((u) => {
+    // TODO: Change "agent" to be the current role
+    return u.role !== "agent";
+  });
+
+  const navigate = useNavigate();
+
+  // TODO: handle account switch
+  async function handleSwitch(subUserId) {
+    await axios.get(`/users/switch/${user.id}`, {
+      subuser_id: subUserId,
+    });
+    navigate("/dashboard");
+  }
 
   // TODO: Fix expand glitch
   const variants = {
@@ -85,11 +101,16 @@ const ProfileDropMenu = ({
       </div>
       {/* switch users */}
       <div className="select_frame">
-        {subUsers && subUsers.length > 0 && (
+        {multiAccounts && (
           <div className="accounts">
-            {subUsers.map((subUser, index) => (
-              <div className="acc" key={index}>
+            {filteredSubUsers.map((subUser, index) => (
+              <button
+                onClick={() => handleSwitch(subUser.id)}
+                className="acc"
+                key={index}
+              >
                 <div className="avatar">
+                  {/* TODO: Change image to be parent image || ask for adding an image to the subuser model */}
                   <img
                     src={subUser.logo !== null ? subUser.logo : fav}
                     alt="avatar"
@@ -99,7 +120,7 @@ const ProfileDropMenu = ({
                   <h6>{`${subUser.role ? subUser.role : "Admin"} User`}</h6>
                   <span>{subUser.email}</span>
                 </div>
-              </div>
+              </button>
             ))}
           </div>
         )}
@@ -108,7 +129,7 @@ const ProfileDropMenu = ({
             <img src={addAcc} alt="add-account" />
             <Link to="/login">Add a new account</Link>
           </div>
-          {subUsers && subUsers.length > 0 ? (
+          {multiAccounts ? (
             <div className="link ps-2">
               <img src={logout} alt="logout" />
               <Link to={"/logout"}>Logout from all accounts</Link>

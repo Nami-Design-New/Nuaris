@@ -14,7 +14,6 @@ const AssignGroupModal = ({
     (state) => state.permissionsGroups.permissionsGroups
   );
   const group = groups.find((group) => group.id === formData.id);
-  console.log(groups);
   const handleConfirm = async () => {
     try {
       await axios.post(`/users/${ivitedUserId}/assign_group/`, formData);

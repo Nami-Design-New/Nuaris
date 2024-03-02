@@ -3,6 +3,7 @@ import { useCookies } from "react-cookie";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { logout } from "../redux/slices/authenticatedUserSlice";
+import axios from "../util/axios";
 
 export default function Logout() {
   const [, , deleteCookie] = useCookies();
@@ -11,6 +12,7 @@ export default function Logout() {
 
   useEffect(() => {
     deleteCookie("refreshToken");
+    delete axios.defaults.headers.common["Authorization"];
     navigate("/login");
     dispatch(logout());
   }, [deleteCookie, navigate, dispatch]);

@@ -27,13 +27,11 @@ export default function Dashboard() {
     // Important: prevent re-rendering if userRole is already set
     if (userRole) return;
     const res = await axios.get(`/users/${userId}`);
-    const access = await axios.post("/users/token/verify/", {
+    const access = await axios.post("/users/token/refresh/", {
       refresh: refreshToken,
     });
 
-    const { subuser_set } = res?.data;
-
-    const requestRole = subuser_set[0].role;
+    const requestRole = res?.data.current_role || "host";
     setUserRole(requestRole);
     dispatch(setUser(res?.data));
     dispatch(setToken(access.data.access));
