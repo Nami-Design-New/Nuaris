@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import CustomRadioInput from "../../ui/CustomRadioInput";
-import { useState } from "react";
-export default function SettingsModal({ isOpen }) {
+import { useEffect, useRef, useState } from "react";
+export default function SettingsModal({ isOpen, setIsOpen }) {
   const variants = {
     open: {
       opacity: 1,
@@ -19,8 +19,26 @@ export default function SettingsModal({ isOpen }) {
     setActive(e.target.value);
     console.log(active);
   }
+
+  const dropdownRef = useRef(null);
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      const isDropdownButton = event.target.closest(".settings-gear");
+
+      if (!isDropdownButton) {
+        setIsOpen(false);
+      }
+    }
+    document.body.addEventListener("click", handleClickOutside);
+    return () => {
+      document.body.removeEventListener("click", handleClickOutside);
+    };
+  }, [setIsOpen, dropdownRef]);
+
   return (
     <motion.div
+      ref={dropdownRef}
       variants={variants}
       initial="closed"
       animate={isOpen ? "open" : "closed"}

@@ -11,6 +11,7 @@ const CrewForm = ({ formData, setFormData, setForm }) => {
     e.preventDefault();
     setForm("Location");
   };
+
   return (
     <div className="form-ui">
       <div className="row m-0">
@@ -29,7 +30,11 @@ const CrewForm = ({ formData, setFormData, setForm }) => {
             setFormData={setFormData}
           />
         </div>
-        <CrewCard />
+        {Array(+formData?.NumberOfCrew)
+          .fill(0)
+          .map((_, i) => {
+            return <CrewCard key={i} index={i + 1} />;
+          })}
         <div className="col-12 p-2 pt-4 d-flex gap-3 ">
           <button className="next_btn" onClick={handleBack}>
             Back

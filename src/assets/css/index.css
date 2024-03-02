@@ -1087,9 +1087,6 @@ button {
   background: #fff;
   height: 0;
   overflow: hidden;
-  padding: 0;
-}
-.main_wrap nav .settings .profile_dropdown.open {
   padding: 16px;
   height: -moz-fit-content;
   height: fit-content;
@@ -1150,6 +1147,7 @@ button {
 .main_wrap nav .settings .profile_dropdown .manage_invite {
   display: flex;
   flex-direction: column;
+  gap: 4px;
 }
 .main_wrap nav .settings .profile_dropdown .manage_invite .link {
   display: flex;
@@ -1602,6 +1600,97 @@ th:last-child .p-column-header-content {
   padding: 16px;
   background: #f8f8f8;
   border-radius: 12px;
+}
+.fleet_form__wrapper .wizard_content .form-ui .member_card .card_header {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 15px;
+  color: #006980;
+  margin: 0;
+}
+.fleet_form__wrapper .wizard_content .form-ui .member_card .card_row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.fleet_form__wrapper .wizard_content .form-ui .member_card .card_row div {
+  width: 100%;
+}
+.fleet_form__wrapper .wizard_content .form-ui .member_card input,
+.fleet_form__wrapper .wizard_content .form-ui .member_card .flag-select button {
+  background-color: #fff !important;
+}
+.fleet_form__wrapper .wizard_content .form-ui .member_card label {
+  font-weight: 500;
+}
+
+.policy_form .header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.policy_form .header img {
+  width: 24px;
+  height: 24px;
+}
+
+.policy_cancel {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.policy_cancel > div {
+  width: 100%;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.policy_cancel > div label {
+  min-width: -moz-max-content !important;
+  min-width: max-content !important;
+}
+
+.gender_select {
+  display: flex;
+  flex-direction: column;
+}
+.gender_select .gender_card {
+  background-color: red;
+  display: flex;
+  gap: 8px;
+  background-color: #fff;
+  color: #0d0d0d;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  border: 1px solid #fff;
+  padding: 12px 16px;
+  transition: 0.3s;
+  cursor: pointer;
+  font-weight: 400 !important;
+  font-size: 14px;
+  width: 100%;
+}
+.gender_select .gender_card img {
+  height: 30px;
+  width: 30px;
+}
+.gender_select .gender_card:hover {
+  background-color: #ebf3f5;
+}
+.gender_select .gender_card.active {
+  border: 1px solid #006980;
+  background-color: #ebf3f5;
+}
+.gender_select > div {
+  display: flex;
+  gap: 8px;
+}
+.gender_select input {
+  visibility: hidden;
+}
+.gender_select label {
+  font-weight: 500;
 }
 
 .route_path {
@@ -2253,4 +2342,23 @@ th:last-child .p-column-header-content {
   display: none;
   width: 16px;
   height: 16px;
+}
+
+.ReactFlagsSelect-module_selectOptions__3LNBJ {
+  font-size: 16px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  border: 0;
+  border-radius: 8px;
+}
+.ReactFlagsSelect-module_selectOptions__3LNBJ input {
+  height: 48px !important;
+  border-radius: 8px !important;
+}
+.ReactFlagsSelect-module_selectOptions__3LNBJ::-webkit-scrollbar {
+  display: none !important;
+}
+
+.ReactFlagsSelect-module_filterBox__3m8EU input {
+  border: 1px solid #f2f2f2;
+  width: 100%;
 }/*# sourceMappingURL=index.css.map */

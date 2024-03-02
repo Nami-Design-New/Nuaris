@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom";
 import avatar from "../../../assets/images/av1.png";
 import { motion } from "framer-motion";
+import { useEffect, useRef } from "react";
 
-export default function NotificationModal({ isOpen }) {
+export default function NotificationModal({ isOpen, setIsOpen }) {
   const variants = {
     open: {
       opacity: 1,
@@ -13,8 +14,26 @@ export default function NotificationModal({ isOpen }) {
       height: 0,
     },
   };
+
+  const dropdownRef = useRef(null);
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      const isDropdownButton = event.target.closest(".notification");
+
+      if (!isDropdownButton) {
+        setIsOpen(false);
+      }
+    }
+    document.body.addEventListener("click", handleClickOutside);
+    return () => {
+      document.body.removeEventListener("click", handleClickOutside);
+    };
+  }, [setIsOpen, dropdownRef]);
+
   return (
     <motion.div
+      ref={dropdownRef}
       variants={variants}
       initial="closed"
       animate={isOpen ? "open" : "closed"}
