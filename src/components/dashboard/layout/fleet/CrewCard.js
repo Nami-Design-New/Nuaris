@@ -7,7 +7,7 @@ const CrewCard = ({ index }) => {
   const [memberData, setMemberData] = useState({
     name: "",
     nationality: "EG",
-    gender: "male",
+    gender: "male"
   });
 
   return (
