@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "../../../util/axios";
+import axios from "axios";
 import { toast } from "react-toastify";
 import { State } from "country-state-city";
 import { useNavigate } from "react-router";

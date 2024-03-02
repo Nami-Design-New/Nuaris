@@ -12,14 +12,9 @@ const EmailForm = ({
 }) => {
   const [loading, setLoading] = useState(false);
 
-  const headersList = {
-    Accept: "application/json",
-    "Content-Type": "application/json",
-  };
   const requestOptions = {
     method: "POST",
     url: "/users/forgot-password/",
-    headers: headersList,
     data: formData,
   };
 

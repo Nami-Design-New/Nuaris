@@ -8,7 +8,10 @@ import { useNavigate } from "react-router-dom";
 import axios from "../../../util/axios";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { setUser } from "../../../redux/slices/authenticatedUserSlice";
+import {
+  setToken,
+  setUser,
+} from "../../../redux/slices/authenticatedUserSlice";
 
 export default function Dashboard() {
   const [cookies, , removeCookie] = useCookies();
@@ -24,12 +27,20 @@ export default function Dashboard() {
     // Important: prevent re-rendering if userRole is already set
     if (userRole) return;
     const res = await axios.get(`/users/${userId}`);
+    const access = await axios.post("/users/token/verify/", {
+      refresh: refreshToken,
+    });
 
     const { subuser_set } = res?.data;
 
     const requestRole = subuser_set[0].role;
     setUserRole(requestRole);
     dispatch(setUser(res?.data));
+    dispatch(setToken(access.data.access));
+
+    axios.defaults.headers.common[
+      "Authorization"
+    ] = `Bearer ${access.data.access}`;
   }
 
   // - if no userId redirect to login
