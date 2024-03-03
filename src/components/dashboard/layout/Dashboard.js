@@ -6,7 +6,7 @@ import { useCookies } from "react-cookie";
 import { useJwt } from "react-jwt";
 import { useNavigate } from "react-router-dom";
 import axios from "../../../util/axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import {
   setToken,
@@ -21,36 +21,41 @@ export default function Dashboard() {
 
   const refreshToken = cookies?.refreshToken;
   const { decodedToken, isExpired } = useJwt(refreshToken || "");
-  const userId = decodedToken?.user_id;
 
-  async function getUser(userId) {
-    // Important: prevent re-rendering if userRole is already set
-    if (userRole) return;
-    const res = await axios.get(`/users/${userId}`);
-    const access = await axios.post("/users/token/refresh/", {
-      refresh: refreshToken,
-    });
+  useEffect(() => {
+    if (!refreshToken) {
+      navigate("/login");
+      removeCookie("refreshToken");
+    }
+    if (decodedToken && !isExpired) {
+      const userId = decodedToken?.user_id;
+      const user = axios.get(`/users/${userId}`);
+      user
+        .then((res) => {
+          dispatch(setUser(res.data));
+          setUserRole(res.data.current_role);
+        })
+        .catch((err) => {
+          console.log(err);
+          navigate("/login");
+        });
 
-    const requestRole = res?.data.current_role || "host";
-    setUserRole(requestRole);
-    dispatch(setUser(res?.data));
-    dispatch(setToken(access.data.access));
-
-    axios.defaults.headers.common[
-      "Authorization"
-    ] = `Bearer ${access.data.access}`;
-  }
-
-  // - if no userId redirect to login
-  if (decodedToken && (!userId || isExpired)) {
-    removeCookie("refreshToken");
-    return navigate("/login");
-  } else if (decodedToken) {
-    // - fetch user with id
-    getUser(userId);
-  } else {
-    return navigate("/login");
-  }
+      const token = axios.post(`/users/token/refresh/`, {
+        refresh: refreshToken,
+      });
+      token
+        .then((res) => {
+          dispatch(setToken(res.data.access));
+          axios.defaults.headers.common[
+            "Authorization"
+          ] = `Bearer ${res.data.access}`;
+        })
+        .catch((err) => {
+          console.log(err);
+          navigate("/login");
+        });
+    }
+  }, [decodedToken, isExpired, dispatch, refreshToken, navigate, removeCookie]);
 
   // - render dashboard based on user role
   if (userRole === ROLES.HOST) {

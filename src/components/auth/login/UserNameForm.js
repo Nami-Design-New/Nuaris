@@ -29,7 +29,7 @@ const UserNameForm = ({ setShowLoginForm, userTypeSelected }) => {
   const requestOptions = {
     method: "POST",
     url: "/users/login/",
-    data: formData,
+    data: { ...formData, role: userTypeSelected },
   };
 
   const handleSubmit = async (e) => {
@@ -37,6 +37,8 @@ const UserNameForm = ({ setShowLoginForm, userTypeSelected }) => {
     e.preventDefault();
     try {
       const res = await axios.request(requestOptions);
+
+      console.log(res);
 
       // set user data in state
       dispatch(setUser(res.data.user));
