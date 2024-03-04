@@ -20,8 +20,7 @@ const ProfileDropMenu = ({
   const dropdownRef = useRef(null);
   const multiAccounts = subUsers?.length > 1;
   const filteredSubUsers = subUsers?.filter((u) => {
-    // TODO: Remove "agent" and keep the current role
-    return u.role !== user.current_role && u.role !== "agent";
+    return u.role !== user.current_role && u.role;
   });
   const navigate = useNavigate();
   const dispatch = useDispatch();

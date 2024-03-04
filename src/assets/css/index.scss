@@ -2276,7 +2276,7 @@ th:last-child .p-column-header-content {
   background-color: $main;
   border-color: $main;
 }
-small {
+small.error {
   font-size: 12px;
   line-height: 15px;
   color: $danger;

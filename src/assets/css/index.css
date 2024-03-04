@@ -2375,7 +2375,7 @@ th:last-child .p-column-header-content {
   border-color: #006980;
 }
 
-small {
+small.error {
   font-size: 12px;
   line-height: 15px;
   color: #dc3545;

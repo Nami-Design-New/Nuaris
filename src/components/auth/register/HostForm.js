@@ -136,7 +136,9 @@ const HostForm = ({ setFormSelection }) => {
               formData={formData}
               setFormData={setFormData}
             />
-            {errors?.email && <small>{errors?.email[0]}</small>}
+            {errors?.email && (
+              <small className="error">{errors?.email[0]}</small>
+            )}
           </div>
           {/* phone number */}
           <div className="col-lg-6 col-12 p-2">
@@ -156,7 +158,9 @@ const HostForm = ({ setFormSelection }) => {
               formData={formData}
               setFormData={setFormData}
             />
-            {errors?.username && <small>{errors?.username[0]}</small>}
+            {errors?.username && (
+              <small className="error">{errors?.username[0]}</small>
+            )}
           </div>
           {/* password */}
           <div className="col-lg-6 col-12 p-2">

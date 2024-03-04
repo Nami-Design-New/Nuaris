@@ -18,7 +18,9 @@ listOfCookies.forEach((e) => {
 });
 
 axios.interceptors.response.use(
-  (res) => res,
+  (res) => {
+    return res;
+  },
   async (err) => {
     if (err.response?.status === 401 && !refresh) {
       refresh = true;
