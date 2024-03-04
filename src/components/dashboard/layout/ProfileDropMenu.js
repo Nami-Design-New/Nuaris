@@ -1,12 +1,15 @@
 import React, { useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import invite from "../../../assets/images/inviteUser.svg";
 import manage from "../../../assets/images/manageAccount.svg";
 import addAcc from "../../../assets/images/addAcc.svg";
-import logout from "../../../assets/images/logout.svg";
+import logoutIcon from "../../../assets/images/logout.svg";
 import fav from "../../../assets/images/fav.svg";
 import editIcon from "../../../assets/images/editIcon.svg";
 import { motion } from "framer-motion";
+import axios from "../../../util/axios";
+import { useDispatch } from "react-redux";
+import { logout } from "../../../redux/slices/authenticatedUserSlice";
 
 const ProfileDropMenu = ({
   profileDropDown,
@@ -15,8 +18,27 @@ const ProfileDropMenu = ({
   setProfileDropDown,
 }) => {
   const dropdownRef = useRef(null);
+  const multiAccounts = subUsers?.length > 1;
+  const filteredSubUsers = subUsers?.filter((u) => {
+    // TODO: Remove "agent" and keep the current role
+    return u.role !== user.current_role && u.role !== "agent";
+  });
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  // TODO: Fix expand glitch
+  // TODO: handle account switch
+  async function handleSwitch(subUserRole) {
+    const res = await axios.post(`/users/${user.id}/switch-role/`, {
+      role: subUserRole,
+    });
+    console.log(res);
+    // TODO: Enhance
+    // force page refresh to fetch new data
+    // window.location.pathname = "/dashboard";
+    dispatch(logout());
+    navigate("/dashboard");
+  }
+
   const variants = {
     open: {
       opacity: 1,
@@ -85,21 +107,23 @@ const ProfileDropMenu = ({
       </div>
       {/* switch users */}
       <div className="select_frame">
-        {subUsers && subUsers.length > 0 && (
+        {multiAccounts && (
           <div className="accounts">
-            {subUsers.map((subUser, index) => (
-              <div className="acc" key={index}>
+            {filteredSubUsers.map((subUser, index) => (
+              <button
+                onClick={() => handleSwitch(subUser.role)}
+                className="acc align-items-center"
+                key={index}
+              >
                 <div className="avatar">
-                  <img
-                    src={subUser.logo !== null ? subUser.logo : fav}
-                    alt="avatar"
-                  />
+                  {/* TODO: Change image to be parent image || ask for adding an image to the subuser model */}
+                  <img src={!subUser?.logo ? subUser.logo : fav} alt="avatar" />
                 </div>
                 <div className="type_mail">
                   <h6>{`${subUser.role ? subUser.role : "Admin"} User`}</h6>
                   <span>{subUser.email}</span>
                 </div>
-              </div>
+              </button>
             ))}
           </div>
         )}
@@ -108,14 +132,14 @@ const ProfileDropMenu = ({
             <img src={addAcc} alt="add-account" />
             <Link to="/login">Add a new account</Link>
           </div>
-          {subUsers && subUsers.length > 0 ? (
+          {multiAccounts ? (
             <div className="link ps-2">
-              <img src={logout} alt="logout" />
+              <img src={logoutIcon} alt="logout" />
               <Link to={"/logout"}>Logout from all accounts</Link>
             </div>
           ) : (
             <div className="link ps-2">
-              <img src={logout} alt="logout" />
+              <img src={logoutIcon} alt="logout" />
               <Link to={"/logout"}>Logout</Link>
             </div>
           )}
