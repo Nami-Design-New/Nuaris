@@ -30,7 +30,7 @@ const ProfileDropMenu = ({
     const res = await axios.post(`/users/${user.id}/switch-role/`, {
       role: subUserRole,
     });
-    console.log(res);
+    console.log("switch role =>", res);
     // TODO: Enhance
     // force page refresh to fetch new data
     // window.location.pathname = "/dashboard";

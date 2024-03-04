@@ -15,6 +15,7 @@ const PhoneField = ({ formData, setFormData, id, value }) => {
       <div className="phone-group">
         <PhoneInput
           placeholder="Enter phone number"
+          value={value || phoneNumber}
           onChange={handlePhoneNumberChange}
           countryOptionsOrder={["SA", "AE"]}
           defaultCountry="SA"

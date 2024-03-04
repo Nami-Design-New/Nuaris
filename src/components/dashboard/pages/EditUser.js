@@ -35,7 +35,6 @@ export default function EditUser() {
     (async () => {
       if (userData.mobile_number) return;
       const user = await axios.get(`/users/${userId}/`);
-      console.log(user.data);
       setUser(user.data);
       setUser({
         ...user.data,
