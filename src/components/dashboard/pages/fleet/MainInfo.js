@@ -9,7 +9,7 @@ const MainInfo = () => {
   const [formData, setFormData] = useState({
     lat: 18.2206,
     lng: 42.5047,
-    NumberOfCrew: 0,
+    NumberOfCrew: 0
   });
   let formComponent;
   if (form === "Main Info") {
@@ -59,7 +59,7 @@ const MainInfo = () => {
           </div>
         ))}
       </div>
-      <div className="wizard_content">
+      <div className="bg_white_card">
         <form>{formComponent}</form>
       </div>
     </div>

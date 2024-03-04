@@ -10,11 +10,7 @@ import { setUser } from "../../../redux/slices/authenticatedUserSlice";
 
 const UserNameForm = ({ setShowLoginForm, userTypeSelected }) => {
   const [loading, setLoading] = useState(false);
-  // TODO: Remove default values
-  const [formData, setFormData] = useState({
-    username: "Ahmed_00",
-    password: "123456",
-  });
+  const [formData, setFormData] = useState({});
   const [, setCookie] = useCookies(["token"]);
   const form = useRef(null);
 
@@ -29,7 +25,7 @@ const UserNameForm = ({ setShowLoginForm, userTypeSelected }) => {
   const requestOptions = {
     method: "POST",
     url: "/users/login/",
-    data: { ...formData, role: userTypeSelected },
+    data: { ...formData, role: userTypeSelected }
   };
 
   const handleSubmit = async (e) => {
@@ -37,16 +33,10 @@ const UserNameForm = ({ setShowLoginForm, userTypeSelected }) => {
     e.preventDefault();
     try {
       const res = await axios.request(requestOptions);
-
-      console.log(res);
-
-      // set user data in state
       dispatch(setUser(res.data.user));
-
-      // set refresh token in cookies
       setCookie("refreshToken", res.data.refresh_token, {
         path: "/",
-        secure: true,
+        secure: true
       });
 
       navigate("/dashboard");

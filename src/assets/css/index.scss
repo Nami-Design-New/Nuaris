@@ -533,6 +533,50 @@ $transation: 0.3s ease-in-out;
         }
       }
     }
+    .checkboxs_inputs {
+      display: flex;
+      width: 100%;
+      height: 54px;
+      border: 1px solid $inputStroke;
+      border-radius: 12px;
+      position: relative;
+      isolation: isolate;
+      overflow: hidden;
+      label {
+        cursor: pointer;
+        flex: 1;
+        @include centerFlex();
+        span {
+          font-size: 16px;
+          font-weight: 400;
+          line-height: 20px;
+          color: $dark;
+          cursor: pointer;
+        }
+        input {
+          display: none;
+          appearance: none;
+          &:checked + span {
+            color: $white;
+          }
+        }
+      }
+      .bg-active {
+        transition: $transation;
+        position: absolute;
+        content: '';
+        top: 0;
+        transform: translateX(0);
+        height: 100%;
+        width: 50%;
+        z-index: -1;
+        background: $main;
+        border-radius: 12px;
+        &.refuse {
+          transform: translateX(100%);
+        }
+      }
+    }
   }
   .check-field {
     width: 100%;
@@ -1496,7 +1540,7 @@ th:last-child .p-column-header-content {
       }
     }
   }
-  .wizard_content {
+  .bg_white_card {
     padding: 16px;
     background: $white;
     border-radius: 24px;
@@ -1535,6 +1579,16 @@ th:last-child .p-column-header-content {
         label {
           font-weight: 500;
         }
+      }
+    }
+  }
+  .form-ui {
+    &.specifications {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      .save_btn {
+        margin-top: 16px;
       }
     }
   }
@@ -2264,7 +2318,7 @@ th:last-child .p-column-header-content {
     display: none !important;
   }
 }
-.ReactFlagsSelect-module_filterBox__3m8EU input{
+.ReactFlagsSelect-module_filterBox__3m8EU input {
   border: 1px solid $inputStroke;
   width: 100%;
 }
