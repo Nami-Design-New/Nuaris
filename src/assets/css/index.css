@@ -2364,4 +2364,19 @@ th:last-child .p-column-header-content {
 .ReactFlagsSelect-module_filterBox__3m8EU input {
   border: 1px solid #f2f2f2;
   width: 100%;
+}
+
+.form-check-input:focus {
+  border-color: #bfd5d8;
+}
+
+.form-check-input:checked {
+  background-color: #006980;
+  border-color: #006980;
+}
+
+small {
+  font-size: 12px;
+  line-height: 15px;
+  color: #dc3545;
 }/*# sourceMappingURL=index.css.map */

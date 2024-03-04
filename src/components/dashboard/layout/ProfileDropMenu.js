@@ -130,7 +130,7 @@ const ProfileDropMenu = ({
         <div className="manage_invite">
           <div className="link ps-2">
             <img src={addAcc} alt="add-account" />
-            <Link to="/login">Add a new account</Link>
+            <Link to="/register">Add a new account</Link>
           </div>
           {multiAccounts ? (
             <div className="link ps-2">

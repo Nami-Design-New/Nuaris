@@ -27,6 +27,7 @@ export default function Dashboard() {
       navigate("/login");
       removeCookie("refreshToken");
     }
+
     if (decodedToken && !isExpired) {
       const userId = decodedToken?.user_id;
       const user = axios.get(`/users/${userId}`);
@@ -43,6 +44,7 @@ export default function Dashboard() {
       const token = axios.post(`/users/token/refresh/`, {
         refresh: refreshToken,
       });
+
       token
         .then((res) => {
           dispatch(setToken(res.data.access));
@@ -54,6 +56,9 @@ export default function Dashboard() {
           console.log(err);
           navigate("/login");
         });
+    } else if (isExpired) {
+      navigate("/login");
+      removeCookie("refreshToken");
     }
   }, [decodedToken, isExpired, dispatch, refreshToken, navigate, removeCookie]);
 

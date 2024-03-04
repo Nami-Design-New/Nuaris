@@ -2264,7 +2264,20 @@ th:last-child .p-column-header-content {
     display: none !important;
   }
 }
-.ReactFlagsSelect-module_filterBox__3m8EU input{
+.ReactFlagsSelect-module_filterBox__3m8EU input {
   border: 1px solid $inputStroke;
   width: 100%;
+}
+
+.form-check-input:focus {
+  border-color: $main25;
+}
+.form-check-input:checked {
+  background-color: $main;
+  border-color: $main;
+}
+small {
+  font-size: 12px;
+  line-height: 15px;
+  color: $danger;
 }

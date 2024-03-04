@@ -23,6 +23,7 @@ const HostForm = ({ setFormSelection }) => {
   const [cityForCountry, setCityForCountry] = useState(null);
   const [selectedCountry, setSelectedCountry] = useState("SA");
   const [serchedPlace, setSerchedPlace] = useState("Search on Map");
+  const [errors, setErrors] = useState({});
   const [formData, setFormData] = useState({
     registration_type: "Company",
     country: "SA",
@@ -62,36 +63,36 @@ const HostForm = ({ setFormSelection }) => {
   };
 
   /* form Submit requirments [Host Register] */
-  const headersList = {
-    Accept: "*/*",
-    "Content-Type": "multipart/form-data",
-  };
-  const requestOptions = {
-    method: "POST",
-    url: "/users/",
-    headers: headersList,
-    data: formData,
-  };
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     try {
-      await axios.request(requestOptions);
-      toast.success("Account created successfully");
-      navigate("/login");
-    } catch (error) {
-      if (error.response && error.response.data) {
-        const errors = error.response.data;
-        Object.keys(errors).forEach((field) => {
-          errors[field].forEach((message) => {
-            toast.error(`${field}: ${message}`);
-          });
-        });
+      const res = await axios.post("/users/", formData, {
+        headers: {
+          Accept: "*/*",
+          "Content-Type": "multipart/form-data",
+          Authorization: null,
+        },
+      });
+      if (res.status === 201) {
+        toast.success("Account created successfully");
+        navigate("/login");
+      } else {
+        setErrors(res.response.data);
+        toast.error(`Something went wrong`);
       }
+    } catch (error) {
+      const errors = error.response.data;
+      Object.keys(errors).forEach((field) => {
+        errors[field].forEach((message) => {
+          toast.error(`${field}: ${message}`);
+        });
+      });
     } finally {
       setLoading(false);
     }
   };
+  // console.log(errors);
 
   return (
     <form onSubmit={handleSubmit} className="form-ui">
@@ -135,6 +136,7 @@ const HostForm = ({ setFormSelection }) => {
               formData={formData}
               setFormData={setFormData}
             />
+            {errors?.email && <small>{errors?.email[0]}</small>}
           </div>
           {/* phone number */}
           <div className="col-lg-6 col-12 p-2">
@@ -154,6 +156,7 @@ const HostForm = ({ setFormSelection }) => {
               formData={formData}
               setFormData={setFormData}
             />
+            {errors?.username && <small>{errors?.username[0]}</small>}
           </div>
           {/* password */}
           <div className="col-lg-6 col-12 p-2">

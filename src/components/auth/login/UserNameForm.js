@@ -12,8 +12,8 @@ const UserNameForm = ({ setShowLoginForm, userTypeSelected }) => {
   const [loading, setLoading] = useState(false);
   // TODO: Remove default values
   const [formData, setFormData] = useState({
-    username: "Ahmed_00",
-    password: "123456",
+    username: "tester",
+    password: "tester123",
   });
   const [, setCookie] = useCookies(["token"]);
   const form = useRef(null);
@@ -38,14 +38,13 @@ const UserNameForm = ({ setShowLoginForm, userTypeSelected }) => {
     try {
       const res = await axios.request(requestOptions);
 
-      console.log(res);
-
       // set user data in state
       dispatch(setUser(res.data.user));
 
       // set refresh token in cookies
       setCookie("refreshToken", res.data.refresh_token, {
         path: "/",
+        expires: new Date(new Date().getTime() + 20 * 60 * 60 * 1000),
         secure: true,
       });
 

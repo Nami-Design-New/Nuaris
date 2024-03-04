@@ -36,7 +36,6 @@ const CreateUser = () => {
     try {
       const response = await axios.post("/users/invite-user/", formData);
       toast.success("Invitation sent successfully");
-      form.current.reset();
       setShowAssignGroups(true);
       setIvitedUserId(response?.data?.user?.id);
     } catch (error) {

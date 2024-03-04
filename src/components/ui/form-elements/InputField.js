@@ -9,6 +9,7 @@ const InputField = ({
   hint,
   formData,
   setFormData,
+  value,
 }) => {
   return (
     <div className="input-field">
@@ -21,6 +22,7 @@ const InputField = ({
         id={id}
         name={id}
         required
+        value={value || formData[htmlFor]}
         onChange={(e) => {
           setFormData({ ...formData, [htmlFor]: e.target.value });
         }}

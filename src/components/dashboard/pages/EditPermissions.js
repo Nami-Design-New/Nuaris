@@ -72,7 +72,7 @@ const EditPermissions = () => {
   return (
     <section className="section-main-content">
       <header className="flex-header">
-        <PageHeader name="Edit Permissions" />
+        <PageHeader removeLast={true} name="Edit Permissions" />
       </header>
       <div className="row m-0">
         <div className="col-12 p-2">
