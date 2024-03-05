@@ -2623,4 +2623,26 @@ small.error {
 .rmdp-shadow {
   box-shadow: none !important;
   border-radius: 8px;
+}
+
+.actions_cell_addons {
+  width: -moz-max-content;
+  width: max-content;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.addon_button {
+  padding: 12px 20px;
+  border-radius: 8px;
+  border: 1px solid #006980;
+  font-size: 14px;
+  line-height: 18px;
+  min-width: 110px;
+}
+.addon_button.active {
+  background-color: transparent;
+  color: #0d0d0d;
+  border-color: #0d0d0d;
 }/*# sourceMappingURL=index.css.map */

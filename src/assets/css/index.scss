@@ -2503,3 +2503,23 @@ small.error {
   box-shadow: none !important;
   border-radius: 8px;
 }
+
+.actions_cell_addons {
+  width: max-content;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.addon_button {
+  padding: 12px 20px;
+  border-radius: 8px;
+  border: 1px solid $main;
+  font-size: 14px;
+  line-height: 18px;
+  min-width: 110px;
+  &.active {
+    background-color: transparent;
+    color: $dark;
+    border-color: $dark;
+  }
+}

@@ -3,9 +3,10 @@ import { Calendar, DateObject } from "react-multi-date-picker";
 import DatePanel from "react-multi-date-picker/plugins/date_panel";
 
 const MultipleRangeCalender = () => {
-  const [selectedDates, setSelectedDates] = useState([]);
+  const [selectedDates, setSelectedDates] = useState([[]]);
 
   const handleDateChange = (dates) => {
+    console.log(dates);
     setSelectedDates(dates);
   };
 
@@ -18,9 +19,9 @@ const MultipleRangeCalender = () => {
         range
         plugins={[<DatePanel />]}
       />
-      {selectedDates.map((date, index) => (
-        <div key={index}>{DateObject(date).format("YYYY-MM-DD")}</div>
-      ))}
+      {selectedDates.map((date, index) =>
+        date.map((d, i) => <p key={i}>{d.format("DD-MM-YYYY")}</p>)
+      )}
     </div>
   );
 };
