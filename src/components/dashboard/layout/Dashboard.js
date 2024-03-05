@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import {
   setToken,
-  setUser,
+  setUser
 } from "../../../redux/slices/authenticatedUserSlice";
 
 export default function Dashboard() {
@@ -40,9 +40,8 @@ export default function Dashboard() {
           console.log(err);
           navigate("/login");
         });
-
       const token = axios.post(`/users/token/refresh/`, {
-        refresh: refreshToken,
+        refresh: refreshToken
       });
 
       token
@@ -66,14 +65,11 @@ export default function Dashboard() {
   if (userRole === ROLES.HOST) {
     return <HostDashboard />;
   }
-
   if (userRole === ROLES.AGENT) {
     return <AgentDashboard />;
   }
-
   if (userRole === ROLES.SERVICE_PROVIDER) {
     return <UserSupport />;
   }
-
   return null;
 }

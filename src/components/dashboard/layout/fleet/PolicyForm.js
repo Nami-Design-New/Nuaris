@@ -3,12 +3,16 @@ import CommentField from "../../../ui/form-elements/CommentField";
 import InputField from "../../../ui/form-elements/InputField";
 import add from "../../../../assets/images/add.svg";
 
-const PolicyForm = () => {
+const PolicyForm = ({ setForm }) => {
   const [formData, setFormData] = useState({
     weatherRestriction: "",
     rolesAndInstructions: "",
-    allowedAndNotAllowed: "",
+    allowedAndNotAllowed: ""
   });
+  const handleBack = (e) => {
+    e.preventDefault();
+    setForm("Crew");
+  };
   return (
     <div className="form-ui">
       <div className="row m-0">
@@ -94,6 +98,12 @@ const PolicyForm = () => {
                   placeholder={"00"}
                 />
               </div>
+            </div>
+            <div className="col-12 p-2 pt-4 d-flex gap-3 ">
+              <button className="next_btn" onClick={handleBack}>
+                Back
+              </button>
+              <button className="save_btn ms-auto">Save</button>
             </div>
           </div>
         </div>
