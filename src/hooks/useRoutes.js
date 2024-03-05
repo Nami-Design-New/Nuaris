@@ -3,8 +3,6 @@ import capitalizeWord from "../util/capitalizeWord";
 
 export default function useRoutes() {
   const { pathname } = useLocation();
-  // TODO: remove params
-  // useParams
 
   // get an array of all visited routes
   let filteredRoutes = pathname?.split("/");

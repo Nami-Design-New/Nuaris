@@ -18,6 +18,7 @@ import { setPermissionsGroups } from "../redux/slices/permissionsGroups";
 import { setPermissions } from "../redux/slices/permissions";
 import { setEmployees } from "../redux/slices/employeesSlice";
 import { setPositions } from "../redux/slices/positions";
+import EditUser from "../components/dashboard/pages/EditUser";
 
 const HostDashboard = () => {
   const [sideBarOpen, setSideBarOpen] = useState(false);
@@ -56,6 +57,10 @@ const HostDashboard = () => {
             <Route path="/invite-user/" element={<InviteUser />} />
             <Route path="/invite-user/create-user" element={<CreateUser />} />
             <Route path="/invite-user/permissions" element={<Permissions />} />9
+            <Route
+              path="/invite-user/edit-user/:userId"
+              element={<EditUser />}
+            />
             <Route
               path="/invite-user/edit-permissions/:permissionId"
               element={<EditPermissions />}

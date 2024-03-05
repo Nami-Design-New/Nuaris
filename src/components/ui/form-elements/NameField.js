@@ -10,8 +10,9 @@ const NameField = ({ setFormData, formData }) => {
           type="text"
           id="firstName"
           name="firstName"
+          value={formData.first_name}
           required
-          onChange={e => {
+          onChange={(e) => {
             setFormData({ ...formData, first_name: e.target.value });
           }}
         />
@@ -20,8 +21,9 @@ const NameField = ({ setFormData, formData }) => {
           type="text"
           id="lastName"
           name="lastName"
+          value={formData.last_name}
           required
-          onChange={e => {
+          onChange={(e) => {
             setFormData({ ...formData, last_name: e.target.value });
           }}
         />

@@ -33,10 +33,14 @@ const UserNameForm = ({ setShowLoginForm, userTypeSelected }) => {
     e.preventDefault();
     try {
       const res = await axios.request(requestOptions);
+      
+      // set user data in state
       dispatch(setUser(res.data.user));
       setCookie("refreshToken", res.data.refresh_token, {
         path: "/",
-        secure: true
+        expires: new Date(new Date().getTime() + 20 * 60 * 60 * 1000),
+        secure: true,
+
       });
 
       navigate("/dashboard");

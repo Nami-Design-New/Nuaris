@@ -12,8 +12,8 @@ const NavBar = ({ setSideBarOpen, sideBarOpen }) => {
   const [profileDropDown, setProfileDropDown] = useState(false);
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
-  const user = useSelector((state) => state.user.user);
-  const subUsers = user.subuser_set;
+  const user = useSelector((state) => state.user?.user);
+  const subUsers = user?.subuser_set;
 
   return (
     <nav>

@@ -20,8 +20,7 @@ const ProfileDropMenu = ({
   const dropdownRef = useRef(null);
   const multiAccounts = subUsers?.length > 1;
   const filteredSubUsers = subUsers?.filter((u) => {
-    // TODO: Remove "agent" and keep the current role
-    return u.role !== user.current_role && u.role !== "agent";
+    return u.role !== user.current_role && u.role;
   });
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -31,7 +30,7 @@ const ProfileDropMenu = ({
     const res = await axios.post(`/users/${user.id}/switch-role/`, {
       role: subUserRole,
     });
-    console.log(res);
+    console.log("switch role =>", res);
     // TODO: Enhance
     // force page refresh to fetch new data
     // window.location.pathname = "/dashboard";
@@ -130,7 +129,7 @@ const ProfileDropMenu = ({
         <div className="manage_invite">
           <div className="link ps-2">
             <img src={addAcc} alt="add-account" />
-            <Link to="/login">Add a new account</Link>
+            <Link to="/register">Add a new account</Link>
           </div>
           {multiAccounts ? (
             <div className="link ps-2">

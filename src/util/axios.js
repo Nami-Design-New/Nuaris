@@ -18,9 +18,10 @@ listOfCookies.forEach((e) => {
 });
 
 axios.interceptors.response.use(
-  (res) => res,
+  (res) => {
+    return res;
+  },
   async (err) => {
-    console.log("err => ", err);
     if (err.response?.status === 401 && !refresh) {
       refresh = true;
       const res = await axios.post("/users/refresh/", {

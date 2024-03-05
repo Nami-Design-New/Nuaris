@@ -10,7 +10,6 @@ import { useSelector } from "react-redux";
 import DeleteModal from "../layout/DeleteModal";
 import { removeEmployee } from "../../../redux/slices/employeesSlice";
 
-
 const InviteUser = () => {
   const [row, setRow] = useState({});
   const [tableData, setTableData] = useState([]);
@@ -28,9 +27,11 @@ const InviteUser = () => {
         <Button onClick={() => deleteRow(rowData)}>
           <img src={deleteIcon} alt="delete" />
         </Button>
-        <Button onClick={() => editRow(rowData)}>
-          <img src={editIcon} alt="edit" />
-        </Button>
+        <Link to={`edit-user/${rowData.id}`}>
+          <Button onClick={() => editRow(rowData)}>
+            <img src={editIcon} alt="edit" />
+          </Button>
+        </Link>
       </div>
     );
   };

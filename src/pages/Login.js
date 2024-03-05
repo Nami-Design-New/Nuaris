@@ -1,16 +1,28 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import logoH from "../assets/images/logoH.svg";
 import loginImage from "../assets/images/login-image.png";
 import LoginForm from "../components/auth/login/LoginForm";
 import UserTypeSelection from "../components/auth/login/UserTypeSelection";
 import OtpForm from "./../components/auth/login/OtpForm";
+import { useDispatch } from "react-redux";
+import { logout } from "../redux/slices/authenticatedUserSlice";
+import { useCookies } from "react-cookie";
+import axios from "../util/axios";
 
 const Login = () => {
   const [showLoginForm, setShowLoginForm] = useState(false);
   const [showOtpForm, SetShowOtpForm] = useState(false);
   const [formData, setFormData] = useState({});
   const [userTypeSelected, setUserTypeSelected] = useState("host");
+  const dispatch = useDispatch();
+  const [, , removeCookie] = useCookies();
+
+  useEffect(() => {
+    dispatch(logout());
+    removeCookie("refreshToken");
+    axios.defaults.headers.common.Authorization = null;
+  }, [dispatch, removeCookie]);
 
   return (
     <section className="auth-section">
