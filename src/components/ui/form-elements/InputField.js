@@ -9,6 +9,7 @@ const InputField = ({
   hint,
   formData,
   setFormData,
+  maxLength,
   value,
 }) => {
   return (

@@ -1,14 +1,6 @@
 import React from "react";
 
-const TimeWithUnit = ({
-  htmlFor,
-  label,
-  options,
-  units,
-  hint,
-  formData,
-  setFormData,
-}) => {
+const InputWithUnit = ({ htmlFor, label, units, hint }) => {
   return (
     <div className="input-field">
       <label htmlFor={htmlFor}>
@@ -28,4 +20,4 @@ const TimeWithUnit = ({
   );
 };
 
-export default TimeWithUnit;
+export default InputWithUnit;

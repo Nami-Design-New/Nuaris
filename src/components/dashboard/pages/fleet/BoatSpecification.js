@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import InputField from "../../../ui/form-elements/InputField";
+import SelectField from "./../../../ui/form-elements/SelectField";
+import InputWithUnit from "./../../../ui/form-elements/InputWithUnit";
 
 const BoatSpecification = () => {
   const [formData, setFormData] = useState({
-    sleepingArrangements: "Accept"
+    sleepingArrangements: "Accept",
   });
   return (
     <div className="fleet_form__wrapper">
@@ -12,6 +14,82 @@ const BoatSpecification = () => {
           <div className="row m-0">
             <div className="col-12 p-2">
               <h6 className="form_title">Engine</h6>
+            </div>
+            {/* Max Capacity */}
+            <div className="col-lg-6 col-12 p-2">
+              <InputField
+                htmlFor="maxCapacity"
+                label="Max Capacity."
+                type="number"
+                placeholder="00"
+                hint="(People)"
+                id="maxCapacity"
+                formData={formData}
+                setFormData={setFormData}
+              />
+            </div>
+            {/* Year of Manufacture */}
+            <div className="col-lg-6 col-12 p-2">
+              <InputField
+                htmlFor="yearOfManufacture"
+                label="Year of Manufacture."
+                type="date"
+                id="yearOfManufacture"
+                formData={formData}
+                setFormData={setFormData}
+              />
+            </div>
+            {/* Vessel Depth */}
+            <div className="col-lg-6 col-12 p-2">
+              <InputWithUnit
+                htmlFor="vesselDepth"
+                label="Vessel Depth"
+                units={["Meter", "Feet", "Inch", "Yard"]}
+              />
+            </div>
+            {/* Vessel length */}
+            <div className="col-lg-6 col-12 p-2">
+              <InputWithUnit
+                htmlFor="vesselLength"
+                label="Vessel length"
+                units={["Meter", "Feet", "Inch", "Yard"]}
+              />
+            </div>
+            {/* Engine Qty */}
+            <div className="col-lg-6 col-12 p-2">
+              <InputField
+                htmlFor="engineQty"
+                label="Engine Qty."
+                type="number"
+                placeholder="00"
+                id="engineQty"
+                formData={formData}
+                setFormData={setFormData}
+              />
+            </div>
+            {/* Engine Size */}
+            <div className="col-lg-6 col-12 p-2">
+              <InputField
+                htmlFor="engineSize"
+                label="Engine Size."
+                type="number"
+                placeholder="00"
+                hint="(HP)"
+                id="engineSize"
+                formData={formData}
+                setFormData={setFormData}
+              />
+            </div>
+            {/* Engine Size */}
+            <div className="col-12 p-2">
+              <SelectField
+                htmlFor="fuel"
+                label="Fuel."
+                options={["Diesel", "Gasoline", "Electric"]}
+                formData={formData}
+                setFormData={setFormData}
+                id="fuel"
+              />
             </div>
           </div>
         </div>
@@ -125,7 +203,7 @@ const BoatSpecification = () => {
                       onChange={() => {
                         setFormData({
                           ...formData,
-                          sleepingArrangements: "Accept"
+                          sleepingArrangements: "Accept",
                         });
                       }}
                     />
@@ -139,7 +217,7 @@ const BoatSpecification = () => {
                       onChange={() => {
                         setFormData({
                           ...formData,
-                          sleepingArrangements: "Refuse"
+                          sleepingArrangements: "Refuse",
                         });
                       }}
                     />
