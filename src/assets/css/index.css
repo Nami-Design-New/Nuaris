@@ -532,10 +532,59 @@ button {
   min-height: 100%;
 }
 .form-ui .input-field.files .filepond--root .filepond--drop-label label {
-  color: #aaaaaa !important;
+  color: #aaaaaa;
   font-size: 14px !important;
   font-weight: 400 !important;
   line-height: 18px !important;
+}
+.form-ui .input-field .checkboxs_inputs {
+  display: flex;
+  width: 100%;
+  height: 54px;
+  border: 1px solid #f2f2f2;
+  border-radius: 12px;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+.form-ui .input-field .checkboxs_inputs label {
+  cursor: pointer;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.form-ui .input-field .checkboxs_inputs label span {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+  color: #0d0d0d;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+}
+.form-ui .input-field .checkboxs_inputs label input {
+  display: none;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+}
+.form-ui .input-field .checkboxs_inputs label input:checked + span {
+  color: #fff;
+}
+.form-ui .input-field .checkboxs_inputs .bg-active {
+  transition: 0.3s ease-in-out;
+  position: absolute;
+  content: "";
+  top: 0;
+  transform: translateX(0);
+  height: 100%;
+  width: 50%;
+  z-index: -1;
+  background: #006980;
+  border-radius: 12px;
+}
+.form-ui .input-field .checkboxs_inputs .bg-active.refuse {
+  transform: translateX(100%);
 }
 .form-ui .check-field {
   width: 100%;
@@ -621,7 +670,7 @@ button {
   gap: 8px;
 }
 .form-ui .time-units .units {
-  width: 120px;
+  width: 140px;
 }
 .form-ui .save_btn {
   border: none;
@@ -1583,17 +1632,17 @@ th:last-child .p-column-header-content {
 .fleet_form__wrapper .wizard_tabs .wizard_tab.active h6, .fleet_form__wrapper .wizard_tabs .wizard_tab:hover h6 {
   color: #006980;
 }
-.fleet_form__wrapper .wizard_content {
+.fleet_form__wrapper .bg_white_card {
   padding: 16px;
   background: #fff;
   border-radius: 24px;
 }
-.fleet_form__wrapper .wizard_content .form-ui .form_title {
+.fleet_form__wrapper .bg_white_card .form-ui .form_title {
   font-weight: 500;
   color: #aaaaaa;
   font-size: 16px;
 }
-.fleet_form__wrapper .wizard_content .form-ui .member_card {
+.fleet_form__wrapper .bg_white_card .form-ui .member_card {
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -1601,27 +1650,126 @@ th:last-child .p-column-header-content {
   background: #f8f8f8;
   border-radius: 12px;
 }
-.fleet_form__wrapper .wizard_content .form-ui .member_card .card_header {
+.fleet_form__wrapper .bg_white_card .form-ui .member_card .card_header {
   font-size: 12px;
   font-weight: 500;
   line-height: 15px;
   color: #006980;
   margin: 0;
 }
-.fleet_form__wrapper .wizard_content .form-ui .member_card .card_row {
+.fleet_form__wrapper .bg_white_card .form-ui .member_card .card_row {
   display: flex;
   align-items: center;
   gap: 8px;
 }
-.fleet_form__wrapper .wizard_content .form-ui .member_card .card_row div {
+.fleet_form__wrapper .bg_white_card .form-ui .member_card .card_row div {
   width: 100%;
 }
-.fleet_form__wrapper .wizard_content .form-ui .member_card input,
-.fleet_form__wrapper .wizard_content .form-ui .member_card .flag-select button {
+.fleet_form__wrapper .bg_white_card .form-ui .member_card input,
+.fleet_form__wrapper .bg_white_card .form-ui .member_card .flag-select button {
   background-color: #fff !important;
 }
-.fleet_form__wrapper .wizard_content .form-ui .member_card label {
+.fleet_form__wrapper .bg_white_card .form-ui .member_card label {
   font-weight: 500;
+}
+.fleet_form__wrapper .bg_white_card .form-ui.specifications {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.fleet_form__wrapper .bg_white_card .form-ui.specifications .save_btn {
+  margin-top: 16px;
+}
+.fleet_form__wrapper .bg_white_card .form-ui.timesRow {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.fleet_form__wrapper .bg_white_card .form_title {
+  font-weight: 500;
+  color: #aaaaaa;
+  font-size: 16px;
+}
+.fleet_form__wrapper .bg_white_card .request_photo_session {
+  padding: 24px;
+  border-radius: 16px;
+  background: #ebf3f5;
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+.fleet_form__wrapper .bg_white_card .request_photo_session .bread_crumb {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.fleet_form__wrapper .bg_white_card .request_photo_session .content {
+  flex: 3;
+}
+.fleet_form__wrapper .bg_white_card .request_photo_session .content h5 {
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 29px;
+}
+.fleet_form__wrapper .bg_white_card .request_photo_session .content p {
+  margin-bottom: 8px;
+  line-height: 24px;
+  color: #666b88;
+}
+.fleet_form__wrapper .bg_white_card .request_photo_session .content button {
+  height: 44px;
+  color: #006980;
+  padding: 0 24px;
+  border-radius: 12px;
+  border: 1px solid #006980;
+}
+.fleet_form__wrapper .bg_white_card .photos {
+  display: flex;
+  gap: 8px;
+}
+.fleet_form__wrapper .bg_white_card .time_row {
+  display: flex;
+  gap: 8px;
+}
+.fleet_form__wrapper .bg_white_card .time_row button {
+  min-width: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.fleet_form__wrapper .bg_white_card .time_row button img {
+  height: 18px;
+}
+.fleet_form__wrapper .bg_white_card .uponRequest {
+  width: 100%;
+  background: #ebf3f5;
+  padding: 12px 24px;
+  border-radius: 60px;
+  border: 1px solid #bfd5d8;
+}
+.fleet_form__wrapper .bg_white_card .uponRequest .form-switch {
+  padding: 0;
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  align-items: center;
+}
+.fleet_form__wrapper .bg_white_card .uponRequest .form-switch label {
+  color: #006980;
+  font-size: 16px;
+  font-weight: 700;
+}
+.fleet_form__wrapper .bg_white_card .uponRequest .form-switch input {
+  box-shadow: none !important;
+  width: 48px;
+  height: 24px;
+  cursor: pointer;
+}
+.fleet_form__wrapper .bg_white_card .addSeason h6 {
+  color: #0d0d0d;
+  font-size: 16px;
+  font-weight: 700;
 }
 
 .policy_form .header {
@@ -2379,4 +2527,87 @@ small.error {
   font-size: 12px;
   line-height: 15px;
   color: #dc3545;
+}
+
+.mainImg {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  background: #fff;
+  border-radius: 20px;
+  color: #006980 !important;
+  padding: 6px 24px !important;
+}
+
+.accordion-button {
+  box-shadow: none !important;
+  padding: 12px 16px;
+}
+
+.accordion {
+  border: none !important;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border: none !important;
+}
+
+.accordion-item {
+  border: 1px solid #eeeeee !important;
+  border-radius: 12px !important;
+  overflow: auto;
+}
+
+.accordion-button:not(.collapsed) {
+  background-color: transparent;
+}
+
+.accordion-button .form-switch {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.accordion-button .form-switch input {
+  box-shadow: none !important;
+}
+.accordion-button::after {
+  content: "\f107";
+  font-family: "Font Awesome 6 pro";
+  background-image: none;
+  transition: var(--bs-accordion-btn-icon-transition);
+  transform: none !important;
+}
+.accordion-button:not(.collapsed)::after {
+  content: "\f106";
+  background: none;
+}
+
+.accordion-body {
+  padding: 0 12px 12px;
+}
+
+.season_calender_card {
+  background: #ebf3f5;
+  padding: 20px 20px 16px;
+  border-radius: 12px;
+}
+.season_calender_card .delete_btn {
+  margin-top: 8px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  justify-content: end;
+}
+.season_calender_card .delete_btn img {
+  height: 24px;
+}
+.season_calender_card input,
+.season_calender_card select {
+  background: #fff !important;
+}
+
+.rmdp-shadow {
+  box-shadow: none !important;
+  border-radius: 8px;
 }/*# sourceMappingURL=index.css.map */

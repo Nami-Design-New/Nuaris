@@ -2,7 +2,7 @@ import React from "react";
 import InputField from "../../../ui/form-elements/InputField";
 import SelectField from "./../../../ui/form-elements/SelectField";
 import CommentField from "./../../../ui/form-elements/CommentField";
-import TimeWithUnit from "../../../ui/form-elements/TimeWithUnit";
+import InputWithUnit from "../../../ui/form-elements/InputWithUnit";
 import FilesUpload from "../../../ui/form-elements/FilesUpload";
 
 const MainInfoForm = ({ formData, setFormData, setForm }) => {
@@ -78,6 +78,10 @@ const MainInfoForm = ({ formData, setFormData, setForm }) => {
           <FilesUpload
             htmlFor="files"
             label="Vessel License and registration"
+            labelIdle="Drag & Drop your files or Browse"
+            pannelRatio=".075"
+            accept=""
+            allowMultiple={true}
             setFormData={setFormData}
           />
         </div>
@@ -94,7 +98,7 @@ const MainInfoForm = ({ formData, setFormData, setForm }) => {
         </div>
         {/* preparation time */}
         <div className="col-lg-6 col-12 p-2">
-          <TimeWithUnit
+          <InputWithUnit
             htmlFor="boatType"
             label="Preparation Time"
             hint="(Time Between trips needed)"

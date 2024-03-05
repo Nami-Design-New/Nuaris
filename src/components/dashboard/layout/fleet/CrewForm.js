@@ -30,7 +30,7 @@ const CrewForm = ({ formData, setFormData, setForm }) => {
             setFormData={setFormData}
           />
         </div>
-        {Array(+formData?.NumberOfCrew || 1)
+        {Array(+formData?.NumberOfCrew)
           .fill(0)
           .map((_, i) => {
             return <CrewCard key={i} index={i + 1} />;

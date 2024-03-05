@@ -3,15 +3,20 @@ import { FilePond, registerPlugin } from "react-filepond";
 import "filepond/dist/filepond.min.css";
 import FilePondPluginImageExifOrientation from "filepond-plugin-image-exif-orientation";
 import FilePondPluginImagePreview from "filepond-plugin-image-preview";
+import FilePondPluginFileValidateType from "filepond-plugin-file-validate-type";
 import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
 
-registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
+registerPlugin(
+  FilePondPluginImageExifOrientation,
+  FilePondPluginImagePreview,
+  FilePondPluginFileValidateType
+);
 
 const LogoUploadField = ({ htmlFor, label, setFormData }) => {
-  const handleFileChange = files => {
-    setFormData(prevFormData => ({
+  const handleFileChange = (files) => {
+    setFormData((prevFormData) => ({
       ...prevFormData,
-      logo: files && files.length > 0 ? files[0].file : null
+      logo: files && files.length > 0 ? files[0].file : null,
     }));
   };
 
@@ -22,7 +27,7 @@ const LogoUploadField = ({ htmlFor, label, setFormData }) => {
       </label>
       <FilePond
         stylePanelLayout="compact"
-        acceptedFileTypes={["image/png, image/jpeg"]}
+        acceptedFileTypes={["image/png", "image/jpeg"]}
         labelIdle="LOGO"
         id={htmlFor}
         stylePanelAspectRatio="0.415"

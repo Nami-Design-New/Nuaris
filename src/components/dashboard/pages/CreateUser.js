@@ -25,7 +25,7 @@ const CreateUser = () => {
     if (user) {
       setFormData((prevFormData) => ({
         ...prevFormData,
-        parent: Number(user.id),
+        parent: Number(user.id)
       }));
     }
   }, [user]);
@@ -37,7 +37,7 @@ const CreateUser = () => {
       const response = await axios.post("/users/invite-user/", formData);
       toast.success("Invitation sent successfully");
       setShowAssignGroups(true);
-      setIvitedUserId(response?.data?.user?.id);
+      setIvitedUserId(response?.data?.user_id);
     } catch (error) {
       console.log("error =>", error);
       toast.error("An error occurred while sending the invitation");
@@ -81,7 +81,7 @@ const CreateUser = () => {
                         );
                       setFormData({
                         ...formData,
-                        position: Number(selectedOptionId),
+                        position: Number(selectedOptionId)
                       });
                     }}
                   >

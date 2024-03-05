@@ -28,7 +28,7 @@ const HostDashboard = () => {
   async function getAllData() {
     const groups = axios.get("/groups");
     const permissions = axios.get("/permissions");
-    const employees = axios.get(`/users/?id=${authedUser.id}`);
+    const employees = axios.get(`/users/?parent_id=${authedUser.id}`);
     const positions = axios.get("/positions");
 
     const [groupsData, permissionsData, employeesData, positionsData] =
