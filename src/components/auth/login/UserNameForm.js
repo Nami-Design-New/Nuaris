@@ -38,6 +38,8 @@ const UserNameForm = ({ setShowLoginForm, userTypeSelected }) => {
     try {
       const res = await axios.request(requestOptions);
 
+      console.log("login res =>", res);
+
       // set user data in state
       dispatch(setUser(res.data.user));
 
