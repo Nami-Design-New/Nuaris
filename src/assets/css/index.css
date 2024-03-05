@@ -434,6 +434,9 @@ button {
 
 .form-ui {
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 .form-ui .input-field {
   width: 100%;
@@ -1792,10 +1795,20 @@ th:last-child .p-column-header-content {
   display: flex;
   gap: 8px;
   align-items: center;
+  position: relative;
 }
 .policy_cancel > div label {
   min-width: -moz-max-content !important;
   min-width: max-content !important;
+}
+.policy_cancel > div span {
+  font-size: 14px;
+  font-weight: 600;
+  color: #006980;
+  position: absolute;
+  top: 50%;
+  right: 8px;
+  transform: translateY(-50%);
 }
 
 .gender_select {
