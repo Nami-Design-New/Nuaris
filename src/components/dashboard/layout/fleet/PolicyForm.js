@@ -2,17 +2,24 @@ import React, { useState } from "react";
 import CommentField from "../../../ui/form-elements/CommentField";
 import InputField from "../../../ui/form-elements/InputField";
 import add from "../../../../assets/images/add.svg";
+import trashIcon from "../../../../assets/images/delete.svg";
 
 const PolicyForm = ({ setForm }) => {
   const [formData, setFormData] = useState({
     weatherRestriction: "",
     rolesAndInstructions: "",
-    allowedAndNotAllowed: ""
+    allowedAndNotAllowed: "",
   });
   const handleBack = (e) => {
     e.preventDefault();
     setForm("Crew");
   };
+
+  const [cancelationCount, setCancelationCount] = useState([
+    { id: 0 },
+    { id: 1 },
+  ]);
+
   return (
     <div className="form-ui">
       <div className="row m-0">
@@ -53,52 +60,66 @@ const PolicyForm = ({ setForm }) => {
           <div className="input-field policy_form">
             <div className="header">
               <label>Cancelation Policy</label>
-              <button>
+              <button
+                type="button"
+                onClick={() =>
+                  setCancelationCount((prev) => [
+                    ...prev,
+                    { id: cancelationCount.length },
+                  ])
+                }
+              >
                 <img src={add} alt="add" />
               </button>
             </div>
-            <div className="col-12 p-2 policy_cancel">
-              <div>
-                <label htmlFor="firstCancelBefore">If cancel before</label>
-                <InputField
-                  formData={formData}
-                  setFormData={setFormData}
-                  htmlFor={"firstCancelBefore"}
-                  placeholder={"Write here"}
-                />
-              </div>
-              <div>
-                <label htmlFor="secondDaysRefund">Days refund is</label>
-                <InputField
-                  formData={formData}
-                  setFormData={setFormData}
-                  htmlFor={"secondDaysRefund"}
-                  placeholder={"00"}
-                />
-              </div>
-            </div>
-            <div className="col-12 p-2 policy_cancel">
-              <div>
-                <label htmlFor="secondCancelBefore">If cancel before</label>
-                <InputField
-                  formData={formData}
-                  setFormData={setFormData}
-                  htmlFor={"secondCancelBefore"}
-                  placeholder={"Write here"}
-                />
-              </div>
-              <div>
-                <label h tmlFor="firstDaysRefund">
-                  Days refund is
-                </label>
-                <InputField
-                  formData={formData}
-                  setFormData={setFormData}
-                  htmlFor={"firstDaysRefund"}
-                  placeholder={"00"}
-                />
-              </div>
-            </div>
+            {cancelationCount.map((_, i) => {
+              return (
+                <>
+                  <div key={i} className="col-12 p-2 policy_cancel">
+                    <div>
+                      <label htmlFor="secondCancelBefore">
+                        If cancel before
+                      </label>
+                      <InputField
+                        formData={formData}
+                        setFormData={setFormData}
+                        htmlFor={"secondCancelBefore"}
+                        placeholder={"Write here"}
+                      />
+                    </div>
+                    <div>
+                      <label h tmlFor="firstDaysRefund">
+                        Days refund is
+                      </label>
+                      <InputField
+                        formData={formData}
+                        setFormData={setFormData}
+                        htmlFor={"firstDaysRefund"}
+                        placeholder={"00"}
+                      />
+                      <span>%</span>
+                    </div>
+                    {i >= 2 && (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setCancelationCount((prev) =>
+                            prev.filter((_, index) => index !== i)
+                          );
+                        }}
+                      >
+                        <img
+                          src={trashIcon}
+                          alt="trash"
+                          width={20}
+                          height={24}
+                        />
+                      </button>
+                    )}
+                  </div>
+                </>
+              );
+            })}
             <div className="col-12 p-2 pt-4 d-flex gap-3 ">
               <button className="next_btn" onClick={handleBack}>
                 Back
