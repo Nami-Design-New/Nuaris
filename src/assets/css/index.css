@@ -434,9 +434,6 @@ button {
 
 .form-ui {
   width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
 }
 .form-ui .input-field {
   width: 100%;
@@ -674,6 +671,52 @@ button {
 }
 .form-ui .time-units .units {
   width: 140px;
+}
+.form-ui .addItem {
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid #eeeeee;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  position: relative;
+}
+.form-ui .addItem input {
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  display: none;
+}
+.form-ui .addItem label {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.form-ui .addItem label h6 {
+  margin: 0;
+  color: #666b88;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+}
+.form-ui .addItem label i {
+  color: #666b88;
+  width: 16px;
+  font-size: 14px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.form-ui .addItem.active {
+  background: #ebf3f5;
+  border-color: transparent;
+}
+.form-ui .addItem.active label h6 {
+  color: #006980;
+}
+.form-ui .addItem.active label i {
+  color: #0d0d0d;
 }
 .form-ui .save_btn {
   border: none;
@@ -1675,14 +1718,6 @@ th:last-child .p-column-header-content {
 .fleet_form__wrapper .bg_white_card .form-ui .member_card label {
   font-weight: 500;
 }
-.fleet_form__wrapper .bg_white_card .form-ui.specifications {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-.fleet_form__wrapper .bg_white_card .form-ui.specifications .save_btn {
-  margin-top: 16px;
-}
 .fleet_form__wrapper .bg_white_card .form-ui.timesRow {
   display: flex;
   flex-direction: column;
@@ -1773,6 +1808,76 @@ th:last-child .p-column-header-content {
   color: #0d0d0d;
   font-size: 16px;
   font-weight: 700;
+}
+.fleet_form__wrapper .bg_white_card .topography {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 18px;
+  color: #006980;
+}
+.fleet_form__wrapper .bg_white_card .vat_container {
+  padding: 16px;
+  border-radius: 12px;
+  gap: 16px;
+  display: flex;
+  flex-direction: column;
+  background: #f8f8f8;
+}
+.fleet_form__wrapper .bg_white_card .vat_container .country_field {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border-radius: 12px;
+  background: #fff;
+  border: 1px solid #f2f2f2;
+}
+.fleet_form__wrapper .bg_white_card .vat_container .country_field .country {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.fleet_form__wrapper .bg_white_card .vat_container .country_field .country h6 {
+  margin: 0;
+  color: #0d0d0d;
+}
+.fleet_form__wrapper .bg_white_card .vat_container .country_field .form-switch {
+  display: flex;
+  align-items: center;
+  flex-direction: row-reverse;
+  padding: 0;
+  gap: 12px;
+  width: 80px;
+}
+.fleet_form__wrapper .bg_white_card .vat_container .country_field .form-switch label {
+  color: #0d0d0d;
+  font-weight: 600;
+}
+.fleet_form__wrapper .bg_white_card .vat_container .country_field .form-switch input {
+  box-shadow: none !important;
+  margin: 0;
+  float: none;
+  width: 40px;
+  cursor: pointer;
+  height: 20px;
+}
+.fleet_form__wrapper .bg_white_card .table-container img {
+  height: 60px;
+  -o-object-fit: contain;
+     object-fit: contain;
+}
+.fleet_form__wrapper .elements {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.fleet_form__wrapper .form-ui.specifications {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.fleet_form__wrapper .form-ui.specifications .save_btn {
+  margin-top: 16px;
 }
 
 .policy_form .header {
@@ -2603,17 +2708,17 @@ small.error {
   background: #ebf3f5;
   padding: 20px 20px 16px;
   border-radius: 12px;
+  position: relative;
 }
 .season_calender_card .delete_btn {
-  margin-top: 8px;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  justify-content: end;
+  position: absolute;
+  top: 8px;
+  padding: 0 !important;
+  right: 12px;
+  width: 32px;
 }
 .season_calender_card .delete_btn img {
-  height: 24px;
+  height: 20px;
 }
 .season_calender_card input,
 .season_calender_card select {
@@ -2645,4 +2750,145 @@ small.error {
   background-color: transparent;
   color: #0d0d0d;
   border-color: #0d0d0d;
+}
+
+.rmdp-panel-body li .b-deselect {
+  padding: 0 6px;
+  background-color: #ffda8b !important;
+}
+
+.rmdp-panel-body li .b-deselect span {
+  font-size: 18px !important;
+}
+
+.rmdp-panel-body li,
+.rmdp-panel-body li.bg-blue {
+  background-color: #006980 !important;
+}
+
+.rmdp-panel-body li {
+  box-shadow: none;
+  overflow: hidden;
+  border-radius: 0;
+}
+
+.rmdp-range {
+  background-color: #006980;
+}
+
+.addOnModal {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.addOnModal .details {
+  background: #f8f8f8;
+  padding: 12px;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.addOnModal .details .aboutAddOn {
+  display: flex;
+  gap: 16px;
+}
+.addOnModal .details .aboutAddOn .img {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+.addOnModal .details .aboutAddOn .img img {
+  height: 80px;
+  -o-object-fit: contain;
+     object-fit: contain;
+}
+.addOnModal .details .aboutAddOn .about {
+  flex: 6;
+}
+.addOnModal .details .aboutAddOn .about h3 {
+  font-size: 28px;
+  color: #0d0d0d;
+  font-weight: 500;
+  line-height: 35px;
+  margin-bottom: 4px;
+}
+.addOnModal .details .aboutAddOn .about span {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 20px;
+  color: #006980;
+}
+.addOnModal .details .aboutAddOn .about p {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+  color: #777777;
+}
+.addOnModal .details .info {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(3, 1fr);
+  width: 100%;
+}
+.addOnModal .details .info .info_card {
+  background: #ebf3f5;
+  padding: 8px 16px;
+  border-radius: 12px;
+}
+.addOnModal .details .info .info_card span {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 18px;
+  color: #777777;
+}
+.addOnModal .details .info .info_card h5 {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 20px;
+  color: #0d0d0d;
+}
+.addOnModal .statistics {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+.addOnModal .statistics .stat_card {
+  background: #fff5e2;
+  padding: 24px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.addOnModal .statistics .stat_card h4 {
+  font-size: 28px;
+  font-weight: 700;
+  color: #0d0d0d;
+}
+.addOnModal .statistics .stat_card h6 {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 18px;
+  color: #777777;
+}
+.addOnModal .upComingBooking {
+  padding: 24px;
+  border-radius: 24px;
+  background: #ebf3f5;
+}
+.addOnModal .upComingBooking h4 {
+  color: #0d0d0d;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 25px;
+}
+.addOnModal .upComingBooking .p-datatable-emptymessage,
+.addOnModal .upComingBooking tr {
+  background: none;
+}
+.addOnModal .upComingBooking .p-datatable-emptymessage td:last-child,
+.addOnModal .upComingBooking tr td:last-child {
+  text-align: center;
 }/*# sourceMappingURL=index.css.map */
