@@ -7,6 +7,8 @@ import Otpcontainer from "../../../shared/Otpcontainer";
 import SubmitButton from "./../../ui/form-elements/SubmitButton";
 import FormBackButton from "../../ui/form-elements/FormBackButton";
 import { useNavigate } from "react-router-dom";
+import { setUser } from "../../../redux/slices/authenticatedUserSlice";
+import { useDispatch } from "react-redux";
 
 const OtpForm = ({
   formData,
@@ -16,9 +18,9 @@ const OtpForm = ({
   setShowLoginForm,
 }) => {
   const [loading, setLoading] = useState(false);
-  const [, setCookie] = useCookies(["token"]);
+  const [, setCookie] = useCookies();
   const navigate = useNavigate();
-
+  const dispatch = useDispatch();
   const handleBackButtonClick = (e) => {
     e.preventDefault();
     setShowLoginForm(true);
@@ -26,38 +28,40 @@ const OtpForm = ({
     setFormData({});
   };
 
-  const requestOptions = {
-    method: "POST",
-    url: "/users/login-otp/",
-    data: { ...formData, role: userTypeSelected },
-  };
   const handleSubmit = async (e) => {
     setLoading(true);
     e.preventDefault();
     try {
-      const res = await axios.request(requestOptions);
+      const res = await axios.post("/users/login-otp/", {
+        ...formData,
+        role: userTypeSelected,
+      });
 
       if (res.status === 200) {
-        toast.success(`Welcome Back @${res.data.user.username}`);
-        setCookie("token", res.data.refresh_token, {
+        setCookie("refreshToken", res.data.refresh_token, {
           path: "/",
           expires: new Date(new Date().getTime() + 20 * 60 * 60 * 1000),
           secure: true,
         });
-        navigate("/dashborad");
-      } else {
-        toast.error("OTP is not correct");
-        setFormData({ ...formData, otp: "" });
+
+        dispatch(setUser(res.data.user));
+        toast.success(`Welcome Back @${res.data.user.username}`);
+        navigate("/dashboard");
+      }
+      if (res?.response?.data?.role) {
+        toast.error(res.response.data.role[0]);
+        return;
+      }
+      if (res?.response?.data?.otp) {
+        toast.error(res.response.data.otp[0]);
+        return;
       }
     } catch (error) {
-      if (
-        error.response &&
-        error.response.data &&
-        error.response.data.otp &&
-        error.response.data.otp.length > 0
-      ) {
+      if (error?.response?.data?.otp?.length > 0) {
         const errorMessage = error.response.data.otp[0];
         toast.error(errorMessage);
+      } else {
+        toast.error("Something went wrong");
       }
     } finally {
       setLoading(false);

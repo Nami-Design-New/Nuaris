@@ -23,9 +23,9 @@ const EmailForm = ({
     setLoading(true);
     e.preventDefault();
     try {
-      await axios.post(
+      const res = await axios.post(
         "/users/send-otp/",
-        { ...formData, role: userTypeSelected },
+        { ...formData },
         {
           headers: {
             Accept: "*/*",
@@ -34,8 +34,15 @@ const EmailForm = ({
           },
         }
       );
-      SetShowOtpForm(true);
-      setShowLoginForm(false);
+
+      if (res.status === 200) {
+        SetShowOtpForm(true);
+        setShowLoginForm(false);
+      } else if (res.response.data.email) {
+        toast.error(res.response.data.email[0]);
+      } else {
+        toast.error("Something went wrong");
+      }
     } catch (error) {
       if (error?.response?.data?.email?.length > 0) {
         const errorMessage = error.response.data.email[0];

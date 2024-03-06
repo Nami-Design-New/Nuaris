@@ -34,14 +34,18 @@ const UserNameForm = ({ setShowLoginForm, userTypeSelected }) => {
     try {
       const res = await axios.request(requestOptions);
 
-      // set user data in state
+      if (res?.response?.data?.non_field_errors) {
+        toast.error(res.response.data.non_field_errors[0]);
+        return;
+      }
+
       dispatch(setUser(res.data.user));
       setCookie("refreshToken", res.data.refresh_token, {
         path: "/",
         expires: new Date(new Date().getTime() + 20 * 60 * 60 * 1000),
         secure: true,
       });
-
+      toast.success("Login successful");
       navigate("/dashboard");
     } catch (error) {
       toast.error("Incorrect username or password");
