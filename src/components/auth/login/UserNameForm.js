@@ -33,6 +33,7 @@ const UserNameForm = ({ setShowLoginForm, userTypeSelected }) => {
     e.preventDefault();
     try {
       const res = await axios.request(requestOptions);
+
       // set user data in state
       dispatch(setUser(res.data.user));
       setCookie("refreshToken", res.data.refresh_token, {
