@@ -23,6 +23,7 @@ const ServiceProvider = ({ setFormSelection }) => {
   const [selectedCountry, setSelectedCountry] = useState("SA");
   const [checkedProducts, setCheckedProducts] = useState(false);
   const [checkedServices, setCheckedServices] = useState(false);
+  const [errors, setErrors] = useState({});
   const [serchedPlace, setSerchedPlace] = useState("Search on Map");
   const [formData, setFormData] = useState({
     registration_type: "Company",
@@ -99,9 +100,19 @@ const ServiceProvider = ({ setFormSelection }) => {
     setLoading(true);
     e.preventDefault();
     try {
-      await axios.request(requestOptions);
-      toast.success("Account created successfully");
-      navigate("/login");
+      const res = await axios.request(requestOptions);
+      if (res?.response?.data?.non_field_errors) {
+        toast.error(res.response.data.non_field_errors[0]);
+        return;
+      }
+
+      if (res.status === 201) {
+        toast.success("Account created successfully");
+        navigate("/login");
+      } else {
+        setErrors(res.response.data);
+        toast.error(`Something went wrong`);
+      }
     } catch (error) {
       if (error.response && error.response.data) {
         const errors = error.response.data;
@@ -159,6 +170,9 @@ const ServiceProvider = ({ setFormSelection }) => {
               formData={formData}
               setFormData={setFormData}
             />
+            {errors?.email && (
+              <small className="error">{errors?.email[0]}</small>
+            )}
           </div>
           {/* phone number */}
           <div className="col-lg-6 col-12 p-2">
@@ -167,6 +181,9 @@ const ServiceProvider = ({ setFormSelection }) => {
               setFormData={setFormData}
               id="mobile_number"
             />
+            {errors?.mobile_number && (
+              <small className="error">{errors?.mobile_number[0]}</small>
+            )}
           </div>
           {/* username */}
           <div className="col-lg-6 col-12 p-2">
@@ -178,6 +195,9 @@ const ServiceProvider = ({ setFormSelection }) => {
               formData={formData}
               setFormData={setFormData}
             />
+            {errors?.username && (
+              <small className="error">{errors?.username[0]}</small>
+            )}
           </div>
           {/* password */}
           <div className="col-lg-6 col-12 p-2">
@@ -187,6 +207,9 @@ const ServiceProvider = ({ setFormSelection }) => {
               formData={formData}
               setFormData={setFormData}
             />
+            {errors?.password && (
+              <small className="error">{errors?.password[0]}</small>
+            )}
           </div>
           {/* commercial name */}
           <div className="col-lg-6 col-12 p-2">
@@ -198,6 +221,9 @@ const ServiceProvider = ({ setFormSelection }) => {
               formData={formData}
               setFormData={setFormData}
             />
+            {errors?.commercial_name && (
+              <small className="error">{errors?.commercial_name[0]}</small>
+            )}
           </div>
           {/* registration number */}
           <div className="col-lg-6 col-12 p-2">
@@ -210,6 +236,9 @@ const ServiceProvider = ({ setFormSelection }) => {
               formData={formData}
               setFormData={setFormData}
             />
+            {errors?.registration_number && (
+              <small className="error">{errors?.registration_number[0]}</small>
+            )}
           </div>
           {/* Company core */}
           <div className="col-lg-6 col-12 p-2">

@@ -73,8 +73,6 @@ const AgentForm = ({ setFormSelection }) => {
     try {
       const res = await axios.request(requestOptions);
 
-      console.log(res);
-
       if (res?.response?.data?.non_field_errors) {
         toast.error(res.response.data.non_field_errors[0]);
         return;
@@ -87,8 +85,6 @@ const AgentForm = ({ setFormSelection }) => {
         setErrors(res.response.data);
         toast.error(`Something went wrong`);
       }
-
-      // navigate("/login");
     } catch (error) {
       if (error.response && error.response.data) {
         const errors = error.response.data;
