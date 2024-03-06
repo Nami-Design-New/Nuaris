@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import invite from "../../../assets/images/inviteUser.svg";
 import manage from "../../../assets/images/manageAccount.svg";
 import addAcc from "../../../assets/images/addAcc.svg";
@@ -22,7 +22,6 @@ const ProfileDropMenu = ({
   const filteredSubUsers = subUsers?.filter((u) => {
     return u.role !== user.current_role && u.role;
   });
-  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   // TODO: handle account switch
@@ -31,11 +30,10 @@ const ProfileDropMenu = ({
       role: subUserRole,
     });
     console.log("switch role =>", res);
-    // TODO: Enhance
-    // force page refresh to fetch new data
-    // window.location.pathname = "/dashboard";
+    // TODO: (optional) Enhance
+    // force page refresh to fetch new data and update redux store
     dispatch(logout());
-    navigate("/dashboard");
+    window.location.pathname = "/dashboard";
   }
 
   const variants = {

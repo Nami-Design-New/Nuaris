@@ -19,6 +19,7 @@ const AgentForm = ({ setFormSelection }) => {
   const [cities, setCities] = useState([]);
   const [cityForCountry, setCityForCountry] = useState(null);
   const [selectedCountry, setSelectedCountry] = useState("SA");
+  const [errors, setErrors] = useState({});
   const [formData, setFormData] = useState({
     role: "agent",
     country: "SA",
@@ -70,9 +71,24 @@ const AgentForm = ({ setFormSelection }) => {
     setLoading(true);
     e.preventDefault();
     try {
-      await axios.request(requestOptions);
-      toast.success("Account created successfully");
-      navigate("/login");
+      const res = await axios.request(requestOptions);
+
+      console.log(res);
+
+      if (res?.response?.data?.non_field_errors) {
+        toast.error(res.response.data.non_field_errors[0]);
+        return;
+      }
+
+      if (res.status === 201) {
+        toast.success("Account created successfully");
+        navigate("/login");
+      } else {
+        setErrors(res.response.data);
+        toast.error(`Something went wrong`);
+      }
+
+      // navigate("/login");
     } catch (error) {
       if (error.response && error.response.data) {
         const errors = error.response.data;
@@ -129,6 +145,9 @@ const AgentForm = ({ setFormSelection }) => {
               formData={formData}
               setFormData={setFormData}
             />
+            {errors?.email && (
+              <small className="error">{errors?.email[0]}</small>
+            )}
           </div>
           {/* phone number */}
           <div className="col-lg-6 col-12 p-2">
@@ -137,6 +156,9 @@ const AgentForm = ({ setFormSelection }) => {
               setFormData={setFormData}
               id="mobile_number"
             />
+            {errors?.mobile_number && (
+              <small className="error">{errors?.mobile_number[0]}</small>
+            )}
           </div>
           {/* username */}
           <div className="col-lg-6 col-12 p-2">
@@ -148,6 +170,9 @@ const AgentForm = ({ setFormSelection }) => {
               formData={formData}
               setFormData={setFormData}
             />
+            {errors?.username && (
+              <small className="error">{errors?.username[0]}</small>
+            )}
           </div>
           {/* password */}
           <div className="col-lg-6 col-12 p-2">
@@ -168,6 +193,9 @@ const AgentForm = ({ setFormSelection }) => {
               formData={formData}
               setFormData={setFormData}
             />
+            {errors?.commercial_name && (
+              <small className="error">{errors?.commercial_name[0]}</small>
+            )}
           </div>
           {/* Licnce Type */}
           <div className="col-lg-6 col-12 p-2">
@@ -179,6 +207,9 @@ const AgentForm = ({ setFormSelection }) => {
               setFormData={setFormData}
               id="licenceType"
             />
+            {errors?.licence_type && (
+              <small className="error">{errors?.licence_type[0]}</small>
+            )}
           </div>
           {/* Licenece Number */}
           <div className="col-lg-6 col-12 p-2">
@@ -191,6 +222,9 @@ const AgentForm = ({ setFormSelection }) => {
               formData={formData}
               setFormData={setFormData}
             />
+            {errors?.licence_number && (
+              <small className="error">{errors?.licence_number[0]}</small>
+            )}
           </div>
           {/* country */}
           <div className="col-lg-6 col-12 p-2">

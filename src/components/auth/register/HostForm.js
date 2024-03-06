@@ -74,6 +74,12 @@ const HostForm = ({ setFormSelection }) => {
           Authorization: null,
         },
       });
+
+      if (res?.response?.data?.non_field_errors) {
+        toast.error(res.response.data.non_field_errors[0]);
+        return;
+      }
+
       if (res.status === 201) {
         toast.success("Account created successfully");
         navigate("/login");
@@ -147,6 +153,9 @@ const HostForm = ({ setFormSelection }) => {
               setFormData={setFormData}
               id="mobile_number"
             />
+            {errors?.phone && (
+              <small className="error">{errors?.phone[0]}</small>
+            )}
           </div>
           {/* username */}
           <div className="col-lg-6 col-12 p-2">
@@ -181,6 +190,9 @@ const HostForm = ({ setFormSelection }) => {
               formData={formData}
               setFormData={setFormData}
             />
+            {errors?.commercial_name && (
+              <small className="error">{errors?.commercial_name[0]}</small>
+            )}
           </div>
           {/* registration type */}
           <div className="col-lg-6 col-12 p-2">
@@ -192,6 +204,9 @@ const HostForm = ({ setFormSelection }) => {
               setFormData={setFormData}
               id="registrationType"
             />
+            {errors?.registration_type && (
+              <small className="error">{errors?.registration_type[0]}</small>
+            )}
           </div>
           {/*registration number */}
           <div className="col-lg-6 col-12 p-2">
@@ -212,6 +227,9 @@ const HostForm = ({ setFormSelection }) => {
               placeholder="XXXX XXXX XXXX XXXX"
               id="registrationNumber"
             />
+            {errors?.registration_number && (
+              <small className="error">{errors?.registration_number[0]}</small>
+            )}
           </div>
           {/* country */}
           <div className="col-lg-6 col-12 p-2">
