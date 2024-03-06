@@ -6,44 +6,15 @@ import PolicyForm from "../../layout/fleet/PolicyForm";
 
 const MainInfo = () => {
   const [form, setForm] = useState("Main Info");
-  const [formData, setFormData] = useState({
-    lat: 18.2206,
-    lng: 42.5047,
-    NumberOfCrew: 1,
-  });
   let formComponent;
   if (form === "Main Info") {
-    formComponent = (
-      <MainInfoForm
-        formData={formData}
-        setFormData={setFormData}
-        setForm={setForm}
-      />
-    );
+    formComponent = <MainInfoForm setForm={setForm} />;
   } else if (form === "Location") {
-    formComponent = (
-      <LocationForm
-        formData={formData}
-        setFormData={setFormData}
-        setForm={setForm}
-      />
-    );
+    formComponent = <LocationForm setForm={setForm} />;
   } else if (form === "Crew") {
-    formComponent = (
-      <CrewForm
-        formData={formData}
-        setFormData={setFormData}
-        setForm={setForm}
-      />
-    );
+    formComponent = <CrewForm setForm={setForm} />;
   } else {
-    formComponent = (
-      <PolicyForm
-        formData={formData}
-        setFormData={setFormData}
-        setForm={setForm}
-      />
-    );
+    formComponent = <PolicyForm setForm={setForm} />;
   }
   return (
     <div className="fleet_form__wrapper">
@@ -59,9 +30,7 @@ const MainInfo = () => {
           </div>
         ))}
       </div>
-      <div className="bg_white_card">
-        <form>{formComponent}</form>
-      </div>
+      <div className="bg_white_card">{formComponent}</div>
     </div>
   );
 };

@@ -4,12 +4,13 @@ import { State } from "country-state-city";
 import MapLocationField from "../../../ui/form-elements/MapLocationField";
 import MapModal from "../../../ui/map-modal/MapModal";
 
-const LocationForm = ({ formData, setFormData, setForm }) => {
+const LocationForm = ({ setForm }) => {
   const [showModalVessel, setShowModalVessel] = useState(false);
   const [showModalMeeting, setShowModalMeeting] = useState(false);
   const [vesselLocation, setVesselLocation] = useState("Search on Map");
   const [meetingLocation, setMeetingLocation] = useState("Search on Map");
 
+  const [formData, setFormData] = useState({});
   const [cities, setCities] = useState([]);
   const [cityForCountry, setCityForCountry] = useState(null);
   const [selectedCountry, setSelectedCountry] = useState("SA");
@@ -38,7 +39,7 @@ const LocationForm = ({ formData, setFormData, setForm }) => {
         ...formData,
         city: cityName,
         lat: Number(selectedCity.latitude).toFixed(6),
-        lng: Number(selectedCity.longitude).toFixed(6),
+        lng: Number(selectedCity.longitude).toFixed(6)
       });
     }
   };

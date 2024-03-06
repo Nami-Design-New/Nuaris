@@ -5,14 +5,19 @@ const CommentField = ({
   label,
   placeholder,
   id,
+  value,
+  hint,
   formData,
-  setFormData,
+  setFormData
 }) => {
   return (
     <div className="input-field">
-      <label htmlFor={htmlFor}>{label}</label>
+      <label htmlFor={htmlFor}>
+        {label} <span>{hint}</span>
+      </label>
       <textarea
         name={id}
+        value={value}
         id={id}
         placeholder={placeholder}
         onChange={(e) => {

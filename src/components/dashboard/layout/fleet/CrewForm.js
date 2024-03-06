@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import InputField from "../../../ui/form-elements/InputField";
 import CrewCard from "./CrewCard";
 
-const CrewForm = ({ formData, setFormData, setForm }) => {
+const CrewForm = ({ setForm }) => {
+  const [formData, setFormData] = useState({
+    NumberOfCrew: "1",
+  });
   const handleNext = (e) => {
     e.preventDefault();
     setForm("Policy");
