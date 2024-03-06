@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Calendar, DateObject } from "react-multi-date-picker";
+import { Calendar } from "react-multi-date-picker";
 import DatePanel from "react-multi-date-picker/plugins/date_panel";
 
 const MultipleRangeCalender = () => {
@@ -19,9 +19,6 @@ const MultipleRangeCalender = () => {
         range
         plugins={[<DatePanel />]}
       />
-      {selectedDates.map((date, index) =>
-        date.map((d, i) => <p key={i}>{d.format("DD-MM-YYYY")}</p>)
-      )}
     </div>
   );
 };

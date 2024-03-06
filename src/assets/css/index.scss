@@ -63,10 +63,12 @@ button {
 }
 /*color pallete*/
 $main: #006980;
-$mainLight: #006980cc;
-$main25: #bfd5d8;
 $main10: #ebf3f5;
+$main25: #bfd5d8;
+$mainLight: #006980cc;
 $dashboardBg: #f7fafb;
+$second: #ffda8b;
+$second25: #fff5e2;
 $dark: #0d0d0d;
 $border: #dddddd;
 $inputBG: #f8f8f8;
@@ -430,9 +432,6 @@ $transation: 0.3s ease-in-out;
 }
 .form-ui {
   width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
   .input-field {
     width: 100%;
     display: flex;
@@ -659,6 +658,50 @@ $transation: 0.3s ease-in-out;
     gap: 8px;
     .units {
       width: 140px;
+    }
+  }
+  .addItem {
+    padding: 8px;
+    border-radius: 8px;
+    border: 1px solid $lightGray;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    position: relative;
+    input {
+      appearance: none;
+      display: none;
+    }
+    label {
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      h6 {
+        margin: 0;
+        color: $text;
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 20px;
+      }
+      i {
+        color: $text;
+        width: 16px;
+        font-size: 14px;
+        font-weight: 600;
+        @include centerFlex();
+      }
+    }
+    &.active {
+      background: $main10;
+      border-color: transparent;
+      label {
+        h6 {
+          color: $main;
+        }
+        i {
+          color: $dark;
+        }
+      }
     }
   }
   .save_btn {
@@ -1582,14 +1625,6 @@ th:last-child .p-column-header-content {
           font-weight: 500;
         }
       }
-      &.specifications {
-        display: flex;
-        flex-direction: column;
-        gap: 16px;
-        .save_btn {
-          margin-top: 16px;
-        }
-      }
       &.timesRow {
         display: flex;
         flex-direction: column;
@@ -1678,6 +1713,77 @@ th:last-child .p-column-header-content {
         color: $dark;
         font-size: 16px;
         font-weight: 700;
+      }
+    }
+    .topography {
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 18px;
+      color: $main;
+    }
+    .vat_container {
+      padding: 16px;
+      border-radius: 12px;
+      gap: 16px;
+      display: flex;
+      flex-direction: column;
+      background: $inputBG;
+      .country_field {
+        @include space-between();
+        padding: 12px 16px;
+        border-radius: 12px;
+        background: $white;
+        border: 1px solid $inputStroke;
+        .country {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          h6 {
+            margin: 0;
+            color: $dark;
+          }
+        }
+        .form-switch {
+          display: flex;
+          align-items: center;
+          flex-direction: row-reverse;
+          padding: 0;
+          gap: 12px;
+          width: 80px;
+          label {
+            color: $dark;
+            font-weight: 600;
+          }
+          input {
+            box-shadow: none !important;
+            margin: 0;
+            float: none;
+            width: 40px;
+            cursor: pointer;
+            height: 20px;
+          }
+        }
+      }
+    }
+    .table-container {
+      img {
+        height: 60px;
+        object-fit: contain;
+      }
+    }
+  }
+  .elements {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .form-ui {
+    &.specifications {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      .save_btn {
+        margin-top: 16px;
       }
     }
   }
@@ -2484,13 +2590,15 @@ small.error {
   background: $main10;
   padding: 20px 20px 16px;
   border-radius: 12px;
+  position: relative;
   .delete_btn {
-    margin-top: 8px;
-    width: 100%;
-    @include centerFlex();
-    justify-content: end;
+    position: absolute;
+    top: 8px;
+    padding: 0 !important;
+    right: 12px;
+    width: 32px;
     img {
-      height: 24px;
+      height: 20px;
     }
   }
   input,
@@ -2521,5 +2629,139 @@ small.error {
     background-color: transparent;
     color: $dark;
     border-color: $dark;
+  }
+}
+.rmdp-panel-body li .b-deselect {
+  padding: 0 6px;
+  background-color: $second !important;
+}
+.rmdp-panel-body li .b-deselect span {
+  font-size: 18px !important;
+}
+.rmdp-panel-body li,
+.rmdp-panel-body li.bg-blue {
+  background-color: $main !important;
+}
+.rmdp-panel-body li {
+  box-shadow: none;
+  overflow: hidden;
+  border-radius: 0;
+}
+.rmdp-range {
+  background-color: $main;
+}
+// add on modal
+.addOnModal {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  .details {
+    background: $inputBG;
+    padding: 12px;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    .aboutAddOn {
+      display: flex;
+      gap: 16px;
+      .img {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        img {
+          height: 80px;
+          object-fit: contain;
+        }
+      }
+      .about {
+        flex: 6;
+        h3 {
+          font-size: 28px;
+          color: $dark;
+          font-weight: 500;
+          line-height: 35px;
+          margin-bottom: 4px;
+        }
+        span {
+          font-size: 16px;
+          font-weight: 500;
+          line-height: 20px;
+          color: $main;
+        }
+        p {
+          font-size: 16px;
+          font-weight: 400;
+          line-height: 20px;
+          color: $gray;
+        }
+      }
+    }
+    .info {
+      display: grid;
+      gap: 12px;
+      grid-template-columns: repeat(3, 1fr);
+      width: 100%;
+      .info_card {
+        background: $main10;
+        padding: 8px 16px;
+        border-radius: 12px;
+        span {
+          font-size: 14px;
+          font-weight: 400;
+          line-height: 18px;
+          color: $gray;
+        }
+        h5 {
+          font-size: 16px;
+          font-weight: 500;
+          line-height: 20px;
+          color: $dark;
+        }
+      }
+    }
+  }
+  .statistics {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    .stat_card {
+      background: $second25;
+      padding: 24px;
+      border-radius: 12px;
+      @include centerFlex();
+      flex-direction: column;
+      h4 {
+        font-size: 28px;
+        font-weight: 700;
+        color: $dark;
+      }
+      h6 {
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 18px;
+        color: $gray;
+      }
+    }
+  }
+  .upComingBooking {
+    padding: 24px;
+    border-radius: 24px;
+    background: $main10;
+    h4 {
+      color: $dark;
+      font-size: 20px;
+      font-weight: 600;
+      line-height: 25px;
+    }
+    .p-datatable-emptymessage,
+    tr {
+      background: none;
+      td {
+        &:last-child {
+          text-align: center;
+        }
+      }
+    }
   }
 }

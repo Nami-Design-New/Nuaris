@@ -8,7 +8,7 @@ const PolicyForm = ({ setForm }) => {
   const [formData, setFormData] = useState({
     weatherRestriction: "",
     rolesAndInstructions: "",
-    allowedAndNotAllowed: "",
+    allowedAndNotAllowed: ""
   });
   const handleBack = (e) => {
     e.preventDefault();
@@ -17,7 +17,7 @@ const PolicyForm = ({ setForm }) => {
 
   const [cancelationCount, setCancelationCount] = useState([
     { id: 0 },
-    { id: 1 },
+    { id: 1 }
   ]);
 
   return (
@@ -65,7 +65,7 @@ const PolicyForm = ({ setForm }) => {
                 onClick={() =>
                   setCancelationCount((prev) => [
                     ...prev,
-                    { id: cancelationCount.length },
+                    { id: cancelationCount.length }
                   ])
                 }
               >
@@ -99,23 +99,16 @@ const PolicyForm = ({ setForm }) => {
                       />
                       <span>%</span>
                     </div>
-                    {i >= 2 && (
-                      <button
-                        type="button"
-                        onClick={() => {
-                          setCancelationCount((prev) =>
-                            prev.filter((_, index) => index !== i)
-                          );
-                        }}
-                      >
-                        <img
-                          src={trashIcon}
-                          alt="trash"
-                          width={20}
-                          height={24}
-                        />
-                      </button>
-                    )}
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setCancelationCount((prev) =>
+                          prev.filter((_, index) => index !== i)
+                        );
+                      }}
+                    >
+                      <img src={trashIcon} alt="trash" width={20} height={24} />
+                    </button>
                   </div>
                 </>
               );

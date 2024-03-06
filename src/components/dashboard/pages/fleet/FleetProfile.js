@@ -31,8 +31,7 @@ export default function FleetProfile() {
           </button>
         </div>
       </header>
-
-      <div className="row gap-3 m-0">
+      <div className="row m-0">
         <FleetProfileMedia fleet={fleet} />
         <FleetProfileInfo fleet={fleet} />
         <FleetProfileTabs fleet={fleet} />

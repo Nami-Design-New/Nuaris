@@ -3,12 +3,14 @@ import InputWithUnit from "../../../ui/form-elements/InputWithUnit";
 import InputField from "./../../../ui/form-elements/InputField";
 import calenderIcon from "../../../../assets/images/calender.svg";
 import addIcon from "../../../../assets/images/add.svg";
+import saudiaFlag from "../../../../assets/images/saudiArabia.svg";
+import qtr from "../../../../assets/images/qtr.svg";
 import { Form } from "react-bootstrap";
 import SeasonCard from "../../layout/fleet/SeasonCard";
 
 const Pricing = () => {
   const [formData, setFormData] = useState({});
-  const [seasonCards, setSeasonCards] = useState([]);
+  const [seasonCards, setSeasonCards] = useState([{}]);
   const handleAddSeasonCard = (e) => {
     e.preventDefault();
     setSeasonCards([...seasonCards, {}]);
@@ -107,6 +109,25 @@ const Pricing = () => {
                 onDelete={handleDeleteSeasonCard}
               />
             ))}
+            <div className="col-12 p-2">
+              <div className="vat_container">
+                <h6 className="form_title">Pricing</h6>
+                <div className="country_field">
+                  <div className="country">
+                    <img src={saudiaFlag} alt="saudiaFlag" />
+                    <h6>Saudi Arabia</h6>
+                  </div>
+                  <Form.Check type="switch" label="20%" />
+                </div>
+                <div className="country_field">
+                  <div className="country">
+                    <img src={qtr} alt="saudiaFlag" />
+                    <h6>Qatar</h6>
+                  </div>
+                  <Form.Check type="switch" label="10%" />
+                </div>
+              </div>
+            </div>
             <div className="col-12 p-2 pt-4 d-flex">
               <button className="save_btn ms-auto">Save</button>
             </div>
