@@ -9,6 +9,7 @@ const EmailForm = ({
   SetShowOtpForm,
   formData,
   setFormData,
+  userTypeSelected,
 }) => {
   const [loading, setLoading] = useState(false);
 
@@ -18,26 +19,25 @@ const EmailForm = ({
     setFormData({});
   };
 
-  const requestOptions = {
-    method: "POST",
-    url: "/users/send-otp/",
-    data: formData,
-  };
-
   const handleSubmit = async (e) => {
     setLoading(true);
     e.preventDefault();
     try {
-      await axios.request(requestOptions);
+      await axios.post(
+        "/users/send-otp/",
+        { ...formData, role: userTypeSelected },
+        {
+          headers: {
+            Accept: "*/*",
+            "Content-Type": "application/json",
+            Authorization: null,
+          },
+        }
+      );
       SetShowOtpForm(true);
       setShowLoginForm(false);
     } catch (error) {
-      if (
-        error.response &&
-        error.response.data &&
-        error.response.data.email &&
-        error.response.data.email.length > 0
-      ) {
+      if (error?.response?.data?.email?.length > 0) {
         const errorMessage = error.response.data.email[0];
         setFormData({ ...formData, email: "" });
         toast.error(errorMessage);

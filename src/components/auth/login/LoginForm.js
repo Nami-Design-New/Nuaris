@@ -25,6 +25,7 @@ const LoginForm = ({
   } else if (formType === "email") {
     formComponent = (
       <EmailForm
+        userTypeSelected={userTypeSelected}
         setShowLoginForm={setShowLoginForm}
         SetShowOtpForm={SetShowOtpForm}
         formData={formData}

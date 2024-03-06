@@ -6,6 +6,7 @@ import { useCookies } from "react-cookie";
 import Otpcontainer from "../../../shared/Otpcontainer";
 import SubmitButton from "./../../ui/form-elements/SubmitButton";
 import FormBackButton from "../../ui/form-elements/FormBackButton";
+import { useNavigate } from "react-router-dom";
 
 const OtpForm = ({
   formData,
@@ -16,6 +17,7 @@ const OtpForm = ({
 }) => {
   const [loading, setLoading] = useState(false);
   const [, setCookie] = useCookies(["token"]);
+  const navigate = useNavigate();
 
   const handleBackButtonClick = (e) => {
     e.preventDefault();
@@ -27,24 +29,26 @@ const OtpForm = ({
   const requestOptions = {
     method: "POST",
     url: "/users/login-otp/",
-    data: formData,
+    data: { ...formData, role: userTypeSelected },
   };
   const handleSubmit = async (e) => {
     setLoading(true);
     e.preventDefault();
     try {
       const res = await axios.request(requestOptions);
-      toast.success(`Welcome Back @${res.data.user.username}`);
-      setCookie("token", res.data.access_token, {
-        path: "/",
-        expires: new Date(new Date().getTime() + 6 * 60 * 60 * 1000),
-        secure: true,
-      });
-      setCookie("id", res.data.user.id, {
-        path: "/",
-        expires: new Date(new Date().getTime() + 6 * 60 * 60 * 1000),
-        secure: true,
-      });
+
+      if (res.status === 200) {
+        toast.success(`Welcome Back @${res.data.user.username}`);
+        setCookie("token", res.data.refresh_token, {
+          path: "/",
+          expires: new Date(new Date().getTime() + 20 * 60 * 60 * 1000),
+          secure: true,
+        });
+        navigate("/dashborad");
+      } else {
+        toast.error("OTP is not correct");
+        setFormData({ ...formData, otp: "" });
+      }
     } catch (error) {
       if (
         error.response &&
