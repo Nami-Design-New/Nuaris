@@ -1437,7 +1437,7 @@ footer .links a:hover {
   background: rgba(52, 181, 58, 0.8);
 }
 .button.danger {
-  background: #dc3545;
+  background: #ff3a29;
 }
 .button.danger:hover {
   background: rgba(220, 53, 69, 0.8);
@@ -1515,6 +1515,7 @@ th:last-child .p-column-header-content {
 
 .p-paginator-bottom {
   gap: 4px;
+  margin-top: 16px;
   border-bottom: 0 !important;
 }
 
@@ -2095,7 +2096,7 @@ th:last-child .p-column-header-content {
   background-color: #34b53a;
 }
 .badge.danger {
-  background-color: #dc3545;
+  background-color: #ff3a29;
 }
 .badge.idle {
   background-color: #777777;
@@ -2117,30 +2118,17 @@ th:last-child .p-column-header-content {
   top: 12px;
   left: 12px;
 }
-.fleet-media-swiper .carousel .carousel-item {
+.fleet-media-swiper .swiper-slide {
   height: 400px;
 }
-.fleet-media-swiper .carousel .carousel-indicators {
-  margin: 0;
-  width: -moz-max-content;
-  width: max-content;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  left: 12px;
-  bottom: 5px;
+.fleet-media-swiper .swiper-pagination {
+  text-align: left;
+  padding-left: 12px;
 }
-.fleet-media-swiper .carousel .carousel-indicators button {
-  border-radius: 50%;
-  width: 11px;
-  height: 11px;
-  background-color: #fff;
-  opacity: 30%;
-  margin: 0;
-  transition: opacity 0.3s;
-}
-.fleet-media-swiper .carousel .carousel-indicators button.active {
-  opacity: 100%;
+.fleet-media-swiper .swiper-pagination .swiper-pagination-bullet {
+  background: #fff;
+  width: 10px;
+  height: 10px;
 }
 .fleet-media-swiper img {
   max-width: 100%;
@@ -2353,6 +2341,31 @@ th:last-child .p-column-header-content {
 .fleet-part .tab-content p {
   line-height: 24px;
   margin-bottom: 0;
+}
+.fleet-part .table-container tbody tr td:last-child {
+  text-align: end;
+}
+.fleet-part .table-container .status-success {
+  padding: 0 8px;
+  border-radius: 100px;
+  background: #34b53a;
+  color: #fff;
+  width: 90px;
+  font-size: 15px;
+  display: flex;
+  margin-left: auto;
+  justify-content: center;
+}
+.fleet-part .table-container .status-danger {
+  padding: 0 8px;
+  font-size: 15px;
+  border-radius: 100px;
+  background: #ff3a29;
+  color: #fff;
+  width: 90px;
+  display: flex;
+  margin-left: auto;
+  justify-content: center;
 }
 
 .coming-soon {
@@ -2644,7 +2657,7 @@ th:last-child .p-column-header-content {
 small.error {
   font-size: 12px;
   line-height: 15px;
-  color: #dc3545;
+  color: #ff3a29;
 }
 
 .mainImg {

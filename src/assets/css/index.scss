@@ -82,7 +82,7 @@ $JumbotronHead: #4f4f4f;
 $inputStroke: #f2f2f2;
 $success: #34b53a;
 $successLight: #34b53acc;
-$danger: #dc3545;
+$danger: #ff3a29;
 $dangerLight: #dc3545cc;
 $borderRadius: 12px;
 $transation: 0.3s ease-in-out;
@@ -1432,6 +1432,7 @@ th:last-child .p-column-header-content {
 }
 .p-paginator-bottom {
   gap: 4px;
+  margin-top: 16px;
   border-bottom: 0 !important;
 }
 .p-dropdown-label {
@@ -2018,30 +2019,16 @@ th:last-child .p-column-header-content {
     top: 12px;
     left: 12px;
   }
-  .carousel {
-    .carousel-item {
-      height: 400px;
-    }
-    .carousel-indicators {
-      margin: 0;
-      width: max-content;
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      left: 12px;
-      bottom: 5px;
-      button {
-        border-radius: 50%;
-        width: 11px;
-        height: 11px;
-        background-color: $white;
-        opacity: 30%;
-        margin: 0;
-        transition: opacity 0.3s;
-        &.active {
-          opacity: 100%;
-        }
-      }
+  .swiper-slide {
+    height: min(400px, 400px);
+  }
+  .swiper-pagination {
+    text-align: left;
+    padding-left: 12px;
+    .swiper-pagination-bullet {
+      background: $white;
+      width: 10px;
+      height: 10px;
     }
   }
   img {
@@ -2252,6 +2239,33 @@ th:last-child .p-column-header-content {
     p {
       line-height: 24px;
       margin-bottom: 0;
+    }
+  }
+  .table-container {
+    tbody tr td:last-child {
+      text-align: end;
+    }
+    .status-success {
+      padding: 0 8px;
+      border-radius: 100px;
+      background: $success;
+      color: $white;
+      width: 90px;
+      font-size: 15px;
+      display: flex;
+      margin-left: auto;
+      justify-content: center;
+    }
+    .status-danger {
+      padding: 0 8px;
+      font-size: 15px;
+      border-radius: 100px;
+      background: $danger;
+      color: $white;
+      width: 90px;
+      display: flex;
+      margin-left: auto;
+      justify-content: center;
     }
   }
 }
