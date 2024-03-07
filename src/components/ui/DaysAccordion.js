@@ -1,27 +1,33 @@
-import React from "react";
-import Accordion from "react-bootstrap/Accordion";
+import React, { useState } from "react";
+import { Accordion } from "react-bootstrap";
 import DayAccordionItem from "./DayAccordionItem";
+import { DAYS } from "../../constants";
 
-const DaysAccordion = ({ formData, setFormData }) => {
-  const days = [
-    "Saturday",
-    "Sunday",
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-  ];
+const DaysAccordion = ({ setFormData }) => {
+  const [daysArray, setDaysArray] = useState([]);
+
+  const handleSetFormData = (day, hours) => {
+    const updatedDaysArray = [...daysArray];
+    const index = updatedDaysArray.findIndex((item) => item.day === day);
+    if (index !== -1) {
+      updatedDaysArray[index].hours = hours;
+    } else {
+      updatedDaysArray.push({ day, hours });
+    }
+    setDaysArray(updatedDaysArray);
+    setFormData(updatedDaysArray);
+  };
 
   return (
     <Accordion>
-      {days.map((day, index) => (
+      {DAYS.map((day, index) => (
         <DayAccordionItem
           day={day}
           index={index}
           key={day}
-          formData={formData}
-          setFormData={setFormData}
+          daysArray={daysArray}
+          setDaysArray={setDaysArray}
+          setFormData={handleSetFormData}
         />
       ))}
     </Accordion>

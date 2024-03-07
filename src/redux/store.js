@@ -13,6 +13,6 @@ export const store = configureStore({
     positions,
     employees,
     permissionsGroups,
-    permissions
-  }
+    permissions,
+  },
 });
