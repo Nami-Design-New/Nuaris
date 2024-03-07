@@ -1,11 +1,14 @@
 import React from "react";
-import InputField from "./form-elements/InputField";
-import deleteIcon from "../../assets/images/delete.svg";
 
-const TimeRow = ({ day, index, formData, setFormData, onDelete }) => {
+import deleteIcon from "../../assets/images/delete.svg";
+import InputField from './form-elements/InputField';
+
+const TimeRow = ({ day, index, setHours, onDelete }) => {
   const handleDelete = () => {
     onDelete(index);
+    setHours([]);
   };
+
   return (
     <div className="time_row" key={index}>
       {/* From time */}
@@ -13,16 +16,12 @@ const TimeRow = ({ day, index, formData, setFormData, onDelete }) => {
         type="time"
         htmlFor={`fromTime-${day}-${index}`}
         id={`fromTime-${day}-${index}`}
-        formData={formData}
-        setFormData={setFormData}
       />
       {/* To time */}
       <InputField
         type="time"
         htmlFor={`toTime-${day}-${index}`}
         id={`toTime-${day}-${index}`}
-        formData={formData}
-        setFormData={setFormData}
       />
       <button onClick={handleDelete}>
         <img src={deleteIcon} alt="deleteIcon" />

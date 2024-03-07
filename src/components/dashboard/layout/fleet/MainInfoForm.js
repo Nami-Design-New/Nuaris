@@ -7,6 +7,8 @@ import FilesUpload from "../../../ui/form-elements/FilesUpload";
 import SubmitButton from "../../../ui/form-elements/SubmitButton";
 import { toast } from "react-toastify";
 import axios from "./../../../../util/axios";
+import { useSelector } from "react-redux";
+import { BRANDS, TYPE } from "../../../../constants";
 
 const MainInfoForm = ({ setForm }) => {
   const [formData, setFormData] = useState({
@@ -20,9 +22,11 @@ const MainInfoForm = ({ setForm }) => {
     license_expire_date: "",
     preparation_time: "",
     description_en: "",
-    description_ar: ""
+    description_ar: "",
   });
   const [loading, setLoading] = useState(false);
+  const user = useSelector((state) => state.user?.user);
+  const subUserSet = user?.subuser_set;
 
   const handleNext = (e) => {
     e.preventDefault();
@@ -31,29 +35,34 @@ const MainInfoForm = ({ setForm }) => {
 
   const headersList = {
     Accept: "*/*",
-    "Content-Type": "multipart/form-data"
-  };
-  const requestOptions = {
-    method: "POST",
-    url: "/yachts/",
-    headers: headersList,
-    data: formData
+    "Content-Type": "multipart/form-data",
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     try {
-      const response = await axios.request(requestOptions);
-      console.log("response =>", response);
-      setForm("Location");
+      const subUser = subUserSet?.filter((u) => u.role === user.current_role);
+      if (!subUser) {
+        throw new Error("No matching sub user found");
+      }
+      const data = { ...formData, sub_user: subUser[0]?.id };
+      const response = await axios.post("/yachts/", data, {
+        headers: headersList,
+      });
+      if (response.status === 201) {
+        setForm("Location");
+        toast.success("Main Info Saved Successfully");
+        sessionStorage.setItem("yacht_id", response?.data?.id);
+      } else {
+        toast.error("Something went wrong");
+      }
     } catch (error) {
-      console.log("error =>", error);
-      toast.error("something went wrong");
+      console.error("Error:", error);
+      toast.error("Something went wrong");
     } finally {
       setLoading(false);
     }
   };
-  
   return (
     <form className="form-ui" onSubmit={handleSubmit}>
       <div className="row m-0">
@@ -69,7 +78,7 @@ const MainInfoForm = ({ setForm }) => {
             value={formData.type}
             formData={formData}
             setFormData={setFormData}
-            options={["Motor", "Sailing", "Catamaran"]}
+            options={TYPE}
           />
         </div>
         {/* vessel brand */}
@@ -81,7 +90,7 @@ const MainInfoForm = ({ setForm }) => {
             value={formData.brand}
             formData={formData}
             setFormData={setFormData}
-            options={["brand1", "brand2", "brand3"]}
+            options={BRANDS}
           />
         </div>
         {/* vessel name english */}

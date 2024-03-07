@@ -515,6 +515,7 @@ button {
 }
 .form-ui .input-field textarea {
   height: 152px;
+  line-height: 24px;
 }
 .form-ui .input-field label {
   color: #0d0d0d;

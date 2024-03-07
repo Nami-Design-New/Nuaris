@@ -2,14 +2,55 @@ import React, { useState } from "react";
 import InputField from "../../../ui/form-elements/InputField";
 import SelectField from "./../../../ui/form-elements/SelectField";
 import InputWithUnit from "./../../../ui/form-elements/InputWithUnit";
+import { toast } from "react-toastify";
+import axios from "axios";
+import SubmitButton from "./../../../ui/form-elements/SubmitButton";
+import { FUEL, YRARS } from "../../../../constants";
+import { useNavigate } from "react-router-dom";
 
 const BoatSpecification = () => {
+  const createdYacht = sessionStorage.getItem("yacht_id");
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    sleepingArrangements: "Accept",
+    capacity: "",
+    year_of_manufacture: "select",
+    depth: "",
+    length: "",
+    engine_quantity: "",
+    engine_size: "",
+    bathrooms: "",
+    sleeping_cabins: "",
+    single_beds: "",
+    double_beds: "",
+    queen_beds: "",
+    king_beds: "",
+    sofa_beds: "",
+    fuel: "select",
+    sleeping_arrangements: "Accept",
   });
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      const response = await axios.patch(`/yachts/${createdYacht}/`, formData);
+      if (response.status === 200) {
+        toast.success("Boat Specification Saved Successfully");
+        navigate("/dashboard/fleet/add-yacht/working-hours");
+      } else {
+        toast.error("Something went wrong");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      toast.error("Something went wrong");
+    } finally {
+      setLoading(false);
+    }
+  };
   return (
     <div className="fleet_form__wrapper">
-      <form className="form-ui specifications">
+      <form className="form-ui specifications" onSubmit={handleSubmit}>
         <div className="bg_white_card">
           <div className="row m-0">
             <div className="col-12 p-2">
@@ -18,51 +59,60 @@ const BoatSpecification = () => {
             {/* Max Capacity */}
             <div className="col-lg-6 col-12 p-2">
               <InputField
-                htmlFor="maxCapacity"
+                htmlFor="capacity"
                 label="Max Capacity."
                 type="number"
                 placeholder="00"
                 hint="(People)"
                 id="maxCapacity"
+                value={formData.capacity}
                 formData={formData}
                 setFormData={setFormData}
               />
             </div>
             {/* Year of Manufacture */}
             <div className="col-lg-6 col-12 p-2">
-              <InputField
-                htmlFor="yearOfManufacture"
+              <SelectField
+                htmlFor="year_of_manufacture"
                 label="Year of Manufacture."
-                type="date"
                 id="yearOfManufacture"
+                value={formData.year_of_manufacture}
                 formData={formData}
                 setFormData={setFormData}
+                options={YRARS}
               />
             </div>
             {/* Vessel Depth */}
             <div className="col-lg-6 col-12 p-2">
               <InputWithUnit
-                htmlFor="vesselDepth"
+                htmlFor="depth"
                 label="Vessel Depth"
+                id="vesselDepth"
                 units={["Meter", "Feet", "Inch", "Yard"]}
+                formData={formData}
+                setFormData={setFormData}
               />
             </div>
             {/* Vessel length */}
             <div className="col-lg-6 col-12 p-2">
               <InputWithUnit
-                htmlFor="vesselLength"
+                htmlFor="length"
                 label="Vessel length"
+                id="vesselLength"
                 units={["Meter", "Feet", "Inch", "Yard"]}
+                formData={formData}
+                setFormData={setFormData}
               />
             </div>
             {/* Engine Qty */}
             <div className="col-lg-6 col-12 p-2">
               <InputField
-                htmlFor="engineQty"
+                htmlFor="engine_quantity"
                 label="Engine Qty."
                 type="number"
                 placeholder="00"
                 id="engineQty"
+                value={formData.engine_quantity}
                 formData={formData}
                 setFormData={setFormData}
               />
@@ -70,12 +120,13 @@ const BoatSpecification = () => {
             {/* Engine Size */}
             <div className="col-lg-6 col-12 p-2">
               <InputField
-                htmlFor="engineSize"
+                htmlFor="engine_size"
                 label="Engine Size."
                 type="number"
                 placeholder="00"
                 hint="(HP)"
                 id="engineSize"
+                value={formData.engine_size}
                 formData={formData}
                 setFormData={setFormData}
               />
@@ -85,10 +136,11 @@ const BoatSpecification = () => {
               <SelectField
                 htmlFor="fuel"
                 label="Fuel."
-                options={["Diesel", "Gasoline", "Electric"]}
+                id="fuel"
+                value={formData.fuel}
                 formData={formData}
                 setFormData={setFormData}
-                id="fuel"
+                options={FUEL}
               />
             </div>
           </div>
@@ -106,6 +158,7 @@ const BoatSpecification = () => {
                 type="number"
                 placeholder="00"
                 id="bathrooms"
+                value={formData.bathrooms}
                 formData={formData}
                 setFormData={setFormData}
               />
@@ -113,11 +166,12 @@ const BoatSpecification = () => {
             {/* No. of Sleeping Capacity */}
             <div className="col-lg-6 col-12 p-2">
               <InputField
-                htmlFor="sleepingCapacity"
+                htmlFor="sleeping_cabins"
                 label="No. of Sleeping Capacity."
                 type="number"
                 placeholder="00"
                 id="sleepingCapacity"
+                value={formData.sleeping_cabins}
                 formData={formData}
                 setFormData={setFormData}
               />
@@ -125,11 +179,12 @@ const BoatSpecification = () => {
             {/* Single Beds Qty. */}
             <div className="col-lg-6 col-12 p-2">
               <InputField
-                htmlFor="singleBedsQty"
+                htmlFor="single_beds"
                 label="Single Beds Qty."
                 type="number"
                 placeholder="00"
                 id="singleBedsQty"
+                value={formData.single_beds}
                 formData={formData}
                 setFormData={setFormData}
               />
@@ -137,11 +192,12 @@ const BoatSpecification = () => {
             {/* Double Beds Qty. */}
             <div className="col-lg-6 col-12 p-2">
               <InputField
-                htmlFor="doubleBedsQty"
+                htmlFor="double_beds"
                 label="Double Beds Qty."
                 type="number"
                 placeholder="00"
                 id="doubleBedsQty"
+                value={formData.double_beds}
                 formData={formData}
                 setFormData={setFormData}
               />
@@ -149,11 +205,12 @@ const BoatSpecification = () => {
             {/* Queen Beds Qty */}
             <div className="col-lg-6 col-12 p-2">
               <InputField
-                htmlFor="queenBedsQty"
+                htmlFor="queen_beds"
                 label="Queen Beds Qty."
                 type="number"
                 placeholder="00"
                 id="queenBedsQty"
+                value={formData.queen_beds}
                 formData={formData}
                 setFormData={setFormData}
               />
@@ -161,11 +218,12 @@ const BoatSpecification = () => {
             {/* King Bed Qty */}
             <div className="col-lg-6 col-12 p-2">
               <InputField
-                htmlFor="kingBedQty"
+                htmlFor="king_beds"
                 label="King Bed Qty."
                 type="number"
                 placeholder="00"
                 id="kingBedQty"
+                value={formData.king_beds}
                 formData={formData}
                 setFormData={setFormData}
               />
@@ -173,11 +231,12 @@ const BoatSpecification = () => {
             {/* Sofa Beds Qty */}
             <div className="col-lg-6 col-12 p-2">
               <InputField
-                htmlFor="sofaBedsQty"
+                htmlFor="sofa_beds"
                 label="Sofa Beds Qty."
                 type="number"
                 placeholder="00"
                 id="sofaBedsQty"
+                value={formData.sofa_beds}
                 formData={formData}
                 setFormData={setFormData}
               />
@@ -191,7 +250,9 @@ const BoatSpecification = () => {
                 <div className="checkboxs_inputs">
                   <span
                     className={`bg-active ${
-                      formData.sleepingArrangements === "Refuse" ? "refuse" : ""
+                      formData.sleeping_arrangements === "Refuse"
+                        ? "refuse"
+                        : ""
                     }`}
                   ></span>
                   <label htmlFor="accept">
@@ -199,11 +260,11 @@ const BoatSpecification = () => {
                       type="radio"
                       name="sleepingArrangements"
                       id="accept"
-                      checked={formData.sleepingArrangements === "Accept"}
+                      checked={formData.sleeping_arrangements === "Accept"}
                       onChange={() => {
                         setFormData({
                           ...formData,
-                          sleepingArrangements: "Accept",
+                          sleeping_arrangements: "Accept",
                         });
                       }}
                     />
@@ -217,7 +278,7 @@ const BoatSpecification = () => {
                       onChange={() => {
                         setFormData({
                           ...formData,
-                          sleepingArrangements: "Refuse",
+                          sleeping_arrangements: "Refuse",
                         });
                       }}
                     />
@@ -228,7 +289,11 @@ const BoatSpecification = () => {
             </div>
           </div>
         </div>
-        <button className="save_btn ms-auto">Save</button>
+        <SubmitButton
+          className="save_btn ms-auto"
+          name="Save"
+          loading={loading}
+        />
       </form>
     </div>
   );
