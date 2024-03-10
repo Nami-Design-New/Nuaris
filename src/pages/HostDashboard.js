@@ -48,7 +48,7 @@ const HostDashboard = () => {
 
   return (
     <>
-      <SideBar sideBarOpen={sideBarOpen} />
+      <SideBar sideBarOpen={sideBarOpen} setSideBarOpen={setSideBarOpen} />
       <div className={`main_wrap ${sideBarOpen ? "expand" : ""}`}>
         <NavBar setSideBarOpen={setSideBarOpen} sideBarOpen={sideBarOpen} />
         <main className="main_wrapper">
