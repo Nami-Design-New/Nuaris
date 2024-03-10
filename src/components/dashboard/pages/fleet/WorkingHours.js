@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import DaysAccordion from "../../../ui/DaysAccordion";
 import axios from "./../../../../util/axios";
 import { toast } from "react-toastify";
@@ -12,7 +12,7 @@ const WorkingHours = () => {
       day,
       hours: [{ from: "00:00", to: "00:00" }],
       selected: false,
-      index,
+      index
     };
   });
   const [formData, setFormData] = useState(formDataInitial);
@@ -28,11 +28,13 @@ const WorkingHours = () => {
       const reqData = filteredFormData.map((obj) => {
         return {
           day: obj.day,
-          hours: obj.hours,
+          hours: obj.hours
         };
       });
 
-      const response = await axios.patch(`/yachts/${createdYacht}/`, reqData);
+      const response = await axios.patch(`/yachts/${createdYacht}/`, {
+        reqData
+      });
       if (response.status === 200) {
         toast.success("Working Hours Saved Successfully");
         navigate("/dashboard/fleet/add-yacht/pricing");
