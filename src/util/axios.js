@@ -28,13 +28,11 @@ axios.interceptors.response.use(
         refresh: refreshToken,
       });
 
-      if (res?.status === 200) {
-        axios.defaults.headers.common[
-          "Authorization"
-        ] = `Bearer ${res.data.access}`;
+      axios.defaults.headers.common[
+        "Authorization"
+      ] = `Bearer ${res.data.access}`;
 
-        return axios(err.config);
-      }
+      return axios(err.config);
     }
     refresh = false;
     return err;
