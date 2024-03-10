@@ -7,6 +7,7 @@ const DayAccordionItem = ({ formData, day, index, setFormData }) => {
   function handleCheck(e) {
     const { checked } = e.target;
 
+
     setFormData((prev) => {
       return [
         ...prev.filter((obj) => obj.day !== day),
