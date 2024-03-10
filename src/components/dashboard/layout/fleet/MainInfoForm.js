@@ -161,7 +161,7 @@ const MainInfoForm = ({ setForm }) => {
         <div className="col-lg-6 col-12 p-2">
           <InputField
             type="date"
-            htmlFor="licenseExpireDate"
+            htmlFor="license_expire_date"
             label="License expiration date"
             id="licenseExpireDate"
             formData={formData}
