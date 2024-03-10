@@ -916,6 +916,7 @@ button {
   background: #fff;
   position: fixed;
   top: 0;
+  z-index: 99;
   left: 0;
   gap: 24px;
   height: 100%;
@@ -998,6 +999,11 @@ button {
   width: calc(100% - 80px);
   margin-left: 80px;
   height: 100%;
+}
+@media (max-width: 768px) {
+  .main_wrap {
+    padding-right: 0;
+  }
 }
 .main_wrap.expand {
   width: calc(100% - 280px);
@@ -1109,6 +1115,15 @@ button {
 .main_wrap nav .settings ul li a img {
   height: 20px;
 }
+@media (max-width: 768px) {
+  .main_wrap nav .settings ul li a {
+    width: 42px;
+    height: 42px;
+  }
+  .main_wrap nav .settings ul li a img {
+    height: 16px;
+  }
+}
 .main_wrap nav .settings ul li.notification {
   position: relative;
 }
@@ -1137,6 +1152,12 @@ button {
   display: flex;
   cursor: pointer;
 }
+@media (max-width: 768px) {
+  .main_wrap nav .settings ul li .dropdownButton {
+    border: none;
+    margin-right: 12px;
+  }
+}
 .main_wrap nav .settings ul li .dropdownButton .avatar {
   width: 48px;
   height: 48px;
@@ -1156,6 +1177,11 @@ button {
   align-items: center;
   justify-content: center;
   padding: 0 18px 0 12px;
+}
+@media (max-width: 768px) {
+  .main_wrap nav .settings ul li .dropdownButton .name {
+    display: none;
+  }
 }
 .main_wrap nav .settings ul li .dropdownButton .name h6 {
   color: #0d0d0d;
@@ -1186,6 +1212,11 @@ button {
   padding: 16px;
   height: -moz-fit-content;
   height: fit-content;
+}
+@media (max-width: 768px) {
+  .main_wrap nav .settings .profile_dropdown {
+    right: 8px;
+  }
 }
 .main_wrap nav .settings .profile_dropdown .account_owner {
   gap: 12px;
@@ -1371,6 +1402,12 @@ button {
   margin: 0;
 }
 @media (max-width: 768px) {
+  .main_wrap .main_wrapper {
+    margin: 0 8px;
+    padding: 32px 8px;
+  }
+}
+@media (max-width: 768px) {
   .main_wrap {
     width: 100%;
     margin-left: 0;
@@ -1386,6 +1423,12 @@ footer {
   background: #fff;
   display: flex;
   align-items: center;
+}
+@media (max-width: 576px) {
+  footer {
+    height: auto;
+    padding: 24px 8px;
+  }
 }
 footer .inner_footer {
   height: 52px;
@@ -1403,6 +1446,12 @@ footer .inner_footer h6 {
 }
 footer .inner_footer h6 a {
   color: #006980;
+}
+@media (max-width: 576px) {
+  footer .inner_footer {
+    height: auto;
+    flex-direction: column-reverse;
+  }
 }
 footer .links {
   display: flex;
@@ -1646,6 +1695,15 @@ th:last-child .p-column-header-content {
   top: 52%;
   transform: translateY(-50%);
 }
+@media (max-width: 768px) {
+  .fleet_form__wrapper .wizard_tabs {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .fleet_form__wrapper .wizard_tabs::after {
+    display: none;
+  }
+}
 .fleet_form__wrapper .wizard_tabs .wizard_tab {
   display: flex;
   gap: 8px;
@@ -1738,6 +1796,12 @@ th:last-child .p-column-header-content {
   align-items: center;
   gap: 32px;
 }
+@media (max-width: 768px) {
+  .fleet_form__wrapper .bg_white_card .request_photo_session {
+    flex-direction: column-reverse;
+    align-items: flex-start;
+  }
+}
 .fleet_form__wrapper .bg_white_card .request_photo_session .bread_crumb {
   flex: 1;
   display: flex;
@@ -1767,6 +1831,14 @@ th:last-child .p-column-header-content {
 .fleet_form__wrapper .bg_white_card .photos {
   display: flex;
   gap: 8px;
+}
+@media (max-width: 768px) {
+  .fleet_form__wrapper .bg_white_card .photos {
+    flex-wrap: wrap;
+  }
+  .fleet_form__wrapper .bg_white_card .photos .files {
+    width: calc(50% - 4px);
+  }
 }
 .fleet_form__wrapper .bg_white_card .time_row {
   display: flex;
@@ -2490,6 +2562,7 @@ th:last-child .p-column-header-content {
   display: flex;
   flex-direction: column;
   gap: 8px;
+  right: 0;
   background: #fff;
   overflow: hidden;
   padding: 16px;
@@ -2905,4 +2978,8 @@ small.error {
 .addOnModal .upComingBooking .p-datatable-emptymessage td:last-child,
 .addOnModal .upComingBooking tr td:last-child {
   text-align: center;
+}
+
+.rmdp-wrapper {
+  width: auto;
 }/*# sourceMappingURL=index.css.map */

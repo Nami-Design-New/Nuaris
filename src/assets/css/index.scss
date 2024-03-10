@@ -873,6 +873,7 @@ $transation: 0.3s ease-in-out;
   background: $white;
   position: fixed;
   top: 0;
+  z-index: 99;
   left: 0;
   gap: 24px;
   height: 100%;
@@ -951,6 +952,9 @@ $transation: 0.3s ease-in-out;
   padding-right: 16px;
   width: calc(100% - 80px);
   margin-left: 80px;
+  @media (max-width: 768px) {
+    padding-right: 0;
+  }
   &.expand {
     width: calc(100% - 280px);
     margin-left: 280px;
@@ -1049,6 +1053,13 @@ $transation: 0.3s ease-in-out;
             img {
               height: 20px;
             }
+            @media (max-width: 768px) {
+              width: 42px;
+              height: 42px;
+              img {
+                height: 16px;
+              }
+            }
           }
           &.notification {
             position: relative;
@@ -1077,6 +1088,10 @@ $transation: 0.3s ease-in-out;
             border-radius: 24px;
             display: flex;
             cursor: pointer;
+            @media (max-width: 768px) {
+              border: none;
+              margin-right: 12px;
+            }
             .avatar {
               width: 48px;
               height: 48px;
@@ -1093,6 +1108,9 @@ $transation: 0.3s ease-in-out;
             .name {
               @include centerFlex();
               padding: 0 18px 0 12px;
+              @media (max-width: 768px) {
+                display: none;
+              }
               h6 {
                 color: $dark;
                 margin: 0;
@@ -1127,6 +1145,9 @@ $transation: 0.3s ease-in-out;
         overflow: hidden;
         padding: 16px;
         height: fit-content;
+        @media (max-width: 768px) {
+          right: 8px;
+        }
         .account_owner {
           gap: 12px;
           @include centerFlex();
@@ -1304,6 +1325,10 @@ $transation: 0.3s ease-in-out;
         margin: 0;
       }
     }
+    @media (max-width: 768px) {
+      margin: 0 8px;
+      padding: 32px 8px;
+    }
   }
   @media (max-width: 768px) {
     width: 100%;
@@ -1319,6 +1344,10 @@ footer {
   background: $white;
   display: flex;
   align-items: center;
+  @media (max-width: 576px) {
+    height: auto;
+    padding: 24px 8px;
+  }
   .inner_footer {
     height: 52px;
     background: $inputBG;
@@ -1332,6 +1361,10 @@ footer {
       a {
         color: $main;
       }
+    }
+    @media (max-width: 576px) {
+      height: auto;
+      flex-direction: column-reverse;
     }
   }
   .links {
@@ -1551,6 +1584,13 @@ th:last-child .p-column-header-content {
       top: 52%;
       transform: translateY(-50%);
     }
+    @media (max-width: 768px) {
+      flex-direction: column;
+      align-items: flex-start;
+      &::after {
+        display: none;
+      }
+    }
     .wizard_tab {
       display: flex;
       gap: 8px;
@@ -1644,6 +1684,10 @@ th:last-child .p-column-header-content {
       background: $main10;
       display: flex;
       align-items: center;
+      @media (max-width: 768px) {
+        flex-direction: column-reverse;
+        align-items: flex-start;
+      }
       gap: 32px;
       .bread_crumb {
         flex: 1;
@@ -1673,6 +1717,12 @@ th:last-child .p-column-header-content {
     .photos {
       display: flex;
       gap: 8px;
+      @media (max-width: 768px) {
+        flex-wrap: wrap;
+        .files {
+          width: calc(50% - 4px);
+        }
+      }
     }
     .time_row {
       display: flex;
@@ -2385,6 +2435,7 @@ th:last-child .p-column-header-content {
   display: flex;
   flex-direction: column;
   gap: 8px;
+  right: 0;
   background: $white;
   overflow: hidden;
   padding: 16px;
@@ -2779,4 +2830,7 @@ small.error {
       }
     }
   }
+}
+.rmdp-wrapper {
+  width: auto;
 }
