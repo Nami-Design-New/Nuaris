@@ -1,12 +1,21 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import DaysAccordion from "../../../ui/DaysAccordion";
 import axios from "./../../../../util/axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import SubmitButton from "./../../../ui/form-elements/SubmitButton";
+import { DAYS } from "../../../../constants";
 
 const WorkingHours = () => {
-  const [formData, setFormData] = useState({});
+  const formDataInitial = DAYS.map((day, index) => {
+    return {
+      day,
+      hours: [{ from: "00:00", to: "00:00" }],
+      selected: false,
+      index,
+    };
+  });
+  const [formData, setFormData] = useState(formDataInitial);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const createdYacht = sessionStorage.getItem("yacht_id");
@@ -15,7 +24,15 @@ const WorkingHours = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      const response = await axios.patch(`/yachts/${createdYacht}/`, formData);
+      const filteredFormData = formData.filter((obj) => obj.selected === true);
+      const reqData = filteredFormData.map((obj) => {
+        return {
+          day: obj.day,
+          hours: obj.hours,
+        };
+      });
+
+      const response = await axios.patch(`/yachts/${createdYacht}/`, reqData);
       if (response.status === 200) {
         toast.success("Working Hours Saved Successfully");
         navigate("/dashboard/fleet/add-yacht/pricing");
@@ -39,7 +56,7 @@ const WorkingHours = () => {
               <h6 className="form_title">Working Hours</h6>
             </div>
             <div className="col-12 p-2">
-              <DaysAccordion setFormData={setFormData} />
+              <DaysAccordion formData={formData} setFormData={setFormData} />
             </div>
             <div className="col-12 p-2 pt-4 d-flex gap-3 ">
               <SubmitButton

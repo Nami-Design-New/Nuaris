@@ -1,64 +1,40 @@
-import React, { useState } from "react";
 import { Accordion, Form } from "react-bootstrap";
 import TimeRow from "./TimeRow";
-import addIcon from "../../assets/images/addRow.svg";
 
-const DayAccordionItem = ({ day, index, setFormData }) => {
-  const [timeRows, setTimeRows] = useState([]);
-  const [isChecked, setIsChecked] = useState(false);
+const DayAccordionItem = ({ formData, day, index, setFormData }) => {
+  const currentObject = formData.find((obj) => obj.day === day);
 
-  const handleCheck = () => {
-    setIsChecked(!isChecked);
-    if (!isChecked) {
-      setFormData(day, []);
-    }
-  };
+  function handleCheck(e) {
+    const { checked } = e.target;
 
-  const handleAddTimeRow = () => {
-    setTimeRows([...timeRows, {}]);
-    if (!isChecked) {
-      setIsChecked(true);
-      setFormData(day, []);
-    }
-  };
-
-  const handleDeleteTimeRow = (index) => {
-    const newTimeRows = [...timeRows];
-    newTimeRows.splice(index, 1);
-    setTimeRows(newTimeRows);
-    setFormData(day, newTimeRows);
-  };
-
-  const handleSetHours = (hours) => {
-    setFormData(day, hours);
-  };
+    setFormData((prev) => {
+      return [
+        ...prev.filter((obj) => obj.day !== day),
+        {
+          ...currentObject,
+          selected: checked,
+        },
+      ];
+    });
+  }
 
   return (
     <Accordion.Item key={day} eventKey={index}>
       <Accordion.Header>
-        <Form.Check
-          type="switch"
-          id={day}
-          label={day}
-          checked={isChecked}
-          onChange={handleCheck}
-        />
+        <Form.Check onClick={handleCheck} type="switch" id={day} label={day} />
       </Accordion.Header>
       <Accordion.Body>
         <div className="form-ui timesRow">
-          <div className="time_row">
-            {/* From time */}
-            <div className="input-field">
-              <input type="time" required />
-            </div>
-            {/* To time */}
-            <div className="input-field">
-              <input type="time" required />
-            </div>
-            <button onClick={handleAddTimeRow}>
-              <img src={addIcon} alt="addIcon" />
-            </button>
-          </div>
+          {currentObject.hours.map((_, i) => (
+            <TimeRow
+              key={i}
+              formData={formData}
+              setFormData={setFormData}
+              currentObject={currentObject}
+              index={i}
+              day={day}
+            />
+          ))}
         </div>
       </Accordion.Body>
     </Accordion.Item>
