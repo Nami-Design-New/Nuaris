@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import {
   setToken,
-  setUser
+  setUser,
 } from "../../../redux/slices/authenticatedUserSlice";
 
 export default function Dashboard() {
@@ -31,30 +31,20 @@ export default function Dashboard() {
     if (decodedToken && !isExpired) {
       const userId = decodedToken?.user_id;
       const user = axios.get(`/users/${userId}`);
-      user
-        .then((res) => {
-          dispatch(setUser(res.data));
-          setUserRole(res.data.current_role);
-        })
-        .catch((err) => {
-          console.log(err);
-          navigate("/login");
-        });
+      user.then((res) => {
+        dispatch(setUser(res.data));
+        setUserRole(res.data.current_role);
+      });
       const token = axios.post(`/users/token/refresh/`, {
-        refresh: refreshToken
+        refresh: refreshToken,
       });
 
-      token
-        .then((res) => {
-          dispatch(setToken(res.data.access));
-          axios.defaults.headers.common[
-            "Authorization"
-          ] = `Bearer ${res.data.access}`;
-        })
-        .catch((err) => {
-          console.log(err);
-          navigate("/login");
-        });
+      token.then((res) => {
+        dispatch(setToken(res.data.access));
+        axios.defaults.headers.common[
+          "Authorization"
+        ] = `Bearer ${res.data.access}`;
+      });
     } else if (isExpired) {
       navigate("/login");
       removeCookie("refreshToken");
