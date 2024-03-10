@@ -3,7 +3,13 @@ import { Accordion, Form } from "react-bootstrap";
 import TimeRow from "./TimeRow";
 import addIcon from "../../assets/images/addRow.svg";
 
-const DayAccordionItem = ({ day, index, setFormData }) => {
+const DayAccordionItem = ({
+  day,
+  index,
+  setFormData,
+  daysArray,
+  setDaysArray
+}) => {
   const [timeRows, setTimeRows] = useState([]);
   const [isChecked, setIsChecked] = useState(false);
 
@@ -11,6 +17,8 @@ const DayAccordionItem = ({ day, index, setFormData }) => {
     setIsChecked(!isChecked);
     if (!isChecked) {
       setFormData(day, []);
+    } else {
+      setDaysArray(daysArray.filter((item) => item.day !== day));
     }
   };
 

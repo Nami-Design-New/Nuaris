@@ -4,7 +4,7 @@ import logo from "../../../assets/images/logoH.svg";
 import fav from "../../../assets/images/fav.svg";
 import sidebarData from "./sidebarData";
 
-const SideBar = ({ sideBarOpen }) => {
+const SideBar = ({ sideBarOpen, setSideBarOpen }) => {
   return (
     <aside className={`side_bar ${sideBarOpen ? "expand" : ""}`}>
       <div className="logo_wrapper">
@@ -18,7 +18,7 @@ const SideBar = ({ sideBarOpen }) => {
       <ul className="navigation_menu">
         {sidebarData.map((item, index) => (
           <li className="nav_item" key={index} title={item.label}>
-            <NavLink end to={item.path}>
+            <NavLink end to={item.path} onClick={() => setSideBarOpen(false)}>
               <img src={item.icon} alt={item.alt} />
               {item.label}
             </NavLink>
