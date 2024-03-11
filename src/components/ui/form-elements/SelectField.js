@@ -6,7 +6,7 @@ const SelectField = ({
   options,
   formData,
   setFormData,
-  value
+  value,
 }) => {
   return (
     <div className="input-field">
@@ -15,14 +15,13 @@ const SelectField = ({
         name={htmlFor}
         id={htmlFor}
         required
-        defaultValue="select"
         value={value}
         onChange={(e) => {
           setFormData({ ...formData, [htmlFor]: e.target.value });
         }}
       >
-        <option value="select" disabled>
-          select
+        <option value="" disabled>
+          Select
         </option>
         {options.map((option, index) => (
           <option key={index} value={option}>

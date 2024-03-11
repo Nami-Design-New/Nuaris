@@ -3,20 +3,36 @@ import ReactFlagsSelect from "react-flags-select";
 import { State } from "country-state-city";
 import MapLocationField from "../../../ui/form-elements/MapLocationField";
 import MapModal from "../../../ui/map-modal/MapModal";
+import { toast } from "react-toastify";
+import axios from "./../../../../util/axios";
+import SubmitButton from "../../../ui/form-elements/SubmitButton";
 
 const LocationForm = ({ setForm }) => {
+  const createdYacht = sessionStorage.getItem("yacht_id");
   const [showModalVessel, setShowModalVessel] = useState(false);
   const [showModalMeeting, setShowModalMeeting] = useState(false);
   const [vesselLocation, setVesselLocation] = useState("Search on Map");
   const [meetingLocation, setMeetingLocation] = useState("Search on Map");
-
-  const [formData, setFormData] = useState({});
-  const [cities, setCities] = useState([]);
   const [cityForCountry, setCityForCountry] = useState(null);
   const [selectedCountry, setSelectedCountry] = useState("SA");
+  const [cities, setCities] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [formData, setFormData] = useState({
+    city: "select",
+    country: "",
+    location: {
+      lat: 0,
+      lng: 0,
+    },
+    meeting_location: {
+      lat: 0,
+      lng: 0,
+    },
+  });
 
   const fetchCitiesForCountry = (countryCode) => {
     const citiesArray = State.getStatesOfCountry(countryCode);
+    console.log(citiesArray);
     const citiesNames = citiesArray.map((city) => city.name);
     setCities(citiesArray);
     setCityForCountry(citiesNames);
@@ -29,6 +45,7 @@ const LocationForm = ({ setForm }) => {
   // Handle country selection
   const handleSelectCountry = (countryCode) => {
     setSelectedCountry(countryCode);
+    setFormData({ ...formData, country: countryCode });
     fetchCitiesForCountry(countryCode);
   };
   // Handle city selection
@@ -38,11 +55,18 @@ const LocationForm = ({ setForm }) => {
       setFormData({
         ...formData,
         city: cityName,
-        lat: Number(selectedCity.latitude).toFixed(6),
-        lng: Number(selectedCity.longitude).toFixed(6)
+        location: {
+          lat: Number(selectedCity.latitude).toFixed(6),
+          lng: Number(selectedCity.longitude).toFixed(6),
+        },
+        meeting_location: {
+          lat: Number(selectedCity.latitude).toFixed(6),
+          lng: Number(selectedCity.longitude).toFixed(6),
+        },
       });
     }
   };
+
   const handleNext = (e) => {
     e.preventDefault();
     setForm("Crew");
@@ -52,8 +76,27 @@ const LocationForm = ({ setForm }) => {
     setForm("Main Info");
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      const response = await axios.patch(`/yachts/${createdYacht}/`, formData);
+      if (response.status === 200) {
+        toast.success("Location Saved Successfully");
+        setForm("Crew");
+      } else {
+        toast.error("Something went wrong");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      toast.error("Something went wrong");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
-    <div className="form-ui">
+    <form className="form-ui" onSubmit={handleSubmit}>
       <div className="row m-0">
         <div className="col-12 p-2">
           <h6 className="form_title">Location</h6>
@@ -81,8 +124,12 @@ const LocationForm = ({ setForm }) => {
             <select
               name="city"
               id="city"
+              value={formData.city}
               onChange={(e) => handleSelectCity(e.target.value)}
             >
+              <option disabled value="select">
+                select
+              </option>
               {cityForCountry ? (
                 cityForCountry.map((city, index) => (
                   <option key={index} value={city}>
@@ -118,7 +165,11 @@ const LocationForm = ({ setForm }) => {
           <button className="next_btn" onClick={handleBack}>
             Back
           </button>
-          <button className="save_btn ms-auto">Save</button>
+          <SubmitButton
+            name="Save"
+            loading={loading}
+            className="save_btn ms-auto"
+          />
           <button className="next_btn" onClick={handleNext}>
             Next
           </button>
@@ -130,6 +181,7 @@ const LocationForm = ({ setForm }) => {
         setShowModal={setShowModalVessel}
         setFormData={setFormData}
         formData={formData}
+        target="location"
         title="Vessel Location"
         setSerchedPlace={setVesselLocation}
       />
@@ -139,10 +191,11 @@ const LocationForm = ({ setForm }) => {
         setShowModal={setShowModalMeeting}
         setFormData={setFormData}
         formData={formData}
+        target="meeting_location"
         title="Meeting Location"
         setSerchedPlace={setMeetingLocation}
       />
-    </div>
+    </form>
   );
 };
 

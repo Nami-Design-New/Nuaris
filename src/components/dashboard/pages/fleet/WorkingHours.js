@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import DaysAccordion from "../../../ui/DaysAccordion";
 import axios from "./../../../../util/axios";
 import { toast } from "react-toastify";
@@ -31,8 +31,11 @@ const WorkingHours = () => {
           hours: obj.hours,
         };
       });
-
-      const response = await axios.patch(`/yachts/${createdYacht}/`, reqData);
+      const dictionary = { working_hours: reqData };
+      const response = await axios.patch(
+        `/yachts/${createdYacht}/`,
+        dictionary
+      );
       if (response.status === 200) {
         toast.success("Working Hours Saved Successfully");
         navigate("/dashboard/fleet/add-yacht/pricing");

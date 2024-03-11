@@ -9,6 +9,7 @@ const MapModal = ({
   setFormData,
   formData,
   title,
+  target,
   setSerchedPlace,
 }) => {
   const [mapLoaded, setMapLoaded] = useState(false);
@@ -42,6 +43,7 @@ const MapModal = ({
             <div className="map">
               {mapLoaded && (
                 <MapWithMarker
+                  target={target}
                   formData={formData}
                   setFormData={setFormData}
                   setSerchedPlace={setSerchedPlace}

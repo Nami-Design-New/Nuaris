@@ -2,26 +2,44 @@ import React, { useState, useRef, useEffect } from "react";
 import { GoogleMap, Marker, StandaloneSearchBox } from "@react-google-maps/api";
 import pin from "../../../assets/images/mapPin.svg";
 
-const MapWithMarker = ({ formData, setFormData, setSerchedPlace }) => {
-  const [markerPosition, setMarkerPosition] = useState({
-    lat: Number(formData.lat),
-    lng: Number(formData.lng),
-  });
+const MapWithMarker = ({ formData, setFormData, setSerchedPlace, target }) => {
+  const [markerPosition, setMarkerPosition] = useState({});
   const [searchInput, setSearchInput] = useState("");
   const searchBox = useRef(null);
 
   useEffect(() => {
+    if (target) {
+      setMarkerPosition({
+        lat: Number(formData?.[target]?.lat),
+        lng: Number(formData?.[target]?.lng),
+      });
+    } else {
+      setMarkerPosition({
+        lat: Number(formData.lat),
+        lng: Number(formData.lng),
+      });
+    }
     reverseGeocodeMarkerPosition();
-  }, []);
+  }, [formData, target]);
 
   const handleMarkerDragEnd = (coord) => {
     setMarkerPosition(coord);
-    setFormData({
-      ...formData,
-      lat: coord.lat.toFixed(6),
-      lng: coord.lng.toFixed(6),
-    });
-    reverseGeocodeMarkerPosition(coord); // Pass the dragged position
+    if (target) {
+      setFormData({
+        ...formData,
+        [target]: {
+          lat: coord.lat.toFixed(6),
+          lng: coord.lng.toFixed(6),
+        },
+      });
+    } else {
+      setFormData({
+        ...formData,
+        lat: coord.lat.toFixed(6),
+        lng: coord.lng.toFixed(6),
+      });
+    }
+    reverseGeocodeMarkerPosition(coord);
   };
 
   const reverseGeocodeMarkerPosition = (position) => {
@@ -30,7 +48,7 @@ const MapWithMarker = ({ formData, setFormData, setSerchedPlace }) => {
       if (status === "OK") {
         if (results[0]) {
           setSearchInput(results[0].formatted_address);
-          setSerchedPlace(results[0].formatted_address); // Set searched place
+          setSerchedPlace(results[0].formatted_address);
         } else {
           console.error("No results found");
         }
@@ -49,11 +67,21 @@ const MapWithMarker = ({ formData, setFormData, setSerchedPlace }) => {
         lng: selectedPlace.geometry.location.lng(),
       };
       setMarkerPosition(position);
-      setFormData({
-        ...formData,
-        lat: position.lat.toFixed(6),
-        lng: position.lng.toFixed(6),
-      });
+      if (target) {
+        setFormData({
+          ...formData,
+          [target]: {
+            lat: position.lat.toFixed(6),
+            lng: position.lng.toFixed(6),
+          },
+        });
+      } else {
+        setFormData({
+          ...formData,
+          lat: position.lat.toFixed(6),
+          lng: position.lng.toFixed(6),
+        });
+      }
       setSearchInput(selectedPlace.name);
       setSerchedPlace(selectedPlace.name);
     }
