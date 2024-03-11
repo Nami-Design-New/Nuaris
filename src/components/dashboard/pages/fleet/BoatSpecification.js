@@ -27,7 +27,7 @@ const BoatSpecification = () => {
     king_beds: "",
     sofa_beds: "",
     fuel: "select",
-    sleeping_arrangements: "Accept",
+    accept_sleeping_arrangement: false,
   });
 
   const handleSubmit = async (e) => {
@@ -250,7 +250,7 @@ const BoatSpecification = () => {
                 <div className="checkboxs_inputs">
                   <span
                     className={`bg-active ${
-                      formData.sleeping_arrangements === "Refuse"
+                      formData.accept_sleeping_arrangement === false
                         ? "refuse"
                         : ""
                     }`}
@@ -260,11 +260,11 @@ const BoatSpecification = () => {
                       type="radio"
                       name="sleepingArrangements"
                       id="accept"
-                      checked={formData.sleeping_arrangements === "Accept"}
+                      checked={formData.accept_sleeping_arrangement === true}
                       onChange={() => {
                         setFormData({
                           ...formData,
-                          sleeping_arrangements: "Accept",
+                          accept_sleeping_arrangement: true,
                         });
                       }}
                     />
@@ -275,10 +275,11 @@ const BoatSpecification = () => {
                       type="radio"
                       name="sleepingArrangements"
                       id="refuse"
+                      checked={formData.accept_sleeping_arrangement === false}
                       onChange={() => {
                         setFormData({
                           ...formData,
-                          sleeping_arrangements: "Refuse",
+                          accept_sleeping_arrangement: false,
                         });
                       }}
                     />

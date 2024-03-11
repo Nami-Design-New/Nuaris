@@ -12,7 +12,7 @@ const SeasonCard = ({ formData, setFormData, onDelete, index }) => {
     <div className="col-12 p-2">
       <div className="season_calender_card">
         <div className="row m-0">
-          <div className="col-lg-7 col-12 p-0">
+          <div className="col-lg-7 col-12 p-0 pe-lg-3 pe-0">
             <MultipleRangeCalender />
           </div>
           <div className="col-lg-5 col-11 p-0">
