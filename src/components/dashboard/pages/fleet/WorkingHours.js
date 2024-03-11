@@ -12,7 +12,7 @@ const WorkingHours = () => {
       day,
       hours: [{ from: "00:00", to: "00:00" }],
       selected: false,
-      index
+      index,
     };
   });
   const [formData, setFormData] = useState(formDataInitial);
@@ -28,13 +28,14 @@ const WorkingHours = () => {
       const reqData = filteredFormData.map((obj) => {
         return {
           day: obj.day,
-          hours: obj.hours
+          hours: obj.hours,
         };
       });
-
-      const response = await axios.patch(`/yachts/${createdYacht}/`, {
-        reqData
-      });
+      const dictionary = { working_hours: reqData };
+      const response = await axios.patch(
+        `/yachts/${createdYacht}/`,
+        dictionary
+      );
       if (response.status === 200) {
         toast.success("Working Hours Saved Successfully");
         navigate("/dashboard/fleet/add-yacht/pricing");
