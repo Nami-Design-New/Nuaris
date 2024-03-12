@@ -7,7 +7,7 @@ import { useJwt } from "react-jwt";
 import { useNavigate } from "react-router-dom";
 import axios from "../../../util/axios";
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   setToken,
   setUser,
@@ -49,7 +49,7 @@ export default function Dashboard() {
       navigate("/login");
       removeCookie("refreshToken");
     }
-  }, [decodedToken, isExpired, dispatch, refreshToken, navigate, removeCookie]);
+  }, [decodedToken, refreshToken]);
 
   // - render dashboard based on user role
   if (userRole === ROLES.HOST) {

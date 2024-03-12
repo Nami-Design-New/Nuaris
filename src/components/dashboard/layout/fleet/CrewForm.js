@@ -1,6 +1,7 @@
-import React, { useState } from "react";
-import InputField from "../../../ui/form-elements/InputField";
+import { useState } from "react";
+import CustomInputField from "../../../ui/form-elements/CustomInputField";
 import CrewCard from "./CrewCard";
+import { toast } from "react-toastify";
 
 const CrewForm = ({ setForm }) => {
   const [formData, setFormData] = useState({
@@ -15,6 +16,14 @@ const CrewForm = ({ setForm }) => {
     setForm("Location");
   };
 
+  function handleChange(e) {
+    if (+e.target.value > 20) {
+      toast.error("Maximum crew members count is 20");
+    } else {
+      setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    }
+  }
+
   return (
     <div className="form-ui">
       <div className="row m-0">
@@ -23,14 +32,13 @@ const CrewForm = ({ setForm }) => {
         </div>
         {/* Number of Crew */}
         <div className="col-12 p-2">
-          <InputField
-            htmlFor="NumberOfCrew"
+          <CustomInputField
+            name="NumberOfCrew"
             label="Number of Crew"
             placeholder="0"
             type="number"
-            id="NumberOfCrew"
-            formData={formData}
-            setFormData={setFormData}
+            value={formData.NumberOfCrew}
+            onChange={handleChange}
           />
         </div>
         {Array(+formData?.NumberOfCrew)
