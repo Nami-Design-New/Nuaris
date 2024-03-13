@@ -19,6 +19,8 @@ import { setPermissions } from "../redux/slices/permissions";
 import { setEmployees } from "../redux/slices/employeesSlice";
 import { setPositions } from "../redux/slices/positions";
 import EditUser from "../components/dashboard/pages/EditUser";
+import AddOns from "../components/dashboard/pages/AddOns";
+import AddNewAddOn from "../components/dashboard/pages/AddNewAddOn";
 
 const HostDashboard = () => {
   const [sideBarOpen, setSideBarOpen] = useState(false);
@@ -54,6 +56,7 @@ const HostDashboard = () => {
         <main className="main_wrapper">
           <Routes>
             <Route path="/NSSM" element={<Nssm />} />
+            {/* invite-user */}
             <Route path="/invite-user/" element={<InviteUser />} />
             <Route path="/invite-user/create-user" element={<CreateUser />} />
             <Route path="/invite-user/permissions" element={<Permissions />} />9
@@ -69,9 +72,14 @@ const HostDashboard = () => {
               path="/invite-user/permissions/create-permissions"
               element={<CreatePermission />}
             />
+            {/* fleets */}
             <Route path="/fleet" element={<Fleet />} />
             <Route path="/fleet/:fleetId" element={<FleetProfile />} />
             <Route path="/fleet/add-yacht/*" element={<AddYacht />} />
+            {/* add ons */}
+            <Route path="/addons" element={<AddOns />} />
+            <Route path="/addons/add-new-addon" element={<AddNewAddOn />} />
+            {/* error redirect */}
             <Route path="*" element={<>404 page</>} />
           </Routes>
         </main>

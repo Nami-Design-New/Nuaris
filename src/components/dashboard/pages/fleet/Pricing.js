@@ -4,10 +4,9 @@ import CustomInputField from "../../../ui/form-elements/CustomInputField";
 import calenderIcon from "../../../../assets/images/calender.svg";
 import addIcon from "../../../../assets/images/add.svg";
 import trashIcon from "../../../../assets/images/delete.svg";
-import saudiaFlag from "../../../../assets/images/saudiArabia.svg";
-import qtr from "../../../../assets/images/qtr.svg";
 import { Form } from "react-bootstrap";
 import SeasonCard from "../../layout/fleet/SeasonCard";
+import Vat from "../../layout/Vat";
 
 const Pricing = () => {
   const seasonCardInitialData = {
@@ -225,33 +224,7 @@ const Pricing = () => {
                   />
                 ))}
                 <div className="col-12 p-2">
-                  <div className="vat_container">
-                    <h6 className="form_title">Pricing</h6>
-                    <div className="country_field">
-                      <div className="country">
-                        <img src={saudiaFlag} alt="saudiaFlag" />
-                        <h6>Saudi Arabia</h6>
-                      </div>
-                      <Form.Check
-                        name="VAT"
-                        onChange={(e) => handleNestedChange(e, "SA", "checked")}
-                        type="switch"
-                        label="20%"
-                      />
-                    </div>
-                    <div className="country_field">
-                      <div className="country">
-                        <img src={qtr} alt="saudiaFlag" />
-                        <h6>Qatar</h6>
-                      </div>
-                      <Form.Check
-                        onChange={(e) => handleNestedChange(e, "QA", "checked")}
-                        name="VAT"
-                        type="switch"
-                        label="10%"
-                      />
-                    </div>
-                  </div>
+                  <Vat />
                 </div>
               </>
             )}

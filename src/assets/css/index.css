@@ -1683,12 +1683,14 @@ th:last-child .p-column-header-content {
   color: #006980;
 }
 
-.fleet_form__wrapper {
+.fleet_form__wrapper,
+.addon_form_wrapper {
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
-.fleet_form__wrapper .wizard_tabs {
+.fleet_form__wrapper .wizard_tabs,
+.addon_form_wrapper .wizard_tabs {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -1697,7 +1699,8 @@ th:last-child .p-column-header-content {
   background: #fff;
   border-radius: 24px;
 }
-.fleet_form__wrapper .wizard_tabs::after {
+.fleet_form__wrapper .wizard_tabs::after,
+.addon_form_wrapper .wizard_tabs::after {
   content: "";
   width: calc(100% - 48px);
   height: 1px;
@@ -1708,15 +1711,18 @@ th:last-child .p-column-header-content {
   transform: translateY(-50%);
 }
 @media (max-width: 768px) {
-  .fleet_form__wrapper .wizard_tabs {
+  .fleet_form__wrapper .wizard_tabs,
+  .addon_form_wrapper .wizard_tabs {
     flex-direction: column;
     align-items: flex-start;
   }
-  .fleet_form__wrapper .wizard_tabs::after {
+  .fleet_form__wrapper .wizard_tabs::after,
+  .addon_form_wrapper .wizard_tabs::after {
     display: none;
   }
 }
-.fleet_form__wrapper .wizard_tabs .wizard_tab {
+.fleet_form__wrapper .wizard_tabs .wizard_tab,
+.addon_form_wrapper .wizard_tabs .wizard_tab {
   display: flex;
   gap: 8px;
   align-items: center;
@@ -1725,7 +1731,8 @@ th:last-child .p-column-header-content {
   padding: 8px;
   cursor: pointer;
 }
-.fleet_form__wrapper .wizard_tabs .wizard_tab .step_no {
+.fleet_form__wrapper .wizard_tabs .wizard_tab .step_no,
+.addon_form_wrapper .wizard_tabs .wizard_tab .step_no {
   transition: 0.3s ease-in-out;
   font-weight: 500;
   color: #0d0d0d;
@@ -1737,30 +1744,38 @@ th:last-child .p-column-header-content {
   justify-content: center;
   border: 1px solid #0d0d0d;
 }
-.fleet_form__wrapper .wizard_tabs .wizard_tab h6 {
+.fleet_form__wrapper .wizard_tabs .wizard_tab h6,
+.addon_form_wrapper .wizard_tabs .wizard_tab h6 {
   margin: 0;
   font-weight: 500;
   transition: 0.3s ease-in-out;
 }
-.fleet_form__wrapper .wizard_tabs .wizard_tab.active .step_no, .fleet_form__wrapper .wizard_tabs .wizard_tab:hover .step_no {
+.fleet_form__wrapper .wizard_tabs .wizard_tab.active .step_no, .fleet_form__wrapper .wizard_tabs .wizard_tab:hover .step_no,
+.addon_form_wrapper .wizard_tabs .wizard_tab.active .step_no,
+.addon_form_wrapper .wizard_tabs .wizard_tab:hover .step_no {
   border-color: #006980;
   background: #ebf3f5;
   color: #006980;
 }
-.fleet_form__wrapper .wizard_tabs .wizard_tab.active h6, .fleet_form__wrapper .wizard_tabs .wizard_tab:hover h6 {
+.fleet_form__wrapper .wizard_tabs .wizard_tab.active h6, .fleet_form__wrapper .wizard_tabs .wizard_tab:hover h6,
+.addon_form_wrapper .wizard_tabs .wizard_tab.active h6,
+.addon_form_wrapper .wizard_tabs .wizard_tab:hover h6 {
   color: #006980;
 }
-.fleet_form__wrapper .bg_white_card {
+.fleet_form__wrapper .bg_white_card,
+.addon_form_wrapper .bg_white_card {
   padding: 16px;
   background: #fff;
   border-radius: 24px;
 }
-.fleet_form__wrapper .bg_white_card .form-ui .form_title {
+.fleet_form__wrapper .bg_white_card .form-ui .form_title,
+.addon_form_wrapper .bg_white_card .form-ui .form_title {
   font-weight: 500;
   color: #aaaaaa;
   font-size: 16px;
 }
-.fleet_form__wrapper .bg_white_card .form-ui .member_card {
+.fleet_form__wrapper .bg_white_card .form-ui .member_card,
+.addon_form_wrapper .bg_white_card .form-ui .member_card {
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -1768,39 +1783,48 @@ th:last-child .p-column-header-content {
   background: #f8f8f8;
   border-radius: 12px;
 }
-.fleet_form__wrapper .bg_white_card .form-ui .member_card .card_header {
+.fleet_form__wrapper .bg_white_card .form-ui .member_card .card_header,
+.addon_form_wrapper .bg_white_card .form-ui .member_card .card_header {
   font-size: 12px;
   font-weight: 500;
   line-height: 15px;
   color: #006980;
   margin: 0;
 }
-.fleet_form__wrapper .bg_white_card .form-ui .member_card .card_row {
+.fleet_form__wrapper .bg_white_card .form-ui .member_card .card_row,
+.addon_form_wrapper .bg_white_card .form-ui .member_card .card_row {
   display: flex;
   align-items: center;
   gap: 8px;
 }
-.fleet_form__wrapper .bg_white_card .form-ui .member_card .card_row div {
+.fleet_form__wrapper .bg_white_card .form-ui .member_card .card_row div,
+.addon_form_wrapper .bg_white_card .form-ui .member_card .card_row div {
   width: 100%;
 }
 .fleet_form__wrapper .bg_white_card .form-ui .member_card input,
-.fleet_form__wrapper .bg_white_card .form-ui .member_card .flag-select button {
+.fleet_form__wrapper .bg_white_card .form-ui .member_card .flag-select button,
+.addon_form_wrapper .bg_white_card .form-ui .member_card input,
+.addon_form_wrapper .bg_white_card .form-ui .member_card .flag-select button {
   background-color: #fff !important;
 }
-.fleet_form__wrapper .bg_white_card .form-ui .member_card label {
+.fleet_form__wrapper .bg_white_card .form-ui .member_card label,
+.addon_form_wrapper .bg_white_card .form-ui .member_card label {
   font-weight: 500;
 }
-.fleet_form__wrapper .bg_white_card .form-ui.timesRow {
+.fleet_form__wrapper .bg_white_card .form-ui.timesRow,
+.addon_form_wrapper .bg_white_card .form-ui.timesRow {
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
-.fleet_form__wrapper .bg_white_card .form_title {
+.fleet_form__wrapper .bg_white_card .form_title,
+.addon_form_wrapper .bg_white_card .form_title {
   font-weight: 500;
   color: #aaaaaa;
   font-size: 16px;
 }
-.fleet_form__wrapper .bg_white_card .request_photo_session {
+.fleet_form__wrapper .bg_white_card .request_photo_session,
+.addon_form_wrapper .bg_white_card .request_photo_session {
   padding: 24px;
   border-radius: 16px;
   background: #ebf3f5;
@@ -1809,99 +1833,118 @@ th:last-child .p-column-header-content {
   gap: 32px;
 }
 @media (max-width: 768px) {
-  .fleet_form__wrapper .bg_white_card .request_photo_session {
+  .fleet_form__wrapper .bg_white_card .request_photo_session,
+  .addon_form_wrapper .bg_white_card .request_photo_session {
     flex-direction: column-reverse;
     align-items: flex-start;
   }
 }
-.fleet_form__wrapper .bg_white_card .request_photo_session .bread_crumb {
+.fleet_form__wrapper .bg_white_card .request_photo_session .bread_crumb,
+.addon_form_wrapper .bg_white_card .request_photo_session .bread_crumb {
   flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.fleet_form__wrapper .bg_white_card .request_photo_session .content {
+.fleet_form__wrapper .bg_white_card .request_photo_session .content,
+.addon_form_wrapper .bg_white_card .request_photo_session .content {
   flex: 3;
 }
-.fleet_form__wrapper .bg_white_card .request_photo_session .content h5 {
+.fleet_form__wrapper .bg_white_card .request_photo_session .content h5,
+.addon_form_wrapper .bg_white_card .request_photo_session .content h5 {
   font-size: 24px;
   font-weight: 500;
   line-height: 29px;
 }
-.fleet_form__wrapper .bg_white_card .request_photo_session .content p {
+.fleet_form__wrapper .bg_white_card .request_photo_session .content p,
+.addon_form_wrapper .bg_white_card .request_photo_session .content p {
   margin-bottom: 8px;
   line-height: 24px;
   color: #666b88;
 }
-.fleet_form__wrapper .bg_white_card .request_photo_session .content button {
+.fleet_form__wrapper .bg_white_card .request_photo_session .content button,
+.addon_form_wrapper .bg_white_card .request_photo_session .content button {
   height: 44px;
   color: #006980;
   padding: 0 24px;
   border-radius: 12px;
   border: 1px solid #006980;
 }
-.fleet_form__wrapper .bg_white_card .photos {
+.fleet_form__wrapper .bg_white_card .photos,
+.addon_form_wrapper .bg_white_card .photos {
   display: flex;
   gap: 8px;
 }
 @media (max-width: 768px) {
-  .fleet_form__wrapper .bg_white_card .photos {
+  .fleet_form__wrapper .bg_white_card .photos,
+  .addon_form_wrapper .bg_white_card .photos {
     flex-wrap: wrap;
   }
-  .fleet_form__wrapper .bg_white_card .photos .files {
+  .fleet_form__wrapper .bg_white_card .photos .files,
+  .addon_form_wrapper .bg_white_card .photos .files {
     width: calc(50% - 4px);
   }
 }
-.fleet_form__wrapper .bg_white_card .time_row {
+.fleet_form__wrapper .bg_white_card .time_row,
+.addon_form_wrapper .bg_white_card .time_row {
   display: flex;
   gap: 8px;
 }
-.fleet_form__wrapper .bg_white_card .time_row button {
+.fleet_form__wrapper .bg_white_card .time_row button,
+.addon_form_wrapper .bg_white_card .time_row button {
   min-width: 48px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.fleet_form__wrapper .bg_white_card .time_row button img {
+.fleet_form__wrapper .bg_white_card .time_row button img,
+.addon_form_wrapper .bg_white_card .time_row button img {
   height: 18px;
 }
-.fleet_form__wrapper .bg_white_card .uponRequest {
+.fleet_form__wrapper .bg_white_card .uponRequest,
+.addon_form_wrapper .bg_white_card .uponRequest {
   width: 100%;
   background: #ebf3f5;
   padding: 12px 24px;
   border-radius: 60px;
   border: 1px solid #bfd5d8;
 }
-.fleet_form__wrapper .bg_white_card .uponRequest .form-switch {
+.fleet_form__wrapper .bg_white_card .uponRequest .form-switch,
+.addon_form_wrapper .bg_white_card .uponRequest .form-switch {
   padding: 0;
   display: flex;
   flex-direction: row-reverse;
   justify-content: space-between;
   align-items: center;
 }
-.fleet_form__wrapper .bg_white_card .uponRequest .form-switch label {
+.fleet_form__wrapper .bg_white_card .uponRequest .form-switch label,
+.addon_form_wrapper .bg_white_card .uponRequest .form-switch label {
   color: #006980;
   font-size: 16px;
   font-weight: 700;
 }
-.fleet_form__wrapper .bg_white_card .uponRequest .form-switch input {
+.fleet_form__wrapper .bg_white_card .uponRequest .form-switch input,
+.addon_form_wrapper .bg_white_card .uponRequest .form-switch input {
   box-shadow: none !important;
   width: 48px;
   height: 24px;
   cursor: pointer;
 }
-.fleet_form__wrapper .bg_white_card .addSeason h6 {
+.fleet_form__wrapper .bg_white_card .addSeason h6,
+.addon_form_wrapper .bg_white_card .addSeason h6 {
   color: #0d0d0d;
   font-size: 16px;
   font-weight: 700;
 }
-.fleet_form__wrapper .bg_white_card .topography {
+.fleet_form__wrapper .bg_white_card .topography,
+.addon_form_wrapper .bg_white_card .topography {
   font-size: 14px;
   font-weight: 400;
   line-height: 18px;
   color: #006980;
 }
-.fleet_form__wrapper .bg_white_card .vat_container {
+.fleet_form__wrapper .bg_white_card .vat_container,
+.addon_form_wrapper .bg_white_card .vat_container {
   padding: 16px;
   border-radius: 12px;
   gap: 16px;
@@ -1909,7 +1952,8 @@ th:last-child .p-column-header-content {
   flex-direction: column;
   background: #f8f8f8;
 }
-.fleet_form__wrapper .bg_white_card .vat_container .country_field {
+.fleet_form__wrapper .bg_white_card .vat_container .country_field,
+.addon_form_wrapper .bg_white_card .vat_container .country_field {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -1918,16 +1962,19 @@ th:last-child .p-column-header-content {
   background: #fff;
   border: 1px solid #f2f2f2;
 }
-.fleet_form__wrapper .bg_white_card .vat_container .country_field .country {
+.fleet_form__wrapper .bg_white_card .vat_container .country_field .country,
+.addon_form_wrapper .bg_white_card .vat_container .country_field .country {
   display: flex;
   align-items: center;
   gap: 12px;
 }
-.fleet_form__wrapper .bg_white_card .vat_container .country_field .country h6 {
+.fleet_form__wrapper .bg_white_card .vat_container .country_field .country h6,
+.addon_form_wrapper .bg_white_card .vat_container .country_field .country h6 {
   margin: 0;
   color: #0d0d0d;
 }
-.fleet_form__wrapper .bg_white_card .vat_container .country_field .form-switch {
+.fleet_form__wrapper .bg_white_card .vat_container .country_field .form-switch,
+.addon_form_wrapper .bg_white_card .vat_container .country_field .form-switch {
   display: flex;
   align-items: center;
   flex-direction: row-reverse;
@@ -1935,11 +1982,13 @@ th:last-child .p-column-header-content {
   gap: 12px;
   width: 80px;
 }
-.fleet_form__wrapper .bg_white_card .vat_container .country_field .form-switch label {
+.fleet_form__wrapper .bg_white_card .vat_container .country_field .form-switch label,
+.addon_form_wrapper .bg_white_card .vat_container .country_field .form-switch label {
   color: #0d0d0d;
   font-weight: 600;
 }
-.fleet_form__wrapper .bg_white_card .vat_container .country_field .form-switch input {
+.fleet_form__wrapper .bg_white_card .vat_container .country_field .form-switch input,
+.addon_form_wrapper .bg_white_card .vat_container .country_field .form-switch input {
   box-shadow: none !important;
   margin: 0;
   float: none;
@@ -1947,22 +1996,20 @@ th:last-child .p-column-header-content {
   cursor: pointer;
   height: 20px;
 }
-.fleet_form__wrapper .bg_white_card .table-container img {
-  height: 60px;
-  -o-object-fit: contain;
-     object-fit: contain;
-}
-.fleet_form__wrapper .elements {
+.fleet_form__wrapper .elements,
+.addon_form_wrapper .elements {
   display: flex;
   gap: 16px;
   flex-wrap: wrap;
 }
-.fleet_form__wrapper .form-ui.specifications {
+.fleet_form__wrapper .form-ui.specifications,
+.addon_form_wrapper .form-ui.specifications {
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
-.fleet_form__wrapper .form-ui.specifications .save_btn {
+.fleet_form__wrapper .form-ui.specifications .save_btn,
+.addon_form_wrapper .form-ui.specifications .save_btn {
   margin-top: 16px;
 }
 
@@ -1978,28 +2025,40 @@ th:last-child .p-column-header-content {
 
 .policy_cancel {
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   gap: 8px;
 }
-.policy_cancel > div {
+.policy_cancel .policyRow {
   width: 100%;
   display: flex;
   gap: 8px;
-  align-items: center;
   position: relative;
 }
-.policy_cancel > div label {
+.policy_cancel .policyRow div {
+  flex: 1;
+}
+.policy_cancel .policyRow label {
   min-width: -moz-max-content !important;
   min-width: max-content !important;
 }
-.policy_cancel > div span {
+.policy_cancel .policyRow span {
   font-size: 14px;
   font-weight: 600;
+  height: 54px;
+  width: 24px;
   color: #006980;
   position: absolute;
-  top: 50%;
+  bottom: 0;
   right: 8px;
-  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.policy_cancel .trash_btn {
+  height: 54px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .gender_select {
@@ -3002,4 +3061,22 @@ small.error {
 
 .rmdp-wrapper {
   width: auto;
+}
+
+.table-container img {
+  height: 60px;
+  -o-object-fit: contain;
+     object-fit: contain;
+}
+
+.price_template {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.price_template h4 {
+  margin: 0;
+  color: #0d0d0d;
+  font-weight: 700;
+  font-size: 18px;
 }/*# sourceMappingURL=index.css.map */
