@@ -1572,7 +1572,8 @@ th:last-child .p-column-header-content {
     }
   }
 }
-.fleet_form__wrapper {
+.fleet_form__wrapper,
+.addon_form_wrapper {
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -1825,12 +1826,6 @@ th:last-child .p-column-header-content {
         }
       }
     }
-    .table-container {
-      img {
-        height: 60px;
-        object-fit: contain;
-      }
-    }
   }
   .elements {
     display: flex;
@@ -1861,28 +1856,37 @@ th:last-child .p-column-header-content {
 }
 .policy_cancel {
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   gap: 8px;
-  & > div {
+  .policyRow {
     width: 100%;
     display: flex;
     gap: 8px;
-    align-items: center;
     position: relative;
+    div {
+      flex: 1;
+    }
     label {
       min-width: max-content !important;
     }
     span {
       font-size: 14px;
       font-weight: 600;
+      height: 54px;
+      width: 24px;
       color: $main;
       position: absolute;
-      top: 50%;
+      bottom: 0;
       right: 8px;
-      transform: translateY(-50%);
+      @include centerFlex();
     }
   }
+  .trash_btn {
+    height: 54px;
+    @include centerFlex();
+  }
 }
+
 .gender_select {
   display: flex;
   flex-direction: column;
@@ -2846,4 +2850,21 @@ small.error {
 }
 .rmdp-wrapper {
   width: auto;
+}
+.table-container {
+  img {
+    height: 60px;
+    object-fit: contain;
+  }
+}
+.price_template {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  h4 {
+    margin: 0;
+    color: $dark;
+    font-weight: 700;
+    font-size: 18px;
+  }
 }
