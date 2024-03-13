@@ -1,24 +1,28 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CommentField from "../../../ui/form-elements/CommentField";
-import InputField from "../../../ui/form-elements/InputField";
 import add from "../../../../assets/images/add.svg";
 import trashIcon from "../../../../assets/images/delete.svg";
+import CustomInputField from "../../../ui/form-elements/CustomInputField";
+import CustomInputWithUnit from "../../../ui/form-elements/CustomInputWIthUnit";
 
 const PolicyForm = ({ setForm }) => {
+  const cancelationCountInitial = {
+    value: "",
+    unit: "days",
+    refund: "",
+  };
   const [formData, setFormData] = useState({
     weatherRestriction: "",
     rolesAndInstructions: "",
-    allowedAndNotAllowed: ""
+    allowedAndNotAllowed: "",
+    cancelationPolicy: Array(2)
+      .fill(0)
+      .map((_, i) => ({ ...cancelationCountInitial, index: i })),
   });
   const handleBack = (e) => {
     e.preventDefault();
     setForm("Crew");
   };
-
-  const [cancelationCount, setCancelationCount] = useState([
-    { id: 0 },
-    { id: 1 }
-  ]);
 
   return (
     <div className="form-ui">
@@ -63,48 +67,83 @@ const PolicyForm = ({ setForm }) => {
               <button
                 type="button"
                 onClick={() =>
-                  setCancelationCount((prev) => [
-                    ...prev,
-                    { id: cancelationCount.length }
-                  ])
+                  setFormData((prev) => {
+                    return {
+                      ...prev,
+                      cancelationPolicy: [
+                        ...prev.cancelationPolicy,
+                        {
+                          ...cancelationCountInitial,
+                          index: prev.cancelationPolicy.length,
+                        },
+                      ],
+                    };
+                  })
                 }
               >
                 <img src={add} alt="add" />
               </button>
             </div>
-            {cancelationCount.map((_, i) => {
+            {formData.cancelationPolicy.map((policy, i) => {
               return (
                 <>
                   <div key={i} className="col-12 p-2 policy_cancel">
                     <div>
-                      <label htmlFor="secondCancelBefore">
-                        If cancel before
-                      </label>
-                      <InputField
-                        formData={formData}
-                        setFormData={setFormData}
-                        htmlFor={"secondCancelBefore"}
-                        placeholder={"Write here"}
+                      <label>If cancel before</label>
+                      <CustomInputWithUnit
+                        placeholder="00"
+                        name={"secondCancelBefore"}
+                        units={["minutes", "hours", "days", "weeks", "months"]}
+                        onChange={(e) => {
+                          const newArr = [...formData.cancelationPolicy];
+                          newArr[i].value = e.target.value;
+                          setFormData((prev) => {
+                            return {
+                              ...prev,
+                              cancelationPolicy: newArr,
+                            };
+                          });
+                        }}
+                        selectOnChange={(e) => {
+                          const newArr = [...formData.cancelationPolicy];
+                          newArr[i].unit = e.target.value;
+                          setFormData((prev) => {
+                            return {
+                              ...prev,
+                              cancelationPolicy: newArr,
+                            };
+                          });
+                        }}
+                        value={formData.cancelationPolicy[i].value}
+                        selectValue={formData.cancelationPolicy[i].unit}
                       />
                     </div>
                     <div>
-                      <label h tmlFor="firstDaysRefund">
-                        Days refund is
-                      </label>
-                      <InputField
-                        formData={formData}
-                        setFormData={setFormData}
-                        htmlFor={"firstDaysRefund"}
-                        placeholder={"00"}
+                      <label htmlFor="firstDaysRefund">Days refund is</label>
+                      <CustomInputField
+                        type="number"
+                        name="firstDaysRefund"
+                        placeholder="00"
+                        value={formData.cancelationPolicy[i].refund}
+                        onChange={() => {}}
                       />
                       <span>%</span>
                     </div>
                     <button
                       type="button"
                       onClick={() => {
-                        setCancelationCount((prev) =>
-                          prev.filter((_, index) => index !== i)
-                        );
+                        let copyArr = [...formData.cancelationPolicy];
+                        copyArr = copyArr.filter((e) => e.index !== i);
+                        const final = copyArr.map((e, index) => ({
+                          ...e,
+                          index,
+                        }));
+                        setFormData((prev) => {
+                          return {
+                            ...prev,
+                            cancelationPolicy: final,
+                          };
+                        });
                       }}
                     >
                       <img src={trashIcon} alt="trash" width={20} height={24} />
