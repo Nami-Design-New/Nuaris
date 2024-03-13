@@ -6,6 +6,9 @@ import { useState } from "react";
 
 const Media = () => {
   const [formData, setFormData] = useState({});
+
+  // response => {images: [""], video_link: ""}
+
   return (
     <div className="fleet_form__wrapper">
       <div className="bg_white_card">

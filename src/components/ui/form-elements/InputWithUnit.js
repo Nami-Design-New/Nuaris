@@ -6,7 +6,7 @@ const InputWithUnit = ({
   units,
   hint,
   formData,
-  setFormData
+  setFormData,
 }) => {
   const [unit, setUnit] = useState(units[0]);
   const [value, setValue] = useState("");
