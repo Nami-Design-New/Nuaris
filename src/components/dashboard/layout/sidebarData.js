@@ -12,7 +12,7 @@ const sidebarData = [
     label: "Fleet"
   },
   {
-    path: "add-ones",
+    path: "addons",
     icon: require("../../../assets/images/AddOns.svg").default,
     alt: "add-ones-icon",
     label: "Add Ons"

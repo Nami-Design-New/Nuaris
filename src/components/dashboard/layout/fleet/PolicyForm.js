@@ -1,38 +1,67 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import CommentField from "../../../ui/form-elements/CommentField";
 import add from "../../../../assets/images/add.svg";
 import trashIcon from "../../../../assets/images/delete.svg";
 import CustomInputField from "../../../ui/form-elements/CustomInputField";
-import CustomInputWithUnit from "../../../ui/form-elements/CustomInputWIthUnit";
+import { toast } from "react-toastify";
+import axios from "./../../../../util/axios";
+import { useNavigate } from "react-router-dom";
+import SubmitButton from "../../../ui/form-elements/SubmitButton";
+import InputWithUnit from "../../../ui/form-elements/InputWithUnit";
 
 const PolicyForm = ({ setForm }) => {
+  const createdYacht = sessionStorage.getItem("yacht_id");
   const cancelationCountInitial = {
-    value: "",
-    unit: "days",
+    period: "",
     refund: "",
   };
+
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
-    weatherRestriction: "",
-    rolesAndInstructions: "",
-    allowedAndNotAllowed: "",
-    cancelationPolicy: Array(2)
+    weather_restrictions: "",
+    rules_and_instructions: "",
+    allowed_and_not_allowed_items: "",
+    yacht: createdYacht,
+    policy: Array(1)
       .fill(0)
       .map((_, i) => ({ ...cancelationCountInitial, index: i })),
   });
+
+  const navigate = useNavigate();
+
   const handleBack = (e) => {
     e.preventDefault();
     setForm("Crew");
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      const response = await axios.post("/policies/", formData);
+      if (response.status === 201) {
+        toast.success("Policies Saved Successfully");
+        navigate("/dashboard/fleet/add-yacht/media-photos");
+      } else {
+        toast.error("Something went wrong");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      toast.error("Something went wrong");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
-    <div className="form-ui">
+    <form className="form-ui" onSubmit={handleSubmit}>
       <div className="row m-0">
         <div className="col-12 p-2">
           <h6 className="form_title">Renting Policy & Cancelation Policy</h6>
         </div>
         <div className="col-12 p-2">
           <CommentField
-            htmlFor="weatherRestriction"
+            htmlFor="weather_restrictions"
             label="Weather Restriction"
             placeholder="Write here"
             id="weatherRestriction"
@@ -42,7 +71,7 @@ const PolicyForm = ({ setForm }) => {
         </div>
         <div className="col-12 p-2">
           <CommentField
-            htmlFor="rolesAndInstructions"
+            htmlFor="rules_and_instructions"
             label="Rules and instructions"
             placeholder="Write here"
             id="rolesAndInstructions"
@@ -52,7 +81,7 @@ const PolicyForm = ({ setForm }) => {
         </div>
         <div className="col-12 p-2">
           <CommentField
-            htmlFor="allowedAndNotAllowed"
+            htmlFor="allowed_and_not_allowed_items"
             label="Allowed and not allowed items on board"
             placeholder="Write here"
             id="allowedAndNotAllowed"
@@ -70,11 +99,11 @@ const PolicyForm = ({ setForm }) => {
                   setFormData((prev) => {
                     return {
                       ...prev,
-                      cancelationPolicy: [
-                        ...prev.cancelationPolicy,
+                      policy: [
+                        ...prev.policy,
                         {
                           ...cancelationCountInitial,
-                          index: prev.cancelationPolicy.length,
+                          index: prev.policy.length,
                         },
                       ],
                     };
@@ -84,84 +113,80 @@ const PolicyForm = ({ setForm }) => {
                 <img src={add} alt="add" />
               </button>
             </div>
-            {formData.cancelationPolicy.map((policy, i) => {
+            {formData.policy.map((policy, index) => {
               return (
-                <>
-                  <div key={i} className="col-12 p-2 policy_cancel">
+                <div key={index} className="col-12 p-0 pt-2 pb-2 policy_cancel">
+                  <div className="policyRow">
+                    <InputWithUnit
+                      htmlFor="period"
+                      label="if cancel before"
+                      id="period"
+                      units={["minutes", "hours", "days", "weeks", "months"]}
+                      innerTarget="policy"
+                      idx={index}
+                      formData={formData}
+                      setFormData={setFormData}
+                    />
                     <div>
-                      <label>If cancel before</label>
-                      <CustomInputWithUnit
-                        placeholder="00"
-                        name={"secondCancelBefore"}
-                        units={["minutes", "hours", "days", "weeks", "months"]}
-                        onChange={(e) => {
-                          const newArr = [...formData.cancelationPolicy];
-                          newArr[i].value = e.target.value;
-                          setFormData((prev) => {
-                            return {
-                              ...prev,
-                              cancelationPolicy: newArr,
-                            };
-                          });
-                        }}
-                        selectOnChange={(e) => {
-                          const newArr = [...formData.cancelationPolicy];
-                          newArr[i].unit = e.target.value;
-                          setFormData((prev) => {
-                            return {
-                              ...prev,
-                              cancelationPolicy: newArr,
-                            };
-                          });
-                        }}
-                        value={formData.cancelationPolicy[i].value}
-                        selectValue={formData.cancelationPolicy[i].unit}
-                      />
-                    </div>
-                    <div>
-                      <label htmlFor="firstDaysRefund">Days refund is</label>
+                      <label htmlFor={"firstDaysRefund" + index}>
+                        Days refund is
+                      </label>
                       <CustomInputField
                         type="number"
+                        id={"firstDaysRefund" + index}
                         name="firstDaysRefund"
                         placeholder="00"
-                        value={formData.cancelationPolicy[i].refund}
-                        onChange={() => {}}
+                        value={policy.refund}
+                        onChange={(e) => {
+                          setFormData((prevFormData) => ({
+                            ...prevFormData,
+                            policy:
+                              prevFormData.policy.map(
+                                (item, idx) => {
+                                  if (idx === index) {
+                                    return { ...item, refund: e.target.value };
+                                  }
+                                  return item;
+                                }
+                              ),
+                          }));
+                        }}
                       />
                       <span>%</span>
                     </div>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        let copyArr = [...formData.cancelationPolicy];
-                        copyArr = copyArr.filter((e) => e.index !== i);
-                        const final = copyArr.map((e, index) => ({
-                          ...e,
-                          index,
-                        }));
-                        setFormData((prev) => {
-                          return {
-                            ...prev,
-                            cancelationPolicy: final,
-                          };
-                        });
-                      }}
-                    >
-                      <img src={trashIcon} alt="trash" width={20} height={24} />
-                    </button>
                   </div>
-                </>
+                  <button
+                    className="trash_btn"
+                    type="button"
+                    onClick={() => {
+                      const updatedPolicies = formData.policy.filter(
+                        (_, idx) => idx !== index
+                      );
+                      setFormData((prevFormData) => ({
+                        ...prevFormData,
+                        policy: updatedPolicies,
+                      }));
+                    }}
+                  >
+                    <img src={trashIcon} alt="trash" />
+                  </button>
+                </div>
               );
             })}
             <div className="col-12 p-2 pt-4 d-flex gap-3 ">
               <button className="next_btn" onClick={handleBack}>
                 Back
               </button>
-              <button className="save_btn ms-auto">Save</button>
+              <SubmitButton
+                className="save_btn ms-auto"
+                loading={loading}
+                name="Save"
+              />
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </form>
   );
 };
 

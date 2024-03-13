@@ -43,7 +43,7 @@ const SeasonCard = ({ formData, setFormData, index }) => {
     <div className="col-12 p-2">
       <div className="season_calender_card">
         <div className="row m-0">
-          <div className="col-lg-7 col-12 p-0">
+          <div className="col-lg-7 col-12 p-0 pe-3">
             <Calendar
               value={currentCard.dates}
               onChange={(e) => {

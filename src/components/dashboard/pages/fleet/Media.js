@@ -1,13 +1,46 @@
-import React from "react";
+import React, { Fragment } from "react";
 import photoSessionImg from "../../../../assets/images/photoSession.svg";
 import fav from "../../../../assets/images/fav.png";
-import FilesUpload from "../../../ui/form-elements/FilesUpload";
+import CustomFileUpload from "../../../ui/form-elements/CustomFileUpload";
 import { useState } from "react";
+import { uploadFile } from "react-s3";
+window.Buffer = window.Buffer || require("buffer").Buffer;
 
 const Media = () => {
-  const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState({
+    images: [{}],
+    video_link: "",
+  });
 
-  // response => {images: [""], video_link: ""}
+  function handleFileChange(e, type) {
+    if (e.length === 0) {
+      // delete video from form data
+      if (type === "video") {
+        setFormData((prev) => ({ ...prev, video_link: "" }));
+      }
+
+      // or delete image from images array
+      if (type === "image") {
+        // setFormData((prev) => ({...prev, images: prev.images.filter()}))
+      }
+    }
+
+    const config = {
+      bucketName: "nuaris",
+      region: "us-east-1",
+      accessKeyId: process.env.REACT_APP_S3_ACCESS_KEY,
+      secretAccessKey: process.env.REACT_APP_s3_SECRET_ACCESS_KEY,
+    };
+
+    const file = e[0].file;
+    // if (type === "video") {
+    uploadFile(file, config)
+      .then((data) => console.log(data))
+      .catch((err) => console.error(err));
+    // } else {
+    // return;
+    // }
+  }
 
   return (
     <div className="fleet_form__wrapper">
@@ -41,18 +74,18 @@ const Media = () => {
                 <div className="photos">
                   {[0, 1, 2, 3, 4].map((f) => {
                     return (
-                      <FilesUpload
-                        key={f}
-                        labelIdle={`${
-                          f === 0
-                            ? '<label class="mainImg">Main Image</label>'
-                            : ""
-                        } <img src=${fav} alt="fav"/>`}
-                        pannelRatio=".88"
-                        accept={["image/png", "image/jpeg"]}
-                        allowMultiple={false}
-                        setFormData={setFormData}
-                      />
+                      <Fragment key={f}>
+                        <CustomFileUpload
+                          pannelRatio={".88"}
+                          accept={["image/png", "image/jpeg"]}
+                          labelIdle={`${
+                            f === 0
+                              ? '<label class="mainImg">Main Image</label>'
+                              : ""
+                          } <img src=${fav} alt="fav"/>`}
+                          onUpdateFiles={(e) => handleFileChange(e, "image")}
+                        />
+                      </Fragment>
                     );
                   })}
                 </div>
@@ -60,15 +93,13 @@ const Media = () => {
             </div>
             {/* video upload */}
             <div className="col-12 p-2">
-              <FilesUpload
-                htmlFor="vidoe"
+              <CustomFileUpload
                 label="Upload Video"
                 hint="( Max Size 20MB )"
                 labelIdle="Drag & Drop your files or Browse"
                 pannelRatio=".245"
                 accept={["video/*"]}
-                allowMultiple={false}
-                setFormData={setFormData}
+                onUpdateFiles={(e) => handleFileChange(e, "video")}
               />
             </div>
             <div className="col-12 p-2 pt-4 d-flex gap-3 ">
