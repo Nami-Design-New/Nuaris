@@ -67,14 +67,27 @@ const Pricing = () => {
     }));
   }
 
-  useEffect(() => {
-    console.log(formData);
-  }, [formData]);
+  function handleSubmit(e) {
+    e.preventDefault();
+    // const responseType = {
+    //   price: [
+    //     {
+    //       minimumRentalPeriod: formData.minimumRentalPeriod,
+    //       price: formData.price,
+    //       extraHourPrice: formData.extraHourPrice,
+    //       minimumPrice: formData.minimumPrice,
+    //       prepaymentPercentage: formData.prepaymentPercentage,
+    //     },
+    //   ],
+    //   season_price: [...formData.seasonCards],
+    // };
+    // console.log(responseType);
+  }
 
   return (
     <div className="fleet_form__wrapper">
       <div className="bg_white_card">
-        <form className="form-ui">
+        <form onSubmit={(e) => handleSubmit(e)} className="form-ui">
           <div className="row m-0">
             <div className="col-12 p-2">
               <h6 className="form_title">Pricing</h6>
