@@ -3,7 +3,7 @@ import photoSessionImg from "../../../../assets/images/photoSession.svg";
 import fav from "../../../../assets/images/fav.png";
 import CustomFileUpload from "../../../ui/form-elements/CustomFileUpload";
 import { useState } from "react";
-import { uploadFile, deleteFile } from "react-s3";
+import { uploadFile } from "react-s3";
 window.Buffer = window.Buffer || require("buffer").Buffer;
 
 const Media = () => {

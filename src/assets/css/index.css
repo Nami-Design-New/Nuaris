@@ -529,6 +529,11 @@ button {
   color: #0d0d0d;
   cursor: pointer;
 }
+.form-ui .input-field select.disable {
+  pointer-events: none;
+  background: #dddddd;
+  color: rgba(119, 119, 119, 0.8);
+}
 .form-ui .input-field.files .filepond--root .filepond--drop-label {
   min-height: 100%;
 }
@@ -2012,6 +2017,12 @@ th:last-child .p-column-header-content {
 .addon_form_wrapper .form-ui.specifications .save_btn {
   margin-top: 16px;
 }
+.fleet_form__wrapper .parent_yacht_label,
+.addon_form_wrapper .parent_yacht_label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
 
 .policy_form .header {
   display: flex;
@@ -3079,4 +3090,8 @@ small.error {
   color: #0d0d0d;
   font-weight: 700;
   font-size: 18px;
+}
+
+.form-switch input {
+  box-shadow: none !important;
 }/*# sourceMappingURL=index.css.map */

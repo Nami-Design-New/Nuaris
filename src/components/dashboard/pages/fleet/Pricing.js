@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import CustomInputWithUnit from "../../../ui/form-elements/CustomInputWIthUnit";
 import CustomInputField from "../../../ui/form-elements/CustomInputField";
 import calenderIcon from "../../../../assets/images/calender.svg";

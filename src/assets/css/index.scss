@@ -522,6 +522,11 @@ $transation: 0.3s ease-in-out;
     select {
       color: $dark;
       cursor: pointer;
+      &.disable {
+        pointer-events: none;
+        background: $border;
+        color: $grayLight;
+      }
     }
     &.files {
       .filepond--root .filepond--drop-label {
@@ -1842,6 +1847,9 @@ th:last-child .p-column-header-content {
       }
     }
   }
+  .parent_yacht_label {
+    @include space-between();
+  }
 }
 .policy_form {
   .header {
@@ -2866,5 +2874,10 @@ small.error {
     color: $dark;
     font-weight: 700;
     font-size: 18px;
+  }
+}
+.form-switch {
+  input {
+    box-shadow: none !important;
   }
 }

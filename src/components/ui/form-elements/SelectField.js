@@ -2,6 +2,7 @@ import React from "react";
 
 const SelectField = ({
   htmlFor,
+  className,
   label,
   options,
   formData,
@@ -13,6 +14,7 @@ const SelectField = ({
       <label htmlFor={htmlFor}>{label}</label>
       <select
         name={htmlFor}
+        className={className}
         id={htmlFor}
         required
         value={value}
