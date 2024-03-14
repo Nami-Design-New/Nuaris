@@ -7,7 +7,7 @@ import { useJwt } from "react-jwt";
 import { useNavigate } from "react-router-dom";
 import axios from "../../../util/axios";
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
   setToken,
   setUser,

@@ -23,17 +23,20 @@ axios.interceptors.response.use(
   },
   async (err) => {
     if (err.response?.status === 401 && !refresh) {
-      refresh = true;
-      const res = await axios.post("/users/refresh/", {
-        refresh: refreshToken,
-      });
+      try {
+        refresh = true;
+        delete axios.defaults.headers.common.Authorization;
+        const res = await axios.post("/users/token/refresh/", {
+          refresh: refreshToken,
+        });
 
-      if (res.status === 200) {
-        console.log(`fetched from axios and got a response`);
         axios.defaults.headers.common[
           "Authorization"
         ] = `Bearer ${res.data.access}`;
         return axios(err.config);
+      } catch (error) {
+        console.log(error);
+        return err;
       }
     }
     refresh = false;
