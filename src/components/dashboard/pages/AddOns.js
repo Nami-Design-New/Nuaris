@@ -8,9 +8,11 @@ import deleteIcon from "../../../assets/images/delete.svg";
 import editIcon from "../../../assets/images/edit.svg";
 import inflatableImage from "../../../assets/images/inflatable.png";
 import eyeView from "../../../assets/images/eye.svg";
+import AddOnModal from "../layout/AddOnModal";
 
 const AddOns = () => {
-  const [tableData, setTableData] = useState([
+  const [showModal, setShowModal] = useState(false);
+  const [tableData] = useState([
     {
       id: 1,
       name: "Inflatable boat",
@@ -44,7 +46,7 @@ const AddOns = () => {
             <img src={editIcon} alt="edit" />
           </Button>
         </Link>
-        <Button onClick={() => viewRow(rowData)}>
+        <Button onClick={() => setShowModal(true)}>
           <img src={eyeView} alt="view" />
         </Button>
       </div>
@@ -97,17 +99,14 @@ const AddOns = () => {
                   <Column field="parent_yacht" header="Parent Yacht" />
                   <Column field="quantity" header="Quantity" />
                   <Column field="price" body={priceTemplate} header="Price" />
-                  <Column
-                    className="d-flex justify-content-end"
-                    header="Actions"
-                    body={actionTemplate}
-                  />
+                  <Column header="Actions" body={actionTemplate} />
                 </DataTable>
               </div>
             </div>
           </div>
         </div>
       </div>
+      <AddOnModal showModal={showModal} setShowModal={setShowModal} />
     </section>
   );
 };

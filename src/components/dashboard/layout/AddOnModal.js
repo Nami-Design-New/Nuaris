@@ -1,27 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Modal } from "react-bootstrap";
+import CountUp from "react-countup";
 import inflatableImage from "../../../assets/images/inflatable.png";
-import ReactOdometer from "react-odometerjs";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 
 const AddOnModal = ({ showModal, setShowModal }) => {
-  const [value, setValue] = useState(1234);
   const tableData = [
     {
       id: "#51465",
       customerName: "Hamad Almamy",
       startDate: "01/01/2024",
       startTime: "3:07 am",
-      payment: "cash"
-    }
+      payment: "cash",
+    },
   ];
-  useEffect(() => {
-    const timeoutId = setTimeout(() => setValue(4321), 2000);
-    return () => {
-      clearTimeout(timeoutId);
-    };
-  }, []);
   return (
     <Modal
       show={showModal}
@@ -77,13 +70,15 @@ const AddOnModal = ({ showModal, setShowModal }) => {
           <div className="statistics">
             <div className="stat_card">
               <h4>
-                <ReactOdometer value={value} format="(.ddd),dd" />
+                <CountUp duration={5} start={0} end={8399} />
                 <span className="d-inline">$</span>
               </h4>
               <h6>Total earnings</h6>
             </div>
             <div className="stat_card">
-              <h4>71</h4>
+              <h4>
+                <CountUp duration={5} start={0} end={71} />
+              </h4>
               <h6> Upcoming booking</h6>
             </div>
           </div>

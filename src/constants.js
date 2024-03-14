@@ -66,3 +66,11 @@ export const DAYS = [
   "Thursday",
   "Friday",
 ];
+
+// add ons categories
+export const ADD_ONS_CATEGORIES = [
+  "Food & Beverages",
+  "Party Themes",
+  "Expert Assistant",
+  "Other",
+];

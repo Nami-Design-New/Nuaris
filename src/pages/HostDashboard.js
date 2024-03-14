@@ -18,6 +18,7 @@ import { setPermissionsGroups } from "../redux/slices/permissionsGroups";
 import { setPermissions } from "../redux/slices/permissions";
 import { setEmployees } from "../redux/slices/employeesSlice";
 import { setPositions } from "../redux/slices/positions";
+import { setYachts } from "../redux/slices/yachts";
 import EditUser from "../components/dashboard/pages/EditUser";
 import AddOns from "../components/dashboard/pages/AddOns";
 import AddNewAddOn from "../components/dashboard/pages/AddNewAddOn";
@@ -32,14 +33,21 @@ const HostDashboard = () => {
     const permissions = axios.get("/permissions");
     const employees = axios.get(`/users/?parent_id=${authedUser.id}`);
     const positions = axios.get("/positions");
+    const yachts = axios.get("/yachts");
 
-    const [groupsData, permissionsData, employeesData, positionsData] =
-      await Promise.all([groups, permissions, employees, positions]);
+    const [
+      groupsData,
+      permissionsData,
+      employeesData,
+      positionsData,
+      yachtsData,
+    ] = await Promise.all([groups, permissions, employees, positions, yachts]);
 
     dispatch(setPermissionsGroups(groupsData.data));
     dispatch(setPermissions(permissionsData.data));
     dispatch(setEmployees(employeesData.data));
     dispatch(setPositions(positionsData.data));
+    dispatch(setYachts(yachtsData.data));
   }
 
   useEffect(() => {
