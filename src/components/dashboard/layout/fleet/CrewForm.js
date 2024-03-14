@@ -2,10 +2,15 @@ import { useState } from "react";
 import CustomInputField from "../../../ui/form-elements/CustomInputField";
 import CrewCard from "./CrewCard";
 import { toast } from "react-toastify";
+import SubmitButton from "../../../ui/form-elements/SubmitButton";
+import { axios } from "../../../../util/axios";
 
 const CrewForm = ({ setForm }) => {
+  const createdYacht = sessionStorage.getItem("yacht_id");
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
-    NumberOfCrew: "1",
+    number: "1",
+    crew_members: [],
   });
   const handleNext = (e) => {
     e.preventDefault();
@@ -23,9 +28,26 @@ const CrewForm = ({ setForm }) => {
       setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
     }
   }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      const response = await axios.patch(`/yachts/${createdYacht}/`, formData);
+      if (response.status === 200) {
+        toast.success("Crew Info Saved Successfully");
+        setForm("Policy");
+      } else {
+        toast.error("Something went wrong");
+      }
+    } catch (error) {
+      toast.error("Something went wrong");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
-    <div className="form-ui">
+    <form className="form-ui" onSubmit={handleSubmit}>
       <div className="row m-0">
         <div className="col-12 p-2">
           <h6 className="form_title">Crew</h6>
@@ -37,11 +59,11 @@ const CrewForm = ({ setForm }) => {
             label="Number of Crew"
             placeholder="0"
             type="number"
-            value={formData.NumberOfCrew}
+            value={formData.number}
             onChange={handleChange}
           />
         </div>
-        {Array(+formData?.NumberOfCrew)
+        {Array(+formData?.number)
           .fill(0)
           .map((_, i) => {
             return <CrewCard key={i} index={i + 1} />;
@@ -50,13 +72,17 @@ const CrewForm = ({ setForm }) => {
           <button className="next_btn" onClick={handleBack}>
             Back
           </button>
-          <button className="save_btn ms-auto">Save</button>
+          <SubmitButton
+            className="save_btn ms-auto"
+            name={"Save"}
+            loading={loading}
+          />
           <button className="next_btn" onClick={handleNext}>
             Next
           </button>
         </div>
       </div>
-    </div>
+    </form>
   );
 };
 

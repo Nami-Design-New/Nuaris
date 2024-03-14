@@ -1,12 +1,19 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment } from "react";
 import photoSessionImg from "../../../../assets/images/photoSession.svg";
 import fav from "../../../../assets/images/fav.png";
 import CustomFileUpload from "../../../ui/form-elements/CustomFileUpload";
 import { useState } from "react";
 import { uploadFile } from "react-s3";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import axios from "../../../../util/axios";
+import SubmitButton from "../../../ui/form-elements/SubmitButton";
 window.Buffer = window.Buffer || require("buffer").Buffer;
 
 const Media = () => {
+  const createdYacht = sessionStorage.getItem("yacht_id");
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     images: Array(5).fill(""),
     video_link: "",
@@ -21,16 +28,18 @@ const Media = () => {
   };
 
   async function handleUploadMedia(e) {
-    const file = e[0].file;
-    var blob = file.slice(0, file.size, file.type);
-    const newFile = new File([blob], `${Date.now()}${file.name.slice(-5)}`, {
-      type: file.type,
-    });
-    return await uploadFile(newFile, config)
-      .then((data) => {
-        return data.location;
-      })
-      .catch((err) => console.error(err));
+    try {
+      const file = e[0].file;
+      var blob = file.slice(0, file.size, file.type);
+      const newFile = new File([blob], `${Date.now()}${file.name.slice(-5)}`, {
+        type: file.type,
+      });
+      const data = await uploadFile(newFile, config);
+      return data.location;
+    } catch (error) {
+      console.error("Error uploading file:", error);
+      throw error;
+    }
   }
 
   function handleVideoChange(e) {
@@ -41,18 +50,15 @@ const Media = () => {
           .then((link) => {
             setFormData((prev) => ({ ...prev, video_link: link }));
           })
+          .catch((error) => {
+            console.error("Error handling video upload:", error);
+          })
           .finally(() => {
             setCurrentUploading(currentUploading.filter((e) => e !== id));
           });
       }
     } else {
-      setCurrentUploading(
-        currentUploading.filter((e) => e !== formData.video_link)
-      );
-      // TODO: Delete file on delete when user cancels it
-      // deleteFile(formData.video_link, config).then(() => {
-      // });
-      setFormData((prev) => ({ ...prev, video_link: "" }));
+      // Handle case when no file is selected
     }
   }
 
@@ -89,14 +95,29 @@ const Media = () => {
     }
   }
 
-  useEffect(() => {
-    console.log(formData);
-  }, [formData]);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      const response = await axios.patch(`/yachts/${createdYacht}/`, formData);
+      if (response.status === 200) {
+        toast.success("Yacht Media Saved Successfully");
+        navigate("/dashboard/fleet/add-yacht/boat-specification");
+      } else {
+        toast.error("Something went wrong");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      toast.error("Something went wrong");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="fleet_form__wrapper">
       <div className="bg_white_card">
-        <form className="form-ui">
+        <form className="form-ui" onSubmit={handleSubmit}>
           <div className="row m-0">
             <div className="col-12 p-2">
               <h6 className="form_title">Media & Photos</h6>
@@ -156,7 +177,11 @@ const Media = () => {
               />
             </div>
             <div className="col-12 p-2 pt-4 d-flex gap-3 ">
-              <button className="save_btn ms-auto">Save</button>
+              <SubmitButton
+                className={"save_btn ms-auto"}
+                loading={loading}
+                name={"Save"}
+              />
             </div>
           </div>
         </form>
