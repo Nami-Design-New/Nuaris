@@ -3,14 +3,14 @@ import CustomInputField from "../../../ui/form-elements/CustomInputField";
 import CrewCard from "./CrewCard";
 import { toast } from "react-toastify";
 import SubmitButton from "../../../ui/form-elements/SubmitButton";
-import { axios } from "../../../../util/axios";
+import axios from "../../../../util/axios";
 
 const CrewForm = ({ setForm }) => {
   const createdYacht = sessionStorage.getItem("yacht_id");
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     number: "1",
-    crew_members: [],
+    crew_members: []
   });
   const handleNext = (e) => {
     e.preventDefault();
