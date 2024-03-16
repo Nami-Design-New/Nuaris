@@ -1,33 +1,33 @@
 import female from "../../assets/images/female.svg";
 import male from "../../assets/images/male.svg";
-export default function GenderSelect({ formData, setFormData }) {
+export default function GenderSelect({ formData, setFormData, index }) {
   return (
     <div className="gender_select">
       <label>Gender</label>
       <div>
         <label
-          htmlFor="female"
+          htmlFor={`female${index}`}
           className={`gender_card ${formData.gender === "female" && "active"}`}
         >
           <input
-            onChange={(e) => setFormData({ ...formData, gender: e.target.id })}
+            onChange={() => setFormData({ ...formData, gender: "female" })}
             type="radio"
-            name="gender"
-            id="female"
+            name={`gender${index}`}
+            id={`female${index}`}
           />
           <img src={female} alt="female" /> Female
         </label>
         <label
-          htmlFor="male"
+          htmlFor={`male${index}`}
           className={`gender_card ${formData.gender === "male" && "active"}`}
         >
           <input
-            onChange={(e) => setFormData({ ...formData, gender: e.target.id })}
+            onChange={(e) => setFormData({ ...formData, gender: "male" })}
             type="radio"
-            name="gender"
-            id="male"
+            name={`gender${index}`}
+            id={`male${index}`}
           />
-          <img src={male} alt="female" /> Female
+          <img src={male} alt="male" /> Male
         </label>
       </div>
     </div>

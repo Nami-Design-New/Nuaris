@@ -10,10 +10,10 @@ import SubmitButton from "../../../ui/form-elements/SubmitButton";
 import InputWithUnit from "../../../ui/form-elements/InputWithUnit";
 
 const PolicyForm = ({ setForm }) => {
-  const createdYacht = sessionStorage.getItem("yacht_id");
+  //const createdYacht = sessionStorage.getItem("yacht_id");
   const cancelationCountInitial = {
     period: "",
-    refund: "",
+    refund: ""
   };
 
   const [loading, setLoading] = useState(false);
@@ -21,10 +21,9 @@ const PolicyForm = ({ setForm }) => {
     weather_restrictions: "",
     rules_and_instructions: "",
     allowed_and_not_allowed_items: "",
-    yacht: createdYacht,
     policy: Array(1)
       .fill(0)
-      .map((_, i) => ({ ...cancelationCountInitial, index: i })),
+      .map(() => ({ ...cancelationCountInitial }))
   });
 
   const navigate = useNavigate();
@@ -102,10 +101,9 @@ const PolicyForm = ({ setForm }) => {
                       policy: [
                         ...prev.policy,
                         {
-                          ...cancelationCountInitial,
-                          index: prev.policy.length,
-                        },
-                      ],
+                          ...cancelationCountInitial
+                        }
+                      ]
                     };
                   })
                 }
@@ -140,15 +138,12 @@ const PolicyForm = ({ setForm }) => {
                         onChange={(e) => {
                           setFormData((prevFormData) => ({
                             ...prevFormData,
-                            policy:
-                              prevFormData.policy.map(
-                                (item, idx) => {
-                                  if (idx === index) {
-                                    return { ...item, refund: e.target.value };
-                                  }
-                                  return item;
-                                }
-                              ),
+                            policy: prevFormData.policy.map((item, idx) => {
+                              if (idx === index) {
+                                return { ...item, refund: e.target.value };
+                              }
+                              return item;
+                            })
                           }));
                         }}
                       />
@@ -164,7 +159,7 @@ const PolicyForm = ({ setForm }) => {
                       );
                       setFormData((prevFormData) => ({
                         ...prevFormData,
-                        policy: updatedPolicies,
+                        policy: updatedPolicies
                       }));
                     }}
                   >

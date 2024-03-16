@@ -7,8 +7,9 @@ const SelectField = ({
   options,
   formData,
   setFormData,
-  value,
+  value
 }) => {
+  console.log(value);
   return (
     <div className="input-field">
       <label htmlFor={htmlFor}>{label}</label>
@@ -22,7 +23,7 @@ const SelectField = ({
           setFormData({ ...formData, [htmlFor]: e.target.value });
         }}
       >
-        <option value="" disabled>
+        <option value="select" disabled>
           Select
         </option>
         {options.map((option, index) => (
