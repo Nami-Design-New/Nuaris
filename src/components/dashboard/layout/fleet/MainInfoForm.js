@@ -3,14 +3,59 @@ import InputField from "../../../ui/form-elements/InputField";
 import SelectField from "./../../../ui/form-elements/SelectField";
 import CommentField from "./../../../ui/form-elements/CommentField";
 import InputWithUnit from "../../../ui/form-elements/InputWithUnit";
-import FilesUpload from "../../../ui/form-elements/FilesUpload";
 import SubmitButton from "../../../ui/form-elements/SubmitButton";
 import { toast } from "react-toastify";
 import axios from "./../../../../util/axios";
 import { useSelector } from "react-redux";
 import { BRANDS, TYPE } from "../../../../constants";
+import { uploadFile } from "react-s3";
+import CustomFileUpload from "../../../ui/form-elements/CustomFileUpload";
+window.Buffer = window.Buffer || require("buffer").Buffer;
 
 const MainInfoForm = ({ setForm }) => {
+  // ======== start file upload configration =======//
+  const [currentUploading, setCurrentUploading] = useState([]);
+  const config = {
+    bucketName: "nuaris",
+    region: "us-east-1",
+    accessKeyId: process.env.REACT_APP_S3_ACCESS_KEY,
+    secretAccessKey: process.env.REACT_APP_s3_SECRET_ACCESS_KEY
+  };
+  async function handleUploadMedia(e) {
+    try {
+      const file = e[0].file;
+      var blob = file.slice(0, file.size, file.type);
+      const newFile = new File([blob], `${Date.now()}${file.name.slice(-5)}`, {
+        type: file.type
+      });
+      const data = await uploadFile(newFile, config);
+      return data.location;
+    } catch (error) {
+      console.error("Error uploading file:", error);
+      throw error;
+    }
+  }
+  function handleFileChange(e) {
+    if (e.length >= 1) {
+      const id = e[0].id;
+      if (!currentUploading.includes(id)) {
+        handleUploadMedia(e)
+          .then((link) => {
+            setFormData((prev) => ({ ...prev, license_file: link }));
+          })
+          .catch((error) => {
+            console.error("Error handling video upload:", error);
+          })
+          .finally(() => {
+            setCurrentUploading(currentUploading.filter((e) => e !== id));
+          });
+      }
+    } else {
+      // Handle case when no file is selected
+    }
+  }
+  // ======== end file upload configuration =======//
+
   const [formData, setFormData] = useState({
     type: "select",
     brand: "select",
@@ -22,7 +67,7 @@ const MainInfoForm = ({ setForm }) => {
     license_expire_date: "",
     preparation_time: "",
     description_en: "",
-    description_ar: "",
+    description_ar: ""
   });
   const [loading, setLoading] = useState(false);
   const user = useSelector((state) => state.user?.user);
@@ -33,10 +78,6 @@ const MainInfoForm = ({ setForm }) => {
     setForm("Location");
   };
 
-  const headersList = {
-    Accept: "*/*",
-    "Content-Type": "multipart/form-data",
-  };
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -46,9 +87,7 @@ const MainInfoForm = ({ setForm }) => {
         throw new Error("No matching sub user found");
       }
       const data = { ...formData, sub_user: subUser[0]?.id };
-      const response = await axios.post("/yachts/", data, {
-        headers: headersList,
-      });
+      const response = await axios.post("/yachts/", data);
       if (response.status === 201) {
         setForm("Location");
         toast.success("Main Info Saved Successfully");
@@ -147,14 +186,13 @@ const MainInfoForm = ({ setForm }) => {
         </div>
         {/* Vessel License and registration */}
         <div className="col-12 p-2">
-          <FilesUpload
-            htmlFor="files"
+          <CustomFileUpload
             label="Vessel License and registration"
             labelIdle="Drag & Drop your files or Browse"
             pannelRatio=".075"
-            accept=""
-            allowMultiple={true}
-            setFormData={setFormData}
+            accept={["application/pdf"]}
+            allowMultiple={false}
+            onUpdateFiles={(e) => handleFileChange(e)}
           />
         </div>
         {/* license expiration date */}

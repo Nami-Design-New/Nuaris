@@ -6,7 +6,7 @@ export default function CustomInputWithUnit({
   value,
   onChange,
   selectValue,
-  selectOnChange,
+  selectOnChange
 }) {
   return (
     <div className="input-field">

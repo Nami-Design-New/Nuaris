@@ -8,26 +8,36 @@ import axios from "../../../../util/axios";
 const CrewForm = ({ setForm }) => {
   const createdYacht = sessionStorage.getItem("yacht_id");
   const [loading, setLoading] = useState(false);
+  const [crewNumber, setCrewNumber] = useState(1);
+  const initialMemberData = {
+    name: "",
+    nationality: "EG",
+    gender: "male"
+  };
+
   const [formData, setFormData] = useState({
-    number: "1",
-    crew_members: []
+    crew: [initialMemberData]
   });
+
   const handleNext = (e) => {
     e.preventDefault();
     setForm("Policy");
   };
+
   const handleBack = (e) => {
     e.preventDefault();
     setForm("Location");
   };
 
-  function handleChange(e) {
-    if (+e.target.value > 20) {
-      toast.error("Maximum crew members count is 20");
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    if (+value > 20) {
+      toast.warning("Maximum crew members allowed is 20");
     } else {
-      setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+      setFormData((prev) => ({ ...prev, [name]: value }));
     }
-  }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -46,6 +56,17 @@ const CrewForm = ({ setForm }) => {
     }
   };
 
+  const handleCrewNumberChange = (e) => {
+    setCrewNumber(e.target.value);
+    const { value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      crew: Array(+value)
+        .fill(0)
+        .map(() => ({ ...initialMemberData }))
+    }));
+  };
+
   return (
     <form className="form-ui" onSubmit={handleSubmit}>
       <div className="row m-0">
@@ -55,18 +76,26 @@ const CrewForm = ({ setForm }) => {
         {/* Number of Crew */}
         <div className="col-12 p-2">
           <CustomInputField
-            name="NumberOfCrew"
+            name="number"
             label="Number of Crew"
             placeholder="0"
             type="number"
-            value={formData.number}
-            onChange={handleChange}
+            value={crewNumber}
+            onChange={handleCrewNumberChange}
           />
         </div>
-        {Array(+formData?.number)
+        {Array(+crewNumber)
           .fill(0)
           .map((_, i) => {
-            return <CrewCard key={i} index={i + 1} />;
+            return (
+              <CrewCard
+                key={i}
+                index={i}
+                formData={formData.crew[i] || {}}
+                setFormData={setFormData}
+                handleChange={handleChange}
+              />
+            );
           })}
         <div className="col-12 p-2 pt-4 d-flex gap-3 ">
           <button className="next_btn" onClick={handleBack}>

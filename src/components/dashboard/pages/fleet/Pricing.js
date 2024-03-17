@@ -3,7 +3,6 @@ import CustomInputWithUnit from "../../../ui/form-elements/CustomInputWIthUnit";
 import CustomInputField from "../../../ui/form-elements/CustomInputField";
 import calenderIcon from "../../../../assets/images/calender.svg";
 import addIcon from "../../../../assets/images/add.svg";
-import trashIcon from "../../../../assets/images/delete.svg";
 import { Form } from "react-bootstrap";
 import SeasonCard from "../../layout/fleet/SeasonCard";
 import Vat from "../../layout/Vat";
@@ -12,30 +11,30 @@ const Pricing = () => {
   const seasonCardInitialData = {
     price: {
       value: 100,
-      unit: "hour",
+      unit: "hour"
     },
     extraHourPrice: 0,
     minPrice: 0,
     index: 0,
-    dates: [new Date()],
+    dates: [new Date()]
   };
   const initialData = {
     minimumRentalPeriod: {
       value: 1,
-      unit: "hour",
+      unit: "hour"
     },
     price: {
       value: 100,
-      unit: "hour",
+      unit: "hour"
     },
     extraHourPrice: 0,
     minPrice: 0,
     prepaymentPercentage: [""],
     VAT: {
       SA: false,
-      QA: false,
+      QA: false
     },
-    seasonCards: [seasonCardInitialData],
+    seasonCards: [seasonCardInitialData]
   };
   const [formData, setFormData] = useState(initialData);
   const [uponRequest, setUponRequest] = useState(false);
@@ -45,8 +44,8 @@ const Pricing = () => {
       ...formData,
       [e.target.name]: {
         ...formData[e.target.name],
-        [name]: e.target[value],
-      },
+        [name]: e.target[value]
+      }
     });
   }
 
@@ -61,9 +60,9 @@ const Pricing = () => {
         ...prev.seasonCards,
         {
           ...seasonCardInitialData,
-          index: prev.seasonCards.length,
-        },
-      ],
+          index: prev.seasonCards.length
+        }
+      ]
     }));
   }
 
@@ -153,69 +152,15 @@ const Pricing = () => {
                 </div>
                 {/* Prepayment percentage */}
                 <div className="col-12 p-2">
-                  <label className="fw-medium align-items-start d-flex gap-3 justify-content-between">
-                    <div>
-                      Prepayment Percentage{" "}
-                      <span className="hint">{"( Minimum 50% )"}</span>
-                    </div>
-                    <button
-                      onClick={() =>
-                        setFormData((prev) => ({
-                          ...prev,
-                          prepaymentPercentage: [
-                            ...prev.prepaymentPercentage,
-                            "",
-                          ],
-                        }))
-                      }
-                      type="button"
-                    >
-                      <img src={addIcon} alt="add" />
-                    </button>
-                  </label>
-                  <div className="d-flex flex-column gap-2">
-                    {formData.prepaymentPercentage.map((e, i) => {
-                      return (
-                        <div key={i} className="d-flex gap-3">
-                          <CustomInputField
-                            name="prepaymentPercentage"
-                            type="number"
-                            placeholder="00"
-                            value={e}
-                            onChange={(e) => {
-                              const newArr = [...formData.prepaymentPercentage];
-                              newArr[i] = e.target.value;
-                              setFormData((prev) => {
-                                return {
-                                  ...prev,
-                                  prepaymentPercentage: newArr,
-                                };
-                              });
-                            }}
-                          />
-                          <button
-                            onClick={() => {
-                              const newArr = [...formData.prepaymentPercentage];
-                              newArr.splice(i, 1);
-                              setFormData((prev) => {
-                                return {
-                                  ...prev,
-                                  prepaymentPercentage: newArr,
-                                };
-                              });
-                            }}
-                            className={`${
-                              formData.prepaymentPercentage.length === 1 &&
-                              "pe-none opacity-50"
-                            }`}
-                            type="button"
-                          >
-                            <img src={trashIcon} alt="delete" />
-                          </button>
-                        </div>
-                      );
-                    })}
-                  </div>
+                  <CustomInputField
+                    hint={"( Minimum 50% )"}
+                    label={"Prepayment percentage"}
+                    name="prepaymentPercentage"
+                    type="number"
+                    placeholder="00"
+                    value={formData.prepaymentPercentage}
+                    onChange={handleChange}
+                  />
                 </div>
                 {/* calender seasons title */}
                 <div className="col-12 p-2 d-flex align-items-center justify-content-between">

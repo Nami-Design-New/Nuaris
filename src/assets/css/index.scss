@@ -1431,6 +1431,7 @@ footer {
 }
 .Toastify__toast-body > div:last-child {
   line-height: 24px;
+  font-size: 14px;
 }
 // tables
 tbody,
@@ -2031,7 +2032,7 @@ th:last-child .p-column-header-content {
       color: $dark;
       display: flex;
       align-items: center;
-      line-height: 20px;
+      line-height: 24px;
       gap: 8px;
       img {
         width: 16px;
@@ -2860,7 +2861,7 @@ small.error {
   width: auto;
 }
 .table-container {
-  img {
+  .addon {
     height: 60px;
     object-fit: contain;
   }

@@ -49,7 +49,7 @@ export default function Dashboard() {
       navigate("/login");
       removeCookie("refreshToken");
     }
-  }, [decodedToken, refreshToken]);
+  }, [decodedToken, dispatch, isExpired, navigate, refreshToken, removeCookie]);
 
   // - render dashboard based on user role
   if (userRole === ROLES.HOST) {

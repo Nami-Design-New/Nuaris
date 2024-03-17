@@ -3,36 +3,38 @@ import locationIcon from "../../../../assets/images/pin.svg";
 import passengersIcon from "../../../../assets/images/crowd.svg";
 import captainIcon from "../../../../assets/images/captain.svg";
 import Badge from "../../../ui/Badge";
-import fleetImage from "../../../../assets/images/fleet.png";
 import male from "../../../../assets/images/male.svg";
 import female from "../../../../assets/images/female.svg";
+import { COUNTRIES_NAMES } from "../../../../constants";
 
 export default function FleetCard({ fleet }) {
+  const getCountryName = (countryCode) => {
+    return COUNTRIES_NAMES[countryCode] || countryCode;
+  };
   return (
-    <Link className="fleet-card" to={fleet?.id || "1"}>
-      <Badge state={1} content={fleet?.state || "available"} />
+    <Link className="fleet-card" to={`/dashboard/fleet/${fleet?.id}`}>
+      <Badge state={1} content={"available"} />
       <div className="image-container">
         <img
           loading="lazy"
           className="fleet_image"
-          src={fleetImage}
+          src={fleet?.images[0]}
           alt="fleet"
         />
       </div>
       <div className="card-content">
-        <h3>{fleet?.fleetName || "Santa Maria"}</h3>
+        <h3>{fleet?.name_en}</h3>
         <p className="card-location">
           <img src={locationIcon} alt="location pin" />{" "}
-          {fleet?.location || "Riyadh, Saudi Arabia"}
+          {`${fleet?.city}, ${getCountryName(fleet?.country)}`}
         </p>
         <p className="card-location">
-          <img src={passengersIcon} alt="location pin" />{" "}
-          {fleet?.maxPassengers || "25"}
+          <img src={passengersIcon} alt="location pin" /> {fleet?.capacity}
         </p>
         <div className="d-flex justify-content-between">
           <p className="card-location">
-            <img src={captainIcon} alt="location pin" /> Crew ({" "}
-            {fleet?.crewSize || "8"} )
+            <img src={captainIcon} alt="location pin" /> Crew (
+            {fleet?.crews?.length} )
           </p>
           <div className="crew_gender">
             <img src={male} alt="male" />
@@ -40,10 +42,8 @@ export default function FleetCard({ fleet }) {
           </div>
         </div>
         <p className="card-location">
-          <img src={locationIcon} alt="location pin" /> {fleet?.price || "100"}$
-          {(fleet?.pricePer && <span>/ {fleet?.pricePer}</span>) || (
-            <span>/ hour</span>
-          )}
+          <img src={locationIcon} alt="location pin" /> 100
+          <span>/ hour</span>
         </p>
       </div>
     </Link>

@@ -6,27 +6,31 @@ export default function FleetInfoMiniCard({
   title,
   text,
   per,
-  crewGenders,
+  crewGenders
 }) {
   return (
-      <div className="fleet-info-minicard">
-        <div className="content">
-          <img src={icon} alt="fleet" />
-          <div className="text">
-            <span>{title}</span>
-            <p>
-              {text} {per && <span className="text-lowercase">/ {per}</span>}
-            </p>
-          </div>
+    <div className="fleet-info-minicard">
+      <div className="content">
+        <img src={icon} alt="fleet" />
+        <div className="text">
+          <span>{title}</span>
+          <p>
+            {text} {per && <span className="text-lowercase">/ {per}</span>}
+          </p>
         </div>
-        {crewGenders && (
-          <div className="crew_gender">
-            {crewGenders?.includes("male") && <img src={male} alt="male" />}
-            {crewGenders?.includes("female") && (
-              <img src={female} alt="female" />
-            )}
-          </div>
-        )}
       </div>
+      {crewGenders && (
+        <div className="crew_gender">
+          {crewGenders === "male" && <img src={male} alt="male" />}
+          {crewGenders === "female" && <img src={female} alt="female" />}
+          {crewGenders === "both" && (
+            <>
+              <img src={male} alt="male" />
+              <img src={female} alt="female" />
+            </>
+          )}
+        </div>
+      )}
+    </div>
   );
 }

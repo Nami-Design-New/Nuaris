@@ -10,6 +10,20 @@ import { useState } from "react";
 
 export default function FleetProfileInfo({ fleet }) {
   const [isOpen, setIsOpen] = useState(false);
+  const getCrewGenders = () => {
+    const genders = fleet?.crews?.map((crew) => crew?.gender);
+    const allMale = genders?.every((gender) => gender.toLowerCase() === "male");
+    const allFemale = genders?.every(
+      (gender) => gender.toLowerCase() === "female"
+    );
+    if (allMale) {
+      return "male";
+    } else if (allFemale) {
+      return "female";
+    } else {
+      return "both";
+    }
+  };
 
   return (
     <div className="col-12 p-2">
@@ -17,45 +31,40 @@ export default function FleetProfileInfo({ fleet }) {
         <div className="fleet-info-row">
           <div className="d-flex align-items-center justify-content-between">
             <button onClick={() => setIsOpen(true)}>
-              <StarsRate
-                rate={fleet?.rating || "4.2"}
-                reviewsCount={fleet?.reviewsCount || "25"}
-              />
+              <StarsRate rate={"4.2"} reviewsCount={"25"} />
             </button>
             <div className="fleet_tag">
-              <img src={hashIcon} alt="hash" /> <p>{fleet?.tag || "564231"}</p>
+              <img src={hashIcon} alt="hash" /> <p>{"564231"}</p>
             </div>
           </div>
           <RateModal isOpen={isOpen} setIsOpen={setIsOpen} />
-
-          <h2 className="text-capitalize">{fleet?.name || "titanic"}</h2>
-
+          <h2 className="text-capitalize">{fleet?.name_en}</h2>
           <div className="fleet_details">
             <FleetInfoMiniCard
               icon={fleetIcon}
-              title="boat type"
-              text={fleet?.type || "yacht"}
+              title="Boat Type"
+              text={fleet?.type}
             />
             <FleetInfoMiniCard
               icon={crowdIcon}
-              title="capacity"
-              text={fleet?.capacity || "25"}
+              title="Capacity"
+              text={fleet?.capacity}
             />
             <FleetInfoMiniCard
               icon={walledIcon}
-              title="price"
-              text={fleet?.price || "100$"}
+              title="Price"
+              text={"100$"}
               per={"hour"}
             />
             <FleetInfoMiniCard
               icon={captainIcon}
-              title="crew size"
-              text={fleet?.type || "3"}
-              crewGenders={fleet?.crewGenders || ["male"]}
+              title="Crew"
+              text={fleet?.crews?.length}
+              crewGenders={getCrewGenders()}
             />
           </div>
         </div>
       </div>
-   </div>
+    </div>
   );
 }

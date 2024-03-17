@@ -53,7 +53,7 @@ const AddOns = () => {
     );
   };
   const imageTemplate = (item) => {
-    return <img src={item.image} alt="addon" />;
+    return <img src={item.image} alt="addon" className="addon" />;
   };
   const priceTemplate = (item) => {
     return (

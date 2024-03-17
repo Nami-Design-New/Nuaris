@@ -7,19 +7,17 @@ import FleetProfileMedia from "../../layout/fleet/FleetProfileMedia";
 import FleetProfileTabs from "../../layout/fleet/FleetProfileTabs";
 import FleetVesselLogbook from "../../layout/fleet/FleetVesselLogbook";
 import FleetProfileBooking from "../../layout/fleet/FleetProfileBooking";
+import { useSelector } from "react-redux";
 
 export default function FleetProfile() {
+  const fleets = useSelector((state) => state.yachts.yachts);
   const { fleetId } = useParams();
-  // TODO: Fetch fleet data
-  const fleet = {};
+  const fleet = fleets?.find((fleet) => fleet?.id === parseInt(fleetId));
 
   return (
     <section className="section-main-content">
       <header className="flex-header">
-        <PageHeader
-          currentName={"Yacht/boat Profile"}
-          name={fleet?.name || "Fleet profile"}
-        />
+        <PageHeader currentName={fleet?.name_en} name={fleet?.name_en} />
         <div className="utility-buttons">
           <Link to={""}>
             <img src={editIcon} alt="edit icon" />

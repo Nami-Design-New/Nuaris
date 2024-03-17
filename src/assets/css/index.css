@@ -1523,6 +1523,7 @@ footer .links a:hover {
 
 .Toastify__toast-body > div:last-child {
   line-height: 24px;
+  font-size: 14px;
 }
 
 tbody,
@@ -2212,7 +2213,7 @@ th:last-child .p-column-header-content {
   color: #0d0d0d;
   display: flex;
   align-items: center;
-  line-height: 20px;
+  line-height: 24px;
   gap: 8px;
 }
 .fleet-card .card-content p img {
@@ -3074,7 +3075,7 @@ small.error {
   width: auto;
 }
 
-.table-container img {
+.table-container .addon {
   height: 60px;
   -o-object-fit: contain;
      object-fit: contain;

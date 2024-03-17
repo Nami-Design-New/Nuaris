@@ -7,27 +7,23 @@ import { toast } from "react-toastify";
 import axios from "./../../../../util/axios";
 import { useNavigate } from "react-router-dom";
 import SubmitButton from "../../../ui/form-elements/SubmitButton";
-import InputWithUnit from "../../../ui/form-elements/InputWithUnit";
 
 const PolicyForm = ({ setForm }) => {
-  const createdYacht = sessionStorage.getItem("yacht_id");
-  const cancelationCountInitial = {
-    period: "",
-    refund: "",
-  };
-
   const [loading, setLoading] = useState(false);
+  const createdYacht = sessionStorage.getItem("yacht_id");
+  const navigate = useNavigate();
+
+  const cancelationCountInitial = {
+    cancel_before: "",
+    percentage: "",
+    type: "select"
+  };
   const [formData, setFormData] = useState({
     weather_restrictions: "",
     rules_and_instructions: "",
     allowed_and_not_allowed_items: "",
-    yacht: createdYacht,
-    policy: Array(1)
-      .fill(0)
-      .map((_, i) => ({ ...cancelationCountInitial, index: i })),
+    cancellation_policy: [cancelationCountInitial]
   });
-
-  const navigate = useNavigate();
 
   const handleBack = (e) => {
     e.preventDefault();
@@ -38,12 +34,12 @@ const PolicyForm = ({ setForm }) => {
     e.preventDefault();
     setLoading(true);
     try {
-      const response = await axios.post("/policies/", formData);
-      if (response.status === 201) {
+      const response = await axios.patch(`/yachts/${createdYacht}/`, {
+        policy: formData
+      });
+      if (response) {
         toast.success("Policies Saved Successfully");
         navigate("/dashboard/fleet/add-yacht/media-photos");
-      } else {
-        toast.error("Something went wrong");
       }
     } catch (error) {
       console.error("Error:", error);
@@ -57,7 +53,7 @@ const PolicyForm = ({ setForm }) => {
     <form className="form-ui" onSubmit={handleSubmit}>
       <div className="row m-0">
         <div className="col-12 p-2">
-          <h6 className="form_title">Renting Policy & Cancelation Policy</h6>
+          <h6 className="form_title">Renting Policy & Cancellation Policy</h6>
         </div>
         <div className="col-12 p-2">
           <CommentField
@@ -96,37 +92,69 @@ const PolicyForm = ({ setForm }) => {
               <button
                 type="button"
                 onClick={() =>
-                  setFormData((prev) => {
-                    return {
-                      ...prev,
-                      policy: [
-                        ...prev.policy,
-                        {
-                          ...cancelationCountInitial,
-                          index: prev.policy.length,
-                        },
-                      ],
-                    };
-                  })
+                  setFormData((prev) => ({
+                    ...prev,
+                    cancellation_policy: [
+                      ...prev.cancellation_policy,
+                      { ...cancelationCountInitial }
+                    ]
+                  }))
                 }
               >
                 <img src={add} alt="add" />
               </button>
             </div>
-            {formData.policy.map((policy, index) => {
+            {formData.cancellation_policy.map((policy, index) => {
               return (
                 <div key={index} className="col-12 p-0 pt-2 pb-2 policy_cancel">
                   <div className="policyRow">
-                    <InputWithUnit
-                      htmlFor="period"
-                      label="if cancel before"
-                      id="period"
-                      units={["minutes", "hours", "days", "weeks", "months"]}
-                      innerTarget="policy"
-                      idx={index}
-                      formData={formData}
-                      setFormData={setFormData}
-                    />
+                    <div className="input-field">
+                      <label htmlFor="cancel_before">If cancel before</label>
+                      <div className="time-units">
+                        <input
+                          type="number"
+                          placeholder="00"
+                          name="cancel_before"
+                          id="cancel_before"
+                          value={policy.cancel_before}
+                          onChange={(e) => {
+                            const updatedPolicies = [
+                              ...formData.cancellation_policy
+                            ];
+                            updatedPolicies[index].cancel_before =
+                              +e.target.value;
+                            setFormData((prevFormData) => ({
+                              ...prevFormData,
+                              cancellation_policy: updatedPolicies
+                            }));
+                          }}
+                        />
+                        <select
+                          className="units"
+                          name="units"
+                          id="units"
+                          value={policy.type}
+                          onChange={(e) => {
+                            const updatedPolicies = [
+                              ...formData.cancellation_policy
+                            ];
+                            updatedPolicies[index].type = e.target.value;
+                            setFormData((prevFormData) => ({
+                              ...prevFormData,
+                              cancellation_policy: updatedPolicies
+                            }));
+                          }}
+                        >
+                          {["minutes", "hours", "days", "weeks", "months"].map(
+                            (unit, idx) => (
+                              <option key={idx} value={unit}>
+                                {unit}
+                              </option>
+                            )
+                          )}
+                        </select>
+                      </div>
+                    </div>
                     <div>
                       <label htmlFor={"firstDaysRefund" + index}>
                         Days refund is
@@ -136,19 +164,17 @@ const PolicyForm = ({ setForm }) => {
                         id={"firstDaysRefund" + index}
                         name="firstDaysRefund"
                         placeholder="00"
-                        value={policy.refund}
+                        value={policy.percentage}
                         onChange={(e) => {
+                          const updatedPolicies = [
+                            ...formData.cancellation_policy
+                          ];
+                          updatedPolicies[index].percentage = Number(
+                            e.target.value
+                          );
                           setFormData((prevFormData) => ({
                             ...prevFormData,
-                            policy:
-                              prevFormData.policy.map(
-                                (item, idx) => {
-                                  if (idx === index) {
-                                    return { ...item, refund: e.target.value };
-                                  }
-                                  return item;
-                                }
-                              ),
+                            cancellation_policy: updatedPolicies
                           }));
                         }}
                       />
@@ -159,12 +185,13 @@ const PolicyForm = ({ setForm }) => {
                     className="trash_btn"
                     type="button"
                     onClick={() => {
-                      const updatedPolicies = formData.policy.filter(
-                        (_, idx) => idx !== index
-                      );
+                      const updatedPolicies =
+                        formData.cancellation_policy.filter(
+                          (_, idx) => idx !== index
+                        );
                       setFormData((prevFormData) => ({
                         ...prevFormData,
-                        policy: updatedPolicies,
+                        cancellation_policy: updatedPolicies
                       }));
                     }}
                   >
