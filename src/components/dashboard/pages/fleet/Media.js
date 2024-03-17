@@ -15,8 +15,8 @@ const Media = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    images: Array(5).fill(""),
-    video_link: "",
+    image: Array(5).fill(""),
+    video_link: ""
   });
 
   const [currentUploading, setCurrentUploading] = useState([]);
@@ -24,7 +24,7 @@ const Media = () => {
     bucketName: "nuaris",
     region: "us-east-1",
     accessKeyId: process.env.REACT_APP_S3_ACCESS_KEY,
-    secretAccessKey: process.env.REACT_APP_s3_SECRET_ACCESS_KEY,
+    secretAccessKey: process.env.REACT_APP_s3_SECRET_ACCESS_KEY
   };
 
   async function handleUploadMedia(e) {
@@ -32,7 +32,7 @@ const Media = () => {
       const file = e[0].file;
       var blob = file.slice(0, file.size, file.type);
       const newFile = new File([blob], `${Date.now()}${file.name.slice(-5)}`, {
-        type: file.type,
+        type: file.type
       });
       const data = await uploadFile(newFile, config);
       return data.location;
@@ -70,11 +70,11 @@ const Media = () => {
         handleUploadMedia(e)
           .then((link) => {
             setFormData((prev) => {
-              const images = [...prev.images];
-              images[i] = link;
+              const image = [...prev.image];
+              image[i] = link;
               return {
                 ...prev,
-                images,
+                image
               };
             });
           })
@@ -84,13 +84,13 @@ const Media = () => {
       }
     } else {
       setCurrentUploading(
-        currentUploading.filter((e) => e !== formData.images[i])
+        currentUploading.filter((e) => e !== formData.image[i])
       );
       // // deleteFile(formData.images[i], config).then(() => {
       // });
       setFormData((prev) => ({
         ...prev,
-        images: prev.images.map((e, idx) => (idx === i ? "" : e)),
+        image: prev.image.map((e, idx) => (idx === i ? "" : e))
       }));
     }
   }

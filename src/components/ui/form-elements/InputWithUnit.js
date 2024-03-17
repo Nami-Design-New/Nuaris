@@ -6,9 +6,7 @@ const InputWithUnit = ({
   units,
   hint,
   formData,
-  setFormData,
-  idx,
-  innerTarget,
+  setFormData
 }) => {
   const [unit, setUnit] = useState(units[0]);
   const [value, setValue] = useState("");
@@ -25,16 +23,7 @@ const InputWithUnit = ({
 
   const handleChange = (newValue, newUnit) => {
     const combined = `${newValue} ${newUnit}`;
-    if (!innerTarget) {
-      setFormData({ ...formData, [htmlFor]: combined });
-    } else {
-      setFormData((prevFormData) => ({
-        ...prevFormData,
-        [innerTarget]: prevFormData[innerTarget].map((item, i) =>
-          i === idx ? { ...item, [htmlFor]: combined } : item
-        ),
-      }));
-    }
+    setFormData({ ...formData, [htmlFor]: combined });
   };
 
   return (

@@ -8,6 +8,7 @@ import axios from "../../../../util/axios";
 const CrewForm = ({ setForm }) => {
   const createdYacht = sessionStorage.getItem("yacht_id");
   const [loading, setLoading] = useState(false);
+  const [crewNumber, setCrewNumber] = useState(1);
   const initialMemberData = {
     name: "",
     nationality: "EG",
@@ -15,8 +16,7 @@ const CrewForm = ({ setForm }) => {
   };
 
   const [formData, setFormData] = useState({
-    number: 1,
-    crew_members: [initialMemberData]
+    crew: [initialMemberData]
   });
 
   const handleNext = (e) => {
@@ -57,11 +57,11 @@ const CrewForm = ({ setForm }) => {
   };
 
   const handleCrewNumberChange = (e) => {
+    setCrewNumber(e.target.value);
     const { value } = e.target;
     setFormData((prev) => ({
       ...prev,
-      number: value,
-      crew_members: Array(+value)
+      crew: Array(+value)
         .fill(0)
         .map(() => ({ ...initialMemberData }))
     }));
@@ -80,18 +80,18 @@ const CrewForm = ({ setForm }) => {
             label="Number of Crew"
             placeholder="0"
             type="number"
-            value={formData.number}
+            value={crewNumber}
             onChange={handleCrewNumberChange}
           />
         </div>
-        {Array(+formData?.number)
+        {Array(+crewNumber)
           .fill(0)
           .map((_, i) => {
             return (
               <CrewCard
                 key={i}
                 index={i}
-                formData={formData.crew_members[i] || {}}
+                formData={formData.crew[i] || {}}
                 setFormData={setFormData}
                 handleChange={handleChange}
               />

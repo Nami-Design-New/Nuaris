@@ -22,7 +22,7 @@ const MainInfoForm = ({ setForm }) => {
     license_expire_date: "",
     preparation_time: "",
     description_en: "",
-    description_ar: "",
+    description_ar: ""
   });
   const [loading, setLoading] = useState(false);
   const user = useSelector((state) => state.user?.user);
@@ -33,10 +33,6 @@ const MainInfoForm = ({ setForm }) => {
     setForm("Location");
   };
 
-  const headersList = {
-    Accept: "*/*",
-    "Content-Type": "multipart/form-data",
-  };
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -46,9 +42,7 @@ const MainInfoForm = ({ setForm }) => {
         throw new Error("No matching sub user found");
       }
       const data = { ...formData, sub_user: subUser[0]?.id };
-      const response = await axios.post("/yachts/", data, {
-        headers: headersList,
-      });
+      const response = await axios.post("/yachts/", data);
       if (response.status === 201) {
         setForm("Location");
         toast.success("Main Info Saved Successfully");

@@ -3,7 +3,7 @@ import InputField from "../../../ui/form-elements/InputField";
 import ReactFlagsSelect from "react-flags-select";
 import GenderSelect from "../../../ui/GenderSelect";
 
-const CrewCard = ({ index, formData, setFormData }) => {
+const CrewCard = ({ index, setFormData }) => {
   const [memberData, setMemberData] = useState({
     name: "",
     nationality: "EG",
@@ -12,11 +12,11 @@ const CrewCard = ({ index, formData, setFormData }) => {
 
   useEffect(() => {
     setFormData((prev) => {
-      const updatedCrewMembers = [...prev.crew_members];
+      const updatedCrewMembers = [...prev.crew];
       updatedCrewMembers[index] = memberData;
       return {
         ...prev,
-        crew_members: updatedCrewMembers
+        crew: updatedCrewMembers
       };
     });
   }, [index, memberData, setFormData]);
@@ -46,7 +46,7 @@ const CrewCard = ({ index, formData, setFormData }) => {
   return (
     <div className="col-12 p-2">
       <div className="member_card">
-        <p className="card_header">Crew member {index}</p>
+        <p className="card_header">Crew member {index + 1}</p>
         <div className="card_row">
           <div>
             <InputField
