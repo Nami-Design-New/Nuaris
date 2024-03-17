@@ -3,9 +3,10 @@ import pin from "../../../assets/images/pin.svg";
 import mapPin from "../../../assets/images/mapPin.svg";
 
 export default function MapCard({ title, location, lat, lng }) {
+  console.log(lat, lng);
   const position = {
-    lat: lat || 23.616091062161036,
-    lng: lng || 58.59891920931365,
+    lat: Number(lat),
+    lng: Number(lng)
   };
 
   return (
@@ -13,8 +14,8 @@ export default function MapCard({ title, location, lat, lng }) {
       <div className="content">
         <img src={pin} alt="pin icon" />
         <div className="text">
-          <span>{title || "vessel location"}</span>
-          <p>{location || "Riyadh, Saudi arabia"}</p>
+          <span>{title}</span>
+          <p>{location}</p>
         </div>
       </div>
       <div className="map">
@@ -26,9 +27,9 @@ export default function MapCard({ title, location, lat, lng }) {
                 mapTypeControl: false,
                 fullscreenControl: false,
                 disableDefaultUI: true,
-                clickableIcons: false,
+                clickableIcons: false
               }}
-              zoom={13}
+              zoom={8}
               mapContainerStyle={{ width: "100%", height: "100%" }}
               center={position}
             >

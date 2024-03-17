@@ -22,7 +22,7 @@ const PolicyForm = ({ setForm }) => {
     weather_restrictions: "",
     rules_and_instructions: "",
     allowed_and_not_allowed_items: "",
-    cancellation_policies: [cancelationCountInitial]
+    cancellation_policy: [cancelationCountInitial]
   });
 
   const handleBack = (e) => {
@@ -94,8 +94,8 @@ const PolicyForm = ({ setForm }) => {
                 onClick={() =>
                   setFormData((prev) => ({
                     ...prev,
-                    cancellation_policies: [
-                      ...prev.cancellation_policies,
+                    cancellation_policy: [
+                      ...prev.cancellation_policy,
                       { ...cancelationCountInitial }
                     ]
                   }))
@@ -104,7 +104,7 @@ const PolicyForm = ({ setForm }) => {
                 <img src={add} alt="add" />
               </button>
             </div>
-            {formData.cancellation_policies.map((policy, index) => {
+            {formData.cancellation_policy.map((policy, index) => {
               return (
                 <div key={index} className="col-12 p-0 pt-2 pb-2 policy_cancel">
                   <div className="policyRow">
@@ -119,13 +119,13 @@ const PolicyForm = ({ setForm }) => {
                           value={policy.cancel_before}
                           onChange={(e) => {
                             const updatedPolicies = [
-                              ...formData.cancellation_policies
+                              ...formData.cancellation_policy
                             ];
                             updatedPolicies[index].cancel_before =
                               +e.target.value;
                             setFormData((prevFormData) => ({
                               ...prevFormData,
-                              cancellation_policies: updatedPolicies
+                              cancellation_policy: updatedPolicies
                             }));
                           }}
                         />
@@ -136,12 +136,12 @@ const PolicyForm = ({ setForm }) => {
                           value={policy.type}
                           onChange={(e) => {
                             const updatedPolicies = [
-                              ...formData.cancellation_policies
+                              ...formData.cancellation_policy
                             ];
                             updatedPolicies[index].type = e.target.value;
                             setFormData((prevFormData) => ({
                               ...prevFormData,
-                              cancellation_policies: updatedPolicies
+                              cancellation_policy: updatedPolicies
                             }));
                           }}
                         >
@@ -167,14 +167,14 @@ const PolicyForm = ({ setForm }) => {
                         value={policy.percentage}
                         onChange={(e) => {
                           const updatedPolicies = [
-                            ...formData.cancellation_policies
+                            ...formData.cancellation_policy
                           ];
                           updatedPolicies[index].percentage = Number(
                             e.target.value
                           );
                           setFormData((prevFormData) => ({
                             ...prevFormData,
-                            cancellation_policies: updatedPolicies
+                            cancellation_policy: updatedPolicies
                           }));
                         }}
                       />
@@ -186,12 +186,12 @@ const PolicyForm = ({ setForm }) => {
                     type="button"
                     onClick={() => {
                       const updatedPolicies =
-                        formData.cancellation_policies.filter(
+                        formData.cancellation_policy.filter(
                           (_, idx) => idx !== index
                         );
                       setFormData((prevFormData) => ({
                         ...prevFormData,
-                        cancellation_policies: updatedPolicies
+                        cancellation_policy: updatedPolicies
                       }));
                     }}
                   >

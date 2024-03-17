@@ -1,7 +1,3 @@
-import yacht1 from "../../../../assets/images/yacht1.jpeg";
-import yacht2 from "../../../../assets/images/yacht2.jpeg";
-import yacht3 from "../../../../assets/images/yacht3.jpeg";
-import yacht4 from "../../../../assets/images/yacht4.jpeg";
 import Badge from "../../../ui/Badge";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -19,23 +15,21 @@ export default function FleetMediaSwiper({ media }) {
         effect="fade"
         loop={true}
         pagination={{
-          clickable: true,
+          clickable: true
         }}
         modules={[Pagination, EffectFade, Autoplay]}
         className="mySwiper"
       >
-        <SwiperSlide>
-          <img src={yacht1} alt="yacht1" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src={yacht2} alt="yacht2" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src={yacht3} alt="yacht3" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src={yacht4} alt="yacht4" />
-        </SwiperSlide>
+        {media?.video && (
+          <SwiperSlide>
+            <video src={media?.video} autoPlay loop muted playsInline></video>
+          </SwiperSlide>
+        )}
+        {media?.images?.map((image) => (
+          <SwiperSlide key={image}>
+            <img src={image} alt="yacht" />
+          </SwiperSlide>
+        ))}
       </Swiper>
     </div>
   );

@@ -19,15 +19,15 @@ const LocationForm = ({ setForm }) => {
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     city: "select",
-    country: "",
+    country: "SA",
     location: {
       lat: 0,
-      lng: 0,
+      lng: 0
     },
     meeting_location: {
       lat: 0,
-      lng: 0,
-    },
+      lng: 0
+    }
   });
 
   const fetchCitiesForCountry = (countryCode) => {
@@ -57,12 +57,12 @@ const LocationForm = ({ setForm }) => {
         city: cityName,
         location: {
           lat: Number(selectedCity.latitude).toFixed(6),
-          lng: Number(selectedCity.longitude).toFixed(6),
+          lng: Number(selectedCity.longitude).toFixed(6)
         },
         meeting_location: {
           lat: Number(selectedCity.latitude).toFixed(6),
-          lng: Number(selectedCity.longitude).toFixed(6),
-        },
+          lng: Number(selectedCity.longitude).toFixed(6)
+        }
       });
     }
   };

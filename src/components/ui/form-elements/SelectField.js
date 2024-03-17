@@ -9,7 +9,6 @@ const SelectField = ({
   setFormData,
   value
 }) => {
-  console.log(value);
   return (
     <div className="input-field">
       <label htmlFor={htmlFor}>{label}</label>

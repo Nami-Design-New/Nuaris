@@ -86,8 +86,6 @@ const Media = () => {
       setCurrentUploading(
         currentUploading.filter((e) => e !== formData.image[i])
       );
-      // // deleteFile(formData.images[i], config).then(() => {
-      // });
       setFormData((prev) => ({
         ...prev,
         image: prev.image.map((e, idx) => (idx === i ? "" : e))
