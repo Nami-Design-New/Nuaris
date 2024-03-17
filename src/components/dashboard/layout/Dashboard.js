@@ -6,59 +6,68 @@ import { useCookies } from "react-cookie";
 import { useJwt } from "react-jwt";
 import { useNavigate } from "react-router-dom";
 import axios from "../../../util/axios";
-import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {
   setToken,
   setUser,
 } from "../../../redux/slices/authenticatedUserSlice";
 
 export default function Dashboard() {
-  const [cookies, , removeCookie] = useCookies();
+  const [cookies] = useCookies();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [userRole, setUserRole] = useState(null);
 
+  const authedUser = useSelector((state) => state.user.user);
   const refreshToken = cookies?.refreshToken;
+
+  if (!refreshToken) {
+    navigate("/logout");
+  }
+
   const { decodedToken, isExpired } = useJwt(refreshToken || "");
 
   useEffect(() => {
-    if (!refreshToken) {
-      navigate("/login");
-      removeCookie("refreshToken");
+    if (isExpired || !refreshToken) {
+      navigate("/logout");
     }
-
-    if (decodedToken && !isExpired) {
+    if (!authedUser.id && decodedToken?.user_id) {
       const userId = decodedToken?.user_id;
-      const user = axios.get(`/users/${userId}`);
-      user.then((res) => {
-        dispatch(setUser(res.data));
-        setUserRole(res.data.current_role);
-      });
-      const token = axios.post(`/users/token/refresh/`, {
+      // get user
+      axios
+        .get(`/users/${userId}`, {
+          headers: {
+            Authorization: null,
+          },
+        })
+        .then((res) => {
+          dispatch(setUser(res.data));
+        });
+    }
+    // get token
+    axios
+      .post(`/users/token/refresh/`, {
         refresh: refreshToken,
-      });
-
-      token.then((res) => {
+      })
+      .then((res) => {
         dispatch(setToken(res.data.access));
         axios.defaults.headers.common[
           "Authorization"
         ] = `Bearer ${res.data.access}`;
       });
-    } else if (isExpired) {
-      navigate("/login");
-      removeCookie("refreshToken");
-    }
-  }, [decodedToken, dispatch, isExpired, navigate, refreshToken, removeCookie]);
+  }, [authedUser, decodedToken, dispatch, isExpired, navigate, refreshToken]);
 
   // - render dashboard based on user role
-  if (userRole === ROLES.HOST) {
+  if (!authedUser.id) {
+    return null;
+  }
+  if (authedUser.current_role === ROLES.HOST) {
     return <HostDashboard />;
   }
-  if (userRole === ROLES.AGENT) {
+  if (authedUser.current_role === ROLES.AGENT) {
     return <AgentDashboard />;
   }
-  if (userRole === ROLES.SERVICE_PROVIDER) {
+  if (authedUser.current_role === ROLES.SERVICE_PROVIDER) {
     return <UserSupport />;
   }
   return null;

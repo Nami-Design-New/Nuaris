@@ -1,12 +1,11 @@
 import axios from "axios";
+import { store } from "../redux/store";
+import { setToken } from "../redux/slices/authenticatedUserSlice";
 
 axios.defaults.baseURL = "https://nuaris-backend-9ef946ed3002.herokuapp.com";
 
 axios.defaults.headers.common["Content-Type"] = "application/json";
 axios.defaults.headers.common.Accept = "application/json";
-
-// stop infinite requests loop
-let refresh = false;
 
 const cookies = document.cookie;
 const listOfCookies = cookies.split(";");
@@ -22,24 +21,26 @@ axios.interceptors.response.use(
     return res;
   },
   async (err) => {
-    if (err.response?.status === 401 && !refresh) {
+    const originalRequest = err.config;
+    if (err.response?.status === 401 && !originalRequest._retry) {
       try {
-        refresh = true;
+        originalRequest._retry = true;
         delete axios.defaults.headers.common.Authorization;
         const res = await axios.post("/users/token/refresh/", {
           refresh: refreshToken,
         });
 
+        store.dispatch(setToken(res.data.access));
         axios.defaults.headers.common[
           "Authorization"
         ] = `Bearer ${res.data.access}`;
-        return axios(err.config);
+        originalRequest.headers.Authorization = `Bearer ${res.data.access}`;
+        return axios(originalRequest);
       } catch (error) {
         console.log(error);
         return err;
       }
     }
-    refresh = false;
     return err;
   }
 );

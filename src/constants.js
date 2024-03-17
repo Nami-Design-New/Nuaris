@@ -4,7 +4,7 @@ export const ROLES = {
   AGENT: "agent",
   EMPLOYEE: "employee",
   USER_SUPPORT: "user_support",
-  SERVICE_PROVIDER: "service_provider"
+  SERVICE_PROVIDER: "service_provider",
 };
 export const BRANDS = [
   "Sea Ray",
@@ -43,7 +43,7 @@ export const BRANDS = [
   "Island Hopper",
   "Mag Bay",
   "Local Manufacturers",
-  "Other"
+  "Other",
 ];
 export const FUEL = ["Diesel", "Gasoline", "Electric", "Other"];
 export const TYPE = ["motor", "sailing", "catamaran"];
@@ -55,6 +55,12 @@ export const YRARS = Array.from(
   { length: currentYear - startYear + 1 },
   (_, i) => currentYear - i
 );
+export const S3Config = {
+  bucketName: "nuaris",
+  region: "us-east-1",
+  accessKeyId: process.env.REACT_APP_S3_ACCESS_KEY,
+  secretAccessKey: process.env.REACT_APP_s3_SECRET_ACCESS_KEY,
+};
 
 //days
 export const DAYS = [
@@ -64,7 +70,7 @@ export const DAYS = [
   "Tuesday",
   "Wednesday",
   "Thursday",
-  "Friday"
+  "Friday",
 ];
 
 // add ons categories
@@ -72,7 +78,7 @@ export const ADD_ONS_CATEGORIES = [
   "Food & Beverages",
   "Party Themes",
   "Expert Assistant",
-  "Other"
+  "Other",
 ];
 
 // countries
@@ -322,5 +328,5 @@ export const COUNTRIES_NAMES = {
   EH: "Western Sahara",
   YE: "Yemen",
   ZM: "Zambia",
-  ZW: "Zimbabwe"
+  ZW: "Zimbabwe",
 };
