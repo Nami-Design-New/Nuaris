@@ -5,38 +5,38 @@ import CustomInputWithUnit from "../../../ui/form-elements/CustomInputWIthUnit";
 import CustomInputField from "../../../ui/form-elements/CustomInputField";
 
 const SeasonCard = ({ formData, setFormData, index }) => {
-  const currentCard = formData.seasonCards.find((e) => e.index === index);
+  const currentCard = formData.season_price.find((e) => e.index === index);
 
   function handleNestedChange(e, name, value = "value") {
     setFormData({
       ...formData,
-      seasonCards: [
-        ...formData.seasonCards.filter((e) => e.index !== index),
+      season_price: [
+        ...formData.season_price.filter((e) => e.index !== index),
         {
           ...currentCard,
           price: {
             ...currentCard.price,
-            [name]: e.target[value],
-          },
-        },
-      ],
+            [name]: e.target[value]
+          }
+        }
+      ]
     });
   }
 
   function handleChange(e) {
     setFormData((prev) => ({
       ...prev,
-      seasonCards: [
-        ...prev.seasonCards.filter((e) => e.index !== index),
-        { ...currentCard, [e.target.name]: e.target.value },
-      ],
+      season_price: [
+        ...prev.season_price.filter((e) => e.index !== index),
+        { ...currentCard, [e.target.name]: e.target.value }
+      ]
     }));
   }
 
   function handleDeleteSeasonCard() {
-    let newSeasonCards = formData.seasonCards.filter((e) => e.index !== index);
-    newSeasonCards = newSeasonCards.map((card, i) => ({ ...card, index: i }));
-    setFormData((prev) => ({ ...prev, seasonCards: newSeasonCards }));
+    let newseason_price = formData.season_price.filter((e) => e.index !== index);
+    newseason_price = newseason_price.map((card, i) => ({ ...card, index: i }));
+    setFormData((prev) => ({ ...prev, season_price: newseason_price }));
   }
 
   return (
@@ -51,19 +51,24 @@ const SeasonCard = ({ formData, setFormData, index }) => {
                 const timestampsArr = dates.map((e) =>
                   e.map((e) => {
                     const timestamp = e.unix;
-                    const date = new Date(timestamp * 1000);
-                    return date.toLocaleDateString();
+                    const dateObject = new Date(timestamp * 1000);
+                    return `${dateObject.getFullYear()}/${String(
+                      dateObject.getMonth() + 1
+                    ).padStart(2, "0")}/${String(dateObject.getDate()).padStart(
+                      2,
+                      "0"
+                    )}`;
                   })
                 );
                 setFormData({
                   ...formData,
-                  seasonCards: [
-                    ...formData.seasonCards.filter((e) => e.index !== index),
+                  season_price: [
+                    ...formData.season_price.filter((e) => e.index !== index),
                     {
                       ...currentCard,
-                      dates: timestampsArr,
-                    },
-                  ],
+                      dates: timestampsArr
+                    }
+                  ]
                 });
               }}
               multiple
@@ -112,9 +117,9 @@ const SeasonCard = ({ formData, setFormData, index }) => {
             </div>
           </div>
           <button
-            disabled={formData.seasonCards.length === 1}
+            disabled={formData.season_price.length === 1}
             style={{
-              opacity: formData.seasonCards.length === 1 ? "0.5" : "1",
+              opacity: formData.season_price.length === 1 ? "0.5" : "1"
             }}
             type="button"
             className="delete_btn"

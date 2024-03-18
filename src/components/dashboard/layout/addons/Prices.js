@@ -15,18 +15,19 @@ const Prices = ({ setForm }) => {
   const seasonCardInitialData = {
     price: {
       value: "",
-      unit: "select",
+      unit: "select"
     },
     extraHourPrice: "",
     minPrice: "",
     index: 0,
-    dates: [new Date()],
+    dates: [new Date()]
   };
 
   const initialData = {
     price: "",
     price_type: "select",
-    seasonCards: [seasonCardInitialData],
+    min_price: "",
+    season_price: [seasonCardInitialData]
   };
 
   const [formData, setFormData] = useState(initialData);
@@ -38,13 +39,13 @@ const Prices = ({ setForm }) => {
   function handleAddSeasonCard() {
     setFormData((prev) => ({
       ...prev,
-      seasonCards: [
-        ...prev.seasonCards,
+      season_price: [
+        ...prev.season_price,
         {
           ...seasonCardInitialData,
-          index: prev.seasonCards.length,
-        },
-      ],
+          index: prev.season_price.length
+        }
+      ]
     }));
   }
 
@@ -55,7 +56,7 @@ const Prices = ({ setForm }) => {
     try {
       const response = await axios.patch(`/addons/${createdAddOn}/`, {
         ...formData,
-        price_type: formData.price_type.toLocaleLowerCase(),
+        price_type: formData.price_type.toLocaleLowerCase()
       });
       if (response.status === 200) {
         toast.success("Prices Saved Successfully");
@@ -117,7 +118,7 @@ const Prices = ({ setForm }) => {
             formData={formData}
             setFormData={setFormData}
             label={"Minimum Price"}
-            htmlFor={"minPrice"}
+            htmlFor={"min_price"}
             hint={"UCD"}
             type="number"
             placeholder={"00"}
@@ -135,7 +136,7 @@ const Prices = ({ setForm }) => {
           </button>
         </div>
         {/* calender seasons cards */}
-        {formData.seasonCards.map((_, rowIndex) => (
+        {formData.season_price.map((_, rowIndex) => (
           <SeasonCard
             key={rowIndex}
             formData={formData}
