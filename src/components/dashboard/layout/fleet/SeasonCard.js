@@ -16,10 +16,10 @@ const SeasonCard = ({ formData, setFormData, index }) => {
           ...currentCard,
           price: {
             ...currentCard.price,
-            [name]: e.target[value],
-          },
-        },
-      ],
+            [name]: e.target[value]
+          }
+        }
+      ]
     });
   }
 
@@ -28,8 +28,8 @@ const SeasonCard = ({ formData, setFormData, index }) => {
       ...prev,
       seasonCards: [
         ...prev.seasonCards.filter((e) => e.index !== index),
-        { ...currentCard, [e.target.name]: e.target.value },
-      ],
+        { ...currentCard, [e.target.name]: e.target.value }
+      ]
     }));
   }
 
@@ -53,9 +53,9 @@ const SeasonCard = ({ formData, setFormData, index }) => {
                     ...formData.seasonCards.filter((e) => e.index !== index),
                     {
                       ...currentCard,
-                      dates: e,
-                    },
-                  ],
+                      dates: e
+                    }
+                  ]
                 });
               }}
               multiple
@@ -74,7 +74,7 @@ const SeasonCard = ({ formData, setFormData, index }) => {
                   value={currentCard.price.value}
                   selectValue={currentCard.price.unit}
                   label={"Price"}
-                  units={["minute", "hour", "day"]}
+                  units={["minute", "hour", "day", "week", "month"]}
                 />
               </div>
               {/* Extra Hour price */}
@@ -106,7 +106,7 @@ const SeasonCard = ({ formData, setFormData, index }) => {
           <button
             disabled={formData.seasonCards.length === 1}
             style={{
-              opacity: formData.seasonCards.length === 1 ? "0.5" : "1",
+              opacity: formData.seasonCards.length === 1 ? "0.5" : "1"
             }}
             type="button"
             className="delete_btn"

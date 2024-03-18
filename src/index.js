@@ -15,8 +15,8 @@ import "./assets/css/index.css";
 import "primereact/resources/themes/saga-blue/theme.css";
 import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
-/*---------------- odometer -----------------*/
-import "./assets/css/odometer.min.css";
+/*---------------- text editor -----------------*/
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

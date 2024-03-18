@@ -7,53 +7,44 @@ import SubmitButton from "../../../ui/form-elements/SubmitButton";
 import { toast } from "react-toastify";
 import axios from "./../../../../util/axios";
 import { useSelector } from "react-redux";
-import { BRANDS, TYPE } from "../../../../constants";
+import { BRANDS, S3Config, TYPE } from "../../../../constants";
 import { uploadFile } from "react-s3";
 import CustomFileUpload from "../../../ui/form-elements/CustomFileUpload";
 window.Buffer = window.Buffer || require("buffer").Buffer;
 
 const MainInfoForm = ({ setForm }) => {
   // ======== start file upload configration =======//
-  const [currentUploading, setCurrentUploading] = useState([]);
-  const config = {
-    bucketName: "nuaris",
-    region: "us-east-1",
-    accessKeyId: process.env.REACT_APP_S3_ACCESS_KEY,
-    secretAccessKey: process.env.REACT_APP_s3_SECRET_ACCESS_KEY
-  };
-  async function handleUploadMedia(e) {
+  const [fileLoading, setFileLoading] = useState(false);
+  const handleUploadMedia = async (file) => {
+    setFileLoading(true);
     try {
-      const file = e[0].file;
-      var blob = file.slice(0, file.size, file.type);
+      const blob = file.slice(0, file.size, file.type);
       const newFile = new File([blob], `${Date.now()}${file.name.slice(-5)}`, {
         type: file.type
       });
-      const data = await uploadFile(newFile, config);
+      const data = await uploadFile(newFile, S3Config);
       return data.location;
     } catch (error) {
       console.error("Error uploading file:", error);
       throw error;
+    } finally {
+      setFileLoading(false);
     }
-  }
-  function handleFileChange(e) {
-    if (e.length >= 1) {
-      const id = e[0].id;
-      if (!currentUploading.includes(id)) {
-        handleUploadMedia(e)
-          .then((link) => {
-            setFormData((prev) => ({ ...prev, license_file: link }));
-          })
-          .catch((error) => {
-            console.error("Error handling video upload:", error);
-          })
-          .finally(() => {
-            setCurrentUploading(currentUploading.filter((e) => e !== id));
-          });
+  };
+
+  const handleFileChange = async (e, i) => {
+    try {
+      if (!fileLoading) {
+        const file = e[0].file;
+        const link = await handleUploadMedia(file);
+        setFormData((prev) => ({ ...prev, license_file: link }));
       }
-    } else {
-      // Handle case when no file is selected
+    } catch (error) {
+      console.error("Error handling image upload:", error);
+      setFileLoading(false);
+      toast.error("Error uploading image");
     }
-  }
+  };
   // ======== end file upload configuration =======//
 
   const [formData, setFormData] = useState({
@@ -86,7 +77,11 @@ const MainInfoForm = ({ setForm }) => {
       if (!subUser) {
         throw new Error("No matching sub user found");
       }
-      const data = { ...formData, sub_user: subUser[0]?.id };
+      const data = {
+        ...formData,
+        sub_user: subUser[0]?.id,
+        type: formData.type.toLowerCase()
+      };
       const response = await axios.post("/yachts/", data);
       if (response.status === 201) {
         setForm("Location");
@@ -247,6 +242,7 @@ const MainInfoForm = ({ setForm }) => {
         <div className="col-12 p-2 pt-4 d-flex gap-3">
           <SubmitButton
             loading={loading}
+            fileLoading={fileLoading}
             name="Save"
             className="save_btn ms-auto"
           />

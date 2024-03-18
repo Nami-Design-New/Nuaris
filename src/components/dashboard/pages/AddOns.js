@@ -21,7 +21,7 @@ const AddOns = () => {
       parent_yacht: "Titanic",
       quantity: 2,
       price: 200,
-      active: true,
+      active: true
     },
     {
       id: 2,
@@ -31,8 +31,8 @@ const AddOns = () => {
       parent_yacht: "Mayflower",
       quantity: 2,
       price: 200,
-      active: false,
-    },
+      active: false
+    }
   ]);
   // Actions ui
   const actionTemplate = (rowData) => {
