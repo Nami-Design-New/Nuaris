@@ -16,10 +16,10 @@ const SeasonCard = ({ formData, setFormData, index }) => {
           ...currentCard,
           price: {
             ...currentCard.price,
-            [name]: e.target[value]
-          }
-        }
-      ]
+            [name]: e.target[value],
+          },
+        },
+      ],
     });
   }
 
@@ -28,8 +28,8 @@ const SeasonCard = ({ formData, setFormData, index }) => {
       ...prev,
       seasonCards: [
         ...prev.seasonCards.filter((e) => e.index !== index),
-        { ...currentCard, [e.target.name]: e.target.value }
-      ]
+        { ...currentCard, [e.target.name]: e.target.value },
+      ],
     }));
   }
 
@@ -47,15 +47,23 @@ const SeasonCard = ({ formData, setFormData, index }) => {
             <Calendar
               value={currentCard.dates}
               onChange={(e) => {
+                const dates = [...e];
+                const timestampsArr = dates.map((e) =>
+                  e.map((e) => {
+                    const timestamp = e.unix;
+                    const date = new Date(timestamp * 1000);
+                    return date.toLocaleDateString();
+                  })
+                );
                 setFormData({
                   ...formData,
                   seasonCards: [
                     ...formData.seasonCards.filter((e) => e.index !== index),
                     {
                       ...currentCard,
-                      dates: e
-                    }
-                  ]
+                      dates: timestampsArr,
+                    },
+                  ],
                 });
               }}
               multiple
@@ -106,7 +114,7 @@ const SeasonCard = ({ formData, setFormData, index }) => {
           <button
             disabled={formData.seasonCards.length === 1}
             style={{
-              opacity: formData.seasonCards.length === 1 ? "0.5" : "1"
+              opacity: formData.seasonCards.length === 1 ? "0.5" : "1",
             }}
             type="button"
             className="delete_btn"

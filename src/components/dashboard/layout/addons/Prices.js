@@ -15,18 +15,18 @@ const Prices = ({ setForm }) => {
   const seasonCardInitialData = {
     price: {
       value: "",
-      unit: "select"
+      unit: "select",
     },
     extraHourPrice: "",
     minPrice: "",
     index: 0,
-    dates: [new Date()]
+    dates: [new Date()],
   };
 
   const initialData = {
     price: "",
     price_type: "select",
-    seasonCards: [seasonCardInitialData]
+    seasonCards: [seasonCardInitialData],
   };
 
   const [formData, setFormData] = useState(initialData);
@@ -42,19 +42,20 @@ const Prices = ({ setForm }) => {
         ...prev.seasonCards,
         {
           ...seasonCardInitialData,
-          index: prev.seasonCards.length
-        }
-      ]
+          index: prev.seasonCards.length,
+        },
+      ],
     }));
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+
     try {
       const response = await axios.patch(`/addons/${createdAddOn}/`, {
         ...formData,
-        price_type: formData.price_type.toLocaleLowerCase()
+        price_type: formData.price_type.toLocaleLowerCase(),
       });
       if (response.status === 200) {
         toast.success("Prices Saved Successfully");
