@@ -29,7 +29,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     if (isExpired || !refreshToken) {
-      navigate("/logout");
+      return navigate("/logout");
     }
     if (!authedUser.id && decodedToken?.user_id) {
       const userId = decodedToken?.user_id;
