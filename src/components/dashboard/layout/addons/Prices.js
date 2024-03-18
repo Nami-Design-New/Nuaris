@@ -4,40 +4,33 @@ import calenderIcon from "../../../../assets/images/calender.svg";
 import addIcon from "../../../../assets/images/add.svg";
 import { useState } from "react";
 import SeasonCard from "../fleet/SeasonCard";
-import InputWithUnit from "../../../ui/form-elements/InputWithUnit";
 import InputField from "../../../ui/form-elements/InputField";
+import axios from "./../../../../util/axios";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const Prices = ({ setForm }) => {
+  const createdAddOn = sessionStorage.getItem("addon_id");
+  const navigate = useNavigate();
   const seasonCardInitialData = {
     price: {
-      value: 100,
-      unit: "hour",
+      value: "",
+      unit: "select"
     },
-    extraHourPrice: 0,
-    minPrice: 0,
+    extraHourPrice: "",
+    minPrice: "",
     index: 0,
-    dates: [new Date()],
+    dates: [new Date()]
   };
+
   const initialData = {
-    minimumRentalPeriod: {
-      value: 1,
-      unit: "hour",
-    },
-    price: {
-      value: 100,
-      unit: "hour",
-    },
-    extraHourPrice: 0,
-    minPrice: 0,
-    prepaymentPercentage: [""],
-    VAT: {
-      SA: false,
-      QA: false,
-    },
-    seasonCards: [seasonCardInitialData],
+    price: "",
+    price_type: "select",
+    seasonCards: [seasonCardInitialData]
   };
+
   const [formData, setFormData] = useState(initialData);
-  const [loading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const handleBack = (e) => {
     e.preventDefault();
     setForm("Working Time");
@@ -49,26 +42,74 @@ const Prices = ({ setForm }) => {
         ...prev.seasonCards,
         {
           ...seasonCardInitialData,
-          index: prev.seasonCards.length,
-        },
-      ],
+          index: prev.seasonCards.length
+        }
+      ]
     }));
   }
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      const response = await axios.patch(`/addons/${createdAddOn}/`, {
+        ...formData,
+        price_type: formData.price_type.toLocaleLowerCase()
+      });
+      if (response.status === 200) {
+        toast.success("Prices Saved Successfully");
+        navigate("/dashboard/addons");
+      } else {
+        toast.error("Something went wrong");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      toast.error("Something went wrong");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
-    <form className="form-ui">
+    <form className="form-ui" onSubmit={handleSubmit}>
       <div className="row m-0">
         <div className="col-12 p-2">
           <h6 className="form_title">Prices</h6>
         </div>
         <div className="col-lg-6 col-12 p-2">
-          <InputWithUnit
-            formData={formData}
-            setFormData={setFormData}
-            units={["minute", "hour", "day", "week"]}
-            label={"Price"}
-            htmlFor={"price"}
-          />
+          <div className="input-field">
+            <label htmlFor="price">Price</label>
+            <div className="time-units">
+              <input
+                type="number"
+                placeholder="00"
+                name="price"
+                id="price"
+                value={formData.price}
+                onChange={(e) =>
+                  setFormData({ ...formData, price: e.target.value })
+                }
+              />
+              <select
+                className="units"
+                name="units"
+                id="units"
+                value={formData.price_type}
+                onChange={(e) => {
+                  setFormData({ ...formData, price_type: e.target.value });
+                }}
+              >
+                <option value="select" disabled>
+                  Select
+                </option>
+                {["Minutes", "Hour", "Trip", "Item"].map((unit, index) => (
+                  <option key={index} value={unit}>
+                    {unit}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
         </div>
         <div className="col-lg-6 col-12 p-2">
           <InputField
@@ -82,7 +123,6 @@ const Prices = ({ setForm }) => {
             id={"minPrice"}
           />
         </div>
-        <div className="col-lg-6 col-12 p-2"></div>
         {/* calender seasons title */}
         <div className="col-12 p-2 d-flex align-items-center justify-content-between">
           <div className="d-flex align-items-center gap-2 addSeason">

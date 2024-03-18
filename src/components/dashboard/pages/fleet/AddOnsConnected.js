@@ -54,7 +54,7 @@ const AddOnsConnected = () => {
   };
 
   const imageTemplate = (item) => {
-    return <img src={item.image} alt="addon" />;
+    return <img className="addon" src={item.image} alt="addon" />;
   };
 
   return (

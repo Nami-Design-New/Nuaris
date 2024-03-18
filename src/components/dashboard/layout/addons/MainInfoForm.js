@@ -11,97 +11,73 @@ import Vat from "../Vat";
 import fav from "../../../../assets/images/fav.png";
 import { toast } from "react-toastify";
 import axios from "../../../../util/axios";
-import { ADD_ONS_CATEGORIES } from "../../../../constants";
+import { ADD_ONS_CATEGORIES, S3Config } from "../../../../constants";
 
 const MainInfoForm = ({ setForm }) => {
   const { yachts } = useSelector((state) => state.yachts);
-  const [currentUploading, setCurrentUploading] = useState([]);
   const [hasParentYacht, setHasParentYacht] = useState(false);
+  const [fileLoading, setFileLoading] = useState(false);
   const [loading, setLoading] = useState(false);
   const [videoLink, setVideoLink] = useState("");
   const [formData, setFormData] = useState({
-    attachments: [],
+    attachment: [Array(3).fill("")],
     name: "",
     description: "",
-    category: "",
+    category: "select",
     quantity: "",
     yacht: "select",
-    vat: null,
+    vat: null
   });
 
-  const config = {
-    bucketName: "nuaris",
-    region: "us-east-1",
-    accessKeyId: process.env.REACT_APP_S3_ACCESS_KEY,
-    secretAccessKey: process.env.REACT_APP_s3_SECRET_ACCESS_KEY,
+  const handleUploadMedia = async (file) => {
+    setFileLoading(true);
+    try {
+      const blob = file.slice(0, file.size, file.type);
+      const newFile = new File([blob], `${Date.now()}${file.name.slice(-3)}`, {
+        type: file.type
+      });
+      const data = await uploadFile(newFile, S3Config);
+      return data.location;
+    } catch (error) {
+      console.error("Error uploading file:", error);
+      throw error;
+    } finally {
+      setFileLoading(false);
+    }
   };
 
-  async function handleUploadMedia(e) {
-    const file = e[0].file;
-    var blob = file.slice(0, file.size, file.type);
-    const newFile = new File([blob], `${Date.now()}${file.name.slice(-5)}`, {
-      type: file.type,
-    });
-    return await uploadFile(newFile, config)
-      .then((data) => {
-        return data.location;
-      })
-      .catch((err) => console.error(err));
-  }
-
-  function handelImagesChange(e, i) {
-    if (e.length >= 1) {
-      const id = e[0].id;
-      if (!currentUploading.includes(id)) {
-        setCurrentUploading(currentUploading.push(id));
-        handleUploadMedia(e)
-          .then((link) => {
-            setFormData((prev) => {
-              const attachments = [...prev.attachments];
-              attachments[i] = link;
-              return {
-                ...prev,
-                attachments,
-              };
-            });
-          })
-          .finally(() => {
-            setCurrentUploading(currentUploading.filter((e) => e !== id));
-          });
+  const handleImagesChange = async (e, i) => {
+    try {
+      if (!fileLoading) {
+        const file = e[0].file;
+        const link = await handleUploadMedia(file);
+        setFormData((prev) => {
+          const attachment = [...prev.attachment];
+          attachment[i] = link;
+          return {
+            ...prev,
+            attachment
+          };
+        });
       }
-    } else {
-      setCurrentUploading(
-        currentUploading.filter((e) => e !== formData.attachments[i])
-      );
-      setFormData((prev) => ({
-        ...prev,
-        attachments: prev.attachments.map((e, idx) => (idx === i ? "" : e)),
-      }));
+    } catch (error) {
+      console.error("Error handling image upload:", error);
+      setFileLoading(false);
+      toast.error("Error uploading image");
     }
-  }
+  };
 
-  function handleVideoChange(e) {
-    if (e.length >= 1) {
-      const id = e[0].id;
-      if (!currentUploading.includes(id)) {
-        setCurrentUploading((prev) => [...prev, id]);
-        handleUploadMedia(e)
-          .then((link) => {
-            setVideoLink(link);
-          })
-          .finally(() => {
-            setCurrentUploading((prev) =>
-              prev.filter((fileId) => fileId !== id)
-            );
-          });
-      }
-    } else {
-      setCurrentUploading(
-        currentUploading.filter((fileId) => fileId !== videoLink)
-      );
-      setVideoLink("");
+  const handleVideoChange = async (e) => {
+    try {
+      const file = e[0].file;
+      const link = await handleUploadMedia(file);
+      setVideoLink(link);
+    } catch (error) {
+      console.error("Error handling video upload:", error);
+      setFileLoading(false);
+      toast.error("Error uploading video");
     }
-  }
+  };
 
   const handleNext = (e) => {
     e.preventDefault();
@@ -133,12 +109,17 @@ const MainInfoForm = ({ setForm }) => {
       } else {
         categoryId = "other";
       }
+      const attached = formData.attachment.filter((a) => a !== "");
+      if (videoLink) {
+        attached.push(videoLink);
+      }
       const res = await axios.post("/addons/", {
         ...formData,
         yacht: yachtId,
         category: categoryId,
         sub_user: subUser[0]?.id,
         user: user.id,
+        attachment: attached
       });
       if (res.status === 201) {
         toast.success("Addon Main Info Saved Successfully");
@@ -178,7 +159,7 @@ const MainInfoForm = ({ setForm }) => {
                     pannelRatio=".88"
                     accept={["image/png", "image/jpeg"]}
                     allowMultiple={false}
-                    onUpdateFiles={(e) => handelImagesChange(e, i)}
+                    onUpdateFiles={(e) => handleImagesChange(e, i)}
                   />
                 ))}
             </div>
@@ -275,6 +256,7 @@ const MainInfoForm = ({ setForm }) => {
         <div className="col-12 p-2 pt-4 d-flex gap-3">
           <SubmitButton
             loading={loading}
+            fileLoading={fileLoading}
             name="Save"
             className="save_btn ms-auto"
           />
