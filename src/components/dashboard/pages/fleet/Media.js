@@ -1,97 +1,71 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import photoSessionImg from "../../../../assets/images/photoSession.svg";
 import fav from "../../../../assets/images/fav.png";
 import CustomFileUpload from "../../../ui/form-elements/CustomFileUpload";
-import { useState } from "react";
 import { uploadFile } from "react-s3";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import axios from "../../../../util/axios";
 import SubmitButton from "../../../ui/form-elements/SubmitButton";
+import { S3Config } from "../../../../constants";
 window.Buffer = window.Buffer || require("buffer").Buffer;
 
 const Media = () => {
   const createdYacht = sessionStorage.getItem("yacht_id");
-  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const [fileLoading, setFileLoading] = useState(false);
   const [formData, setFormData] = useState({
     image: Array(5).fill(""),
     video_link: ""
   });
 
-  const [currentUploading, setCurrentUploading] = useState([]);
-  const config = {
-    bucketName: "nuaris",
-    region: "us-east-1",
-    accessKeyId: process.env.REACT_APP_S3_ACCESS_KEY,
-    secretAccessKey: process.env.REACT_APP_s3_SECRET_ACCESS_KEY
-  };
-
-  async function handleUploadMedia(e) {
+  const handleUploadMedia = async (file) => {
+    setFileLoading(true);
     try {
-      const file = e[0].file;
-      var blob = file.slice(0, file.size, file.type);
+      const blob = file.slice(0, file.size, file.type);
       const newFile = new File([blob], `${Date.now()}${file.name.slice(-5)}`, {
         type: file.type
       });
-      const data = await uploadFile(newFile, config);
+      const data = await uploadFile(newFile, S3Config);
       return data.location;
     } catch (error) {
       console.error("Error uploading file:", error);
       throw error;
+    } finally {
+      setFileLoading(false);
     }
-  }
+  };
 
-  function handleVideoChange(e) {
-    if (e.length >= 1) {
-      const id = e[0].id;
-      if (!currentUploading.includes(id)) {
-        handleUploadMedia(e)
-          .then((link) => {
-            setFormData((prev) => ({ ...prev, video_link: link }));
-          })
-          .catch((error) => {
-            console.error("Error handling video upload:", error);
-          })
-          .finally(() => {
-            setCurrentUploading(currentUploading.filter((e) => e !== id));
-          });
-      }
-    } else {
-      // Handle case when no file is selected
+  const handleVideoChange = async (e) => {
+    try {
+      const file = e[0].file;
+      const link = await handleUploadMedia(file);
+      setFormData((prev) => ({ ...prev, video_link: link }));
+    } catch (error) {
+      console.error("Error handling video upload:", error);
+      setFileLoading(false);
+      toast.error("Error uploading video");
     }
-  }
+  };
 
-  function handleImageChange(e, i) {
-    if (e.length >= 1) {
-      const id = e[0].id;
-      if (!currentUploading.includes(id)) {
-        setCurrentUploading(currentUploading.push(id));
-        handleUploadMedia(e)
-          .then((link) => {
-            setFormData((prev) => {
-              const image = [...prev.image];
-              image[i] = link;
-              return {
-                ...prev,
-                image
-              };
-            });
-          })
-          .finally(() => {
-            setCurrentUploading(currentUploading.filter((e) => e !== id));
-          });
+  const handleImageChange = async (e, i) => {
+    try {
+      if (!fileLoading) {
+        const file = e[0].file;
+        const link = await handleUploadMedia(file);
+        setFormData((prev) => {
+          const image = [...prev.image];
+          image[i] = link;
+          return { ...prev, image };
+        });
       }
-    } else {
-      setCurrentUploading(
-        currentUploading.filter((e) => e !== formData.image[i])
-      );
-      setFormData((prev) => ({
-        ...prev,
-        image: prev.image.map((e, idx) => (idx === i ? "" : e))
-      }));
+    } catch (error) {
+      console.error("Error handling image upload:", error);
+      setFileLoading(false);
+      toast.error("Error uploading image");
     }
-  }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -178,6 +152,7 @@ const Media = () => {
               <SubmitButton
                 className={"save_btn ms-auto"}
                 loading={loading}
+                fileLoading={fileLoading}
                 name={"Save"}
               />
             </div>

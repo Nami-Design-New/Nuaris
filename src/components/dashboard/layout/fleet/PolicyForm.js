@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import CommentField from "../../../ui/form-elements/CommentField";
 import add from "../../../../assets/images/add.svg";
 import trashIcon from "../../../../assets/images/delete.svg";
 import CustomInputField from "../../../ui/form-elements/CustomInputField";
 import { toast } from "react-toastify";
 import axios from "./../../../../util/axios";
 import { useNavigate } from "react-router-dom";
+import { Editor } from "react-draft-wysiwyg";
+import { EditorState, convertToRaw } from "draft-js";
 import SubmitButton from "../../../ui/form-elements/SubmitButton";
 
 const PolicyForm = ({ setForm }) => {
@@ -13,15 +14,22 @@ const PolicyForm = ({ setForm }) => {
   const createdYacht = sessionStorage.getItem("yacht_id");
   const navigate = useNavigate();
 
+  const [weatherEditorState, setWeatherEditorState] = useState(() =>
+    EditorState.createEmpty()
+  );
+  const [rulesEditorState, setRulesEditorState] = useState(() =>
+    EditorState.createEmpty()
+  );
+  const [allowedItemsEditorState, setAllowedItemsEditorState] = useState(() =>
+    EditorState.createEmpty()
+  );
+
   const cancelationCountInitial = {
     cancel_before: "",
     percentage: "",
     type: "select"
   };
   const [formData, setFormData] = useState({
-    weather_restrictions: "",
-    rules_and_instructions: "",
-    allowed_and_not_allowed_items: "",
     cancellation_policy: [cancelationCountInitial]
   });
 
@@ -34,8 +42,22 @@ const PolicyForm = ({ setForm }) => {
     e.preventDefault();
     setLoading(true);
     try {
+      const rawWeatherContent = convertToRaw(
+        weatherEditorState.getCurrentContent()
+      );
+      const rawRulesContent = convertToRaw(
+        rulesEditorState.getCurrentContent()
+      );
+      const rawAllowedItemsContent = convertToRaw(
+        allowedItemsEditorState.getCurrentContent()
+      );
       const response = await axios.patch(`/yachts/${createdYacht}/`, {
-        policy: formData
+        policy: {
+          ...formData,
+          weather_restrictions: JSON.stringify(rawWeatherContent),
+          rules_and_instructions: JSON.stringify(rawRulesContent),
+          allowed_and_not_allowed_items: JSON.stringify(rawAllowedItemsContent)
+        }
       });
       if (response) {
         toast.success("Policies Saved Successfully");
@@ -56,34 +78,46 @@ const PolicyForm = ({ setForm }) => {
           <h6 className="form_title">Renting Policy & Cancellation Policy</h6>
         </div>
         <div className="col-12 p-2">
-          <CommentField
-            htmlFor="weather_restrictions"
-            label="Weather Restriction"
-            placeholder="Write here"
-            id="weatherRestriction"
-            formData={formData}
-            setFormData={setFormData}
-          />
+          <div className="input-field">
+            <label>Weather Restriction</label>
+            <Editor
+              editorState={weatherEditorState}
+              toolbarClassName="toolbarClassName"
+              wrapperClassName="wrapperClassName"
+              editorClassName="editorClassName"
+              onEditorStateChange={(newEditorState) =>
+                setWeatherEditorState(newEditorState)
+              }
+            />
+          </div>
         </div>
         <div className="col-12 p-2">
-          <CommentField
-            htmlFor="rules_and_instructions"
-            label="Rules and instructions"
-            placeholder="Write here"
-            id="rolesAndInstructions"
-            formData={formData}
-            setFormData={setFormData}
-          />
+          <div className="input-field">
+            <label>Rules and instructions</label>
+            <Editor
+              editorState={rulesEditorState}
+              toolbarClassName="toolbarClassName"
+              wrapperClassName="wrapperClassName"
+              editorClassName="editorClassName"
+              onEditorStateChange={(newEditorState) =>
+                setRulesEditorState(newEditorState)
+              }
+            />
+          </div>
         </div>
         <div className="col-12 p-2">
-          <CommentField
-            htmlFor="allowed_and_not_allowed_items"
-            label="Allowed and not allowed items on board"
-            placeholder="Write here"
-            id="allowedAndNotAllowed"
-            formData={formData}
-            setFormData={setFormData}
-          />
+          <div className="input-field">
+            <label>Allowed and not allowed items on board</label>
+            <Editor
+              editorState={allowedItemsEditorState}
+              toolbarClassName="toolbarClassName"
+              wrapperClassName="wrapperClassName"
+              editorClassName="editorClassName"
+              onEditorStateChange={(newEditorState) =>
+                setAllowedItemsEditorState(newEditorState)
+              }
+            />
+          </div>
         </div>
         <div className="col-12 p-2">
           <div className="input-field policy_form">
