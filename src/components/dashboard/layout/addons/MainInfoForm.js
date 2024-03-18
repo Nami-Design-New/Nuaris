@@ -26,21 +26,21 @@ const MainInfoForm = ({ setForm }) => {
     category: "",
     quantity: "",
     yacht: "select",
-    vat: null
+    vat: null,
   });
 
   const config = {
     bucketName: "nuaris",
     region: "us-east-1",
     accessKeyId: process.env.REACT_APP_S3_ACCESS_KEY,
-    secretAccessKey: process.env.REACT_APP_s3_SECRET_ACCESS_KEY
+    secretAccessKey: process.env.REACT_APP_s3_SECRET_ACCESS_KEY,
   };
 
   async function handleUploadMedia(e) {
     const file = e[0].file;
     var blob = file.slice(0, file.size, file.type);
     const newFile = new File([blob], `${Date.now()}${file.name.slice(-5)}`, {
-      type: file.type
+      type: file.type,
     });
     return await uploadFile(newFile, config)
       .then((data) => {
@@ -61,7 +61,7 @@ const MainInfoForm = ({ setForm }) => {
               attachments[i] = link;
               return {
                 ...prev,
-                attachments
+                attachments,
               };
             });
           })
@@ -75,7 +75,7 @@ const MainInfoForm = ({ setForm }) => {
       );
       setFormData((prev) => ({
         ...prev,
-        attachments: prev.attachments.map((e, idx) => (idx === i ? "" : e))
+        attachments: prev.attachments.map((e, idx) => (idx === i ? "" : e)),
       }));
     }
   }
@@ -137,7 +137,8 @@ const MainInfoForm = ({ setForm }) => {
         ...formData,
         yacht: yachtId,
         category: categoryId,
-        sub_user: subUser[0]?.id
+        sub_user: subUser[0]?.id,
+        user: user.id,
       });
       if (res.status === 201) {
         toast.success("Addon Main Info Saved Successfully");

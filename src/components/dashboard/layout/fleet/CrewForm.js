@@ -12,11 +12,11 @@ const CrewForm = ({ setForm }) => {
   const initialMemberData = {
     name: "",
     nationality: "EG",
-    gender: "male"
+    gender: "male",
   };
 
   const [formData, setFormData] = useState({
-    crew: [initialMemberData]
+    crew: [initialMemberData],
   });
 
   const handleNext = (e) => {
@@ -31,6 +31,7 @@ const CrewForm = ({ setForm }) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    console.log(value);
     if (+value > 20) {
       toast.warning("Maximum crew members allowed is 20");
     } else {
@@ -57,14 +58,19 @@ const CrewForm = ({ setForm }) => {
   };
 
   const handleCrewNumberChange = (e) => {
-    setCrewNumber(e.target.value);
-    const { value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      crew: Array(+value)
-        .fill(0)
-        .map(() => ({ ...initialMemberData }))
-    }));
+    if (e.target.value > 20) {
+      toast.error("Maximum crew members is 20");
+      setCrewNumber(20);
+    } else {
+      setCrewNumber(e.target.value);
+      const { value } = e.target;
+      setFormData((prev) => ({
+        ...prev,
+        crew: Array(+value)
+          .fill(0)
+          .map(() => ({ ...initialMemberData })),
+      }));
+    }
   };
 
   return (

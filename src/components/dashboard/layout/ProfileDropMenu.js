@@ -9,7 +9,7 @@ import editIcon from "../../../assets/images/editIcon.svg";
 import { motion } from "framer-motion";
 import axios from "../../../util/axios";
 import { useDispatch } from "react-redux";
-import { logout } from "../../../redux/slices/authenticatedUserSlice";
+import { logout, setToken } from "../../../redux/slices/authenticatedUserSlice";
 
 const ProfileDropMenu = ({
   profileDropDown,
@@ -70,6 +70,19 @@ const ProfileDropMenu = ({
       initial="closed"
       animate={profileDropDown ? "open" : "closed"}
       className={`profile_dropdown`}
+      // onClick={() => {
+      //   axios.defaults.headers.common.Authorization =
+      //     "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzEwNzEwMTM4LCJpYXQiOjE3MTA3MDI1NDYsImp0aSI6IjFkNDI3NDBkOWRiZjQ2ZGU5OTc1ZTZkMWQ3N2QwMjBlIiwidXNlcl9pZCI6OTV9.GgU8s5Q4k3BFpVlr2i5O0wyOHbMzJqXgYqjYZYEKihw";
+      //   console.log(
+      //     "axios default now is =>",
+      //     axios.defaults.headers.common.Authorization
+      //   );
+      //   dispatch(
+      //     setToken(
+      //       "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzEwNzEwMTM4LCJpYXQiOjE3MTA3MDI1NDYsImp0aSI6IjFkNDI3NDBkOWRiZjQ2ZGU5OTc1ZTZkMWQ3N2QwMjBlIiwidXNlcl9pZCI6OTV9.GgU8s5Q4k3BFpVlr2i5O0wyOHbMzJqXgYqjYZYEKihw"
+      //     )
+      //   );
+      // }}
       ref={dropdownRef}
     >
       {/* authed user */}
