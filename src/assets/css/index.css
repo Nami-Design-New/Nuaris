@@ -2357,8 +2357,12 @@ th:last-child .p-column-header-content {
   margin: 0;
 }
 .stars_rate .stars img {
-  width: 20px;
   height: 20px;
+}
+@media (max-width: 576px) {
+  .stars_rate .stars img {
+    height: 14px;
+  }
 }
 
 .fleet-part {
@@ -2386,8 +2390,12 @@ th:last-child .p-column-header-content {
   gap: 8px;
 }
 .fleet-part .fleet-info-row .fleet_tag img {
-  width: 24px;
   height: 24px;
+}
+@media (max-width: 576px) {
+  .fleet-part .fleet-info-row .fleet_tag img {
+    height: 16px;
+  }
 }
 .fleet-part .fleet-info-row .fleet_tag p {
   margin: 0;
@@ -2396,9 +2404,25 @@ th:last-child .p-column-header-content {
   line-height: 29px;
   color: #0d0d0d;
 }
+@media (max-width: 576px) {
+  .fleet-part .fleet-info-row .fleet_tag p {
+    font-size: 18px;
+  }
+}
 .fleet-part .fleet-info-row .fleet_details {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
   gap: 12px;
+}
+@media (max-width: 768px) {
+  .fleet-part .fleet-info-row .fleet_details {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 576px) {
+  .fleet-part .fleet-info-row .fleet_details {
+    grid-template-columns: repeat(1, 1fr);
+  }
 }
 .fleet-part .fleet-info-row .fleet-info-minicard {
   padding: 12px;

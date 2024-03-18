@@ -17,7 +17,7 @@ const Media = () => {
   const [fileLoading, setFileLoading] = useState(false);
   const [formData, setFormData] = useState({
     image: Array(5).fill(""),
-    video_link: "",
+    video_link: ""
   });
 
   const handleUploadMedia = async (file) => {
@@ -25,7 +25,7 @@ const Media = () => {
     try {
       const blob = file.slice(0, file.size, file.type);
       const newFile = new File([blob], `${Date.now()}${file.name.slice(-5)}`, {
-        type: file.type,
+        type: file.type
       });
       const data = await uploadFile(newFile, S3Config);
       return data.location;
@@ -64,7 +64,6 @@ const Media = () => {
       console.error("Error handling image upload:", error);
       setFileLoading(false);
       toast.error("Error uploading image");
-
     }
   };
 
