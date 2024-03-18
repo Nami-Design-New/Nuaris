@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect } from "react";
 import photoSessionImg from "../../../../assets/images/photoSession.svg";
 import fav from "../../../../assets/images/fav.png";
 import CustomFileUpload from "../../../ui/form-elements/CustomFileUpload";
@@ -16,7 +16,7 @@ const Media = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     image: Array(5).fill(""),
-    video_link: ""
+    video_link: "",
   });
 
   const [currentUploading, setCurrentUploading] = useState([]);
@@ -24,7 +24,7 @@ const Media = () => {
     bucketName: "nuaris",
     region: "us-east-1",
     accessKeyId: process.env.REACT_APP_S3_ACCESS_KEY,
-    secretAccessKey: process.env.REACT_APP_s3_SECRET_ACCESS_KEY
+    secretAccessKey: process.env.REACT_APP_s3_SECRET_ACCESS_KEY,
   };
 
   async function handleUploadMedia(e) {
@@ -32,7 +32,7 @@ const Media = () => {
       const file = e[0].file;
       var blob = file.slice(0, file.size, file.type);
       const newFile = new File([blob], `${Date.now()}${file.name.slice(-5)}`, {
-        type: file.type
+        type: file.type,
       });
       const data = await uploadFile(newFile, config);
       return data.location;
@@ -74,7 +74,7 @@ const Media = () => {
               image[i] = link;
               return {
                 ...prev,
-                image
+                image,
               };
             });
           })
@@ -88,7 +88,7 @@ const Media = () => {
       );
       setFormData((prev) => ({
         ...prev,
-        image: prev.image.map((e, idx) => (idx === i ? "" : e))
+        image: prev.image.map((e, idx) => (idx === i ? "" : e)),
       }));
     }
   }
