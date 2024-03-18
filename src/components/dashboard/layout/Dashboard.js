@@ -55,7 +55,7 @@ export default function Dashboard() {
           "Authorization"
         ] = `Bearer ${res.data.access}`;
       });
-  }, [authedUser, decodedToken, dispatch, isExpired, navigate, refreshToken]);
+  }, [authedUser, decodedToken, dispatch, isExpired, refreshToken]);
 
   // - render dashboard based on user role
   if (!authedUser.id) {
