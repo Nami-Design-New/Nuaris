@@ -655,6 +655,8 @@ $transation: 0.3s ease-in-out;
         box-shadow: none !important;
       }
       label {
+        width: 100%;
+        display: block;
         cursor: pointer;
       }
     }
