@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PageHeader from "../layout/PageHeader";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Button } from "primereact/button";
@@ -12,6 +12,14 @@ import AddOnModal from "../layout/AddOnModal";
 
 const AddOns = () => {
   const [showModal, setShowModal] = useState(false);
+  const [searchParams] = useSearchParams();
+  const currentPage = searchParams.get("page");
+  const [addonsData, setAddonsData] = useState([]);
+
+  useEffect(() => {
+    // TODO: Fetch data
+  }, [currentPage]);
+
   const [tableData] = useState([
     {
       id: 1,
@@ -21,7 +29,7 @@ const AddOns = () => {
       parent_yacht: "Titanic",
       quantity: 2,
       price: 200,
-      active: true
+      active: true,
     },
     {
       id: 2,
@@ -31,8 +39,8 @@ const AddOns = () => {
       parent_yacht: "Mayflower",
       quantity: 2,
       price: 200,
-      active: false
-    }
+      active: false,
+    },
   ]);
   // Actions ui
   const actionTemplate = (rowData) => {
@@ -70,9 +78,7 @@ const AddOns = () => {
   const deleteRow = (rowData) => {
     console.log(rowData);
   };
-  const viewRow = (rowData) => {
-    console.log(rowData);
-  };
+
   return (
     <section className="section-main-content">
       <header className="flex-header">
@@ -85,10 +91,10 @@ const AddOns = () => {
         <div className="col-12 p-2">
           <div className="inner_card">
             <div className="col-12 p-2">
-              <div className="table-container">
+              <div className="table-container p-relative">
                 <DataTable
                   value={tableData}
-                  paginator
+                  // paginator
                   rows={5}
                   paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
                   currentPageReportTemplate="{first} to {last} of {totalRecords}"
@@ -101,6 +107,20 @@ const AddOns = () => {
                   <Column field="price" body={priceTemplate} header="Price" />
                   <Column header="Actions" body={actionTemplate} />
                 </DataTable>
+                <div>
+                  <Link
+                    to={
+                      currentPage > 1
+                        ? `?page=${currentPage - 1}`
+                        : "/dashboard/addons"
+                    }
+                  >
+                    <button>Previous</button>
+                  </Link>
+                  <Link to={`?page=${+currentPage + 1}`}>
+                    <button>Next</button>
+                  </Link>
+                </div>
               </div>
             </div>
           </div>
