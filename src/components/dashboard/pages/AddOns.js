@@ -29,32 +29,9 @@ const AddOns = () => {
       .then((res) => {
         setAddonsCount(res?.data?.count);
         setAddonsData(res?.data?.results);
-        console.log(res.data);
       });
   }, [currentPage]);
 
-  const [tableData] = useState([
-    {
-      id: 1,
-      name: "Inflatable boat",
-      image: inflatableImage,
-      category: "F&B",
-      parent_yacht: "Titanic",
-      quantity: 2,
-      price: 200,
-      active: true,
-    },
-    {
-      id: 2,
-      name: "Inflatable boat",
-      image: inflatableImage,
-      category: "Party Themes",
-      parent_yacht: "Mayflower",
-      quantity: 2,
-      price: 200,
-      active: false,
-    },
-  ]);
   // Actions ui
   const actionTemplate = (rowData) => {
     return (
