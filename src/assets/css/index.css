@@ -3166,4 +3166,40 @@ small.error {
 .DraftEditor-root::-webkit-scrollbar,
 .public-DraftEditor-content::-webkit-scrollbar {
   display: none;
+}
+
+.pagination_component {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+  justify-content: center;
+}
+.pagination_component img {
+  opacity: 50%;
+  transition: opacity 0.2s;
+}
+.pagination_component button:hover img {
+  opacity: 100%;
+}
+.pagination_component button.disabled:hover {
+  cursor: default;
+}
+.pagination_component button.disabled:hover img {
+  opacity: 50%;
+}
+.pagination_component .reverse img {
+  transform: rotate(180deg);
+}
+.pagination_component p {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+.pagination_component p span {
+  color: #0d0d0d;
+  font-weight: 600;
 }/*# sourceMappingURL=index.css.map */

@@ -9,6 +9,7 @@ import editIcon from "../../../assets/images/edit.svg";
 import inflatableImage from "../../../assets/images/inflatable.png";
 import eyeView from "../../../assets/images/eye.svg";
 import AddOnModal from "../layout/AddOnModal";
+import CustomPagination from "../../ui/CustomPagination";
 
 const AddOns = () => {
   const [showModal, setShowModal] = useState(false);
@@ -18,6 +19,7 @@ const AddOns = () => {
 
   useEffect(() => {
     // TODO: Fetch data
+    console.log(currentPage);
   }, [currentPage]);
 
   const [tableData] = useState([
@@ -107,20 +109,7 @@ const AddOns = () => {
                   <Column field="price" body={priceTemplate} header="Price" />
                   <Column header="Actions" body={actionTemplate} />
                 </DataTable>
-                <div>
-                  <Link
-                    to={
-                      currentPage > 1
-                        ? `?page=${currentPage - 1}`
-                        : "/dashboard/addons"
-                    }
-                  >
-                    <button>Previous</button>
-                  </Link>
-                  <Link to={`?page=${+currentPage + 1}`}>
-                    <button>Next</button>
-                  </Link>
-                </div>
+                <CustomPagination count={20} />
               </div>
             </div>
           </div>
