@@ -109,7 +109,7 @@ const AddOns = () => {
                   <Column field="price" body={priceTemplate} header="Price" />
                   <Column header="Actions" body={actionTemplate} />
                 </DataTable>
-                <CustomPagination />
+                <CustomPagination count={20} />
               </div>
             </div>
           </div>
