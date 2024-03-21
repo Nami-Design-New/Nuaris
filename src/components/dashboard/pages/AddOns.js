@@ -19,6 +19,7 @@ const AddOns = () => {
 
   useEffect(() => {
     // TODO: Fetch data
+    console.log("fetch data for page: ", currentPage);
   }, [currentPage]);
 
   const [tableData] = useState([
@@ -108,7 +109,7 @@ const AddOns = () => {
                   <Column field="price" body={priceTemplate} header="Price" />
                   <Column header="Actions" body={actionTemplate} />
                 </DataTable>
-                <CustomPagination count={20} />
+                <CustomPagination count={50} />
               </div>
             </div>
           </div>
