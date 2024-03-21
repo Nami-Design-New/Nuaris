@@ -2979,6 +2979,8 @@ small.error {
   display: flex;
   align-items: center;
   gap: 6px;
+  width: 180px;
+  justify-content: center;
   button {
     border: 1px solid $border;
     border-radius: 4px;

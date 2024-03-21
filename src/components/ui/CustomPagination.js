@@ -11,7 +11,8 @@ export default function CustomPagination({
   param = "page",
 }) {
   const [searchParams, setSearchParams] = useSearchParams();
-  const lastPage = Math.ceil(count / (pageSize || HOST_DASHBOARD_TABLE_SIZE));
+  const lastPage =
+    10 || Math.ceil(count / (pageSize || HOST_DASHBOARD_TABLE_SIZE));
 
   const currentPage = searchParams.get(param) || 1;
   const atStart = currentPage <= 1;
