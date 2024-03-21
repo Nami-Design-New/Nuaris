@@ -83,7 +83,7 @@ const CreatePermission = () => {
               </div>
               <div className="col-12 p-2">
                 <h6 className="simiLabel">
-                  Assign Group Permissions to employee
+                  Choose permissions to assign to group
                 </h6>
               </div>
               {permissions?.map((p) => (
