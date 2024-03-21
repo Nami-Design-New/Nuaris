@@ -19,7 +19,6 @@ const AddOns = () => {
 
   useEffect(() => {
     // TODO: Fetch data
-    console.log(currentPage);
   }, [currentPage]);
 
   const [tableData] = useState([

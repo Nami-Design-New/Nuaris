@@ -2,10 +2,17 @@ import { useSearchParams } from "react-router-dom";
 import { HOST_DASHBOARD_TABLE_SIZE } from "../../constants";
 import chevron from "../../assets/images/chevron-right.svg";
 import chevronDouble from "../../assets/images/chevron-right-double.svg";
+import CustomPaginationNumbers from "./CustomPaginationNumbers";
 
-export default function CustomPagination({ className, count, param = "page" }) {
+export default function CustomPagination({
+  pageSize,
+  className,
+  count,
+  param = "page",
+}) {
   const [searchParams, setSearchParams] = useSearchParams();
-  const lastPage = Math.ceil(count / HOST_DASHBOARD_TABLE_SIZE);
+  const lastPage =
+    10 || Math.ceil(count / (pageSize || HOST_DASHBOARD_TABLE_SIZE));
 
   const currentPage = searchParams.get(param) || 1;
   const atStart = currentPage <= 1;
@@ -33,11 +40,12 @@ export default function CustomPagination({ className, count, param = "page" }) {
           <img src={chevron} alt="Previous" />
         </button>
       </div>
-      <p>
-        <span>{currentPage}</span>
-        <span>of</span>
-        <span>{lastPage}</span>
-      </p>
+      <CustomPaginationNumbers
+        currentPage={currentPage}
+        lastPage={lastPage}
+        param={param}
+        setSearchParams={setSearchParams}
+      />
       <div>
         <button onClick={handleNext}>
           <img src={chevron} alt="Next" />
