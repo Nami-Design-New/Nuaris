@@ -2170,8 +2170,10 @@ th:last-child .p-column-header-content {
       margin: 0;
     }
     img {
-      width: 20px;
       height: 20px;
+      @media (max-width: 576px) {
+        height: 14px;
+      }
     }
   }
 }
@@ -2197,8 +2199,10 @@ th:last-child .p-column-header-content {
       align-items: center;
       gap: 8px;
       img {
-        width: 24px;
         height: 24px;
+        @media (max-width: 576px) {
+          height: 16px;
+        }
       }
       p {
         margin: 0;
@@ -2206,11 +2210,21 @@ th:last-child .p-column-header-content {
         font-size: 24px;
         line-height: 29px;
         color: $dark;
+        @media (max-width: 576px) {
+          font-size: 18px;
+        }
       }
     }
     .fleet_details {
-      display: flex;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
       gap: 12px;
+      @media (max-width: 768px) {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      @media (max-width: 576px) {
+        grid-template-columns: repeat(1, 1fr);
+      }
     }
     .fleet-info-minicard {
       padding: 12px;
