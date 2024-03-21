@@ -2,23 +2,25 @@ import React from "react";
 import Modal from "react-bootstrap/Modal";
 import axios from "../../../util/axios";
 import { toast } from "react-toastify";
-import { useDispatch } from "react-redux";
 
 const DeleteModal = ({
   showDeleteModal,
   setShowDeleteModal,
   row,
-  sliceAction,
   endPoint,
+  tableData,
+  totalRecords,
+  setTotalRecords,
+  setTableData
 }) => {
-  const dispatch = useDispatch();
-
   const handelConfirm = async () => {
     if (row) {
       try {
         await axios.delete(`${endPoint}/${row.id}/`);
         toast.success(`${row.name} group deleted successfully`);
-        dispatch(sliceAction(row.id));
+        const updatedTableData = tableData.filter((item) => item.id !== row.id);
+        setTableData(updatedTableData);
+        setTotalRecords(totalRecords - 1);
       } catch (error) {
         toast.error("An error occurred while deletion");
       } finally {

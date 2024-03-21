@@ -6,22 +6,58 @@ import { Link, useNavigate } from "react-router-dom";
 import { DataTable } from "primereact/datatable";
 import { Button } from "primereact/button";
 import { Column } from "primereact/column";
-import { useSelector } from "react-redux";
 import DeleteModal from "../layout/DeleteModal";
 import { removePermissionGroup } from "../../../redux/slices/permissionsGroups";
+import axios from "./../../../util/axios";
 
 const Permissions = () => {
   const [row, setRow] = useState({});
   const [tableData, setTableData] = useState([]);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const navigate = useNavigate();
-  const groups = useSelector(
-    (state) => state.permissionsGroups.permissionsGroups
-  );
+  const [totalRecords, setTotalRecords] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [nextLink, setNextLink] = useState(null);
+  const [previousLink, setPreviousLink] = useState(null);
+  const fetchTableData = async () => {
+    try {
+      const response = await axios.get("/groups/");
+      setTotalRecords(response?.data?.count);
+      setTableData(response?.data?.results);
+      setNextLink(response?.data?.next);
+      setPreviousLink(response?.data?.previous);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handlePagination = async (link) => {
+    if (!link) return;
+    const response = await axios.get(link);
+    setTableData(response?.data?.results);
+    setNextLink(response?.data?.next);
+    setPreviousLink(response?.data?.previous);
+    setCurrentPage((prevPage) => {
+      if (link === nextLink) return prevPage + 1;
+      if (link === previousLink) return prevPage - 1;
+      return prevPage;
+    });
+  };
 
   useEffect(() => {
-    setTableData(groups);
-  }, [groups]);
+    fetchTableData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const entriesPerPage = tableData?.length;
+  const startIndex =
+    totalRecords === 0 ? 0 : (currentPage - 1) * entriesPerPage + 1;
+  const endIndex =
+    totalRecords === 0
+      ? 0
+      : currentPage === Math.ceil(totalRecords / entriesPerPage)
+      ? totalRecords
+      : currentPage * entriesPerPage;
 
   // Actions ui
   const actionTemplate = (rowData) => {
@@ -71,6 +107,30 @@ const Permissions = () => {
                   <Column field="name" header="Permission Name" />
                   <Column header="Actions" body={actionTemplate} />
                 </DataTable>
+                <div className="pagination_template">
+                  <div className="showing">
+                    <p>
+                      Showing {startIndex} to {endIndex} of {totalRecords}{" "}
+                      entries
+                    </p>
+                  </div>
+                  <div className="pagination_btns">
+                    <button
+                      className={`paginator_btn ${
+                        previousLink ? "" : "disabled"
+                      }`}
+                      onClick={() => handlePagination(previousLink)}
+                    >
+                      <i className="fa-regular fa-angle-left"></i>
+                    </button>
+                    <button
+                      className={`paginator_btn ${nextLink ? "" : "disabled"}`}
+                      onClick={() => handlePagination(nextLink)}
+                    >
+                      <i className="fa-regular fa-angle-right"></i>
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -79,9 +139,12 @@ const Permissions = () => {
       <DeleteModal
         row={row}
         endPoint="groups"
+        tableData={tableData}
+        setTableData={setTableData}
+        totalRecords={totalRecords}
         showDeleteModal={showDeleteModal}
+        setTotalRecords={setTotalRecords}
         setShowDeleteModal={setShowDeleteModal}
-        sliceAction={removePermissionGroup}
       />
     </React.Fragment>
   );

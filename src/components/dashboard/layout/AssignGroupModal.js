@@ -8,12 +8,12 @@ const AssignGroupModal = ({
   showDeleteModal,
   setShowDeleteModal,
   formData,
-  ivitedUserId,
+  ivitedUserId
 }) => {
   const groups = useSelector(
     (state) => state.permissionsGroups.permissionsGroups
   );
-  const group = groups.find((group) => group.id === formData.id);
+  const group = groups?.results?.find((group) => group.id === formData.id);
   const handleConfirm = async () => {
     try {
       await axios.post(`/users/${ivitedUserId}/assign_group/`, formData);

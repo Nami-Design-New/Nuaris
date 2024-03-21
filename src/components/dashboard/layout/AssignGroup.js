@@ -9,12 +9,12 @@ const AssignGroup = ({ ivitedUserId }) => {
   const [formData, setFormData] = useState({ id: "" });
 
   const permissionsGroups = useSelector(
-    (state) => state.permissionsGroups.permissionsGroups
+    (state) => state.permissionsGroups.permissionsGroups?.results
   );
 
   useEffect(() => {
     if (permissionsGroups) {
-      const permissionGroupsMap = permissionsGroups.reduce((acc, group) => {
+      const permissionGroupsMap = permissionsGroups?.reduce((acc, group) => {
         acc[group.id] = false;
         return acc;
       }, {});
@@ -47,7 +47,7 @@ const AssignGroup = ({ ivitedUserId }) => {
                 Assign Group Permissions to employee
               </h6>
             </div>
-            {permissionsGroups.map((g) => (
+            {permissionsGroups?.map((g) => (
               <div className="col-lg-4 col-md-6 col-12 p-2" key={g.id}>
                 <CheckField
                   name={g.name}

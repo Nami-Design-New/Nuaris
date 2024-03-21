@@ -1,21 +1,19 @@
 import React, { useRef, useState } from "react";
 import PageHeader from "../layout/PageHeader";
 import InputField from "../../ui/form-elements/InputField";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import axios from "../../../util/axios";
 import { toast } from "react-toastify";
 
 import SubmitButton from "./../../ui/form-elements/SubmitButton";
-import { setPermissionsGroups } from "../../../redux/slices/permissionsGroups";
 import CheckField from "../../ui/form-elements/CheckField";
 
 const CreatePermission = () => {
-  const dispatch = useDispatch();
   const formRef = useRef(null);
-  const permissions = useSelector((state) => state.permissions.permissions);
-  const permissionsGroups = useSelector(
-    (state) => state.permissionsGroups.permissionsGroups
+  const permissions = useSelector(
+    (state) => state.permissions.permissions?.results
   );
+
   const [formData, setFormData] = useState({ permissions: [] });
   const [loading, setLoading] = useState(false);
 
@@ -24,7 +22,7 @@ const CreatePermission = () => {
     if (checked) {
       setFormData({
         ...formData,
-        permissions: [...formData.permissions, passedPermission],
+        permissions: [...formData.permissions, passedPermission]
       });
     } else {
       const filteredPermessions = formData.permissions.filter(
@@ -37,25 +35,23 @@ const CreatePermission = () => {
   const requestOptions = {
     method: "POST",
     url: "/groups/",
-    data: formData,
+    data: formData
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     try {
       const response = await axios.request(requestOptions);
-      toast.success(`${formData.name} permissions group Created Successfully`);
-      dispatch(setPermissionsGroups([...permissionsGroups, response.data]));
-      formRef.current.reset();
-    } catch (error) {
-      if (error.response && error.response.data) {
-        const errors = error.response.data;
-        Object.keys(errors).forEach((field) => {
-          errors[field].forEach((message) => {
-            toast.error(`${field}: ${message}`);
-          });
-        });
+      if (response.status === 201 || response.status === 200) {
+        toast.success(
+          `${formData.name} permissions group Created Successfully`
+        );
+        formRef.current.reset();
+      } else {
+        toast.error("group with this name already exists.");
       }
+    } catch (error) {
+      toast.error("Something went wrong");
       console.log(error);
     } finally {
       setLoading(false);
@@ -90,7 +86,7 @@ const CreatePermission = () => {
                   Assign Group Permissions to employee
                 </h6>
               </div>
-              {permissions.map((p) => (
+              {permissions?.map((p) => (
                 <div className="col-lg-4 col-md-6 col-12 p-2" key={p.id}>
                   <CheckField
                     label={p.codename}

@@ -3204,4 +3204,36 @@ small.error {
 .pagination_component p span {
   color: #0d0d0d;
   font-weight: 600;
+}
+
+.pagination_template {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 32px;
+  gap: 0.5rem;
+}
+.pagination_template .pagination_btns {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.pagination_template .pagination_btns .paginator_btn {
+  width: 32px;
+  height: 32px;
+  background: #006980;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.pagination_template .pagination_btns .paginator_btn i {
+  color: #fff;
+  font-size: 16px;
+}
+.pagination_template .pagination_btns .paginator_btn.disabled {
+  opacity: 50%;
+  pointer-events: none;
 }/*# sourceMappingURL=index.css.map */
