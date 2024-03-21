@@ -2981,6 +2981,9 @@ small.error {
   gap: 6px;
   width: 180px;
   justify-content: center;
+  &.mini {
+    width: 140px;
+  }
   button {
     border: 1px solid $border;
     border-radius: 4px;

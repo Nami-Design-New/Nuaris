@@ -10,16 +10,27 @@ import inflatableImage from "../../../assets/images/inflatable.png";
 import eyeView from "../../../assets/images/eye.svg";
 import AddOnModal from "../layout/AddOnModal";
 import CustomPagination from "../../ui/CustomPagination";
+import axios from "../../../util/axios";
 
 const AddOns = () => {
   const [showModal, setShowModal] = useState(false);
   const [searchParams] = useSearchParams();
   const currentPage = searchParams.get("page");
   const [addonsData, setAddonsData] = useState([]);
+  const [addonsCount, setAddonsCount] = useState(0);
 
   useEffect(() => {
-    // TODO: Fetch data
-    console.log("fetch data for page: ", currentPage);
+    axios
+      .get("/addons/", {
+        params: {
+          page: currentPage,
+        },
+      })
+      .then((res) => {
+        setAddonsCount(res?.data?.count);
+        setAddonsData(res?.data?.results);
+        console.log(res.data);
+      });
   }, [currentPage]);
 
   const [tableData] = useState([
@@ -63,13 +74,13 @@ const AddOns = () => {
     );
   };
   const imageTemplate = (item) => {
-    return <img src={item.image} alt="addon" className="addon" />;
+    return <img src={item.attachments[0]} alt="addon" className="addon" />;
   };
   const priceTemplate = (item) => {
     return (
       <div className="price_template">
         <h4>{item.price} $ </h4>
-        <span>/ Trip</span>
+        <span>/ {item.price_type}</span>
       </div>
     );
   };
@@ -95,7 +106,7 @@ const AddOns = () => {
             <div className="col-12 p-2">
               <div className="table-container p-relative">
                 <DataTable
-                  value={tableData}
+                  value={addonsData}
                   // paginator
                   rows={5}
                   paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
@@ -109,7 +120,7 @@ const AddOns = () => {
                   <Column field="price" body={priceTemplate} header="Price" />
                   <Column header="Actions" body={actionTemplate} />
                 </DataTable>
-                <CustomPagination count={50} />
+                <CustomPagination count={addonsCount} />
               </div>
             </div>
           </div>
