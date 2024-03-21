@@ -40,7 +40,7 @@ const HostDashboard = () => {
       permissionsData,
       employeesData,
       positionsData,
-      yachtsData,
+      yachtsData
     ] = await Promise.all([groups, permissions, employees, positions, yachts]);
 
     dispatch(setPermissionsGroups(groupsData.data));

@@ -669,6 +669,8 @@ button {
   box-shadow: none !important;
 }
 .form-ui .check_field .form-check label {
+  width: 100%;
+  display: block;
   cursor: pointer;
 }
 .form-ui .time-units {
