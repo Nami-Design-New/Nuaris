@@ -13,13 +13,13 @@ const EditPermissions = () => {
   const [loading, setLoading] = useState(false);
 
   const { permissionId } = useParams();
-  const permissions = useSelector((state) => state.permissions.permissions);
+  const permissions = useSelector((state) => state.permissions.permissions?.results);
   const permissionsGroups = useSelector(
-    (state) => state.permissionsGroups.permissionsGroups
+    (state) => state.permissionsGroups.permissionsGroups?.results
   );
 
   useEffect(() => {
-    const permissionsGroup = permissionsGroups.find(
+    const permissionsGroup = permissionsGroups?.find(
       (p) => p.id === parseInt(permissionId)
     );
     if (permissionsGroup) {
@@ -99,7 +99,7 @@ const EditPermissions = () => {
                   Assign Group Permissions to employee
                 </h6>
               </div>
-              {permissions.map((p) => (
+              {permissions?.map((p) => (
                 <div className="col-lg-4 col-md-6 col-12 p-2" key={p.id}>
                   <CheckField
                     label={p.codename}

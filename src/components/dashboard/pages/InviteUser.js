@@ -1,44 +1,82 @@
-import React, { useEffect, useState } from "react";
-import PageHeader from "../layout/PageHeader";
-import deleteIcon from "../../../assets/images/delete.svg";
-import editIcon from "../../../assets/images/edit.svg";
+import React, { useState, useEffect } from "react";
+import axios from "./../../../util/axios";
 import { Link } from "react-router-dom";
 import { DataTable } from "primereact/datatable";
 import { Button } from "primereact/button";
 import { Column } from "primereact/column";
 import { useSelector } from "react-redux";
-import DeleteModal from "../layout/DeleteModal";
 import { removeEmployee } from "../../../redux/slices/employeesSlice";
+import deleteIcon from "../../../assets/images/delete.svg";
+import editIcon from "../../../assets/images/edit.svg";
+import PageHeader from "../layout/PageHeader";
+import DeleteModal from "../layout/DeleteModal";
 
 const InviteUser = () => {
-  const [row, setRow] = useState({});
-  const [tableData, setTableData] = useState([]);
+  const user = useSelector((state) => state.user?.user);
+  const subUserSet = user?.subuser_set;
+  const subUser = subUserSet?.filter((u) => u.role === user.current_role)[0]
+    ?.id;
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const employees = useSelector((state) => state.employees.employees);
+  const [tableData, setTableData] = useState([]);
+  const [row, setRow] = useState({});
+  const [totalRecords, setTotalRecords] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [nextLink, setNextLink] = useState(null);
+  const [previousLink, setPreviousLink] = useState(null);
+
+  const fetchTableData = async () => {
+    try {
+      const response = await axios.get(`/employees/?sub_user=${subUser}`);
+      setTotalRecords(response?.data?.count);
+      setTableData(response?.data?.results);
+      setNextLink(response?.data?.next);
+      setPreviousLink(response?.data?.previous);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handlePagination = async (link) => {
+    if (!link) return;
+    const response = await axios.get(link);
+    setTableData(response?.data?.results);
+    setNextLink(response?.data?.next);
+    setPreviousLink(response?.data?.previous);
+    setCurrentPage((prevPage) => {
+      if (link === nextLink) return prevPage + 1;
+      if (link === previousLink) return prevPage - 1;
+      return prevPage;
+    });
+  };
 
   useEffect(() => {
-    setTableData(employees);
-  }, [employees]);
+    fetchTableData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-  // Actions ui
-  const actionTemplate = (rowData) => {
-    return (
-      <div className="actions_cell">
-        <Button onClick={() => deleteRow(rowData)}>
-          <img src={deleteIcon} alt="delete" />
+  const entriesPerPage = tableData?.length;
+  const startIndex =
+    totalRecords === 0 ? 0 : (currentPage - 1) * entriesPerPage + 1;
+  const endIndex =
+    totalRecords === 0
+      ? 0
+      : currentPage === Math.ceil(totalRecords / entriesPerPage)
+      ? totalRecords
+      : currentPage * entriesPerPage;
+
+  const actionTemplate = (rowData) => (
+    <div className="actions_cell">
+      <Button onClick={() => deleteRow(rowData)}>
+        <img src={deleteIcon} alt="delete" />
+      </Button>
+      <Link to={`edit-user/${rowData.id}`}>
+        <Button>
+          <img src={editIcon} alt="edit" />
         </Button>
-        <Link to={`edit-user/${rowData.id}`}>
-          <Button onClick={() => editRow(rowData)}>
-            <img src={editIcon} alt="edit" />
-          </Button>
-        </Link>
-      </div>
-    );
-  };
-  // edit and delete
-  const editRow = (rowData) => {
-    console.log("Editing row:", rowData);
-  };
+      </Link>
+    </div>
+  );
+
   const deleteRow = (rowData) => {
     setShowDeleteModal(true);
     setRow(rowData);
@@ -65,19 +103,42 @@ const InviteUser = () => {
                 </div>
               </div>
               <div className="table-container">
-                <DataTable
-                  value={tableData}
-                  paginator
-                  rows={10}
-                  paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
-                  currentPageReportTemplate="{first} to {last} of {totalRecords}"
-                >
-                  <Column field="username" header="User Name" />
+                <DataTable value={tableData}>
+                  <Column
+                    body={(rowData) =>
+                      `${rowData.first_name} ${rowData.last_name}`
+                    }
+                    header="Name"
+                  />
                   <Column field="position" header="Position" />
-                  <Column field="mobile_number" header="Phone number" />
-                  <Column field="groups" header="Permission Groups Name" />
+                  <Column field="phone_number" header="Phone number" />
+                  <Column field="group_name" header="Permission Groups Name" />
                   <Column header="Actions" body={actionTemplate} />
                 </DataTable>
+                <div className="pagination_template">
+                  <div className="showing">
+                    <p>
+                      Showing {startIndex} to {endIndex} of {totalRecords}{" "}
+                      entries
+                    </p>
+                  </div>
+                  <div className="pagination_btns">
+                    <button
+                      className={`paginator_btn ${
+                        previousLink ? "" : "disabled"
+                      }`}
+                      onClick={() => handlePagination(previousLink)}
+                    >
+                      <i className="fa-regular fa-angle-left"></i>
+                    </button>
+                    <button
+                      className={`paginator_btn ${nextLink ? "" : "disabled"}`}
+                      onClick={() => handlePagination(nextLink)}
+                    >
+                      <i className="fa-regular fa-angle-right"></i>
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
