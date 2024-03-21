@@ -2975,6 +2975,24 @@ small.error {
     }
   }
 }
+.numbers {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  button {
+    border: 1px solid $border;
+    border-radius: 4px;
+    padding: 0px 10px;
+    font-size: 14px;
+    color: $dark;
+    font-weight: 500;
+    transition: 0.2s;
+    &.active,
+    &:hover {
+      border-color: $main;
+    }
+  }
+}
 .pagination_template {
   width: 100%;
   @include space-between();

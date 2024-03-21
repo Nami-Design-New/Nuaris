@@ -3206,6 +3206,24 @@ small.error {
   font-weight: 600;
 }
 
+.numbers {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.numbers button {
+  border: 1px solid #dddddd;
+  border-radius: 4px;
+  padding: 0px 10px;
+  font-size: 14px;
+  color: #0d0d0d;
+  font-weight: 500;
+  transition: 0.2s;
+}
+.numbers button.active, .numbers button:hover {
+  border-color: #006980;
+}
+
 .pagination_template {
   width: 100%;
   display: flex;
