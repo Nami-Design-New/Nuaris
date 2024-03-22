@@ -3213,6 +3213,9 @@ small.error {
   width: 180px;
   justify-content: center;
 }
+.numbers.mini {
+  width: 140px;
+}
 .numbers button {
   border: 1px solid #dddddd;
   border-radius: 4px;

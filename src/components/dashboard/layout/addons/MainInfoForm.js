@@ -15,6 +15,7 @@ import { ADD_ONS_CATEGORIES, S3Config } from "../../../../constants";
 
 const MainInfoForm = ({ setForm }) => {
   const { yachts } = useSelector((state) => state.yachts);
+  const results = yachts?.results || [];
   const [hasParentYacht, setHasParentYacht] = useState(false);
   const [fileLoading, setFileLoading] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -26,7 +27,7 @@ const MainInfoForm = ({ setForm }) => {
     category: "select",
     quantity: "",
     yacht: "select",
-    vat: null
+    vat: null,
   });
 
   const handleUploadMedia = async (file) => {
@@ -34,7 +35,7 @@ const MainInfoForm = ({ setForm }) => {
     try {
       const blob = file.slice(0, file.size, file.type);
       const newFile = new File([blob], `${Date.now()}${file.name.slice(-3)}`, {
-        type: file.type
+        type: file.type,
       });
       const data = await uploadFile(newFile, S3Config);
       return data.location;
@@ -56,7 +57,7 @@ const MainInfoForm = ({ setForm }) => {
           attachment[i] = link;
           return {
             ...prev,
-            attachment
+            attachment,
           };
         });
       }
@@ -95,10 +96,9 @@ const MainInfoForm = ({ setForm }) => {
       if (!subUser) {
         throw new Error("No matching sub user found");
       }
-      const yachtId = yachts.find(
+      const yachtId = results.find(
         (yacht) => yacht.name_en === formData.yacht
       )?.id;
-      console.log(yachtId);
       let categoryId;
       if (formData.category === "Party Themes") {
         categoryId = "party_themes";
@@ -119,7 +119,7 @@ const MainInfoForm = ({ setForm }) => {
         category: categoryId,
         sub_user: subUser[0]?.id,
         user: user.id,
-        attachment: attached
+        attachment: attached,
       });
       if (res.status === 201) {
         toast.success("Addon Main Info Saved Successfully");
@@ -244,7 +244,7 @@ const MainInfoForm = ({ setForm }) => {
             value={formData.yacht}
             formData={formData}
             setFormData={setFormData}
-            options={yachts.map((yacht) => yacht.name_en)}
+            options={results?.map((yacht) => yacht.name_en)}
           />
         </div>
         {/* vat */}
