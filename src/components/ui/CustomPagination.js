@@ -31,11 +31,15 @@ export default function CustomPagination({
     <div className={`pagination_component ${className}`}>
       <div className="reverse">
         <button
+          className={+currentPage === 1 ? "disabled" : ""}
           onClick={() => setSearchParams((prev) => ({ ...prev, page: 1 }))}
         >
           <img src={chevronDouble} alt="First page" />
         </button>
-        <button onClick={handlePrev}>
+        <button
+          onClick={handlePrev}
+          className={+currentPage === 1 ? "disabled" : ""}
+        >
           <img src={chevron} alt="Previous" />
         </button>
       </div>
@@ -46,10 +50,15 @@ export default function CustomPagination({
         setSearchParams={setSearchParams}
       />
       <div>
-        <button onClick={handleNext}>
+        <button
+          onClick={handleNext}
+          className={+currentPage === lastPage ? "disabled" : ""}
+          a
+        >
           <img src={chevron} alt="Next" />
         </button>
         <button
+          className={+currentPage === lastPage ? "disabled" : ""}
           onClick={() =>
             setSearchParams((prev) => ({ ...prev, page: lastPage }))
           }

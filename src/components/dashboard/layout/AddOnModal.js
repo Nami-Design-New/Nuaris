@@ -5,7 +5,7 @@ import inflatableImage from "../../../assets/images/inflatable.png";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 
-const AddOnModal = ({ showModal, setShowModal }) => {
+const AddOnModal = ({ showModal, setShowModal, data }) => {
   const tableData = [
     {
       id: "#51465",
@@ -15,6 +15,7 @@ const AddOnModal = ({ showModal, setShowModal }) => {
       payment: "cash",
     },
   ];
+
   return (
     <Modal
       show={showModal}
@@ -31,38 +32,27 @@ const AddOnModal = ({ showModal, setShowModal }) => {
           <div className="details">
             <div className="aboutAddOn">
               <div className="img">
-                <img src={inflatableImage} alt="" />
+                <img src={data.attachments[0]} alt={data.name} />
               </div>
               <div className="about">
-                <h3>Inflatable boat</h3>
-                <span>Expert assistance </span>
-                <p>
-                  It is a long established fact that a reader will be distracted
-                  by the readable content of a page when looking at its layout.
-                  The point of using Lorem Ipsum is that it has a more-or-less
-                  normal distribution of letters, as opposed to using 'Content
-                  here, content here', making it look like readable English.
-                  Many desktop publishing packages and web page editors now use
-                  Lorem Ipsum as their default model text, and a search for
-                  'lorem ipsum' will uncover many web sites still in their
-                  infancy. Various versions have evolved over the years,
-                  sometimes by accident, sometimes on purpose
-                </p>
+                <h3>{data.name}</h3>
+                <span>{data.category}</span>
+                <p>{data.description}</p>
               </div>
             </div>
             <div className="info">
               <div className="info_card">
                 <span>Parent Yacht</span>
-                <h5>Mayflower</h5>
+                <h5>{data.parent_yacht_name}</h5>
               </div>
               <div className="info_card">
                 <span>Quantity</span>
-                <h5>2</h5>
+                <h5>{data.quantity}</h5>
               </div>
               <div className="info_card">
                 <span>price</span>
                 <h5>
-                  $200 <span>/ Trip</span>
+                  ${data.price} <span>/ {data.price_type}</span>
                 </h5>
               </div>
             </div>
@@ -70,21 +60,29 @@ const AddOnModal = ({ showModal, setShowModal }) => {
           <div className="statistics">
             <div className="stat_card">
               <h4>
-                <CountUp duration={5} start={0} end={8399} />
+                <CountUp
+                  duration={3}
+                  start={0}
+                  end={data?.total_earnings || 462}
+                />
                 <span className="d-inline">$</span>
               </h4>
               <h6>Total earnings</h6>
             </div>
             <div className="stat_card">
               <h4>
-                <CountUp duration={5} start={0} end={71} />
+                <CountUp
+                  duration={5}
+                  start={0}
+                  end={data?.upcoming_booking?.length || 21}
+                />
               </h4>
               <h6> Upcoming booking</h6>
             </div>
           </div>
           <div className="upComingBooking">
             <h4>Upcoming Booking</h4>
-            <DataTable value={tableData} rows={10}>
+            <DataTable value={data.upcoming_booking || tableData} rows={10}>
               <Column field="id" header="Add On ID" />
               <Column field="customerName" header="Customer name" />
               <Column field="startDate" header="Start Date" />
