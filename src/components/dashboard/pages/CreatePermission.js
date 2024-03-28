@@ -1,21 +1,44 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import PageHeader from "../layout/PageHeader";
 import InputField from "../../ui/form-elements/InputField";
-import { useSelector } from "react-redux";
 import axios from "../../../util/axios";
 import { toast } from "react-toastify";
-
 import SubmitButton from "./../../ui/form-elements/SubmitButton";
 import CheckField from "../../ui/form-elements/CheckField";
+import CustomPagination from "../../ui/CustomPagination";
+import { useSearchParams } from "react-router-dom";
 
 const CreatePermission = () => {
   const formRef = useRef(null);
-  const permissions = useSelector(
-    (state) => state.permissions.permissions?.results
-  );
-
+  const [permissions, setPermissions] = useState([]);
+  const [permissionsCount, setPermissionsCount] = useState(0);
   const [formData, setFormData] = useState({ permissions: [] });
   const [loading, setLoading] = useState(false);
+  const [searchParams] = useSearchParams();
+  const currentPage = searchParams.get("page");
+
+  useEffect(() => {
+    try {
+      axios
+        .get(`/permissions/?page_size=9`, {
+          params: {
+            page: currentPage
+          }
+        })
+        .then((res) => {
+          setPermissionsCount(res?.data?.count);
+          setPermissions(res?.data?.results);
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  }, [currentPage]);
 
   const handleAddPermission = (e, passedPermission) => {
     const checked = e.target.checked;
@@ -31,17 +54,11 @@ const CreatePermission = () => {
       setFormData({ ...formData, permissions: filteredPermessions });
     }
   };
-
-  const requestOptions = {
-    method: "POST",
-    url: "/groups/",
-    data: formData
-  };
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     try {
-      const response = await axios.request(requestOptions);
+      const response = await axios.post("/groups/", formData);
       if (response.status === 201 || response.status === 200) {
         toast.success(
           `${formData.name} permissions group Created Successfully`
@@ -96,6 +113,7 @@ const CreatePermission = () => {
                   />
                 </div>
               ))}
+              <CustomPagination count={permissionsCount} pageSize={9} />
               <div className="col-12 p-2 d-flex justify-content-end">
                 <SubmitButton
                   loading={loading}

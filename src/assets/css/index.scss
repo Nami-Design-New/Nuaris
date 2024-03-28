@@ -1506,11 +1506,17 @@ th:last-child .p-column-header-content {
 .deleteModal {
   p {
     margin-top: 16px;
+    margin-bottom: 4px;
     color: $dark;
     font-size: 16px;
     font-weight: 400;
     line-height: 24px;
     text-align: center;
+    span {
+      line-height: inherit;
+      color: $danger;
+      font-weight: 600;
+    }
   }
   .cancel {
     @include clearInput();
@@ -2979,23 +2985,53 @@ small.error {
   display: flex;
   align-items: center;
   gap: 6px;
-  width: 180px;
   justify-content: center;
-  &.mini {
-    width: 140px;
-  }
   button {
-    border: 1px solid $border;
-    border-radius: 4px;
-    padding: 0px 10px;
-    font-size: 14px;
+    border-radius: 50%;
+    width: 42px;
+    height: 42px;
+    font-size: 15px;
     color: $dark;
     font-weight: 500;
     transition: 0.2s;
-    &.active,
     &:hover {
-      border-color: $main;
+      background: $inputBG;
     }
+    &.active {
+      background: $main10;
+    }
+  }
+}
+.paginator_btns {
+  display: flex;
+  align-items: center;
+  button {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    @include centerFlex();
+    cursor: pointer;
+    i {
+      color: $dark;
+      font-size: 18px;
+    }
+    &.disabled {
+      opacity: 50%;
+      pointer-events: none;
+    }
+  }
+}
+.tableLoader {
+  min-height: 548px;
+  @include centerFlex();
+  flex-direction: column;
+  .loader--style8 {
+    width: 80px;
+    height: 80px;
+  }
+  svg path,
+  svg rect {
+    fill: $main;
   }
 }
 .pagination_template {
@@ -3024,4 +3060,7 @@ small.error {
       }
     }
   }
+}
+.table-container {
+  white-space: nowrap !important;
 }

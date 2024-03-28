@@ -1,34 +1,12 @@
 import React from "react";
 import Modal from "react-bootstrap/Modal";
-import axios from "../../../util/axios";
-import { toast } from "react-toastify";
 
 const DeleteModal = ({
   showDeleteModal,
   setShowDeleteModal,
-  row,
-  endPoint,
-  tableData,
-  totalRecords,
-  setTotalRecords,
-  setTableData
+  onConfirm,
+  DeletionTarget
 }) => {
-  const handelConfirm = async () => {
-    if (row) {
-      try {
-        await axios.delete(`${endPoint}/${row.id}/`);
-        toast.success(`${row.name} group deleted successfully`);
-        const updatedTableData = tableData.filter((item) => item.id !== row.id);
-        setTableData(updatedTableData);
-        setTotalRecords(totalRecords - 1);
-      } catch (error) {
-        toast.error("An error occurred while deletion");
-      } finally {
-        setShowDeleteModal(false);
-      }
-    }
-  };
-
   return (
     <Modal
       show={showDeleteModal}
@@ -40,9 +18,8 @@ const DeleteModal = ({
         <div className="row m-0 deleteModal">
           <div className="col-12 p-2">
             <p>
-              {`You are about to delete ${
-                row && row.name
-              }. When you continue, you cannot go
+              {`You are about to remove `} <span>{DeletionTarget}</span>{" "}
+              {`. When you continue, you cannot go
               back. Do you want to confirm the deletion?`}
             </p>
           </div>
@@ -53,7 +30,7 @@ const DeleteModal = ({
             >
               Cancel
             </button>
-            <button className="confirm red" onClick={handelConfirm}>
+            <button className="confirm red" onClick={onConfirm}>
               Confirm
             </button>
           </div>
