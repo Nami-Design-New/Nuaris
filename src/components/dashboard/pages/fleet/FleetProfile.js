@@ -7,12 +7,23 @@ import FleetProfileMedia from "../../layout/fleet/FleetProfileMedia";
 import FleetProfileTabs from "../../layout/fleet/FleetProfileTabs";
 import FleetVesselLogbook from "../../layout/fleet/FleetVesselLogbook";
 import FleetProfileBooking from "../../layout/fleet/FleetProfileBooking";
-import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import axios from "./../../../../util/axios";
 
 export default function FleetProfile() {
-  const fleets = useSelector((state) => state.yachts.yachts);
+  const [fleet, setFleet] = useState({});
   const { fleetId } = useParams();
-  const fleet = fleets?.find((fleet) => fleet?.id === parseInt(fleetId));
+  useEffect(() => {
+    const fetchFleet = async () => {
+      try {
+        const response = await axios.get(`/yachts/${fleetId}/`);
+        setFleet(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchFleet();
+  }, [fleetId]);
 
   return (
     <section className="section-main-content">

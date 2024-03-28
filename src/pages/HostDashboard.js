@@ -69,7 +69,7 @@ const HostDashboard = () => {
             <Route path="/invite-user/create-user" element={<CreateUser />} />
             <Route path="/invite-user/permissions" element={<Permissions />} />
             <Route
-              path="/invite-user/edit-user/:userId"
+              path="/invite-user/edit-user/:employeeId"
               element={<EditUser />}
             />
             <Route
