@@ -116,7 +116,7 @@ const Permissions = () => {
                     <Column field="name" header="Permission Name" />
                     <Column header="Actions" body={actionTemplate} />
                   </DataTable>
-                  <CustomPagination count={groupsCount} />
+                  {groupsCount > 0 && <CustomPagination count={groupsCount} />}
                 </div>
               )}
             </div>
@@ -127,7 +127,7 @@ const Permissions = () => {
         showDeleteModal={showDeleteModal}
         setShowDeleteModal={setShowDeleteModal}
         onConfirm={deleteGroup}
-        DeletionTarget={row.name + " group permissions"}
+        DeletionTarget={row.name}
       />
     </React.Fragment>
   );

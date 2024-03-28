@@ -19,7 +19,6 @@ const CreateUser = () => {
   const positions = useSelector((state) => state.positions.positions);
   const user = useSelector((state) => state.user?.user);
   const subUserSet = user?.subuser_set;
-  
 
   const handleSubmit = async (e) => {
     e.preventDefault();

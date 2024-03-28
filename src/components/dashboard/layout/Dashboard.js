@@ -55,6 +55,7 @@ export default function Dashboard() {
           "Authorization"
         ] = `Bearer ${res.data.access}`;
       });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [authedUser, decodedToken, dispatch, isExpired, refreshToken]);
 
   // - render dashboard based on user role
