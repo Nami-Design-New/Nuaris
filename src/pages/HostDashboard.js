@@ -32,7 +32,7 @@ const HostDashboard = () => {
     const groups = axios.get("/groups");
     const permissions = axios.get("/permissions");
     const employees = axios.get(`/users/?parent_id=${authedUser.id}`);
-    const positions = axios.get("/positions");
+    const positions = axios.get("/positions/?page_size=1000");
     const yachts = axios.get("/yachts");
 
     const [
@@ -67,13 +67,13 @@ const HostDashboard = () => {
             {/* invite-user */}
             <Route path="/invite-user/" element={<InviteUser />} />
             <Route path="/invite-user/create-user" element={<CreateUser />} />
-            <Route path="/invite-user/permissions" element={<Permissions />} />9
+            <Route path="/invite-user/permissions" element={<Permissions />} />
             <Route
               path="/invite-user/edit-user/:userId"
               element={<EditUser />}
             />
             <Route
-              path="/invite-user/edit-permissions/:permissionId"
+              path="/invite-user/permissions/edit-permissions/:permissionId"
               element={<EditPermissions />}
             />
             <Route

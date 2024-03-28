@@ -6,7 +6,6 @@ import { Column } from "primereact/column";
 import { Button } from "primereact/button";
 import deleteIcon from "../../../assets/images/delete.svg";
 import editIcon from "../../../assets/images/edit.svg";
-import inflatableImage from "../../../assets/images/inflatable.png";
 import eyeView from "../../../assets/images/eye.svg";
 import AddOnModal from "../layout/AddOnModal";
 import CustomPagination from "../../ui/CustomPagination";

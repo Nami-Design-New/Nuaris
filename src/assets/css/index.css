@@ -1614,11 +1614,17 @@ th:last-child .p-column-header-content {
 
 .deleteModal p {
   margin-top: 16px;
+  margin-bottom: 4px;
   color: #0d0d0d;
   font-size: 16px;
   font-weight: 400;
   line-height: 24px;
   text-align: center;
+}
+.deleteModal p span {
+  line-height: inherit;
+  color: #ff3a29;
+  font-weight: 600;
 }
 .deleteModal .cancel {
   border: none;
@@ -3210,23 +3216,60 @@ small.error {
   display: flex;
   align-items: center;
   gap: 6px;
-  width: 180px;
   justify-content: center;
 }
-.numbers.mini {
-  width: 140px;
-}
 .numbers button {
-  border: 1px solid #dddddd;
-  border-radius: 4px;
-  padding: 0px 10px;
-  font-size: 14px;
+  border-radius: 50%;
+  width: 42px;
+  height: 42px;
+  font-size: 15px;
   color: #0d0d0d;
   font-weight: 500;
   transition: 0.2s;
 }
-.numbers button.active, .numbers button:hover {
-  border-color: #006980;
+.numbers button:hover {
+  background: #f8f8f8;
+}
+.numbers button.active {
+  background: #ebf3f5;
+}
+
+.paginator_btns {
+  display: flex;
+  align-items: center;
+}
+.paginator_btns button {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.paginator_btns button i {
+  color: #0d0d0d;
+  font-size: 18px;
+}
+.paginator_btns button.disabled {
+  opacity: 50%;
+  pointer-events: none;
+}
+
+.tableLoader {
+  min-height: 548px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.tableLoader .loader--style8 {
+  width: 80px;
+  height: 80px;
+}
+.tableLoader svg path,
+.tableLoader svg rect {
+  fill: #006980;
 }
 
 .pagination_template {
@@ -3259,4 +3302,8 @@ small.error {
 .pagination_template .pagination_btns .paginator_btn.disabled {
   opacity: 50%;
   pointer-events: none;
+}
+
+.table-container {
+  white-space: nowrap !important;
 }/*# sourceMappingURL=index.css.map */

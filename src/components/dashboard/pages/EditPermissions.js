@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import PageHeader from "../layout/PageHeader";
 import SubmitButton from "./../../ui/form-elements/SubmitButton";
-import { useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import axios from "../../../util/axios";
 import { toast } from "react-toastify";
 import CheckField from "../../ui/form-elements/CheckField";
@@ -11,41 +10,41 @@ const EditPermissions = () => {
   const [formData, setFormData] = useState({ name: "", permissions: [] });
   const [permissionMap, setPermissionMap] = useState([]);
   const [loading, setLoading] = useState(false);
-
   const { permissionId } = useParams();
-  const permissions = useSelector((state) => state.permissions.permissions?.results);
-  const permissionsGroups = useSelector(
-    (state) => state.permissionsGroups.permissionsGroups?.results
-  );
+  const [group, setGroup] = useState({});
+  const [permissions, setPermissions] = useState([]);
+  const [permissionsCount, setPermissionsCount] = useState(0);
+  const [searchParams] = useSearchParams();
+  const currentPage = searchParams.get("page");
 
-  useEffect(() => {
-    const permissionsGroup = permissionsGroups?.find(
-      (p) => p.id === parseInt(permissionId)
-    );
-    if (permissionsGroup) {
-      const permissionMap = permissionsGroup.permissions.reduce((acc, perm) => {
-        acc[perm.id] = true;
-        return acc;
-      }, {});
-      setPermissionMap(permissionMap);
-      setFormData({
-        name: permissionsGroup.name,
-        permissions: permissionsGroup.permissions,
-      });
-    }
-  }, [permissionId, permissionsGroups]);
+  // useEffect(() => {
+  //   const permissionsGroup = permissionsGroups?.find(
+  //     (p) => p.id === parseInt(permissionId)
+  //   );
+  //   if (permissionsGroup) {
+  //     const permissionMap = permissionsGroup.permissions.reduce((acc, perm) => {
+  //       acc[perm.id] = true;
+  //       return acc;
+  //     }, {});
+  //     setPermissionMap(permissionMap);
+  //     setFormData({
+  //       name: permissionsGroup.name,
+  //       permissions: permissionsGroup.permissions
+  //     });
+  //   }
+  // }, [permissionId, permissionsGroups]);
 
   const handleAddPermission = (e, passedPermission) => {
     const checked = e.target.checked;
     const updatedMap = {
       ...permissionMap,
-      [passedPermission.id]: !permissionMap[passedPermission.id],
+      [passedPermission.id]: !permissionMap[passedPermission.id]
     };
     setPermissionMap(updatedMap);
     if (checked) {
       setFormData({
         ...formData,
-        permissions: [...formData.permissions, passedPermission],
+        permissions: [...formData.permissions, passedPermission]
       });
     } else {
       const filteredPermessions = formData.permissions.filter(

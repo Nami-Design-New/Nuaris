@@ -4,7 +4,8 @@ export default function CustomPaginationNumbers({
   param,
   setSearchParams,
 }) {
-  function handleSetParams(n) {
+  function handleSetParams(event, n) {
+    event.preventDefault();
     setSearchParams({ [param]: n });
   }
 
@@ -18,7 +19,7 @@ export default function CustomPaginationNumbers({
               <button
                 className={+page === i + 1 ? "active" : ""}
                 key={i}
-                onClick={() => handleSetParams(i + 1)}
+                onClick={(event) => handleSetParams(event, i + 1)}
               >
                 {i + 1}
               </button>
@@ -30,7 +31,7 @@ export default function CustomPaginationNumbers({
             <>
               <button
                 className={+page === 1 ? "active" : ""}
-                onClick={() => handleSetParams(1)}
+                onClick={(event) => handleSetParams(event, 1)}
               >
                 1
               </button>
@@ -38,46 +39,51 @@ export default function CustomPaginationNumbers({
             </>
           )}
           {+page >= +max - 1 && (
-            <button onClick={() => handleSetParams(+max - 2)}>
+            <button onClick={(event) => handleSetParams(event, +max - 2)}>
               {+max - 2}
             </button>
           )}
           {+page === +max && (
-            <button onClick={() => handleSetParams(+page - 1)}>
+            <button onClick={(event) => handleSetParams(event, +page - 1)}>
               {+page - 1}
             </button>
           )}
           {+page <= 2 && (
             <button
               className={+page === 1 ? "active" : ""}
-              onClick={() => handleSetParams(1)}
+              onClick={(event) => handleSetParams(event, 1)}
             >
               1
             </button>
           )}
           {+page !== 1 && (
-            <button className={"active"} onClick={() => handleSetParams(+page)}>
+            <button
+              className={"active"}
+              onClick={(event) => handleSetParams(event, +page)}
+            >
               {+page}
             </button>
           )}
           {+page !== +max && (
-            <button onClick={() => handleSetParams(+page + 1)}>
+            <button onClick={(event) => handleSetParams(event, +page + 1)}>
               {+page + 1}
             </button>
           )}
           {+page === 1 && (
-            <button onClick={() => handleSetParams(+page + 2)}>
+            <button onClick={(event) => handleSetParams(event, +page + 2)}>
               {+page + 2}
             </button>
           )}
           {+page <= +max - 3 && (
             <>
               <Ellipsis />
-              <button onClick={() => handleSetParams(max)}>{max}</button>
+              <button onClick={(event) => handleSetParams(event, max)}>
+                {max}
+              </button>
             </>
           )}
           {+page === +max - 2 && (
-            <button onClick={() => handleSetParams(max)}>{max}</button>
+            <button onClick={(event) => handleSetParams(event, max)}>{max}</button>
           )}
         </>
       )}
