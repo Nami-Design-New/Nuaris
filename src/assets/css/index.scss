@@ -2959,10 +2959,6 @@ small.error {
       opacity: 100%;
     }
   }
-  button.disabled {
-    cursor: no-drop;
-    opacity: 50%;
-  }
   button.disabled:hover {
     img {
       opacity: 50%;
@@ -2989,20 +2985,39 @@ small.error {
   display: flex;
   align-items: center;
   gap: 6px;
-  width: 170px;
   justify-content: center;
-  &.mini {
-    width: 125px;
-  }
   button {
-    border-radius: 4px;
-    padding: 0px 6px;
-    font-size: 16px;
-    color: $gray;
+    border-radius: 50%;
+    width: 42px;
+    height: 42px;
+    font-size: 15px;
+    color: $dark;
     font-weight: 500;
     transition: 0.2s;
     &:hover {
-      color: $main;
+      background: $inputBG;
+    }
+    &.active {
+      background: $main10;
+    }
+  }
+}
+.paginator_btns {
+  display: flex;
+  align-items: center;
+  button {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    @include centerFlex();
+    cursor: pointer;
+    i {
+      color: $dark;
+      font-size: 18px;
+    }
+    &.disabled {
+      opacity: 50%;
+      pointer-events: none;
     }
   }
 }
