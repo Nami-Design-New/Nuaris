@@ -1,7 +1,5 @@
 import { useSearchParams } from "react-router-dom";
 import { HOST_DASHBOARD_TABLE_SIZE } from "../../constants";
-import chevron from "../../assets/images/chevron-right.svg";
-import chevronDouble from "../../assets/images/chevron-right-double.svg";
 import CustomPaginationNumbers from "./CustomPaginationNumbers";
 
 export default function CustomPagination({
@@ -17,30 +15,36 @@ export default function CustomPagination({
   const atStart = currentPage <= 1;
   const atEnd = currentPage >= lastPage;
 
-  function handlePrev() {
+  function handlePrev(event) {
+    event.preventDefault();
     !atStart &&
       setSearchParams((prev) => ({ ...prev, [param]: currentPage - 1 }));
   }
 
-  function handleNext() {
+  function handleNext(event) {
+    event.preventDefault();
     !atEnd &&
       setSearchParams((prev) => ({ ...prev, [param]: +currentPage + 1 }));
   }
 
+  function handleFirstPage(event) {
+    event.preventDefault();
+    setSearchParams((prev) => ({ ...prev, [param]: 1 }));
+  }
+
+  function handleLastPage(event) {
+    event.preventDefault();
+    setSearchParams((prev) => ({ ...prev, [param]: lastPage }));
+  }
+
   return (
-    <div className={`pagination_component ${className}`}>
-      <div className="reverse">
-        <button
-          className={+currentPage === 1 ? "disabled" : ""}
-          onClick={() => setSearchParams((prev) => ({ ...prev, page: 1 }))}
-        >
-          <img src={chevronDouble} alt="First page" />
+    <div className={`pagination_component mt-4 ${className}`}>
+      <div className="paginator_btns">
+        <button onClick={handleFirstPage}>
+          <i className="fa-regular fa-angles-left"></i>
         </button>
-        <button
-          onClick={handlePrev}
-          className={+currentPage === 1 ? "disabled" : ""}
-        >
-          <img src={chevron} alt="Previous" />
+        <button onClick={handlePrev}>
+          <i className="fa-regular fa-angle-left"></i>
         </button>
       </div>
       <CustomPaginationNumbers
@@ -49,21 +53,12 @@ export default function CustomPagination({
         param={param}
         setSearchParams={setSearchParams}
       />
-      <div>
-        <button
-          onClick={handleNext}
-          className={+currentPage === lastPage ? "disabled" : ""}
-          a
-        >
-          <img src={chevron} alt="Next" />
+      <div className="paginator_btns">
+        <button onClick={handleNext}>
+          <i className="fa-regular fa-angle-right"></i>
         </button>
-        <button
-          className={+currentPage === lastPage ? "disabled" : ""}
-          onClick={() =>
-            setSearchParams((prev) => ({ ...prev, page: lastPage }))
-          }
-        >
-          <img src={chevronDouble} alt="Last page" />
+        <button onClick={handleLastPage}>
+          <i className="fa-regular fa-angles-right"></i>
         </button>
       </div>
     </div>

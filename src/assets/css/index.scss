@@ -1506,11 +1506,17 @@ th:last-child .p-column-header-content {
 .deleteModal {
   p {
     margin-top: 16px;
+    margin-bottom: 4px;
     color: $dark;
     font-size: 16px;
     font-weight: 400;
     line-height: 24px;
     text-align: center;
+    span {
+      line-height: inherit;
+      color: $danger;
+      font-weight: 600;
+    }
   }
   .cancel {
     @include clearInput();
@@ -2995,10 +3001,22 @@ small.error {
     color: $gray;
     font-weight: 500;
     transition: 0.2s;
-    &.active,
     &:hover {
       color: $main;
     }
+  }
+}
+.tableLoader {
+  min-height: 548px;
+  @include centerFlex();
+  flex-direction: column;
+  .loader--style8 {
+    width: 80px;
+    height: 80px;
+  }
+  svg path,
+  svg rect {
+    fill: $main;
   }
 }
 .pagination_template {
@@ -3027,4 +3045,7 @@ small.error {
       }
     }
   }
+}
+.table-container {
+  white-space: nowrap !important;
 }

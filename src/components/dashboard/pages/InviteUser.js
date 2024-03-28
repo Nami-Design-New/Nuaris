@@ -1,68 +1,53 @@
 import React, { useState, useEffect } from "react";
 import axios from "./../../../util/axios";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { DataTable } from "primereact/datatable";
 import { Button } from "primereact/button";
 import { Column } from "primereact/column";
 import { useSelector } from "react-redux";
-import { removeEmployee } from "../../../redux/slices/employeesSlice";
 import deleteIcon from "../../../assets/images/delete.svg";
 import editIcon from "../../../assets/images/edit.svg";
 import PageHeader from "../layout/PageHeader";
-import DeleteModal from "../layout/DeleteModal";
+import CustomPagination from "../../ui/CustomPagination";
+import TableLoader from "./../../ui/TableLoader";
+import DeleteModal from "../../ui/DeleteModal";
 
 const InviteUser = () => {
-  const user = useSelector((state) => state.user?.user);
-  const subUserSet = user?.subuser_set;
-  const subUser = subUserSet?.filter((u) => u.role === user.current_role)[0]
-    ?.id;
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [tableData, setTableData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [employeesData, setEmployeesData] = useState([]);
+  const [employeesCount, setEmployeesCount] = useState(0);
   const [row, setRow] = useState({});
-  const [totalRecords, setTotalRecords] = useState(0);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [nextLink, setNextLink] = useState(null);
-  const [previousLink, setPreviousLink] = useState(null);
-
-  const fetchTableData = async () => {
-    try {
-      const response = await axios.get(`/employees/?sub_user=${subUser}`);
-      setTotalRecords(response?.data?.count);
-      setTableData(response?.data?.results);
-      setNextLink(response?.data?.next);
-      setPreviousLink(response?.data?.previous);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const handlePagination = async (link) => {
-    if (!link) return;
-    const response = await axios.get(link);
-    setTableData(response?.data?.results);
-    setNextLink(response?.data?.next);
-    setPreviousLink(response?.data?.previous);
-    setCurrentPage((prevPage) => {
-      if (link === nextLink) return prevPage + 1;
-      if (link === previousLink) return prevPage - 1;
-      return prevPage;
-    });
-  };
+  const [searchParams] = useSearchParams();
+  const currentPage = searchParams.get("page");
+  const user = useSelector((state) => state.user?.user);
+  const subUser = user?.subuser_set?.filter(
+    (u) => u.role === user.current_role
+  )[0]?.id;
 
   useEffect(() => {
-    fetchTableData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const entriesPerPage = tableData?.length;
-  const startIndex =
-    totalRecords === 0 ? 0 : (currentPage - 1) * entriesPerPage + 1;
-  const endIndex =
-    totalRecords === 0
-      ? 0
-      : currentPage === Math.ceil(totalRecords / entriesPerPage)
-      ? totalRecords
-      : currentPage * entriesPerPage;
+    try {
+      axios
+        .get(`/employees/?sub_user=${subUser}`, {
+          params: {
+            page: currentPage
+          }
+        })
+        .then((res) => {
+          setEmployeesCount(res?.data?.count);
+          setEmployeesData(res?.data?.results);
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    } catch (err) {
+      console.log(err);
+      setLoading(false);
+    }
+  }, [currentPage, subUser]);
 
   const actionTemplate = (rowData) => (
     <div className="actions_cell">
@@ -80,6 +65,30 @@ const InviteUser = () => {
   const deleteRow = (rowData) => {
     setShowDeleteModal(true);
     setRow(rowData);
+  };
+
+  const deleteEmployee = () => {
+    setShowDeleteModal(false);
+    axios
+      .delete(`/employees/${row.id}/`, { data: { sub_user: subUser } })
+      .then(() => {
+        setEmployeesData((prevData) =>
+          prevData.filter((employee) => employee.id !== row.id)
+        );
+        if (employeesData.length === 1 && currentPage > 1) {
+          const newPage = parseInt(currentPage) - 1;
+          searchParams.set("page", newPage.toString());
+          window.history.replaceState(
+            {},
+            "",
+            `${window.location.pathname}?${searchParams.toString()}`
+          );
+        }
+        setEmployeesCount((prevCount) => prevCount - 1);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
@@ -102,54 +111,37 @@ const InviteUser = () => {
                   </Link>
                 </div>
               </div>
-              <div className="table-container">
-                <DataTable value={tableData}>
-                  <Column
-                    body={(rowData) =>
-                      `${rowData.first_name} ${rowData.last_name}`
-                    }
-                    header="Name"
-                  />
-                  <Column field="position" header="Position" />
-                  <Column field="phone_number" header="Phone number" />
-                  <Column field="group_name" header="Permission Groups Name" />
-                  <Column header="Actions" body={actionTemplate} />
-                </DataTable>
-                <div className="pagination_template">
-                  <div className="showing">
-                    <p>
-                      Showing {startIndex} to {endIndex} of {totalRecords}{" "}
-                      entries
-                    </p>
-                  </div>
-                  <div className="pagination_btns">
-                    <button
-                      className={`paginator_btn ${
-                        previousLink ? "" : "disabled"
-                      }`}
-                      onClick={() => handlePagination(previousLink)}
-                    >
-                      <i className="fa-regular fa-angle-left"></i>
-                    </button>
-                    <button
-                      className={`paginator_btn ${nextLink ? "" : "disabled"}`}
-                      onClick={() => handlePagination(nextLink)}
-                    >
-                      <i className="fa-regular fa-angle-right"></i>
-                    </button>
-                  </div>
+              {loading ? (
+                <TableLoader />
+              ) : (
+                <div className="table-container">
+                  <DataTable value={employeesData}>
+                    <Column
+                      body={(rowData) =>
+                        `${rowData.first_name} ${rowData.last_name}`
+                      }
+                      header="Name"
+                    />
+                    <Column field="position" header="Position" />
+                    <Column field="phone_number" header="Phone number" />
+                    <Column
+                      field="group_name"
+                      header="Permission Groups Name"
+                    />
+                    <Column header="Actions" body={actionTemplate} />
+                  </DataTable>
+                  <CustomPagination count={employeesCount} />
                 </div>
-              </div>
+              )}
             </div>
           </div>
         </div>
       </section>
       <DeleteModal
-        row={row}
-        endPoint="users"
         showDeleteModal={showDeleteModal}
         setShowDeleteModal={setShowDeleteModal}
-        sliceAction={removeEmployee}
+        onConfirm={deleteEmployee}
+        DeletionTarget={row.first_name + " " + row.last_name}
       />
     </React.Fragment>
   );

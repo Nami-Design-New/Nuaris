@@ -2,62 +2,46 @@ import React, { useEffect, useState } from "react";
 import PageHeader from "../layout/PageHeader";
 import deleteIcon from "../../../assets/images/delete.svg";
 import editIcon from "../../../assets/images/edit.svg";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { DataTable } from "primereact/datatable";
 import { Button } from "primereact/button";
 import { Column } from "primereact/column";
-import DeleteModal from "../layout/DeleteModal";
-import { removePermissionGroup } from "../../../redux/slices/permissionsGroups";
 import axios from "./../../../util/axios";
+import DeleteModal from "../../ui/DeleteModal";
+import CustomPagination from "../../ui/CustomPagination";
+import TableLoader from "../../ui/TableLoader";
 
 const Permissions = () => {
-  const [row, setRow] = useState({});
-  const [tableData, setTableData] = useState([]);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const navigate = useNavigate();
-  const [totalRecords, setTotalRecords] = useState(0);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [nextLink, setNextLink] = useState(null);
-  const [previousLink, setPreviousLink] = useState(null);
-  const fetchTableData = async () => {
-    try {
-      const response = await axios.get("/groups/");
-      setTotalRecords(response?.data?.count);
-      setTableData(response?.data?.results);
-      setNextLink(response?.data?.next);
-      setPreviousLink(response?.data?.previous);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const handlePagination = async (link) => {
-    if (!link) return;
-    const response = await axios.get(link);
-    setTableData(response?.data?.results);
-    setNextLink(response?.data?.next);
-    setPreviousLink(response?.data?.previous);
-    setCurrentPage((prevPage) => {
-      if (link === nextLink) return prevPage + 1;
-      if (link === previousLink) return prevPage - 1;
-      return prevPage;
-    });
-  };
+  const [groupsData, setGroupsData] = useState([]);
+  const [groupsCount, setGroupsCount] = useState(0);
+  const [loading, setLoading] = useState(true);
+  const [row, setRow] = useState({});
+  const [searchParams] = useSearchParams();
+  const currentPage = searchParams.get("page");
 
   useEffect(() => {
-    fetchTableData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const entriesPerPage = tableData?.length;
-  const startIndex =
-    totalRecords === 0 ? 0 : (currentPage - 1) * entriesPerPage + 1;
-  const endIndex =
-    totalRecords === 0
-      ? 0
-      : currentPage === Math.ceil(totalRecords / entriesPerPage)
-      ? totalRecords
-      : currentPage * entriesPerPage;
+    try {
+      axios
+        .get(`/groups/`, {
+          params: {
+            page: currentPage
+          }
+        })
+        .then((res) => {
+          setGroupsCount(res?.data?.count);
+          setGroupsData(res?.data?.results);
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  }, [currentPage]);
 
   // Actions ui
   const actionTemplate = (rowData) => {
@@ -66,20 +50,42 @@ const Permissions = () => {
         <Button onClick={() => deleteRow(rowData)}>
           <img src={deleteIcon} alt="delete" />
         </Button>
-        <Button onClick={() => editRow(rowData)}>
-          <img src={editIcon} alt="edit" />
-        </Button>
+        <Link to={`edit-permissions/${rowData.id}`}>
+          <Button>
+            <img src={editIcon} alt="edit" />
+          </Button>
+        </Link>
       </div>
     );
-  };
-  // edit and delete
-  const editRow = (rowData) => {
-    navigate(`/dashboard/invite-user/edit-permissions/${rowData.id}`);
   };
 
   const deleteRow = (rowData) => {
     setShowDeleteModal(true);
     setRow(rowData);
+  };
+
+  const deleteGroup = () => {
+    setShowDeleteModal(false);
+    axios
+      .delete(`/groups/${row.id}/`)
+      .then(() => {
+        setGroupsData((prevData) =>
+          prevData.filter((group) => group.id !== row.id)
+        );
+        if (groupsData.length === 1 && currentPage > 1) {
+          const newPage = parseInt(currentPage) - 1;
+          searchParams.set("page", newPage.toString());
+          window.history.replaceState(
+            {},
+            "",
+            `${window.location.pathname}?${searchParams.toString()}`
+          );
+        }
+        setGroupsCount((prevCount) => prevCount - 1);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
@@ -101,50 +107,27 @@ const Permissions = () => {
                     Create Permissions
                   </Link>
                 </div>
-              </div>
-              <div className="table-container">
-                <DataTable value={tableData}>
-                  <Column field="name" header="Permission Name" />
-                  <Column header="Actions" body={actionTemplate} />
-                </DataTable>
-                <div className="pagination_template">
-                  <div className="showing">
-                    <p>
-                      Showing {startIndex} to {endIndex} of {totalRecords}{" "}
-                      entries
-                    </p>
-                  </div>
-                  <div className="pagination_btns">
-                    <button
-                      className={`paginator_btn ${
-                        previousLink ? "" : "disabled"
-                      }`}
-                      onClick={() => handlePagination(previousLink)}
-                    >
-                      <i className="fa-regular fa-angle-left"></i>
-                    </button>
-                    <button
-                      className={`paginator_btn ${nextLink ? "" : "disabled"}`}
-                      onClick={() => handlePagination(nextLink)}
-                    >
-                      <i className="fa-regular fa-angle-right"></i>
-                    </button>
-                  </div>
+              </div>{" "}
+              {loading ? (
+                <TableLoader />
+              ) : (
+                <div className="table-container">
+                  <DataTable value={groupsData}>
+                    <Column field="name" header="Permission Name" />
+                    <Column header="Actions" body={actionTemplate} />
+                  </DataTable>
+                  <CustomPagination count={groupsCount} />
                 </div>
-              </div>
+              )}
             </div>
           </div>
         </div>
       </section>
       <DeleteModal
-        row={row}
-        endPoint="groups"
-        tableData={tableData}
-        setTableData={setTableData}
-        totalRecords={totalRecords}
         showDeleteModal={showDeleteModal}
-        setTotalRecords={setTotalRecords}
         setShowDeleteModal={setShowDeleteModal}
+        onConfirm={deleteGroup}
+        DeletionTarget={row.name + " group permissions"}
       />
     </React.Fragment>
   );

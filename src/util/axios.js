@@ -3,7 +3,6 @@ import { store } from "../redux/store";
 import { setToken } from "../redux/slices/authenticatedUserSlice";
 
 axios.defaults.baseURL = "https://nuaris-backend-9ef946ed3002.herokuapp.com";
-
 axios.defaults.headers.common["Content-Type"] = "application/json";
 axios.defaults.headers.common.Accept = "application/json";
 
@@ -27,9 +26,8 @@ axios.interceptors.response.use(
         originalRequest._retry = true;
         delete axios.defaults.headers.common.Authorization;
         const res = await axios.post("/users/token/refresh/", {
-          refresh: refreshToken,
+          refresh: refreshToken
         });
-
         store.dispatch(setToken(res.data.access));
         axios.defaults.headers.common[
           "Authorization"
