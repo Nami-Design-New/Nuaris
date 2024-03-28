@@ -127,7 +127,7 @@ const Permissions = () => {
         showDeleteModal={showDeleteModal}
         setShowDeleteModal={setShowDeleteModal}
         onConfirm={deleteGroup}
-        DeletionTarget={row.name + " group permissions"}
+        DeletionTarget={row.name}
       />
     </React.Fragment>
   );
