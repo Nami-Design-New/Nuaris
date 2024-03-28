@@ -3,7 +3,6 @@ import pin from "../../../assets/images/pin.svg";
 import mapPin from "../../../assets/images/mapPin.svg";
 
 export default function MapCard({ title, location, lat, lng }) {
-  console.log(lat, lng);
   const position = {
     lat: Number(lat),
     lng: Number(lng)

@@ -17,7 +17,7 @@ export default function EditUser() {
     (u) => u.role === user.current_role
   )[0]?.id;
   const form = useRef(null);
-  const { userId } = useParams();
+  const { employeeId } = useParams();
   const [employee, setEmployee] = useState({});
   const [loading, setLoading] = useState(false);
   const positions = useSelector((state) => state.positions.positions?.results);
@@ -25,7 +25,7 @@ export default function EditUser() {
   useEffect(() => {
     try {
       axios
-        .get(`/employees/?employee=${userId}/`, { data: { sub_user: subUser } })
+        .get(`/employees/${employeeId}/?sub_user=${subUser}`)
         .then((res) => {
           console.log(res.data);
           setEmployee(res.data);
@@ -36,7 +36,7 @@ export default function EditUser() {
     } catch (err) {
       console.log(err);
     }
-  }, [subUser, userId]);
+  }, [subUser, employeeId]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -125,7 +125,7 @@ export default function EditUser() {
                     id="email"
                     formData={employee}
                     setFormData={setEmployee}
-                    value={employee["email"]}
+                    value={employee?.email}
                   />
                 </div>
                 <div className="col-lg-6 col-12 p-2">
@@ -133,7 +133,7 @@ export default function EditUser() {
                     formData={employee}
                     setFormData={setEmployee}
                     id="mobile_number"
-                    value={employee["mobile_number"]}
+                    value={employee?.phone_number}
                   />
                 </div>
                 <div className="col-12 p-2 d-flex justify-content-end">
