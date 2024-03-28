@@ -130,7 +130,9 @@ const InviteUser = () => {
                     />
                     <Column header="Actions" body={actionTemplate} />
                   </DataTable>
-                  <CustomPagination count={employeesCount} />
+                  {employeesCount > 0 && (
+                    <CustomPagination count={employeesCount} />
+                  )}
                 </div>
               )}
             </div>

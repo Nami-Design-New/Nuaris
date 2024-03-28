@@ -79,7 +79,7 @@ const AssignGroup = ({ ivitedUserId }) => {
                 />
               </div>
             ))}
-            <CustomPagination count={groupsCount} />
+            {groupsCount > 0 && <CustomPagination count={groupsCount} />}
             <div className="col-12 p-2 d-flex justify-content-end">
               <button className="log w-25" onClick={handleOpenModal}>
                 Confirm

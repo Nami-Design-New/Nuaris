@@ -2911,6 +2911,9 @@ small.error {
 }
 
 .season_calender_card {
+  position: relative;
+  display: flex;
+  gap: 16px;
   background: #ebf3f5;
   padding: 20px 20px 16px;
   border-radius: 12px;
@@ -2929,6 +2932,12 @@ small.error {
 .season_calender_card input,
 .season_calender_card select {
   background: #fff !important;
+}
+@media (max-width: 768px) {
+  .season_calender_card {
+    flex-direction: column;
+    padding-top: 50px;
+  }
 }
 
 .rmdp-shadow {
@@ -3248,12 +3257,16 @@ small.error {
   cursor: pointer;
 }
 .paginator_btns button i {
-  color: #0d0d0d;
+  color: #777777;
   font-size: 18px;
+  transition: 0.2s;
 }
 .paginator_btns button.disabled {
   opacity: 50%;
   pointer-events: none;
+}
+.paginator_btns button:hover i {
+  color: #0d0d0d;
 }
 
 .tableLoader {
@@ -3306,4 +3319,9 @@ small.error {
 
 .table-container {
   white-space: nowrap !important;
+}
+
+.rmdp-panel {
+  min-width: 150px;
+  padding: 0 6px;
 }/*# sourceMappingURL=index.css.map */

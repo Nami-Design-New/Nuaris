@@ -6,7 +6,7 @@ export default function CustomPagination({
   pageSize,
   className,
   count,
-  param = "page",
+  param = "page"
 }) {
   const [searchParams, setSearchParams] = useSearchParams();
   const lastPage = Math.ceil(count / (pageSize || HOST_DASHBOARD_TABLE_SIZE));

@@ -34,7 +34,9 @@ const SeasonCard = ({ formData, setFormData, index }) => {
   }
 
   function handleDeleteSeasonCard() {
-    let newseason_price = formData.season_price.filter((e) => e.index !== index);
+    let newseason_price = formData.season_price.filter(
+      (e) => e.index !== index
+    );
     newseason_price = newseason_price.map((card, i) => ({ ...card, index: i }));
     setFormData((prev) => ({ ...prev, season_price: newseason_price }));
   }
@@ -42,92 +44,86 @@ const SeasonCard = ({ formData, setFormData, index }) => {
   return (
     <div className="col-12 p-2">
       <div className="season_calender_card">
+        <Calendar
+          value={currentCard.dates}
+          onChange={(e) => {
+            const dates = [...e];
+            const timestampsArr = dates.map((e) =>
+              e.map((e) => {
+                const timestamp = e.unix;
+                const dateObject = new Date(timestamp * 1000);
+                return `${dateObject.getFullYear()}/${String(
+                  dateObject.getMonth() + 1
+                ).padStart(2, "0")}/${String(dateObject.getDate()).padStart(
+                  2,
+                  "0"
+                )}`;
+              })
+            );
+            setFormData({
+              ...formData,
+              season_price: [
+                ...formData.season_price.filter((e) => e.index !== index),
+                {
+                  ...currentCard,
+                  dates: timestampsArr
+                }
+              ]
+            });
+          }}
+          multiple
+          range
+          plugins={[<DatePanel />]}
+        />
         <div className="row m-0">
-          <div className="col-lg-7 col-12 p-0 pe-3">
-            <Calendar
-              value={currentCard.dates}
-              onChange={(e) => {
-                const dates = [...e];
-                const timestampsArr = dates.map((e) =>
-                  e.map((e) => {
-                    const timestamp = e.unix;
-                    const dateObject = new Date(timestamp * 1000);
-                    return `${dateObject.getFullYear()}/${String(
-                      dateObject.getMonth() + 1
-                    ).padStart(2, "0")}/${String(dateObject.getDate()).padStart(
-                      2,
-                      "0"
-                    )}`;
-                  })
-                );
-                setFormData({
-                  ...formData,
-                  season_price: [
-                    ...formData.season_price.filter((e) => e.index !== index),
-                    {
-                      ...currentCard,
-                      dates: timestampsArr
-                    }
-                  ]
-                });
-              }}
-              multiple
-              range
-              plugins={[<DatePanel />]}
+          {/* Price */}
+          <div className="col-12 p-2 pe-0 ps-0">
+            <CustomInputWithUnit
+              name={"price"}
+              onChange={(e) => handleNestedChange(e, "value")}
+              selectOnChange={(e) => handleNestedChange(e, "unit")}
+              value={currentCard.price.value}
+              selectValue={currentCard.price.unit}
+              label={"Price"}
+              units={["minute", "hour", "day", "week", "month"]}
             />
           </div>
-          <div className="col-lg-5 col-11 p-0">
-            <div className="row m-0">
-              {/* Price */}
-              <div className="col-12 p-2 pe-0 ps-0">
-                <CustomInputWithUnit
-                  name={"price"}
-                  onChange={(e) => handleNestedChange(e, "value")}
-                  selectOnChange={(e) => handleNestedChange(e, "unit")}
-                  value={currentCard.price.value}
-                  selectValue={currentCard.price.unit}
-                  label={"Price"}
-                  units={["minute", "hour", "day", "week", "month"]}
-                />
-              </div>
-              {/* Extra Hour price */}
-              <div className="col-12 p-2 pe-0 ps-0">
-                <CustomInputField
-                  name="extraHourPrice"
-                  label={"Extra Hour Price"}
-                  hint={"( USD )"}
-                  placeholder="00"
-                  type="number"
-                  value={currentCard.extraHourPrice}
-                  onChange={handleChange}
-                />
-              </div>
-              {/* Extra Hour price */}
-              <div className="col-12 p-2 pe-0 ps-0">
-                <CustomInputField
-                  name="minPrice"
-                  label={"Minimum Price"}
-                  hint={"( USD )"}
-                  placeholder="00"
-                  type="number"
-                  value={currentCard.minPrice}
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
+          {/* Extra Hour price */}
+          <div className="col-12 p-2 pe-0 ps-0">
+            <CustomInputField
+              name="extraHourPrice"
+              label={"Extra Hour Price"}
+              hint={"( USD )"}
+              placeholder="00"
+              type="number"
+              value={currentCard.extraHourPrice}
+              onChange={handleChange}
+            />
           </div>
-          <button
-            disabled={formData.season_price.length === 1}
-            style={{
-              opacity: formData.season_price.length === 1 ? "0.5" : "1"
-            }}
-            type="button"
-            className="delete_btn"
-            onClick={handleDeleteSeasonCard}
-          >
-            <img src={deleteIcon} alt="deleteIcon" />
-          </button>
+          {/* Extra Hour price */}
+          <div className="col-12 p-2 pe-0 ps-0">
+            <CustomInputField
+              name="minPrice"
+              label={"Minimum Price"}
+              hint={"( USD )"}
+              placeholder="00"
+              type="number"
+              value={currentCard.minPrice}
+              onChange={handleChange}
+            />
+          </div>
         </div>
+        <button
+          disabled={formData.season_price.length === 1}
+          style={{
+            opacity: formData.season_price.length === 1 ? "0.5" : "1"
+          }}
+          type="button"
+          className="delete_btn"
+          onClick={handleDeleteSeasonCard}
+        >
+          <img src={deleteIcon} alt="deleteIcon" />
+        </button>
       </div>
     </div>
   );
