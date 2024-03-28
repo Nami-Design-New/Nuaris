@@ -20,7 +20,7 @@ export default function FleetCardsGrid() {
   useEffect(() => {
     try {
       axios
-        .get(`/yachts/?page_size=9?sub_user=${subUser}`, {
+        .get(`/yachts/?page_size=9/&sub_user=${subUser}`, {
           params: {
             page: currentPage
           }
