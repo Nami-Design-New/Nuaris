@@ -1,26 +1,48 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import CheckField from "../../ui/form-elements/CheckField";
 import AssignGroupModal from "./AssignGroupModal";
+import CustomPagination from "./../../ui/CustomPagination";
+import { useSearchParams } from "react-router-dom";
+import axios from "./../../../util/axios";
 
 const AssignGroup = ({ ivitedUserId }) => {
   const [permissionMap, setPermissionMap] = useState({});
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [formData, setFormData] = useState({ id: "" });
-
-  const permissionsGroups = useSelector(
-    (state) => state.permissionsGroups.permissionsGroups?.results
-  );
+  const [groups, setGroups] = useState([]);
+  const [groupsCount, setGroupsCount] = useState(0);
+  const [searchParams] = useSearchParams();
+  const currentPage = searchParams.get("page");
 
   useEffect(() => {
-    if (permissionsGroups) {
-      const permissionGroupsMap = permissionsGroups?.reduce((acc, group) => {
+    try {
+      axios
+        .get(`/groups/`, {
+          params: {
+            page: currentPage
+          }
+        })
+        .then((res) => {
+          setGroupsCount(res?.data?.count);
+          setGroups(res?.data?.results);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  }, [currentPage]);
+
+  useEffect(() => {
+    if (groups) {
+      const permissionGroupsMap = groups?.reduce((acc, group) => {
         acc[group.id] = false;
         return acc;
       }, {});
       setPermissionMap(permissionGroupsMap);
     }
-  }, [permissionsGroups]);
+  }, [groups]);
 
   const handleAddGroup = (passedGroup) => {
     const groupId = passedGroup.id;
@@ -47,16 +69,17 @@ const AssignGroup = ({ ivitedUserId }) => {
                 Assign Group Permissions to employee
               </h6>
             </div>
-            {permissionsGroups?.map((g) => (
+            {groups?.map((g) => (
               <div className="col-lg-4 col-md-6 col-12 p-2" key={g.id}>
                 <CheckField
                   name={g.name}
                   id={g.id}
                   checked={permissionMap[g.id]}
-                  onChange={(e) => handleAddGroup(g)}
+                  onChange={() => handleAddGroup(g)}
                 />
               </div>
             ))}
+            <CustomPagination count={groupsCount} />
             <div className="col-12 p-2 d-flex justify-content-end">
               <button className="log w-25" onClick={handleOpenModal}>
                 Confirm

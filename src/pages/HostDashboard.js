@@ -73,7 +73,7 @@ const HostDashboard = () => {
               element={<EditUser />}
             />
             <Route
-              path="/invite-user/permissions/edit-permissions/:permissionId"
+              path="/invite-user/permissions/edit-permissions/:groupId"
               element={<EditPermissions />}
             />
             <Route
