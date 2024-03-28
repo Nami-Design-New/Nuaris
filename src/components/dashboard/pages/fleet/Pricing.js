@@ -1,69 +1,57 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CustomInputWithUnit from "../../../ui/form-elements/CustomInputWIthUnit";
 import CustomInputField from "../../../ui/form-elements/CustomInputField";
 import calenderIcon from "../../../../assets/images/calender.svg";
 import addIcon from "../../../../assets/images/add.svg";
 import { Form } from "react-bootstrap";
 import SeasonCard from "../../layout/fleet/SeasonCard";
+import deleteIcon from "../../../../assets/images/delete.svg";
 import Vat from "../../layout/Vat";
 
 const Pricing = () => {
   const seasonCardInitialData = {
-    price: {
-      value: 100,
-      unit: "hour"
-    },
-    extraHourPrice: 0,
-    minPrice: 0,
-    index: 0,
-    dates: [new Date()]
+    price: null,
+    period: null,
+    type: "hours",
+    period_type: "hours",
+    extra_hour_price: null,
+    minimum_price: null,
+    dates: [new Date()],
+  };
+  const initialPricesData = {
+    price: null,
+    type: "hour",
+    period: null,
+    period_type: "hours",
+    extra_hour_price: null,
+    minimum_price: null,
   };
   const initialData = {
-    minimumRentalPeriod: {
-      value: 1,
-      unit: "hour"
-    },
-    price: {
-      value: 100,
-      unit: "hour"
-    },
-    extraHourPrice: 0,
-    minPrice: 0,
-    prepaymentPercentage: [""],
-    VAT: {
-      SA: false,
-      QA: false
-    },
-    seasonCards: [seasonCardInitialData]
+    prices: [initialPricesData],
+    season_prices: [seasonCardInitialData],
+    vat: [],
+    prepayment_percentage: 100,
   };
+
   const [formData, setFormData] = useState(initialData);
   const [uponRequest, setUponRequest] = useState(false);
 
-  function handleNestedChange(e, name, value = "value") {
-    setFormData({
-      ...formData,
-      [e.target.name]: {
-        ...formData[e.target.name],
-        [name]: e.target[value]
-      }
-    });
-  }
-
   function handleChange(e) {
-    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-  }
-
-  function handleAddSeasonCard() {
     setFormData((prev) => ({
       ...prev,
-      seasonCards: [
-        ...prev.seasonCards,
-        {
-          ...seasonCardInitialData,
-          index: prev.seasonCards.length
-        }
-      ]
+      [e.target.name]: e.target.value,
     }));
+  }
+
+  function handleChangePrice(e, i) {
+    setFormData((prev) => {
+      const prices = [...prev.prices];
+      prices[i][e.target.name] = e.target.value;
+      return {
+        ...prev,
+        prices,
+      };
+    });
   }
 
   function handleSubmit(e) {
@@ -78,10 +66,14 @@ const Pricing = () => {
     //       prepaymentPercentage: formData.prepaymentPercentage,
     //     },
     //   ],
-    //   season_price: [...formData.seasonCards],
+    //   season_price: [...formData.season_prices],
     // };
     // console.log(responseType);
   }
+
+  useEffect(() => {
+    console.log(formData);
+  }, [formData]);
 
   return (
     <div className="fleet_form__wrapper">
@@ -102,54 +94,106 @@ const Pricing = () => {
             </div>
             {!uponRequest && (
               <>
-                {/* Minimum rental Period */}
-                <div className="col-lg-6 col-12 p-2">
-                  <CustomInputWithUnit
-                    value={formData.minimumRentalPeriod.value}
-                    selectValue={formData.minimumRentalPeriod.unit}
-                    onChange={(e) => handleNestedChange(e, "value")}
-                    selectOnChange={(e) => handleNestedChange(e, "unit")}
-                    name="minimumRentalPeriod"
-                    label="Minimum rental Period"
-                    units={["minutes", "hours", "days", "weeks", "months"]}
-                  />
+                <div className="col-12 p-2 d-flex align-items-center justify-content-between">
+                  <div className="d-flex align-items-center gap-2 addSeason">
+                    <h6 className="m-0">General Price</h6>
+                  </div>
+                  <button
+                    onClick={() => {
+                      setFormData((prev) => {
+                        return {
+                          ...prev,
+                          prices: [...prev.prices, initialPricesData],
+                        };
+                      });
+                    }}
+                    type="button"
+                  >
+                    <img src={addIcon} alt="addIcon" />
+                  </button>
                 </div>
-                {/* Price */}
-                <div className="col-lg-6 col-12 p-2">
-                  <CustomInputWithUnit
-                    value={formData.price.value}
-                    selectValue={formData.price.unit}
-                    onChange={(e) => handleNestedChange(e, "value")}
-                    selectOnChange={(e) => handleNestedChange(e, "unit")}
-                    name={"price"}
-                    label="Price"
-                    units={["minute", "hour", "day"]}
-                  />
-                </div>
-                {/* Extra Hour price */}
-                <div className="col-lg-6 col-12 p-2">
-                  <CustomInputField
-                    label={"Extra Hour Price"}
-                    name="extraHourPrice"
-                    hint={"( USD )"}
-                    type="number"
-                    placeholder="00"
-                    value={formData.extraHourPrice}
-                    onChange={handleChange}
-                  />
-                </div>
-                {/* Min Price */}
-                <div className="col-lg-6 col-12 p-2">
-                  <CustomInputField
-                    hint={"( USD )"}
-                    label={"Minimum Price"}
-                    name="minPrice"
-                    type="number"
-                    placeholder="00"
-                    value={formData.minPrice}
-                    onChange={handleChange}
-                  />
-                </div>
+
+                {formData.prices.map((e, index) => {
+                  return (
+                    <div
+                      key={index}
+                      className="col-12 position-relative p-2 d-flex flex-wrap"
+                    >
+                      {/* Minimum rental Period */}
+                      <div className="col-lg-6 col-12 p-2">
+                        <CustomInputWithUnit
+                          value={e.period}
+                          selectValue={e.period_type}
+                          onChange={(e) => handleChangePrice(e, index)}
+                          selectOnChange={(e) => handleChangePrice(e, index)}
+                          name="period"
+                          selectName={"period_type"}
+                          label="Minimum rental Period"
+                          units={[
+                            "minutes",
+                            "hours",
+                            "days",
+                            "weeks",
+                            "months",
+                          ]}
+                        />
+                      </div>
+                      {/* Price */}
+                      <div className="col-lg-6 col-12 p-2">
+                        <CustomInputWithUnit
+                          value={e.price}
+                          selectValue={e.type}
+                          onChange={(e) => handleChangePrice(e, index)}
+                          selectOnChange={(e) => handleChangePrice(e, index)}
+                          selectName={"type"}
+                          name={"price"}
+                          label="Price"
+                          units={["minute", "hour", "day"]}
+                        />
+                      </div>
+                      {/* Extra Hour price */}
+                      <div className="col-lg-6 col-12 p-2">
+                        <CustomInputField
+                          label={"Extra Hour Price"}
+                          name="extra_hour_price"
+                          hint={"( USD )"}
+                          type="number"
+                          placeholder="00"
+                          value={e.extra_hour_price}
+                          onChange={(e) => handleChangePrice(e, index)}
+                        />
+                      </div>
+                      {/* Min Price */}
+                      <div className="col-lg-6 col-12 p-2">
+                        <CustomInputField
+                          hint={"( USD )"}
+                          label={"Minimum Price"}
+                          name="minimum_price"
+                          type="number"
+                          placeholder="00"
+                          value={e.minimum_price}
+                          onChange={(e) => handleChangePrice(e, index)}
+                        />
+                      </div>
+                      <button
+                        onClick={() => {
+                          setFormData((prev) => {
+                            const prices = [...prev.prices];
+                            prices.splice(index, 1);
+                            return {
+                              ...prev,
+                              prices,
+                            };
+                          });
+                        }}
+                        className="price_trash_icon"
+                        type="button"
+                      >
+                        <img src={deleteIcon} alt="delete" />
+                      </button>
+                    </div>
+                  );
+                })}
                 {/* Prepayment percentage */}
                 <div className="col-12 p-2">
                   <CustomInputField
@@ -158,7 +202,7 @@ const Pricing = () => {
                     name="prepaymentPercentage"
                     type="number"
                     placeholder="00"
-                    value={formData.prepaymentPercentage}
+                    value={formData.prepayment_percentage}
                     onChange={handleChange}
                   />
                 </div>
@@ -168,12 +212,25 @@ const Pricing = () => {
                     <img src={calenderIcon} alt="calender" />
                     <h6 className="m-0">Season Price</h6>
                   </div>
-                  <button onClick={handleAddSeasonCard} type="button">
+                  <button
+                    onClick={() => {
+                      setFormData((prev) => {
+                        return {
+                          ...prev,
+                          season_prices: [
+                            ...prev.season_prices,
+                            seasonCardInitialData,
+                          ],
+                        };
+                      });
+                    }}
+                    type="button"
+                  >
                     <img src={addIcon} alt="addIcon" />
                   </button>
                 </div>
                 {/* calender seasons cards */}
-                {formData.seasonCards.map((_, rowIndex) => (
+                {formData.season_prices.map((_, rowIndex) => (
                   <SeasonCard
                     key={rowIndex}
                     formData={formData}

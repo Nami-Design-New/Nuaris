@@ -3021,7 +3021,6 @@ small.error {
     i {
       color: $gray;
       font-size: 18px;
-      transition: .2s;
     }
     &.disabled {
       opacity: 50%;
@@ -3075,7 +3074,14 @@ small.error {
 .table-container {
   white-space: nowrap !important;
 }
-.rmdp-panel {
-  min-width: 150px;
-  padding: 0 6px;
+.price_trash_icon {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  width: 17px;
+  height: 17px;
+  img {
+    width: 100%;
+    height: 100%;
+  }
 }

@@ -96,7 +96,7 @@ button {
 .auth-section .left-side .form-header .logo img {
   height: 60px;
   -o-object-fit: contain;
-     object-fit: contain;
+  object-fit: contain;
 }
 .auth-section .left-side .form-header .logo h1 {
   color: #006980;
@@ -571,8 +571,8 @@ button {
 .form-ui .input-field .checkboxs_inputs label input {
   display: none;
   -webkit-appearance: none;
-     -moz-appearance: none;
-          appearance: none;
+  -moz-appearance: none;
+  appearance: none;
 }
 .form-ui .input-field .checkboxs_inputs label input:checked + span {
   color: #fff;
@@ -622,8 +622,8 @@ button {
   background: #ebf3f5;
   cursor: pointer;
   -webkit-appearance: none;
-     -moz-appearance: none;
-          appearance: none;
+  -moz-appearance: none;
+  appearance: none;
   width: 100%;
   height: 100%;
 }
@@ -641,10 +641,10 @@ button {
   transform: translate(-50%, -50%);
   font-size: 16px !important;
 }
-.form-ui input[type=number]::-webkit-outer-spin-button {
+.form-ui input[type="number"]::-webkit-outer-spin-button {
   display: none;
 }
-.form-ui input[type=number]::-webkit-inner-spin-button {
+.form-ui input[type="number"]::-webkit-inner-spin-button {
   display: none;
 }
 .form-ui .simiLabel {
@@ -690,8 +690,8 @@ button {
 }
 .form-ui .addItem input {
   -webkit-appearance: none;
-     -moz-appearance: none;
-          appearance: none;
+  -moz-appearance: none;
+  appearance: none;
   display: none;
 }
 .form-ui .addItem label {
@@ -937,7 +937,7 @@ button {
 }
 .side_bar .logo_wrapper img {
   -o-object-fit: contain;
-     object-fit: contain;
+  object-fit: contain;
   height: 43px;
 }
 .side_bar .logo_wrapper .logo-lg {
@@ -983,11 +983,13 @@ button {
   max-width: 22px;
   filter: grayscale(1);
 }
-.side_bar .navigation_menu .nav_item a.active, .side_bar .navigation_menu .nav_item a:hover {
+.side_bar .navigation_menu .nav_item a.active,
+.side_bar .navigation_menu .nav_item a:hover {
   background: #ebf3f5;
   color: #006980;
 }
-.side_bar .navigation_menu .nav_item a.active img, .side_bar .navigation_menu .nav_item a:hover img {
+.side_bar .navigation_menu .nav_item a.active img,
+.side_bar .navigation_menu .nav_item a:hover img {
   filter: grayscale(0);
 }
 @media (max-width: 768px) {
@@ -1177,7 +1179,7 @@ button {
   width: 100%;
   height: 100%;
   -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
 }
 .main_wrap nav .settings ul li .dropdownButton .name {
   display: flex;
@@ -1255,13 +1257,13 @@ button {
 .main_wrap nav .settings .profile_dropdown .account_owner .avatar .edit img {
   height: 12px;
   -o-object-fit: contain;
-     object-fit: contain;
+  object-fit: contain;
 }
 .main_wrap nav .settings .profile_dropdown .account_owner .avatar img {
   width: 100%;
   height: 100%;
   -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
 }
 .main_wrap nav .settings .profile_dropdown .account_welcoming {
   width: 100%;
@@ -1316,7 +1318,14 @@ button {
   display: flex;
   gap: 12px;
 }
-.main_wrap nav .settings .profile_dropdown .select_frame .accounts .acc .avatar {
+.main_wrap
+  nav
+  .settings
+  .profile_dropdown
+  .select_frame
+  .accounts
+  .acc
+  .avatar {
   width: 52px;
   height: 52px;
   border-radius: 50%;
@@ -1324,26 +1333,57 @@ button {
   border: 1px solid #f2f2f2;
   overflow: hidden;
 }
-.main_wrap nav .settings .profile_dropdown .select_frame .accounts .acc .avatar img {
+.main_wrap
+  nav
+  .settings
+  .profile_dropdown
+  .select_frame
+  .accounts
+  .acc
+  .avatar
+  img {
   width: 100%;
   height: 100%;
   -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
   -o-object-position: center;
-     object-position: center;
+  object-position: center;
 }
-.main_wrap nav .settings .profile_dropdown .select_frame .accounts .acc .type_mail {
+.main_wrap
+  nav
+  .settings
+  .profile_dropdown
+  .select_frame
+  .accounts
+  .acc
+  .type_mail {
   display: flex;
   justify-content: center;
   flex-direction: column;
 }
-.main_wrap nav .settings .profile_dropdown .select_frame .accounts .acc .type_mail h6 {
+.main_wrap
+  nav
+  .settings
+  .profile_dropdown
+  .select_frame
+  .accounts
+  .acc
+  .type_mail
+  h6 {
   color: #0d0d0d;
   font-size: 16px;
   margin: 0;
   font-weight: 600;
 }
-.main_wrap nav .settings .profile_dropdown .select_frame .accounts .acc .type_mail span {
+.main_wrap
+  nav
+  .settings
+  .profile_dropdown
+  .select_frame
+  .accounts
+  .acc
+  .type_mail
+  span {
   color: #777777;
   line-height: 24px;
 }
@@ -1692,7 +1732,8 @@ th:last-child .p-column-header-content {
 .fleet_side_bar .navigation_menu .nav_item a img {
   max-width: 22px;
 }
-.fleet_side_bar .navigation_menu .nav_item a.active, .fleet_side_bar .navigation_menu .nav_item a:hover {
+.fleet_side_bar .navigation_menu .nav_item a.active,
+.fleet_side_bar .navigation_menu .nav_item a:hover {
   background: #ebf3f5;
   color: #006980;
 }
@@ -1764,14 +1805,16 @@ th:last-child .p-column-header-content {
   font-weight: 500;
   transition: 0.3s ease-in-out;
 }
-.fleet_form__wrapper .wizard_tabs .wizard_tab.active .step_no, .fleet_form__wrapper .wizard_tabs .wizard_tab:hover .step_no,
+.fleet_form__wrapper .wizard_tabs .wizard_tab.active .step_no,
+.fleet_form__wrapper .wizard_tabs .wizard_tab:hover .step_no,
 .addon_form_wrapper .wizard_tabs .wizard_tab.active .step_no,
 .addon_form_wrapper .wizard_tabs .wizard_tab:hover .step_no {
   border-color: #006980;
   background: #ebf3f5;
   color: #006980;
 }
-.fleet_form__wrapper .wizard_tabs .wizard_tab.active h6, .fleet_form__wrapper .wizard_tabs .wizard_tab:hover h6,
+.fleet_form__wrapper .wizard_tabs .wizard_tab.active h6,
+.fleet_form__wrapper .wizard_tabs .wizard_tab:hover h6,
 .addon_form_wrapper .wizard_tabs .wizard_tab.active h6,
 .addon_form_wrapper .wizard_tabs .wizard_tab:hover h6 {
   color: #006980;
@@ -1996,13 +2039,33 @@ th:last-child .p-column-header-content {
   gap: 12px;
   width: 80px;
 }
-.fleet_form__wrapper .bg_white_card .vat_container .country_field .form-switch label,
-.addon_form_wrapper .bg_white_card .vat_container .country_field .form-switch label {
+.fleet_form__wrapper
+  .bg_white_card
+  .vat_container
+  .country_field
+  .form-switch
+  label,
+.addon_form_wrapper
+  .bg_white_card
+  .vat_container
+  .country_field
+  .form-switch
+  label {
   color: #0d0d0d;
   font-weight: 600;
 }
-.fleet_form__wrapper .bg_white_card .vat_container .country_field .form-switch input,
-.addon_form_wrapper .bg_white_card .vat_container .country_field .form-switch input {
+.fleet_form__wrapper
+  .bg_white_card
+  .vat_container
+  .country_field
+  .form-switch
+  input,
+.addon_form_wrapper
+  .bg_white_card
+  .vat_container
+  .country_field
+  .form-switch
+  input {
   box-shadow: none !important;
   margin: 0;
   float: none;
@@ -2199,7 +2262,7 @@ th:last-child .p-column-header-content {
   max-width: 100%;
   width: 100%;
   -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
   transition: 1s ease-out;
 }
 .fleet-card .card-content {
@@ -2299,7 +2362,7 @@ th:last-child .p-column-header-content {
   max-width: 100%;
   width: 100%;
   -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
   height: 100%;
 }
 
@@ -2757,7 +2820,7 @@ th:last-child .p-column-header-content {
   width: 100%;
   height: 100%;
   -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
 }
 .notification-modal .notification-card .content {
   display: flex;
@@ -3016,7 +3079,7 @@ small.error {
 .addOnModal .details .aboutAddOn .img img {
   height: 80px;
   -o-object-fit: contain;
-     object-fit: contain;
+  object-fit: contain;
 }
 .addOnModal .details .aboutAddOn .about {
   flex: 6;
@@ -3120,7 +3183,7 @@ small.error {
 .table-container .addon {
   height: 60px;
   -o-object-fit: contain;
-     object-fit: contain;
+  object-fit: contain;
 }
 
 .price_template {
@@ -3161,7 +3224,8 @@ small.error {
   height: 28px !important;
   padding: 8px !important;
 }
-.rdw-option-wrapper:hover, .rdw-option-wrapper:active {
+.rdw-option-wrapper:hover,
+.rdw-option-wrapper:active {
   box-shadow: none !important;
 }
 
@@ -3190,8 +3254,8 @@ small.error {
   align-items: center;
   gap: 0.5rem;
   -webkit-user-select: none;
-     -moz-user-select: none;
-          user-select: none;
+  -moz-user-select: none;
+  user-select: none;
   justify-content: center;
 }
 .pagination_component img {
@@ -3321,7 +3385,14 @@ small.error {
   white-space: nowrap !important;
 }
 
-.rmdp-panel {
-  min-width: 150px;
-  padding: 0 6px;
-}/*# sourceMappingURL=index.css.map */
+.price_trash_icon {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  width: 17px;
+  height: 17px;
+}
+.price_trash_icon img {
+  width: 100%;
+  height: 100%;
+} /*# sourceMappingURL=index.css.map */
