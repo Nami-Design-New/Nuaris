@@ -113,7 +113,9 @@ const CreatePermission = () => {
                   />
                 </div>
               ))}
-              <CustomPagination count={permissionsCount} pageSize={9} />
+              {permissionsCount > 0 && (
+                <CustomPagination count={permissionsCount} pageSize={9} />
+              )}
               <div className="col-12 p-2 d-flex justify-content-end">
                 <SubmitButton
                   loading={loading}

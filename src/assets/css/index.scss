@@ -2698,6 +2698,9 @@ small.error {
 }
 // season calender card
 .season_calender_card {
+  position: relative;
+  display: flex;
+  gap: 16px;
   background: $main10;
   padding: 20px 20px 16px;
   border-radius: 12px;
@@ -2715,6 +2718,10 @@ small.error {
   input,
   select {
     background: $white !important;
+  }
+  @media (max-width: 768px) {
+    flex-direction: column;
+    padding-top: 50px;
   }
 }
 //calender pannel global
@@ -3012,12 +3019,16 @@ small.error {
     @include centerFlex();
     cursor: pointer;
     i {
-      color: $dark;
+      color: $gray;
       font-size: 18px;
+      transition: .2s;
     }
     &.disabled {
       opacity: 50%;
       pointer-events: none;
+    }
+    &:hover i {
+      color: $dark;
     }
   }
 }
@@ -3063,4 +3074,8 @@ small.error {
 }
 .table-container {
   white-space: nowrap !important;
+}
+.rmdp-panel {
+  min-width: 150px;
+  padding: 0 6px;
 }

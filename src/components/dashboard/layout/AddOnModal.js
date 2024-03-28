@@ -1,7 +1,6 @@
 import React from "react";
 import { Modal } from "react-bootstrap";
 import CountUp from "react-countup";
-import inflatableImage from "../../../assets/images/inflatable.png";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 
@@ -32,27 +31,27 @@ const AddOnModal = ({ showModal, setShowModal, data }) => {
           <div className="details">
             <div className="aboutAddOn">
               <div className="img">
-                <img src={data.attachments[0]} alt={data.name} />
+                <img src={data?.attachments?.[0]} alt={data?.name} />
               </div>
               <div className="about">
-                <h3>{data.name}</h3>
-                <span>{data.category}</span>
-                <p>{data.description}</p>
+                <h3>{data?.name}</h3>
+                <span>{data?.category}</span>
+                <p>{data?.description}</p>
               </div>
             </div>
             <div className="info">
               <div className="info_card">
                 <span>Parent Yacht</span>
-                <h5>{data.parent_yacht_name}</h5>
+                <h5>{data?.parent_yacht_name}</h5>
               </div>
               <div className="info_card">
                 <span>Quantity</span>
-                <h5>{data.quantity}</h5>
+                <h5>{data?.quantity}</h5>
               </div>
               <div className="info_card">
-                <span>price</span>
+                <span>Price</span>
                 <h5>
-                  ${data.price} <span>/ {data.price_type}</span>
+                  ${data?.price} <span>/ {data?.price_type}</span>
                 </h5>
               </div>
             </div>
@@ -77,12 +76,16 @@ const AddOnModal = ({ showModal, setShowModal, data }) => {
                   end={data?.upcoming_booking?.length || 21}
                 />
               </h4>
-              <h6> Upcoming booking</h6>
+              <h6>Upcoming booking</h6>
             </div>
           </div>
           <div className="upComingBooking">
             <h4>Upcoming Booking</h4>
-            <DataTable value={data.upcoming_booking || tableData} rows={10}>
+            <DataTable
+              value={data?.upcoming_booking || tableData}
+              rows={10}
+              className="p-datatable-striped"
+            >
               <Column field="id" header="Add On ID" />
               <Column field="customerName" header="Customer name" />
               <Column field="startDate" header="Start Date" />
