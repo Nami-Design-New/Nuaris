@@ -1,7 +1,6 @@
 import React from "react";
 import { Modal } from "react-bootstrap";
 import CountUp from "react-countup";
-import inflatableImage from "../../../assets/images/inflatable.png";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 

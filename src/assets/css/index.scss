@@ -3064,3 +3064,14 @@ small.error {
 .table-container {
   white-space: nowrap !important;
 }
+.price_trash_icon {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  width: 17px;
+  height: 17px;
+  img {
+    width: 100%;
+    height: 100%;
+  }
+}

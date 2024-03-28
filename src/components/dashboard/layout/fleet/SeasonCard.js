@@ -5,38 +5,28 @@ import CustomInputWithUnit from "../../../ui/form-elements/CustomInputWIthUnit";
 import CustomInputField from "../../../ui/form-elements/CustomInputField";
 
 const SeasonCard = ({ formData, setFormData, index }) => {
-  const currentCard = formData.season_price.find((e) => e.index === index);
+  const currentCard = formData.season_prices[index];
 
-  function handleNestedChange(e, name, value = "value") {
-    setFormData({
-      ...formData,
-      season_price: [
-        ...formData.season_price.filter((e) => e.index !== index),
-        {
-          ...currentCard,
-          price: {
-            ...currentCard.price,
-            [name]: e.target[value]
-          }
-        }
-      ]
+  function handleDeleteSeasonCard() {
+    setFormData((prev) => {
+      const season_prices = [...prev.season_prices];
+      season_prices.splice(index, 1);
+      return {
+        ...prev,
+        season_prices,
+      };
     });
   }
 
-  function handleChange(e) {
-    setFormData((prev) => ({
-      ...prev,
-      season_price: [
-        ...prev.season_price.filter((e) => e.index !== index),
-        { ...currentCard, [e.target.name]: e.target.value }
-      ]
-    }));
-  }
-
-  function handleDeleteSeasonCard() {
-    let newseason_price = formData.season_price.filter((e) => e.index !== index);
-    newseason_price = newseason_price.map((card, i) => ({ ...card, index: i }));
-    setFormData((prev) => ({ ...prev, season_price: newseason_price }));
+  function handleChangeSeasonPrice(e, i) {
+    setFormData((prev) => {
+      const season_prices = [...prev.season_prices];
+      season_prices[i][e.target.name] = e.target.value;
+      return {
+        ...prev,
+        season_prices,
+      };
+    });
   }
 
   return (
@@ -60,15 +50,19 @@ const SeasonCard = ({ formData, setFormData, index }) => {
                     )}`;
                   })
                 );
-                setFormData({
-                  ...formData,
-                  season_price: [
-                    ...formData.season_price.filter((e) => e.index !== index),
-                    {
-                      ...currentCard,
-                      dates: timestampsArr
-                    }
-                  ]
+                setFormData((prev) => {
+                  const season_prices = [...prev.season_prices];
+                  season_prices.splice(index, 1);
+                  return {
+                    ...prev,
+                    season_prices: [
+                      ...season_prices,
+                      {
+                        ...currentCard,
+                        dates: timestampsArr,
+                      },
+                    ],
+                  };
                 });
               }}
               multiple
@@ -78,14 +72,28 @@ const SeasonCard = ({ formData, setFormData, index }) => {
           </div>
           <div className="col-lg-5 col-11 p-0">
             <div className="row m-0">
+              {/* Minimum rental period */}
+              <div className="col-12 p-2 pe-0 ps-0">
+                <CustomInputWithUnit
+                  value={currentCard.period}
+                  selectValue={currentCard.period_type}
+                  onChange={(e) => handleChangeSeasonPrice(e, index)}
+                  selectOnChange={(e) => handleChangeSeasonPrice(e, index)}
+                  selectName={"period_type"}
+                  name={"period"}
+                  label="Minimum Rental Period"
+                  units={["minute", "hour", "day"]}
+                />
+              </div>
               {/* Price */}
               <div className="col-12 p-2 pe-0 ps-0">
                 <CustomInputWithUnit
                   name={"price"}
-                  onChange={(e) => handleNestedChange(e, "value")}
-                  selectOnChange={(e) => handleNestedChange(e, "unit")}
-                  value={currentCard.price.value}
-                  selectValue={currentCard.price.unit}
+                  onChange={(e) => handleChangeSeasonPrice(e, index)}
+                  selectOnChange={(e) => handleChangeSeasonPrice(e, index)}
+                  value={currentCard.price}
+                  selectValue={currentCard.type}
+                  selectName={"type"}
                   label={"Price"}
                   units={["minute", "hour", "day", "week", "month"]}
                 />
@@ -93,33 +101,33 @@ const SeasonCard = ({ formData, setFormData, index }) => {
               {/* Extra Hour price */}
               <div className="col-12 p-2 pe-0 ps-0">
                 <CustomInputField
-                  name="extraHourPrice"
+                  name="extra_hour_price"
                   label={"Extra Hour Price"}
                   hint={"( USD )"}
                   placeholder="00"
                   type="number"
-                  value={currentCard.extraHourPrice}
-                  onChange={handleChange}
+                  value={currentCard.extra_hour_price}
+                  onChange={(e) => handleChangeSeasonPrice(e, index)}
                 />
               </div>
               {/* Extra Hour price */}
               <div className="col-12 p-2 pe-0 ps-0">
                 <CustomInputField
-                  name="minPrice"
+                  name="minimum_price"
                   label={"Minimum Price"}
                   hint={"( USD )"}
                   placeholder="00"
                   type="number"
-                  value={currentCard.minPrice}
-                  onChange={handleChange}
+                  value={currentCard.minimum_price}
+                  onChange={(e) => handleChangeSeasonPrice(e, index)}
                 />
               </div>
             </div>
           </div>
           <button
-            disabled={formData.season_price.length === 1}
+            disabled={formData.season_prices.length === 1}
             style={{
-              opacity: formData.season_price.length === 1 ? "0.5" : "1"
+              opacity: formData.season_prices.length === 1 ? "0.5" : "1",
             }}
             type="button"
             className="delete_btn"

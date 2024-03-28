@@ -6,7 +6,8 @@ export default function CustomInputWithUnit({
   value,
   onChange,
   selectValue,
-  selectOnChange
+  selectOnChange,
+  selectName,
 }) {
   return (
     <div className="input-field">
@@ -24,7 +25,7 @@ export default function CustomInputWithUnit({
         />
         <select
           className="units"
-          name="units"
+          name={selectName}
           id="units"
           value={selectValue}
           onChange={selectOnChange}
