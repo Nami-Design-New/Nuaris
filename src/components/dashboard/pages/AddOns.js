@@ -146,7 +146,7 @@ const AddOns = () => {
           </div>
         </div>
       </div>
-      {row  && (
+      {row && (
         <AddOnModal
           data={row}
           showModal={showModal}

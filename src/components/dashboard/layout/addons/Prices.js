@@ -22,7 +22,6 @@ const Prices = ({ setForm }) => {
     index: 0,
     dates: [new Date()]
   };
-
   const initialData = {
     price: "",
     price_type: "select",
@@ -52,7 +51,6 @@ const Prices = ({ setForm }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-
     try {
       const response = await axios.patch(`/addons/${createdAddOn}/`, {
         ...formData,
