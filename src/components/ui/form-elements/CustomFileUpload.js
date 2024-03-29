@@ -19,7 +19,8 @@ export default function CustomFileUpload({
   labelIdle,
   accept = "image/*",
   allowMultiple = false,
-  onUpdateFiles
+  onUpdateFiles,
+  files,
 }) {
   return (
     <div className="input-field files">
@@ -28,6 +29,23 @@ export default function CustomFileUpload({
       </label>
       <FilePond
         acceptedFileTypes={accept}
+        files={
+          files && files.map((e) => ({ source: e, options: { type: "local" } }))
+        }
+        server={{
+          load: (source, load) => {
+            let myRequest = new Request(source);
+            fetch(myRequest)
+              .then(function (response) {
+                response.blob().then(function (myBlob) {
+                  load(myBlob);
+                });
+              })
+              .catch((err) => {
+                console.error(err);
+              });
+          },
+        }}
         allowMultiple={allowMultiple}
         stylePanelLayout="compact"
         labelIdle={labelIdle}

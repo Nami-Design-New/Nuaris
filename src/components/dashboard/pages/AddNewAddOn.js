@@ -16,6 +16,7 @@ const AddNewAddOn = () => {
       axios
         .get(`/addons/${id}/`)
         .then((res) => {
+          console.log(res.data);
           setAddon(res.data);
         })
         .catch((err) => {

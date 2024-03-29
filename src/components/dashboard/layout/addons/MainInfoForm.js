@@ -20,14 +20,34 @@ const MainInfoForm = ({ setForm, addon }) => {
   const [loading, setLoading] = useState(false);
   const [videoLink, setVideoLink] = useState("");
   const [formData, setFormData] = useState({
-    attachment: [Array(3).fill("")],
+    attachment: [],
     name: "",
     description: "",
     category: "select",
     quantity: "",
     yacht: "select",
-    vat: null
+    vat: null,
   });
+
+  useEffect(() => {
+    setFormData({
+      ...formData,
+      yacht: addon?.yacht || "select",
+      category: addon?.category || "select",
+      vat: addon?.vat || null,
+      quantity: addon?.quantity || "",
+      name: addon?.name || "",
+      description: addon?.description || "",
+      attachment: addon?.attachments || [],
+    });
+    if (addon?.yacht) {
+      setHasParentYacht(true);
+    }
+  }, [addon]);
+
+  useEffect(() => {
+    console.log("formData useEffect", formData);
+  }, [formData]);
 
   useEffect(() => {
     axios
@@ -45,7 +65,7 @@ const MainInfoForm = ({ setForm, addon }) => {
     try {
       const blob = file.slice(0, file.size, file.type);
       const newFile = new File([blob], `${Date.now()}${file.name.slice(-3)}`, {
-        type: file.type
+        type: file.type,
       });
       const data = await uploadFile(newFile, S3Config);
       return data.location;
@@ -58,7 +78,12 @@ const MainInfoForm = ({ setForm, addon }) => {
   };
 
   const handleImagesChange = async (e, i) => {
+    // TODO: remove the ! to make the logic work
+    if (!formData.attachment[i]?.endsWidth(e[0].file.name)) {
+      return;
+    }
     try {
+      console.log("uploading");
       if (!fileLoading) {
         const file = e[0].file;
         const link = await handleUploadMedia(file);
@@ -67,7 +92,7 @@ const MainInfoForm = ({ setForm, addon }) => {
           attachment[i] = link;
           return {
             ...prev,
-            attachment
+            attachment,
           };
         });
       }
@@ -132,8 +157,8 @@ const MainInfoForm = ({ setForm, addon }) => {
           category: categoryId,
           sub_user: subUser[0]?.id,
           user: user.id,
-          attachment: attached
-        }
+          attachment: attached,
+        },
       });
       if (res.status === 201) {
         toast.success("Addon Main Info Saved Successfully");
@@ -171,8 +196,10 @@ const MainInfoForm = ({ setForm, addon }) => {
                       i === 0 ? '<label class="mainImg">Main Image</label>' : ""
                     } <img src=${fav} alt="fav"/>`}
                     pannelRatio=".88"
+                    files={
+                      formData.attachment[i] ? [formData.attachment[i]] : null
+                    }
                     value
-                    accept={["image/png", "image/jpeg"]}
                     allowMultiple={false}
                     onUpdateFiles={(e) => handleImagesChange(e, i)}
                   />
@@ -199,7 +226,7 @@ const MainInfoForm = ({ setForm, addon }) => {
             label="Addon Name"
             id="AddonName"
             placeholder="Write here"
-            value={addon ? addon.name : formData.name}
+            value={formData.name}
             formData={formData}
             setFormData={setFormData}
           />
@@ -211,7 +238,7 @@ const MainInfoForm = ({ setForm, addon }) => {
             label="Description"
             id="description"
             placeholder="Write here"
-            value={addon ? addon.description : formData.description}
+            value={formData.description}
             formData={formData}
             setFormData={setFormData}
           />
@@ -236,7 +263,7 @@ const MainInfoForm = ({ setForm, addon }) => {
             label="Quantity"
             id="quantity"
             placeholder="00"
-            value={addon ? addon.quantity : formData.quantity}
+            value={formData.quantity}
             formData={formData}
             setFormData={setFormData}
           />
