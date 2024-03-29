@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Form } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { uploadFile } from "react-s3";
@@ -13,9 +13,8 @@ import { toast } from "react-toastify";
 import axios from "../../../../util/axios";
 import { ADD_ONS_CATEGORIES, S3Config } from "../../../../constants";
 
-const MainInfoForm = ({ setForm }) => {
-  const { yachts } = useSelector((state) => state.yachts);
-  const results = yachts?.results || [];
+const MainInfoForm = ({ setForm, addon }) => {
+  const [yachts, setYachts] = useState([]);
   const [hasParentYacht, setHasParentYacht] = useState(false);
   const [fileLoading, setFileLoading] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -27,15 +26,26 @@ const MainInfoForm = ({ setForm }) => {
     category: "select",
     quantity: "",
     yacht: "select",
-    vat: null,
+    vat: null
   });
+
+  useEffect(() => {
+    axios
+      .get("/yachts/?page_size=1000")
+      .then((res) => {
+        setYachts(res?.data?.results);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   const handleUploadMedia = async (file) => {
     setFileLoading(true);
     try {
       const blob = file.slice(0, file.size, file.type);
       const newFile = new File([blob], `${Date.now()}${file.name.slice(-3)}`, {
-        type: file.type,
+        type: file.type
       });
       const data = await uploadFile(newFile, S3Config);
       return data.location;
@@ -57,7 +67,7 @@ const MainInfoForm = ({ setForm }) => {
           attachment[i] = link;
           return {
             ...prev,
-            attachment,
+            attachment
           };
         });
       }
@@ -96,7 +106,7 @@ const MainInfoForm = ({ setForm }) => {
       if (!subUser) {
         throw new Error("No matching sub user found");
       }
-      const yachtId = results.find(
+      const yachtId = yachts.find(
         (yacht) => yacht.name_en === formData.yacht
       )?.id;
       let categoryId;
@@ -113,13 +123,17 @@ const MainInfoForm = ({ setForm }) => {
       if (videoLink) {
         attached.push(videoLink);
       }
-      const res = await axios.post("/addons/", {
-        ...formData,
-        yacht: yachtId,
-        category: categoryId,
-        sub_user: subUser[0]?.id,
-        user: user.id,
-        attachment: attached,
+      const res = await axios.request({
+        method: addon.id ? "PATCH" : "POST",
+        url: "/addons/",
+        data: {
+          ...formData,
+          yacht: yachtId,
+          category: categoryId,
+          sub_user: subUser[0]?.id,
+          user: user.id,
+          attachment: attached
+        }
       });
       if (res.status === 201) {
         toast.success("Addon Main Info Saved Successfully");
@@ -157,6 +171,7 @@ const MainInfoForm = ({ setForm }) => {
                       i === 0 ? '<label class="mainImg">Main Image</label>' : ""
                     } <img src=${fav} alt="fav"/>`}
                     pannelRatio=".88"
+                    value
                     accept={["image/png", "image/jpeg"]}
                     allowMultiple={false}
                     onUpdateFiles={(e) => handleImagesChange(e, i)}
@@ -184,7 +199,7 @@ const MainInfoForm = ({ setForm }) => {
             label="Addon Name"
             id="AddonName"
             placeholder="Write here"
-            value={formData.name}
+            value={addon ? addon.name : formData.name}
             formData={formData}
             setFormData={setFormData}
           />
@@ -196,7 +211,7 @@ const MainInfoForm = ({ setForm }) => {
             label="Description"
             id="description"
             placeholder="Write here"
-            value={formData.description}
+            value={addon ? addon.description : formData.description}
             formData={formData}
             setFormData={setFormData}
           />
@@ -221,7 +236,7 @@ const MainInfoForm = ({ setForm }) => {
             label="Quantity"
             id="quantity"
             placeholder="00"
-            value={formData.quantity}
+            value={addon ? addon.quantity : formData.quantity}
             formData={formData}
             setFormData={setFormData}
           />
@@ -244,7 +259,7 @@ const MainInfoForm = ({ setForm }) => {
             value={formData.yacht}
             formData={formData}
             setFormData={setFormData}
-            options={results?.map((yacht) => yacht.name_en)}
+            options={yachts?.map((yacht) => yacht.name_en)}
           />
         </div>
         {/* vat */}

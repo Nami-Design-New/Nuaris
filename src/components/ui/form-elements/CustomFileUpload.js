@@ -19,7 +19,7 @@ export default function CustomFileUpload({
   labelIdle,
   accept = "image/*",
   allowMultiple = false,
-  onUpdateFiles,
+  onUpdateFiles
 }) {
   return (
     <div className="input-field files">

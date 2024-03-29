@@ -64,6 +64,7 @@ const HostDashboard = () => {
             {/* add ons */}
             <Route path="/addons" element={<AddOns />} />
             <Route path="/addons/add-new-addon" element={<AddNewAddOn />} />
+            <Route path="/addons/edit-addon/:id" element={<AddNewAddOn />} />
             {/* error redirect */}
             <Route path="*" element={<>404 page</>} />
           </Routes>
