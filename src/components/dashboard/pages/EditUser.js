@@ -41,8 +41,16 @@ export default function EditUser() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+    if (employee?.phone_number?.length > 15) {
+      toast.error("Please enter a valid phone number");
+      setLoading(false);
+      return;
+    }
     try {
-      const response = await axios.patch(`/users/${employee.id}/`, employee);
+      const response = await axios.put(`/employees/${employee.id}/`, {
+        ...employee,
+        sub_user: subUser
+      });
       toast.success("User updated successfully");
       console.log(response);
     } catch (error) {
@@ -78,13 +86,20 @@ export default function EditUser() {
                       name="positions"
                       id="positions"
                       required
-                      value={employee.position}
+                      value={
+                        positions?.find(
+                          (option) => option.id === employee.position
+                        )?.name
+                      }
                       onChange={(e) => {
                         const selectedOption =
                           e.target.options[e.target.selectedIndex].value;
                         setEmployee({
                           ...employee,
-                          position: selectedOption
+                          position: positions?.find(
+                            (option) => option.name === selectedOption
+                          )?.id,
+                          position_name: selectedOption
                         });
                       }}
                     >
@@ -110,9 +125,9 @@ export default function EditUser() {
                       searchable={true}
                       selectedSize={false}
                       onSelect={(code) => {
-                        setEmployee((prev) => ({ ...prev, country: code }));
+                        setEmployee((prev) => ({ ...prev, nationality: code }));
                       }}
-                      selected={employee.country || "SA"}
+                      selected={employee.nationality || "SA"}
                     />
                   </div>
                 </div>
@@ -132,7 +147,7 @@ export default function EditUser() {
                   <PhoneField
                     formData={employee}
                     setFormData={setEmployee}
-                    id="mobile_number"
+                    id="phone_number"
                     value={employee?.phone_number}
                   />
                 </div>
@@ -146,7 +161,7 @@ export default function EditUser() {
               </form>
             </div>
           </div>
-          <AssignGroup ivitedUserId={employee.id} />
+          <AssignGroup invitedUserId={employee.id} />
         </div>
       </section>
     </>

@@ -15,7 +15,7 @@ const CreateUser = () => {
   const [formData, setFormData] = useState({ nationality: "SA" });
   const [loading, setLoading] = useState(false);
   const [showAssignGroups, setShowAssignGroups] = useState(false);
-  const [ivitedUserId, setIvitedUserId] = useState(null);
+  const [invitedUserId, setInvitedUserId] = useState(null);
   const positions = useSelector((state) => state.positions.positions);
   const user = useSelector((state) => state.user?.user);
   const subUserSet = user?.subuser_set;
@@ -45,7 +45,7 @@ const CreateUser = () => {
       if (response?.status === 201 || response?.status === 200) {
         toast.success("Invitation sent successfully");
         setShowAssignGroups(true);
-        setIvitedUserId(response?.data?.user_id);
+        setInvitedUserId(response?.data?.employee?.id);
       } else {
         toast.error(
           "User with this phone number already exists, check your email if you want to override the phone number."
@@ -148,7 +148,7 @@ const CreateUser = () => {
             </form>
           </div>
         </div>
-        {showAssignGroups && <AssignGroup ivitedUserId={ivitedUserId} />}
+        {showAssignGroups && <AssignGroup invitedUserId={invitedUserId} />}
       </div>
     </section>
   );

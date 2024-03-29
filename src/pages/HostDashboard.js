@@ -13,45 +13,22 @@ import Fleet from "../components/dashboard/pages/Fleet";
 import AddYacht from "../components/dashboard/pages/AddYacht";
 import FleetProfile from "../components/dashboard/pages/fleet/FleetProfile";
 import axios from "../util/axios";
-import { useDispatch, useSelector } from "react-redux";
-import { setPermissionsGroups } from "../redux/slices/permissionsGroups";
-import { setPermissions } from "../redux/slices/permissions";
-import { setEmployees } from "../redux/slices/employeesSlice";
+import { useDispatch } from "react-redux";
 import { setPositions } from "../redux/slices/positions";
-import { setYachts } from "../redux/slices/yachts";
 import EditUser from "../components/dashboard/pages/EditUser";
 import AddOns from "../components/dashboard/pages/AddOns";
 import AddNewAddOn from "../components/dashboard/pages/AddNewAddOn";
 
 const HostDashboard = () => {
   const [sideBarOpen, setSideBarOpen] = useState(false);
-  const authedUser = useSelector((state) => state.user.user);
   const dispatch = useDispatch();
 
   async function getAllData() {
-    const groups = axios.get("/groups");
-    const permissions = axios.get("/permissions");
-    const employees = axios.get(`/users/?parent_id=${authedUser.id}`);
     const positions = axios.get("/positions/?page_size=1000");
-    const yachts = axios.get("/yachts");
-
-    const [
-      groupsData,
-      permissionsData,
-      employeesData,
-      positionsData,
-      yachtsData
-    ] = await Promise.all([groups, permissions, employees, positions, yachts]);
-
-    dispatch(setPermissionsGroups(groupsData.data));
-    dispatch(setPermissions(permissionsData.data));
-    dispatch(setEmployees(employeesData.data));
+    const [positionsData] = await Promise.all([positions]);
     dispatch(setPositions(positionsData.data));
-    dispatch(setYachts(yachtsData.data));
   }
-
   useEffect(() => {
-    // fetch the required website data for redux store
     getAllData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

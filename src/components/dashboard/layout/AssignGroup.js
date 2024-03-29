@@ -1,18 +1,24 @@
 import React, { useEffect, useState } from "react";
 import CheckField from "../../ui/form-elements/CheckField";
-import AssignGroupModal from "./AssignGroupModal";
 import CustomPagination from "./../../ui/CustomPagination";
 import { useSearchParams } from "react-router-dom";
 import axios from "./../../../util/axios";
+import ConfirmModal from "../../ui/ConfirmModal";
+import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
 
-const AssignGroup = ({ ivitedUserId }) => {
+const AssignGroup = ({ invitedUserId }) => {
   const [permissionMap, setPermissionMap] = useState({});
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [formData, setFormData] = useState({ id: "" });
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [formData, setFormData] = useState("");
   const [groups, setGroups] = useState([]);
   const [groupsCount, setGroupsCount] = useState(0);
   const [searchParams] = useSearchParams();
   const currentPage = searchParams.get("page");
+  const user = useSelector((state) => state.user?.user);
+  const subUser = user?.subuser_set?.filter(
+    (u) => u.role === user.current_role
+  )[0]?.id;
 
   useEffect(() => {
     try {
@@ -46,19 +52,37 @@ const AssignGroup = ({ ivitedUserId }) => {
 
   const handleAddGroup = (passedGroup) => {
     const groupId = passedGroup.id;
-    const updatedMap = {};
-    for (const key in permissionMap) {
-      updatedMap[key] = key === groupId;
-    }
+    const updatedMap = { ...permissionMap };
     updatedMap[groupId] = !permissionMap[groupId];
     setPermissionMap(updatedMap);
-    setFormData({ id: groupId });
+    setFormData(groupId);
   };
 
   const handleOpenModal = (e) => {
     e.preventDefault();
-    setShowDeleteModal(true);
+    setShowConfirmModal(true);
   };
+
+  const handleAssignGroup = async () => {
+    try {
+      const res = await axios.post(`/groups/${invitedUserId}/assign_group/`, {
+        id: formData,
+        name: groups.find((g) => g.id === formData)?.name,
+        sub_user: subUser
+      });
+      if (res?.status === 201 || res?.status === 200) {
+        toast.success("Group assigned successfully");
+        setShowConfirmModal(false);
+      } else {
+        toast.error("An error occurred while assigning the group");
+        setShowConfirmModal(false);
+      }
+    } catch (error) {
+      console.log("error =>", error);
+      toast.error("An error occurred while assigning the group");
+    }
+  };
+
   return (
     <>
       <div className="col-12 p-2">
@@ -88,11 +112,13 @@ const AssignGroup = ({ ivitedUserId }) => {
           </form>
         </div>
       </div>
-      <AssignGroupModal
-        showDeleteModal={showDeleteModal}
-        setShowDeleteModal={setShowDeleteModal}
-        ivitedUserId={ivitedUserId}
-        formData={formData}
+      <ConfirmModal
+        showConfirmModal={showConfirmModal}
+        setShowConfirmModal={setShowConfirmModal}
+        handleConfirm={handleAssignGroup}
+        message={`Are you sure you want to invite this user as a ${
+          groups?.find((g) => permissionMap[g.id])?.name
+        }?`}
       />
     </>
   );
