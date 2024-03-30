@@ -12,6 +12,7 @@ import CustomPagination from "../../ui/CustomPagination";
 import axios from "../../../util/axios";
 import TableLoader from "./../../ui/TableLoader";
 import DeleteModal from "../../ui/DeleteModal";
+import { useSelector } from "react-redux";
 
 const AddOns = () => {
   const [row, setRow] = useState({});
@@ -22,6 +23,11 @@ const AddOns = () => {
   const [addonsCount, setAddonsCount] = useState(0);
   const [showModal, setShowModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const user = useSelector((state) => state.user?.user);
+  const subUser = user?.subuser_set?.filter(
+    (u) => u.role === user.current_role
+  )[0]?.id;
+
   const deleteRow = (rowData) => {
     setShowDeleteModal(true);
     setRow(rowData);
@@ -51,7 +57,7 @@ const AddOns = () => {
   useEffect(() => {
     try {
       axios
-        .get("/addons/", {
+        .get(`/addons/?sub_user=${subUser}`, {
           params: {
             page: currentPage
           }
@@ -69,7 +75,7 @@ const AddOns = () => {
     } catch (err) {
       console.log(err);
     }
-  }, [currentPage]);
+  }, [currentPage, subUser]);
 
   // Actions ui
   const imageTemplate = (item) => {

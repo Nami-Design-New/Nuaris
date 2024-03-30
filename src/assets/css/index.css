@@ -1023,7 +1023,7 @@ button {
   display: flex;
   position: sticky;
   top: 0;
-  z-index: 99;
+  z-index: 999;
 }
 .main_wrap nav .links {
   flex: 1;
@@ -2910,7 +2910,8 @@ small.error {
   padding: 0 12px 12px;
 }
 
-.season_calender_card {
+.season_calender_card,
+.price_card {
   position: relative;
   display: flex;
   gap: 16px;
@@ -2919,22 +2920,27 @@ small.error {
   border-radius: 12px;
   position: relative;
 }
-.season_calender_card .delete_btn {
+.season_calender_card .delete_btn,
+.price_card .delete_btn {
   position: absolute;
   top: 8px;
   padding: 0 !important;
   right: 12px;
   width: 32px;
 }
-.season_calender_card .delete_btn img {
+.season_calender_card .delete_btn img,
+.price_card .delete_btn img {
   height: 20px;
 }
 .season_calender_card input,
-.season_calender_card select {
+.season_calender_card select,
+.price_card input,
+.price_card select {
   background: #fff !important;
 }
 @media (max-width: 768px) {
-  .season_calender_card {
+  .season_calender_card,
+  .price_card {
     flex-direction: column;
     padding-top: 50px;
   }
@@ -3330,4 +3336,28 @@ small.error {
 .price_trash_icon img {
   width: 100%;
   height: 100%;
+}
+
+.rmdp-wrapper {
+  width: auto;
+  height: -moz-fit-content;
+  height: fit-content;
+}
+
+.vessel_status .checkboxs_inputs label input:checked + span {
+  color: #0d0d0d !important;
+}
+.vessel_status .checkboxs_inputs .bg-active {
+  transform: translateX(0);
+  width: 33.3333333333% !important;
+  background: #ffda8b !important;
+}
+.vessel_status .checkboxs_inputs .bg-active.active {
+  transform: translateX(0%) !important;
+}
+.vessel_status .checkboxs_inputs .bg-active.inactive {
+  transform: translateX(100%) !important;
+}
+.vessel_status .checkboxs_inputs .bg-active.hidden {
+  transform: translateX(200%) !important;
 }/*# sourceMappingURL=index.css.map */

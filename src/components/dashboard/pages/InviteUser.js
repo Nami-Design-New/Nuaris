@@ -122,7 +122,7 @@ const InviteUser = () => {
                       }
                       header="Name"
                     />
-                    <Column field="position" header="Position" />
+                    <Column field="position_name" header="Position" />
                     <Column field="phone_number" header="Phone number" />
                     <Column
                       field="group_name"

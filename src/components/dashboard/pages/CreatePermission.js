@@ -12,7 +12,7 @@ const CreatePermission = () => {
   const formRef = useRef(null);
   const [permissions, setPermissions] = useState([]);
   const [permissionsCount, setPermissionsCount] = useState(0);
-  const [formData, setFormData] = useState({ permissions: [] });
+  const [formData, setFormData] = useState({ permission_ids: [] });
   const [loading, setLoading] = useState(false);
   const [searchParams] = useSearchParams();
   const currentPage = searchParams.get("page");
@@ -45,13 +45,13 @@ const CreatePermission = () => {
     if (checked) {
       setFormData({
         ...formData,
-        permissions: [...formData.permissions, passedPermission]
+        permission_ids: [...formData.permission_ids, passedPermission]
       });
     } else {
-      const filteredPermessions = formData.permissions.filter(
+      const filteredPermessions = formData.permission_ids.filter(
         (permission) => permission.id !== passedPermission.id
       );
-      setFormData({ ...formData, permissions: filteredPermessions });
+      setFormData({ ...formData, permission_ids: filteredPermessions });
     }
   };
   const handleSubmit = async (e) => {
@@ -109,7 +109,7 @@ const CreatePermission = () => {
                     label={p.codename}
                     name={p.name}
                     id={p.id}
-                    onChange={(e) => handleAddPermission(e, p)}
+                    onChange={(e) => handleAddPermission(e, p.id)}
                   />
                 </div>
               ))}
