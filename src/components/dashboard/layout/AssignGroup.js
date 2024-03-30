@@ -5,20 +5,15 @@ import { useSearchParams } from "react-router-dom";
 import axios from "./../../../util/axios";
 import ConfirmModal from "../../ui/ConfirmModal";
 import { toast } from "react-toastify";
-import { useSelector } from "react-redux";
 
 const AssignGroup = ({ invitedUserId }) => {
   const [permissionMap, setPermissionMap] = useState({});
   const [showConfirmModal, setShowConfirmModal] = useState(false);
-  const [formData, setFormData] = useState("");
+  const [formData, setFormData] = useState([]);
   const [groups, setGroups] = useState([]);
   const [groupsCount, setGroupsCount] = useState(0);
   const [searchParams] = useSearchParams();
   const currentPage = searchParams.get("page");
-  const user = useSelector((state) => state.user?.user);
-  const subUser = user?.subuser_set?.filter(
-    (u) => u.role === user.current_role
-  )[0]?.id;
 
   useEffect(() => {
     try {
@@ -55,7 +50,7 @@ const AssignGroup = ({ invitedUserId }) => {
     const updatedMap = { ...permissionMap };
     updatedMap[groupId] = !permissionMap[groupId];
     setPermissionMap(updatedMap);
-    setFormData(groupId);
+    setFormData(updatedMap[groupId] ? [...formData, groupId] : formData);
   };
 
   const handleOpenModal = (e) => {
@@ -65,10 +60,8 @@ const AssignGroup = ({ invitedUserId }) => {
 
   const handleAssignGroup = async () => {
     try {
-      const res = await axios.post(`/groups/${invitedUserId}/assign_group/`, {
-        id: formData,
-        name: groups.find((g) => g.id === formData)?.name,
-        sub_user: subUser
+      const res = await axios.post(`/users/${invitedUserId}/assign_group/`, {
+        ids: formData
       });
       if (res?.status === 201 || res?.status === 200) {
         toast.success("Group assigned successfully");

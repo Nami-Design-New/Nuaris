@@ -16,7 +16,7 @@ const Pricing = () => {
     period_type: "hours",
     extra_hour_price: null,
     minimum_price: null,
-    dates: [new Date()],
+    dates: [new Date()]
   };
   const initialPricesData = {
     price: null,
@@ -24,13 +24,13 @@ const Pricing = () => {
     period: null,
     period_type: "hours",
     extra_hour_price: null,
-    minimum_price: null,
+    minimum_price: null
   };
   const initialData = {
     prices: [initialPricesData],
     season_prices: [seasonCardInitialData],
     vat: [],
-    prepayment_percentage: 100,
+    prepayment_percentage: 100
   };
 
   const [formData, setFormData] = useState(initialData);
@@ -39,7 +39,7 @@ const Pricing = () => {
   function handleChange(e) {
     setFormData((prev) => ({
       ...prev,
-      [e.target.name]: e.target.value,
+      [e.target.name]: e.target.value
     }));
   }
 
@@ -49,7 +49,7 @@ const Pricing = () => {
       prices[i][e.target.name] = e.target.value;
       return {
         ...prev,
-        prices,
+        prices
       };
     });
   }
@@ -94,106 +94,6 @@ const Pricing = () => {
             </div>
             {!uponRequest && (
               <>
-                <div className="col-12 p-2 d-flex align-items-center justify-content-between">
-                  <div className="d-flex align-items-center gap-2 addSeason">
-                    <h6 className="m-0">General Price</h6>
-                  </div>
-                  <button
-                    onClick={() => {
-                      setFormData((prev) => {
-                        return {
-                          ...prev,
-                          prices: [...prev.prices, initialPricesData],
-                        };
-                      });
-                    }}
-                    type="button"
-                  >
-                    <img src={addIcon} alt="addIcon" />
-                  </button>
-                </div>
-
-                {formData.prices.map((e, index) => {
-                  return (
-                    <div
-                      key={index}
-                      className="col-12 position-relative p-2 d-flex flex-wrap"
-                    >
-                      {/* Minimum rental Period */}
-                      <div className="col-lg-6 col-12 p-2">
-                        <CustomInputWithUnit
-                          value={e.period}
-                          selectValue={e.period_type}
-                          onChange={(e) => handleChangePrice(e, index)}
-                          selectOnChange={(e) => handleChangePrice(e, index)}
-                          name="period"
-                          selectName={"period_type"}
-                          label="Minimum rental Period"
-                          units={[
-                            "minutes",
-                            "hours",
-                            "days",
-                            "weeks",
-                            "months",
-                          ]}
-                        />
-                      </div>
-                      {/* Price */}
-                      <div className="col-lg-6 col-12 p-2">
-                        <CustomInputWithUnit
-                          value={e.price}
-                          selectValue={e.type}
-                          onChange={(e) => handleChangePrice(e, index)}
-                          selectOnChange={(e) => handleChangePrice(e, index)}
-                          selectName={"type"}
-                          name={"price"}
-                          label="Price"
-                          units={["minute", "hour", "day"]}
-                        />
-                      </div>
-                      {/* Extra Hour price */}
-                      <div className="col-lg-6 col-12 p-2">
-                        <CustomInputField
-                          label={"Extra Hour Price"}
-                          name="extra_hour_price"
-                          hint={"( USD )"}
-                          type="number"
-                          placeholder="00"
-                          value={e.extra_hour_price}
-                          onChange={(e) => handleChangePrice(e, index)}
-                        />
-                      </div>
-                      {/* Min Price */}
-                      <div className="col-lg-6 col-12 p-2">
-                        <CustomInputField
-                          hint={"( USD )"}
-                          label={"Minimum Price"}
-                          name="minimum_price"
-                          type="number"
-                          placeholder="00"
-                          value={e.minimum_price}
-                          onChange={(e) => handleChangePrice(e, index)}
-                        />
-                      </div>
-                      <button
-                        onClick={() => {
-                          setFormData((prev) => {
-                            const prices = [...prev.prices];
-                            prices.splice(index, 1);
-                            return {
-                              ...prev,
-                              prices,
-                            };
-                          });
-                        }}
-                        className="price_trash_icon"
-                        type="button"
-                      >
-                        <img src={deleteIcon} alt="delete" />
-                      </button>
-                    </div>
-                  );
-                })}
                 {/* Prepayment percentage */}
                 <div className="col-12 p-2">
                   <CustomInputField
@@ -206,6 +106,109 @@ const Pricing = () => {
                     onChange={handleChange}
                   />
                 </div>
+                <div className="col-lg-6 col-12 p-2">
+                  <CustomInputWithUnit
+                    name="period"
+                    selectName={"period_type"}
+                    label="Minimum rental Period"
+                    units={["minutes", "hours", "days", "weeks", "months"]}
+                  />
+                </div>
+                {/* Price */}
+                <div className="col-lg-6 col-12 p-2">
+                  <CustomInputField
+                    selectName={"type"}
+                    name={"price"}
+                    label="Price"
+                    placeholder="00"
+                  />
+                </div>
+                <div className="col-12 p-2 d-flex align-items-center justify-content-between">
+                  <div className="d-flex align-items-center gap-2 addSeason">
+                    <h6 className="m-0">General Price</h6>
+                  </div>
+                  <button
+                    onClick={() => {
+                      setFormData((prev) => {
+                        return {
+                          ...prev,
+                          prices: [...prev.prices, initialPricesData]
+                        };
+                      });
+                    }}
+                    type="button"
+                  >
+                    <img src={addIcon} alt="addIcon" />
+                  </button>
+                </div>
+                {formData.prices.map((e, index) => {
+                  return (
+                    <div
+                      key={index}
+                      className="col-12 p-2"
+                    >
+                      <div className="price_card p-2">
+                        <div className="row m-0">
+                          {/* Price */}
+                          <div className="col-12 p-2">
+                            <CustomInputWithUnit
+                              value={e.price}
+                              selectValue={e.type}
+                              onChange={(e) => handleChangePrice(e, index)}
+                              selectOnChange={(e) =>
+                                handleChangePrice(e, index)
+                              }
+                              selectName={"type"}
+                              name={"price"}
+                              label="Price"
+                              units={["minute", "hour", "day", "week", "month"]}
+                            />
+                          </div>
+                          {/* Extra Hour price */}
+                          <div className="col-lg-6 col-12 p-2">
+                            <CustomInputField
+                              label={"Extra Hour Price"}
+                              name="extra_hour_price"
+                              hint={"( USD )"}
+                              type="number"
+                              placeholder="00"
+                              value={e.extra_hour_price}
+                              onChange={(e) => handleChangePrice(e, index)}
+                            />
+                          </div>
+                          {/* Min Price */}
+                          <div className="col-lg-6 col-12 p-2">
+                            <CustomInputField
+                              hint={"( USD )"}
+                              label={"Minimum Price"}
+                              name="minimum_price"
+                              type="number"
+                              placeholder="00"
+                              value={e.minimum_price}
+                              onChange={(e) => handleChangePrice(e, index)}
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      <button
+                        onClick={() => {
+                          setFormData((prev) => {
+                            const prices = [...prev.prices];
+                            prices.splice(index, 1);
+                            return {
+                              ...prev,
+                              prices
+                            };
+                          });
+                        }}
+                        className="price_trash_icon"
+                        type="button"
+                      >
+                        <img src={deleteIcon} alt="delete" />
+                      </button>
+                    </div>
+                  );
+                })}
                 {/* calender seasons title */}
                 <div className="col-12 p-2 d-flex align-items-center justify-content-between">
                   <div className="d-flex align-items-center gap-2 addSeason">
@@ -219,8 +222,8 @@ const Pricing = () => {
                           ...prev,
                           season_prices: [
                             ...prev.season_prices,
-                            seasonCardInitialData,
-                          ],
+                            seasonCardInitialData
+                          ]
                         };
                       });
                     }}

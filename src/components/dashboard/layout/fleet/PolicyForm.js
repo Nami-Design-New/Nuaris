@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import add from "../../../../assets/images/add.svg";
-import trashIcon from "../../../../assets/images/delete.svg";
-import CustomInputField from "../../../ui/form-elements/CustomInputField";
-import { toast } from "react-toastify";
 import axios from "./../../../../util/axios";
+import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { Editor } from "react-draft-wysiwyg";
 import { EditorState, convertToRaw } from "draft-js";
+import add from "../../../../assets/images/add.svg";
+import trashIcon from "../../../../assets/images/delete.svg";
+import CustomInputField from "../../../ui/form-elements/CustomInputField";
 import SubmitButton from "../../../ui/form-elements/SubmitButton";
 
 const PolicyForm = ({ setForm }) => {
@@ -125,15 +125,18 @@ const PolicyForm = ({ setForm }) => {
               <label>Cancelation Policy</label>
               <button
                 type="button"
-                onClick={() =>
-                  setFormData((prev) => ({
-                    ...prev,
-                    cancellation_policy: [
-                      ...prev.cancellation_policy,
-                      { ...cancelationCountInitial }
-                    ]
-                  }))
-                }
+                onClick={() => {
+                  if (formData.cancellation_policy.length < 5) {
+                    setFormData((prev) => ({
+                      ...prev,
+                      cancellation_policy: [
+                        ...prev.cancellation_policy,
+                        { ...cancelationCountInitial }
+                      ]
+                    }));
+                  }
+                }}
+                disabled={formData.cancellation_policy.length >= 5}
               >
                 <img src={add} alt="add" />
               </button>

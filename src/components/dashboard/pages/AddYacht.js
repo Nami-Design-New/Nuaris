@@ -9,6 +9,7 @@ import MainInfo from "./fleet/MainInfo";
 import WorkingHours from "./fleet/WorkingHours";
 import AddOnsConnected from "./fleet/AddOnsConnected";
 import BoatSpecification from "./fleet/BoatSpecification";
+import VesselStatusForm from "../layout/fleet/VesselStatusForm";
 
 const AddYacht = () => {
   return (
@@ -19,6 +20,7 @@ const AddYacht = () => {
       <div className="row m-0">
         <div className="col-lg-4 col-12 p-2">
           <SideBar />
+          <VesselStatusForm />
         </div>
         <div className="col-lg-8 col-12 p-2">
           <Routes>

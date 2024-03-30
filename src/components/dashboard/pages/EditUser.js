@@ -60,7 +60,7 @@ export default function EditUser() {
       setLoading(false);
     }
   };
-
+console.log(employee);
   return (
     <>
       <section className="section-main-content">

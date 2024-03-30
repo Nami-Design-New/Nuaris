@@ -27,7 +27,7 @@ const BoatSpecification = () => {
     king_beds: "",
     sofa_beds: "",
     fuel: "select",
-    accept_sleeping_arrangement: false,
+    accept_sleeping_arrangement: false
   });
 
   const handleSubmit = async (e) => {
@@ -264,7 +264,7 @@ const BoatSpecification = () => {
                       onChange={() => {
                         setFormData({
                           ...formData,
-                          accept_sleeping_arrangement: true,
+                          accept_sleeping_arrangement: true
                         });
                       }}
                     />
@@ -279,7 +279,7 @@ const BoatSpecification = () => {
                       onChange={() => {
                         setFormData({
                           ...formData,
-                          accept_sleeping_arrangement: false,
+                          accept_sleeping_arrangement: false
                         });
                       }}
                     />
