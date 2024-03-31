@@ -15,6 +15,10 @@ import axios from "../../../../util/axios";
 import { ADD_ONS_CATEGORIES, S3Config } from "../../../../constants";
 
 const MainInfoForm = ({ setForm, addon }) => {
+  const user = useSelector((state) => state.user?.user);
+  const subUser = user?.subuser_set?.filter(
+    (u) => u.role === user.current_role
+  )[0]?.id;
   const [yachts, setYachts] = useState([]);
   const [hasParentYacht, setHasParentYacht] = useState(false);
   const [fileLoading, setFileLoading] = useState(false);
@@ -48,14 +52,14 @@ const MainInfoForm = ({ setForm, addon }) => {
 
   useEffect(() => {
     axios
-      .get("/yachts/?page_size=1000")
+      .get(`/yachts/?page_size=1000/&sub_user=${subUser}`)
       .then((res) => {
         setYachts(res?.data?.results);
       })
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [subUser]);
 
   const handleUploadMedia = async (file) => {
     setFileLoading(true);
@@ -126,9 +130,6 @@ const MainInfoForm = ({ setForm, addon }) => {
     e.preventDefault();
     setForm("Working Time");
   };
-
-  const user = useSelector((state) => state.user?.user);
-  const subUserSet = user?.subuser_set;
 
   const handleSubmit = async (e) => {
     e.preventDefault();

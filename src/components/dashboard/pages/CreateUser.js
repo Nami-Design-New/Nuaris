@@ -45,7 +45,7 @@ const CreateUser = () => {
       if (response?.status === 201 || response?.status === 200) {
         toast.success("Invitation sent successfully");
         setShowAssignGroups(true);
-        setInvitedUserId(response?.data?.employee?.id);
+        setInvitedUserId(response?.data?.user_id);
       } else {
         toast.error(
           "User with this phone number already exists, check your email if you want to override the phone number."

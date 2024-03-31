@@ -974,7 +974,7 @@ $transation: 0.3s ease-in-out;
     display: flex;
     position: sticky;
     top: 0;
-    z-index: 99;
+    z-index: 999;
     .links {
       flex: 1;
       ul {
@@ -2697,7 +2697,8 @@ small.error {
   padding: 0 12px 12px;
 }
 // season calender card
-.season_calender_card {
+.season_calender_card,
+.price_card {
   position: relative;
   display: flex;
   gap: 16px;
@@ -3083,5 +3084,30 @@ small.error {
   img {
     width: 100%;
     height: 100%;
+  }
+}
+.rmdp-wrapper {
+  width: auto;
+  height: fit-content;
+}
+.vessel_status {
+  .checkboxs_inputs {
+    label input:checked + span {
+      color: $dark !important;
+    }
+    .bg-active {
+      transform: translateX(0);
+      width: calc(100% / 3) !important;
+      background: $second !important;
+      &.active {
+        transform: translateX(0%) !important;
+      }
+      &.inactive {
+        transform: translateX(100%) !important;
+      }
+      &.hidden {
+        transform: translateX(200%) !important;
+      }
+    }
   }
 }

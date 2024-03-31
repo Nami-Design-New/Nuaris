@@ -9,92 +9,69 @@ import CustomPagination from "../../ui/CustomPagination";
 
 const EditPermissions = () => {
   const [formData, setFormData] = useState({ name: "", permissions: [] });
-  const [permissionMap, setPermissionMap] = useState([]);
+  const [permissionMap, setPermissionMap] = useState({});
   const [loading, setLoading] = useState(false);
   const { groupId } = useParams();
-  const [group, setGroup] = useState({});
   const [permissions, setPermissions] = useState([]);
   const [permissionsCount, setPermissionsCount] = useState(0);
   const [searchParams] = useSearchParams();
   const currentPage = searchParams.get("page");
 
   useEffect(() => {
-    try {
-      axios
-        .get(`/groups/${groupId}/`)
-        .then((res) => {
-          setGroup(res?.data);
-          setFormData({
-            name: res?.data?.name,
-            permissions: res?.data?.permissions
-          });
-          const groupPermissionMap = {};
-          res?.data?.permissions.forEach((permission) => {
-            groupPermissionMap[permission.id] = true;
-          });
-          setPermissionMap(groupPermissionMap);
-        })
-        .catch((err) => {
-          console.log(err);
+    const fetchData = async () => {
+      try {
+        const groupResponse = await axios.get(`/groups/${groupId}/`);
+        const permissionsResponse = await axios.get(`/permissions/`, {
+          params: { page: currentPage, page_size: 9 }
         });
-    } catch (error) {
-      console.log(error);
-    }
-  }, [groupId]);
-
-  useEffect(() => {
-    try {
-      axios
-        .get(`/permissions/?page_size=9`, {
-          params: {
-            page: currentPage
-          }
-        })
-        .then((res) => {
-          setPermissionsCount(res?.data?.count);
-          setPermissions(res?.data?.results);
-        })
-        .catch((err) => {
-          console.log(err);
-        })
-        .finally(() => {
-          setLoading(false);
+        setFormData({
+          name: groupResponse.data.name,
+          permissions: groupResponse.data.permissions
         });
-    } catch (error) {
-      console.log(error);
-    }
-  }, [currentPage]);
+        const groupPermissionMap = {};
+        groupResponse.data.permissions.forEach((permission) => {
+          groupPermissionMap[permission.id] = true;
+        });
+        setPermissionMap(groupPermissionMap);
+        setPermissionsCount(permissionsResponse.data.count);
+        setPermissions(permissionsResponse.data.results);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+    fetchData();
+  }, [groupId, currentPage]);
 
-  const handleAddPermission = (e, passedPermission) => {
-    const checked = e.target.checked;
+  const handleAddPermission = (permission) => {
     const updatedMap = {
       ...permissionMap,
-      [passedPermission.id]: !permissionMap[passedPermission.id]
+      [permission.id]: !permissionMap[permission.id]
     };
     setPermissionMap(updatedMap);
-    if (checked) {
-      setFormData({
-        ...formData,
-        permissions: [...formData.permissions, passedPermission]
-      });
-    } else {
-      const filteredPermessions = formData.permissions.filter(
-        (permission) => permission.id !== passedPermission.id
-      );
-      setFormData({ ...formData, permissions: filteredPermessions });
-    }
+    const updatedPermissions = updatedMap[permission.id]
+      ? [...formData.permissions, permission]
+      : formData.permissions.filter((p) => p.id !== permission.id);
+    setFormData({ ...formData, permissions: updatedPermissions });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const permission_ids = formData.permissions.map(
+      (permission) => permission.id
+    );
     try {
       setLoading(true);
-      const { name, permissions } = formData;
-      await axios.patch(`groups/${groupId}/`, { name, permissions });
+      console.log("Submitting data:", { name: formData.name, permission_ids });
+      const response = await axios.patch(`/groups/${groupId}/`, {
+        name: formData.name,
+        permission_ids
+      });
+      console.log("Response:", response.data);
       setLoading(false);
       toast.success("Permissions group updated successfully");
     } catch (error) {
       console.error("Error updating permissions group:", error);
+      setLoading(false);
       toast.error("Failed to update permissions group");
     }
   };
@@ -116,7 +93,7 @@ const EditPermissions = () => {
                     type="text"
                     id="groupOfPermissionsName"
                     name="groupOfPermissionsName"
-                    value={group?.name}
+                    value={formData.name}
                     required
                     onChange={(e) => {
                       setFormData({ ...formData, name: e.target.value });
@@ -129,14 +106,14 @@ const EditPermissions = () => {
                   Assign Group Permissions to employee
                 </h6>
               </div>
-              {permissions?.map((p) => (
+              {permissions.map((p) => (
                 <div className="col-lg-4 col-md-6 col-12 p-2" key={p.id}>
                   <CheckField
                     label={p.codename}
                     name={p.name}
                     id={p.id}
                     checked={permissionMap[p.id] || false}
-                    onChange={(e) => handleAddPermission(e, p)}
+                    onChange={() => handleAddPermission(p)}
                   />
                 </div>
               ))}
