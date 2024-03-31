@@ -47,7 +47,7 @@ const MainInfoForm = ({ setForm, addon }) => {
     if (addon?.yacht) {
       setHasParentYacht(true);
     }
-  }, [addon]);
+  }, [addon, formData]);
 
   useEffect(() => {
     axios
@@ -134,12 +134,6 @@ const MainInfoForm = ({ setForm, addon }) => {
     e.preventDefault();
     setLoading(true);
     try {
-      const subUser = user?.subuser_set?.filter(
-        (u) => u.role === user.current_role
-      );
-      if (!subUser) {
-        throw new Error("No matching sub user found");
-      }
       const attached = formData.attachments.filter((a) => a !== "");
       if (videoLink) {
         attached.push(videoLink);
@@ -149,7 +143,7 @@ const MainInfoForm = ({ setForm, addon }) => {
         url: `/addons/${addon.id ? `${addon.id}/` : ""}`,
         data: {
           ...formData,
-          sub_user: subUser[0]?.id,
+          sub_user: subUser,
           user: user.id,
           attachments: attached,
         },

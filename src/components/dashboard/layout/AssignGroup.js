@@ -6,10 +6,9 @@ import axios from "./../../../util/axios";
 import ConfirmModal from "../../ui/ConfirmModal";
 import { toast } from "react-toastify";
 
-const AssignGroup = ({ invitedUserId }) => {
+const AssignGroup = ({ invitedUserId, groupNames }) => {
   const [permissionMap, setPermissionMap] = useState({});
   const [showConfirmModal, setShowConfirmModal] = useState(false);
-  const [formData, setFormData] = useState([]);
   const [groups, setGroups] = useState([]);
   const [groupsCount, setGroupsCount] = useState(0);
   const [searchParams] = useSearchParams();
@@ -20,8 +19,8 @@ const AssignGroup = ({ invitedUserId }) => {
       axios
         .get(`/groups/`, {
           params: {
-            page: currentPage
-          }
+            page: currentPage,
+          },
         })
         .then((res) => {
           setGroupsCount(res?.data?.count);
@@ -38,19 +37,18 @@ const AssignGroup = ({ invitedUserId }) => {
   useEffect(() => {
     if (groups) {
       const permissionGroupsMap = groups?.reduce((acc, group) => {
-        acc[group.id] = false;
+        acc[group.id] = groupNames?.includes(group.name);
         return acc;
       }, {});
       setPermissionMap(permissionGroupsMap);
     }
-  }, [groups]);
+  }, [groups, groupNames]);
 
   const handleAddGroup = (passedGroup) => {
     const groupId = passedGroup.id;
     const updatedMap = { ...permissionMap };
     updatedMap[groupId] = !permissionMap[groupId];
     setPermissionMap(updatedMap);
-    setFormData(updatedMap[groupId] ? [...formData, groupId] : formData);
   };
 
   const handleOpenModal = (e) => {
@@ -60,8 +58,12 @@ const AssignGroup = ({ invitedUserId }) => {
 
   const handleAssignGroup = async () => {
     try {
+      const selectedGroupIds = Object.entries(permissionMap)
+        .filter(([groupId, isChecked]) => isChecked)
+        .map(([groupId]) => parseInt(groupId));
+
       const res = await axios.post(`/users/${invitedUserId}/assign_group/`, {
-        ids: formData
+        ids: selectedGroupIds,
       });
       if (res?.status === 201 || res?.status === 200) {
         toast.success("Group assigned successfully");
