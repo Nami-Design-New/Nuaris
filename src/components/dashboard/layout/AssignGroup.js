@@ -20,8 +20,8 @@ const AssignGroup = ({ invitedUserId }) => {
       axios
         .get(`/groups/`, {
           params: {
-            page: currentPage
-          }
+            page: currentPage,
+          },
         })
         .then((res) => {
           setGroupsCount(res?.data?.count);
@@ -61,7 +61,7 @@ const AssignGroup = ({ invitedUserId }) => {
   const handleAssignGroup = async () => {
     try {
       const res = await axios.post(`/users/${invitedUserId}/assign_group/`, {
-        ids: formData
+        ids: formData,
       });
       if (res?.status === 201 || res?.status === 200) {
         toast.success("Group assigned successfully");
