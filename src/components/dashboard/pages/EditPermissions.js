@@ -22,11 +22,11 @@ const EditPermissions = () => {
       try {
         const groupResponse = await axios.get(`/groups/${groupId}/`);
         const permissionsResponse = await axios.get(`/permissions/`, {
-          params: { page: currentPage, page_size: 9 }
+          params: { page: currentPage, page_size: 9 },
         });
         setFormData({
           name: groupResponse.data.name,
-          permissions: groupResponse.data.permissions
+          permissions: groupResponse.data.permissions,
         });
         const groupPermissionMap = {};
         groupResponse.data.permissions.forEach((permission) => {
@@ -45,7 +45,7 @@ const EditPermissions = () => {
   const handleAddPermission = (permission) => {
     const updatedMap = {
       ...permissionMap,
-      [permission.id]: !permissionMap[permission.id]
+      [permission.id]: !permissionMap[permission.id],
     };
     setPermissionMap(updatedMap);
     const updatedPermissions = updatedMap[permission.id]
@@ -61,14 +61,17 @@ const EditPermissions = () => {
     );
     try {
       setLoading(true);
-      console.log("Submitting data:", { name: formData.name, permission_ids });
       const response = await axios.patch(`/groups/${groupId}/`, {
         name: formData.name,
-        permission_ids
+        permission_ids,
       });
-      console.log("Response:", response.data);
-      setLoading(false);
-      toast.success("Permissions group updated successfully");
+      if (response?.status === 200 || response?.status === 201) {
+        setLoading(false);
+        toast.success("Permissions group updated successfully");
+      } else {
+        toast.error("Failed to update permissions group");
+        setLoading(false);
+      }
     } catch (error) {
       console.error("Error updating permissions group:", error);
       setLoading(false);

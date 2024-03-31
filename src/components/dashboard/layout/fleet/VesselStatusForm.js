@@ -9,7 +9,7 @@ const VesselStatusForm = () => {
   const [formData, setFormData] = useState({
     status: "inactive",
     inactivity_time_from: null,
-    inactivity_time_to: null
+    inactivity_time_to: null,
   });
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -23,6 +23,10 @@ const VesselStatusForm = () => {
       const response = await axios.patch(`/yachts/${yacht_id}/`, formData);
       if (response.status === 200) {
         toast.success("Vessel Status Updated Successfully");
+        setFormData({
+          inactivity_time_from: null,
+          inactivity_time_to: null,
+        });
       } else {
         toast.error("Something went wrong");
       }
@@ -49,7 +53,7 @@ const VesselStatusForm = () => {
                 onChange={() => {
                   setFormData({
                     ...formData,
-                    status: "active"
+                    status: "active",
                   });
                 }}
               />
@@ -64,7 +68,7 @@ const VesselStatusForm = () => {
                 onChange={() => {
                   setFormData({
                     ...formData,
-                    status: "inactive"
+                    status: "inactive",
                   });
                 }}
               />
@@ -79,7 +83,7 @@ const VesselStatusForm = () => {
                 onChange={() => {
                   setFormData({
                     ...formData,
-                    status: "hidden"
+                    status: "hidden",
                   });
                 }}
               />
@@ -102,7 +106,7 @@ const VesselStatusForm = () => {
                   onChange={(e) => {
                     setFormData({
                       ...formData,
-                      inactivity_time_from: e.target.value
+                      inactivity_time_from: e.target.value,
                     });
                   }}
                 />
@@ -121,7 +125,7 @@ const VesselStatusForm = () => {
                   onChange={(e) => {
                     setFormData({
                       ...formData,
-                      inactivity_time_to: e.target.value
+                      inactivity_time_to: e.target.value,
                     });
                   }}
                 />

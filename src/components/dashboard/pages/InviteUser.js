@@ -30,8 +30,8 @@ const InviteUser = () => {
       axios
         .get(`/employees/?sub_user=${subUser}`, {
           params: {
-            page: currentPage
-          }
+            page: currentPage,
+          },
         })
         .then((res) => {
           setEmployeesCount(res?.data?.count);
@@ -91,6 +91,13 @@ const InviteUser = () => {
       });
   };
 
+  const groupsNamesTemplate = (rowData) => {
+    if (rowData?.group_names?.length === 0) {
+      return "-";
+    }
+    return rowData?.group_names?.map((group) => group).join(", ");
+  };
+
   return (
     <React.Fragment>
       <section className="section-main-content">
@@ -125,7 +132,7 @@ const InviteUser = () => {
                     <Column field="position_name" header="Position" />
                     <Column field="phone_number" header="Phone number" />
                     <Column
-                      field="group_name"
+                      body={groupsNamesTemplate}
                       header="Permission Groups Name"
                     />
                     <Column header="Actions" body={actionTemplate} />

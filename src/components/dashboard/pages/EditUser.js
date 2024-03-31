@@ -49,7 +49,7 @@ export default function EditUser() {
     try {
       const response = await axios.put(`/employees/${employee.id}/`, {
         ...employee,
-        sub_user: subUser
+        sub_user: subUser,
       });
       toast.success("User updated successfully");
       console.log(response);
@@ -60,7 +60,6 @@ export default function EditUser() {
       setLoading(false);
     }
   };
-console.log(employee);
   return (
     <>
       <section className="section-main-content">
@@ -99,7 +98,7 @@ console.log(employee);
                           position: positions?.find(
                             (option) => option.name === selectedOption
                           )?.id,
-                          position_name: selectedOption
+                          position_name: selectedOption,
                         });
                       }}
                     >
@@ -161,7 +160,7 @@ console.log(employee);
               </form>
             </div>
           </div>
-          <AssignGroup invitedUserId={employee.id} />
+          <AssignGroup invitedUserId={employee.user_id} />
         </div>
       </section>
     </>
