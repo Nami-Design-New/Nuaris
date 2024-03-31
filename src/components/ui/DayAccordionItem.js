@@ -7,22 +7,22 @@ const DayAccordionItem = ({ formData, day, index, setFormData }) => {
   function handleCheck(e) {
     const { checked } = e.target;
 
-
     setFormData((prev) => {
-      return [
-        ...prev.filter((obj) => obj.day !== day),
-        {
-          ...currentObject,
-          selected: checked,
-        },
-      ];
+      let newFormData = [...prev];
+      newFormData[index].selected = checked;
+      return newFormData;
     });
   }
-
   return (
     <Accordion.Item key={day} eventKey={index}>
       <Accordion.Header>
-        <Form.Check onClick={handleCheck} type="switch" id={day} label={day} />
+        <Form.Check
+          onClick={handleCheck}
+          checked={formData[index].selected}
+          type="switch"
+          id={day}
+          label={day}
+        />
       </Accordion.Header>
       <Accordion.Body>
         <div className="form-ui timesRow">

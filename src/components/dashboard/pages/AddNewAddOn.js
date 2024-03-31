@@ -8,9 +8,9 @@ import { useParams } from "react-router-dom";
 import axios from "./../../../util/axios";
 
 const AddNewAddOn = () => {
-  // for edit
   const { id } = useParams();
-  const [addon, setAddon] = useState({});
+  const [addon, setAddon] = useState(null);
+  const [form, setForm] = useState("Main Info");
   useEffect(() => {
     if (id) {
       axios
@@ -23,9 +23,7 @@ const AddNewAddOn = () => {
           console.log(err);
         });
     }
-  }, [id]);
-  //============================= //
-  const [form, setForm] = useState("Main Info");
+  }, [id, form]);
   let formComponent;
   if (form === "Main Info") {
     formComponent = <MainInfoForm setForm={setForm} addon={addon} />;

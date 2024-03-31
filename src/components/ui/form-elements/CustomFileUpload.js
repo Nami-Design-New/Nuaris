@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FilePond, registerPlugin } from "react-filepond";
 import "filepond/dist/filepond.min.css";
 import FilePondPluginFileValidateType from "filepond-plugin-file-validate-type";
@@ -50,7 +50,14 @@ export default function CustomFileUpload({
         stylePanelLayout="compact"
         labelIdle={labelIdle}
         stylePanelAspectRatio={pannelRatio}
-        onupdatefiles={onUpdateFiles}
+        onupdatefiles={(fileItems) => {
+          // Check if the file change was due to an upload by the user
+          if (typeof fileItems[0]?.source === "object" || !fileItems[0]) {
+            onUpdateFiles(fileItems);
+          } else {
+            return;
+          }
+        }}
       />
     </div>
   );
