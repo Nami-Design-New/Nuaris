@@ -5,7 +5,6 @@ import { uploadFile } from "react-s3";
 import CustomFileUpload from "../../../ui/form-elements/CustomFileUpload";
 import InputField from "../../../ui/form-elements/InputField";
 import CommentField from "../../../ui/form-elements/CommentField";
-import SelectField from "../../../ui/form-elements/SelectField";
 import CustomSelectField from "../../../ui/form-elements/CustomSelectField";
 import SubmitButton from "../../../ui/form-elements/SubmitButton";
 import Vat from "../Vat";
