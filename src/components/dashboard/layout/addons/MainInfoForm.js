@@ -134,7 +134,9 @@ const MainInfoForm = ({ setForm, addon }) => {
     e.preventDefault();
     setLoading(true);
     try {
-      const subUser = subUserSet?.filter((u) => u.role === user.current_role);
+      const subUser = user?.subuser_set?.filter(
+        (u) => u.role === user.current_role
+      );
       if (!subUser) {
         throw new Error("No matching sub user found");
       }
