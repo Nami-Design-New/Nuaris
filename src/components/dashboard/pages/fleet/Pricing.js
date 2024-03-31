@@ -10,38 +10,32 @@ import Vat from "../../layout/Vat";
 
 const Pricing = () => {
   const seasonCardInitialData = {
-    price: null,
-    period: null,
+    price: "",
+    period: "",
     type: "hours",
     period_type: "hours",
-    extra_hour_price: null,
-    minimum_price: null,
-    dates: [new Date()]
+    extra_hour_price: "",
+    minimum_price: "",
+    dates: [new Date()],
   };
   const initialPricesData = {
-    price: null,
-    type: "hour",
-    period: null,
-    period_type: "hours",
-    extra_hour_price: null,
-    minimum_price: null
+    price: "",
+    type: "hours",
+    extra_hour_price: "",
+    minimum_price: "",
   };
   const initialData = {
     prices: [initialPricesData],
     season_prices: [seasonCardInitialData],
     vat: [],
-    prepayment_percentage: 100
+    period: "",
+    period_type: "hours",
+    period_price: "",
+    prepayment_percentage: 100,
   };
 
   const [formData, setFormData] = useState(initialData);
   const [uponRequest, setUponRequest] = useState(false);
-
-  function handleChange(e) {
-    setFormData((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value
-    }));
-  }
 
   function handleChangePrice(e, i) {
     setFormData((prev) => {
@@ -49,7 +43,7 @@ const Pricing = () => {
       prices[i][e.target.name] = e.target.value;
       return {
         ...prev,
-        prices
+        prices,
       };
     });
   }
@@ -103,16 +97,74 @@ const Pricing = () => {
                     type="number"
                     placeholder="00"
                     value={formData.prepayment_percentage}
-                    onChange={handleChange}
+                    onChange={(e) => {
+                      setFormData((prev) => ({
+                        ...prev,
+                        prepayment_percentage: e.target.value,
+                      }));
+                    }}
                   />
                 </div>
                 <div className="col-lg-6 col-12 p-2">
-                  <CustomInputWithUnit
-                    name="period"
-                    selectName={"period_type"}
-                    label="Minimum rental Period"
-                    units={["minutes", "hours", "days", "weeks", "months"]}
-                  />
+                  <div className="input-field">
+                    <label htmlFor="period">Minimum rental Period</label>
+                    <div className="time-units">
+                      {formData.period_type === "minutes" ? (
+                        <select
+                          className="units w-100"
+                          name="minits"
+                          id="minits"
+                          value={formData.period}
+                          onChange={(e) =>
+                            setFormData((prev) => ({
+                              ...prev,
+                              period: e.target.value,
+                            }))
+                          }
+                        >
+                          {["15", "30", "45"].map((minit, index) => (
+                            <option key={index} value={minit}>
+                              {minit}
+                            </option>
+                          ))}
+                        </select>
+                      ) : (
+                        <input
+                          type="number"
+                          placeholder="00"
+                          name="period"
+                          id="period"
+                          value={formData.period}
+                          onChange={(e) =>
+                            setFormData((prev) => ({
+                              ...prev,
+                              period: e.target.value,
+                            }))
+                          }
+                        />
+                      )}
+                      <select
+                        className="units"
+                        name="period_type"
+                        id="units"
+                        value={formData.period_type}
+                        onChange={(e) =>
+                          setFormData((prev) => ({
+                            ...prev,
+                            period_type: e.target.value,
+                          }))
+                        }
+                      >
+                        {["minutes", "hours", "days", "weeks", "months"].map(
+                          (unit, index) => (
+                            <option key={index} value={unit}>
+                              {unit}
+                            </option>
+                          )
+                        )}
+                      </select>
+                    </div>
+                  </div>
                 </div>
                 {/* Price */}
                 <div className="col-lg-6 col-12 p-2">
@@ -121,6 +173,13 @@ const Pricing = () => {
                     name={"price"}
                     label="Price"
                     placeholder="00"
+                    value={formData.period_price}
+                    onChange={(e) => {
+                      setFormData((prev) => ({
+                        ...prev,
+                        period_price: e.target.value,
+                      }));
+                    }}
                   />
                 </div>
                 <div className="col-12 p-2 d-flex align-items-center justify-content-between">
@@ -132,7 +191,7 @@ const Pricing = () => {
                       setFormData((prev) => {
                         return {
                           ...prev,
-                          prices: [...prev.prices, initialPricesData]
+                          prices: [...prev.prices, initialPricesData],
                         };
                       });
                     }}
@@ -143,12 +202,9 @@ const Pricing = () => {
                 </div>
                 {formData.prices.map((e, index) => {
                   return (
-                    <div
-                      key={index}
-                      className="col-12 p-2"
-                    >
+                    <div key={index} className="col-12 p-2">
                       <div className="price_card p-2">
-                        <div className="row m-0">
+                        <div className="row m-0 w-100">
                           {/* Price */}
                           <div className="col-12 p-2">
                             <CustomInputWithUnit
@@ -197,7 +253,7 @@ const Pricing = () => {
                             prices.splice(index, 1);
                             return {
                               ...prev,
-                              prices
+                              prices,
                             };
                           });
                         }}
@@ -222,8 +278,8 @@ const Pricing = () => {
                           ...prev,
                           season_prices: [
                             ...prev.season_prices,
-                            seasonCardInitialData
-                          ]
+                            seasonCardInitialData,
+                          ],
                         };
                       });
                     }}

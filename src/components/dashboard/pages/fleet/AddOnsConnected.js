@@ -8,7 +8,10 @@ import { useSearchParams } from "react-router-dom";
 import axios from "../../../../util/axios";
 import TableLoader from "../../../ui/TableLoader";
 import CustomPagination from "../../../ui/CustomPagination";
+import { Button } from "primereact/button";
+import { toast } from "react-toastify";
 const AddOnsConnected = () => {
+  const yachtId = sessionStorage.getItem("yacht_id");
   const [row, setRow] = useState({});
   const [searchParams] = useSearchParams();
   const [loading, setLoading] = useState(true);
@@ -44,23 +47,62 @@ const AddOnsConnected = () => {
     }
   }, [currentPage, subUser]);
 
+  const viewRow = (e, rowData) => {
+    e.preventDefault();
+    setShowModal(true);
+    setRow(rowData);
+  };
+
+  const connectAddon = async (rowData) => {
+    try {
+      const isConnected = rowData.yacht === yachtId;
+      const action = isConnected ? "disconnect" : "connect";
+
+      const response = await axios.patch(`/addons/${rowData?.id}/`, {
+        yacht: isConnected ? null : yachtId,
+        sub_user: subUser,
+      });
+
+      if (response.status === 200) {
+        toast.success(
+          `Addon ${
+            action === "connect" ? "Connected" : "Disconnected"
+          } successfully`
+        );
+
+        setAddonsData((prevData) => {
+          const updatedData = prevData.map((item) => {
+            if (item.id === rowData.id) {
+              item.yacht = isConnected ? null : yachtId;
+            }
+            return item;
+          });
+          return updatedData;
+        });
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   const actionTemplate = (rowData) => {
     return (
       <div className="actions_cell_addons">
         <button
           type="button"
-          className={`button addon_button ${rowData.active && "active"}`}
+          onClick={() => connectAddon(rowData)}
+          className={`button addon_button ${
+            rowData.yacht === yachtId ? "" : "active"
+          }`}
         >
-          {rowData.active ? "Connect" : "Disconnect"}
+          {rowData.yacht === yachtId ? "Disconnect" : "Connect"}
         </button>
-        <button
-          type="button"
-          onClick={() => {
-            setShowModal(true);
-          }}
+        <Button
+          onClick={(e) => viewRow(e, rowData)}
+          style={{ boxShadow: "none" }}
         >
-          <img src={eyeIcon} alt="visible" width={16} height={16} />
-        </button>
+          <img src={eyeIcon} alt="view" />
+        </Button>
       </div>
     );
   };
@@ -73,40 +115,38 @@ const AddOnsConnected = () => {
     <>
       <div className="fleet_form__wrapper">
         <div className="bg_white_card">
-          <form className="form-ui">
-            <div className="row m-0">
-              <div className="col-12 p-2">
-                <h6 className="form_title">Add ons connected</h6>
-              </div>
-              <div className="col-12 p-2">
-                {loading ? (
-                  <TableLoader />
-                ) : (
-                  <div className="table-container">
-                    <DataTable value={addonsData} rows={10}>
-                      <Column
-                        body={imageTemplate}
-                        field="image"
-                        header="Image"
-                      />
-                      <Column field="name" header="Name" />
-                      <Column
-                        className="d-flex justify-content-end"
-                        header="Actions"
-                        body={actionTemplate}
-                      />
-                    </DataTable>
-                    {addonsCount > 0 && (
-                      <CustomPagination count={addonsCount} />
-                    )}
-                  </div>
-                )}
-              </div>
+          <div className="row m-0">
+            <div className="col-12 p-2">
+              <h6 className="form_title">Add ons connected</h6>
             </div>
-          </form>
+            <div className="col-12 p-2">
+              {loading ? (
+                <TableLoader />
+              ) : (
+                <div className="table-container">
+                  <DataTable value={addonsData} rows={10}>
+                    <Column body={imageTemplate} field="image" header="Image" />
+                    <Column field="name" header="Name" />
+                    <Column
+                      className="d-flex justify-content-end"
+                      header="Actions"
+                      body={actionTemplate}
+                    />
+                  </DataTable>
+                  {addonsCount > 0 && <CustomPagination count={addonsCount} />}
+                </div>
+              )}
+            </div>
+          </div>
         </div>
       </div>
-      <AddOnModal showModal={showModal} setShowModal={setShowModal} />
+      {row && (
+        <AddOnModal
+          data={row}
+          showModal={showModal}
+          setShowModal={setShowModal}
+        />
+      )}
     </>
   );
 };

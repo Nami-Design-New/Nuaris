@@ -2962,10 +2962,11 @@ small.error {
 .addon_button {
   padding: 12px 20px;
   border-radius: 8px;
-  border: 1px solid #006980;
+  border: 1px solid #0d0d0d;
   font-size: 14px;
   line-height: 18px;
   min-width: 110px;
+  background: #0d0d0d;
 }
 .addon_button.active {
   background-color: transparent;
