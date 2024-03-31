@@ -9,7 +9,6 @@ import { toast } from "react-toastify";
 const AssignGroup = ({ invitedUserId }) => {
   const [permissionMap, setPermissionMap] = useState({});
   const [showConfirmModal, setShowConfirmModal] = useState(false);
-  const [formData, setFormData] = useState([]);
   const [groups, setGroups] = useState([]);
   const [groupsCount, setGroupsCount] = useState(0);
   const [searchParams] = useSearchParams();
@@ -50,7 +49,6 @@ const AssignGroup = ({ invitedUserId }) => {
     const updatedMap = { ...permissionMap };
     updatedMap[groupId] = !permissionMap[groupId];
     setPermissionMap(updatedMap);
-    setFormData(updatedMap[groupId] ? [...formData, groupId] : formData);
   };
 
   const handleOpenModal = (e) => {
@@ -60,8 +58,12 @@ const AssignGroup = ({ invitedUserId }) => {
 
   const handleAssignGroup = async () => {
     try {
+      const selectedGroupIds = Object.entries(permissionMap)
+        .filter(([groupId, isChecked]) => isChecked)
+        .map(([groupId]) => parseInt(groupId));
+
       const res = await axios.post(`/users/${invitedUserId}/assign_group/`, {
-        ids: formData,
+        ids: selectedGroupIds,
       });
       if (res?.status === 201 || res?.status === 200) {
         toast.success("Group assigned successfully");
