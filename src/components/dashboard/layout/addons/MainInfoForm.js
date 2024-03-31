@@ -5,7 +5,7 @@ import { uploadFile } from "react-s3";
 import CustomFileUpload from "../../../ui/form-elements/CustomFileUpload";
 import InputField from "../../../ui/form-elements/InputField";
 import CommentField from "../../../ui/form-elements/CommentField";
-import SelectField from "../../../ui/form-elements/SelectField";
+import CustomSelectField from "../../../ui/form-elements/CustomSelectField";
 import SubmitButton from "../../../ui/form-elements/SubmitButton";
 import Vat from "../Vat";
 import fav from "../../../../assets/images/fav.png";
@@ -24,14 +24,30 @@ const MainInfoForm = ({ setForm, addon }) => {
   const [loading, setLoading] = useState(false);
   const [videoLink, setVideoLink] = useState("");
   const [formData, setFormData] = useState({
-    attachment: [Array(3).fill("")],
+    attachments: [],
     name: "",
     description: "",
     category: "select",
     quantity: "",
     yacht: "select",
-    vat: null
+    vat: null,
   });
+
+  useEffect(() => {
+    setFormData({
+      ...formData,
+      yacht: addon?.yacht || "select",
+      category: `${addon?.category}`.toLowerCase() || "select",
+      vat: addon?.vat || null,
+      quantity: addon?.quantity || "",
+      name: addon?.name || "",
+      description: addon?.description || "",
+      attachments: addon?.attachments || [],
+    });
+    if (addon?.yacht) {
+      setHasParentYacht(true);
+    }
+  }, [addon]);
 
   useEffect(() => {
     axios
@@ -49,7 +65,7 @@ const MainInfoForm = ({ setForm, addon }) => {
     try {
       const blob = file.slice(0, file.size, file.type);
       const newFile = new File([blob], `${Date.now()}${file.name.slice(-3)}`, {
-        type: file.type
+        type: file.type,
       });
       const data = await uploadFile(newFile, S3Config);
       return data.location;
@@ -62,16 +78,27 @@ const MainInfoForm = ({ setForm, addon }) => {
   };
 
   const handleImagesChange = async (e, i) => {
+    if (e?.length === 0) {
+      setFormData((prev) => {
+        const attachment = [...prev.attachments];
+        attachment.splice(i, 1);
+        return {
+          ...prev,
+          attachments: attachment,
+        };
+      });
+      return;
+    }
     try {
       if (!fileLoading) {
         const file = e[0].file;
         const link = await handleUploadMedia(file);
         setFormData((prev) => {
-          const attachment = [...prev.attachment];
+          const attachment = [...prev.attachments];
           attachment[i] = link;
           return {
             ...prev,
-            attachment
+            attachments: attachment,
           };
         });
       }
@@ -83,6 +110,10 @@ const MainInfoForm = ({ setForm, addon }) => {
   };
 
   const handleVideoChange = async (e) => {
+    if (e?.length === 0) {
+      setVideoLink("");
+      return;
+    }
     try {
       const file = e[0].file;
       const link = await handleUploadMedia(file);
@@ -103,36 +134,25 @@ const MainInfoForm = ({ setForm, addon }) => {
     e.preventDefault();
     setLoading(true);
     try {
-      const yachtId = yachts.find(
-        (yacht) => yacht.name_en === formData.yacht
-      )?.id;
-      let categoryId;
-      if (formData.category === "Party Themes") {
-        categoryId = "party_themes";
-      } else if (formData.category === "Food & Beverages") {
-        categoryId = "f&b";
-      } else if (formData.category === "Expert Assistant") {
-        categoryId = "expert_assistant";
-      } else {
-        categoryId = "other";
+      const subUser = subUserSet?.filter((u) => u.role === user.current_role);
+      if (!subUser) {
+        throw new Error("No matching sub user found");
       }
-      const attached = formData.attachment.filter((a) => a !== "");
+      const attached = formData.attachments.filter((a) => a !== "");
       if (videoLink) {
         attached.push(videoLink);
       }
       const res = await axios.request({
         method: addon.id ? "PATCH" : "POST",
-        url: "/addons/",
+        url: `/addons/${addon.id ? `${addon.id}/` : ""}`,
         data: {
           ...formData,
-          yacht: yachtId,
-          category: categoryId,
-          sub_user: subUser,
+          sub_user: subUser[0]?.id,
           user: user.id,
-          attachment: attached
-        }
+          attachments: attached,
+        },
       });
-      if (res.status === 201) {
+      if (res.status === 201 || res.status === 200) {
         toast.success("Addon Main Info Saved Successfully");
         setForm("Working Time");
         sessionStorage.setItem("addon_id", res?.data?.id);
@@ -168,8 +188,10 @@ const MainInfoForm = ({ setForm, addon }) => {
                       i === 0 ? '<label class="mainImg">Main Image</label>' : ""
                     } <img src=${fav} alt="fav"/>`}
                     pannelRatio=".88"
+                    files={
+                      formData.attachments[i] ? [formData.attachments[i]] : null
+                    }
                     value
-                    accept={["image/png", "image/jpeg"]}
                     allowMultiple={false}
                     onUpdateFiles={(e) => handleImagesChange(e, i)}
                   />
@@ -196,7 +218,7 @@ const MainInfoForm = ({ setForm, addon }) => {
             label="Addon Name"
             id="AddonName"
             placeholder="Write here"
-            value={addon ? addon.name : formData.name}
+            value={formData.name}
             formData={formData}
             setFormData={setFormData}
           />
@@ -208,21 +230,35 @@ const MainInfoForm = ({ setForm, addon }) => {
             label="Description"
             id="description"
             placeholder="Write here"
-            value={addon ? addon.description : formData.description}
+            value={formData.description}
             formData={formData}
             setFormData={setFormData}
           />
         </div>
         {/* category */}
         <div className="col-lg-6 col-12 p-2">
-          <SelectField
-            htmlFor="category"
+          <CustomSelectField
             label="category"
-            id="category"
             value={formData.category}
-            formData={formData}
-            setFormData={setFormData}
-            options={ADD_ONS_CATEGORIES}
+            onChange={(e) =>
+              setFormData((prev) => ({ ...prev, category: e.target.value }))
+            }
+            options={ADD_ONS_CATEGORIES.map((e) => {
+              let value;
+              if (e === "Party Themes") {
+                value = "party_themes";
+              } else if (e === "Food & Beverages") {
+                value = "f&b";
+              } else if (e === "Expert Assistant") {
+                value = "expert_assistant";
+              } else {
+                value = "other";
+              }
+              return {
+                value,
+                name: e,
+              };
+            })}
           />
         </div>
         {/* quantity */}
@@ -233,7 +269,7 @@ const MainInfoForm = ({ setForm, addon }) => {
             label="Quantity"
             id="quantity"
             placeholder="00"
-            value={addon ? addon.quantity : formData.quantity}
+            value={formData.quantity}
             formData={formData}
             setFormData={setFormData}
           />
@@ -249,14 +285,17 @@ const MainInfoForm = ({ setForm, addon }) => {
               onChange={() => setHasParentYacht(!hasParentYacht)}
             />
           </label>
-          <SelectField
-            htmlFor="yacht"
+          <CustomSelectField
             className={hasParentYacht ? "" : "disable"}
             id="yacht"
             value={formData.yacht}
-            formData={formData}
-            setFormData={setFormData}
-            options={yachts?.map((yacht) => yacht.name_en)}
+            onChange={(e) => {
+              setFormData((prev) => ({ ...prev, yacht: e.target.value }));
+            }}
+            options={yachts?.map((yacht) => ({
+              name: yacht.name_en,
+              value: yacht.id,
+            }))}
           />
         </div>
         {/* vat */}

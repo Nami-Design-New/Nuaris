@@ -1,13 +1,15 @@
 import addIcon from "../../assets/images/addRow.svg";
 import deleteIcon from "../../assets/images/delete.svg";
 
-const TimeRow = ({ formData, setFormData, currentObject, index, day }) => {
+const TimeRow = ({ setFormData, currentObject, index, day }) => {
   function handleTimeChange(value, key, index) {
     currentObject.hours[index][key] = value;
-    setFormData((prev) => [
-      ...prev.filter((obj) => obj.day !== day),
-      currentObject,
-    ]);
+    setFormData((prev) => {
+      const currentIndex = prev.findIndex((obj) => obj.day === day);
+      const newFormData = [...prev];
+      newFormData[currentIndex] = currentObject;
+      return newFormData;
+    });
   }
 
   function handleAddNewHoursRow() {
@@ -31,14 +33,14 @@ const TimeRow = ({ formData, setFormData, currentObject, index, day }) => {
       <div className="input-field">
         <input
           type="time"
-          value={formData.find((e) => e.day === day).hours[index].from}
+          value={currentObject.hours[index].from}
           onChange={(e) => handleTimeChange(e.target.value, "from", index)}
           required
         />
       </div>
       <div className="input-field">
         <input
-          value={formData.find((e) => e.day === day).hours[index].to}
+          value={currentObject.hours[index].to}
           type="time"
           onChange={(e) => handleTimeChange(e.target.value, "to", index)}
           required

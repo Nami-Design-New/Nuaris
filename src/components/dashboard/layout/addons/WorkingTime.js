@@ -6,22 +6,33 @@ import axios from "./../../../../util/axios";
 import { toast } from "react-toastify";
 
 const WorkingTime = ({ setForm, addon }) => {
-  // for edit
-  // useEffect(() => {
-  //   if (addon) {
-  //     setFormData(addon?.working_hours);
-  //   }
-  // }, [addon]);
-  const createdAddOn = sessionStorage.getItem("addon_id");
   const formDataInitial = DAYS.map((day, index) => {
     return {
       day,
       hours: [{ from: "00:00", to: "00:00" }],
       selected: false,
-      index
+      index,
     };
   });
   const [formData, setFormData] = useState(formDataInitial);
+  const createdAddOn = sessionStorage.getItem("addon_id");
+  useEffect(() => {
+    if (addon.id) {
+      const newWorkingHours = addon?.working_hours?.map((e) => {
+        return {
+          ...e,
+          selected: true,
+          index: formData.findIndex((obj) => obj.day === e.day),
+        };
+      });
+      let newFormData = [...formData];
+      newWorkingHours.forEach((e) => {
+        newFormData[e.index].hours = e.hours;
+        newFormData[e.index].selected = true;
+      });
+      setFormData(newFormData);
+    }
+  }, [addon]);
   const [loading, setLoading] = useState(false);
   const handleNext = (e) => {
     e.preventDefault();
@@ -40,7 +51,7 @@ const WorkingTime = ({ setForm, addon }) => {
       const reqData = filteredFormData.map((obj) => {
         return {
           day: obj.day,
-          hours: obj.hours
+          hours: obj.hours,
         };
       });
       const dictionary = { working_hours: reqData };
