@@ -17,7 +17,7 @@ const WorkingTime = ({ setForm, addon }) => {
   const [formData, setFormData] = useState(formDataInitial);
   const createdAddOn = sessionStorage.getItem("addon_id");
   useEffect(() => {
-    if (addon.id) {
+    if (addon) {
       const newWorkingHours = addon?.working_hours?.map((e) => {
         return {
           ...e,

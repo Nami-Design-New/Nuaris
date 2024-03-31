@@ -24,30 +24,33 @@ const MainInfoForm = ({ setForm, addon }) => {
   const [loading, setLoading] = useState(false);
   const [videoLink, setVideoLink] = useState("");
   const [formData, setFormData] = useState({
-    attachments: [],
-    name: "",
-    description: "",
-    category: "select",
-    quantity: "",
-    yacht: "select",
+    attachment: Array(3).fill(""),
+    name: null,
+    description: null,
+    category: null,
+    quantity: null,
+    yacht: null,
     vat: null,
   });
 
   useEffect(() => {
     setFormData({
       ...formData,
-      yacht: addon?.yacht || "select",
-      category: `${addon?.category}`.toLowerCase() || "select",
+      yacht: addon?.yacht || null,
+      category: addon?.category.toLowerCase() || null,
       vat: addon?.vat || null,
-      quantity: addon?.quantity || "",
-      name: addon?.name || "",
-      description: addon?.description || "",
-      attachments: addon?.attachments || [],
+      quantity: addon?.quantity || null,
+      name: addon?.name || null,
+      description: addon?.description || null,
+      attachment: addon?.attachments || Array(3).fill(),
     });
     if (addon?.yacht) {
       setHasParentYacht(true);
     }
-  }, [addon, formData]);
+    if (addon?.attachments[3]) {
+      setVideoLink(addon?.attachments[3]);
+    }
+  }, [addon]);
 
   useEffect(() => {
     axios
@@ -61,6 +64,9 @@ const MainInfoForm = ({ setForm, addon }) => {
   }, [subUser]);
 
   const handleUploadMedia = async (file) => {
+    if (fileLoading) {
+      return "";
+    }
     setFileLoading(true);
     try {
       const blob = file.slice(0, file.size, file.type);
@@ -80,38 +86,43 @@ const MainInfoForm = ({ setForm, addon }) => {
   const handleImagesChange = async (e, i) => {
     if (e?.length === 0) {
       setFormData((prev) => {
-        const attachment = [...prev.attachments];
-        attachment.splice(i, 1);
+        const attachment = [...prev.attachment];
+        attachment[i] = "";
         return {
           ...prev,
-          attachments: attachment,
+          attachment: attachment,
         };
       });
       return;
     }
+    if (fileLoading) {
+      return;
+    }
     try {
-      if (!fileLoading) {
-        const file = e[0].file;
-        const link = await handleUploadMedia(file);
-        setFormData((prev) => {
-          const attachment = [...prev.attachments];
-          attachment[i] = link;
-          return {
-            ...prev,
-            attachments: attachment,
-          };
-        });
-      }
+      const file = e[0].file;
+      const link = await handleUploadMedia(file);
+      setFormData((prev) => {
+        const attachment = [...prev.attachment];
+        attachment[i] = link;
+        return {
+          ...prev,
+          attachment: attachment,
+        };
+      });
     } catch (error) {
       console.error("Error handling image upload:", error);
-      setFileLoading(false);
       toast.error("Error uploading image");
+    } finally {
+      setFileLoading(false);
     }
   };
 
   const handleVideoChange = async (e) => {
     if (e?.length === 0) {
       setVideoLink("");
+      return;
+    }
+    if (fileLoading) {
       return;
     }
     try {
@@ -134,18 +145,20 @@ const MainInfoForm = ({ setForm, addon }) => {
     e.preventDefault();
     setLoading(true);
     try {
-      const attached = formData.attachments.filter((a) => a !== "");
+      const attached = formData.attachment.filter((a) => a);
+      // const attached = [...formData.attachment];
       if (videoLink) {
         attached.push(videoLink);
       }
       const res = await axios.request({
-        method: addon.id ? "PATCH" : "POST",
-        url: `/addons/${addon.id ? `${addon.id}/` : ""}`,
+        method: addon ? "PATCH" : "POST",
+        url: `/addons/${addon ? `${addon.id}/` : ""}`,
         data: {
           ...formData,
+          yacht: formData.yacht === "select" ? null : formData.yacht,
           sub_user: subUser,
           user: user.id,
-          attachments: attached,
+          attachment: attached,
         },
       });
       if (res.status === 201 || res.status === 200) {
@@ -156,6 +169,7 @@ const MainInfoForm = ({ setForm, addon }) => {
         toast.error("Something went wrong");
       }
     } catch (error) {
+      console.log(error);
       toast.error("Something went wrong");
     } finally {
       setLoading(false);
@@ -185,7 +199,7 @@ const MainInfoForm = ({ setForm, addon }) => {
                     } <img src=${fav} alt="fav"/>`}
                     pannelRatio=".88"
                     files={
-                      formData.attachments[i] ? [formData.attachments[i]] : null
+                      formData.attachment[i] ? [formData.attachment[i]] : null
                     }
                     value
                     allowMultiple={false}
@@ -204,6 +218,7 @@ const MainInfoForm = ({ setForm, addon }) => {
             pannelRatio=".283"
             accept={["video/*"]}
             allowMultiple={false}
+            files={videoLink ? [videoLink] : null}
             onUpdateFiles={(e) => handleVideoChange(e)}
           />
         </div>
