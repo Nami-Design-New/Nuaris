@@ -160,7 +160,10 @@ export default function EditUser() {
               </form>
             </div>
           </div>
-          <AssignGroup invitedUserId={employee.user_id} />
+          <AssignGroup
+            invitedUserId={employee.user_id}
+            groupNames={employee?.group_names}
+          />
         </div>
       </section>
     </>

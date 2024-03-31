@@ -6,7 +6,7 @@ import axios from "./../../../util/axios";
 import ConfirmModal from "../../ui/ConfirmModal";
 import { toast } from "react-toastify";
 
-const AssignGroup = ({ invitedUserId }) => {
+const AssignGroup = ({ invitedUserId, groupNames }) => {
   const [permissionMap, setPermissionMap] = useState({});
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [groups, setGroups] = useState([]);
@@ -37,12 +37,12 @@ const AssignGroup = ({ invitedUserId }) => {
   useEffect(() => {
     if (groups) {
       const permissionGroupsMap = groups?.reduce((acc, group) => {
-        acc[group.id] = false;
+        acc[group.id] = groupNames?.includes(group.name);
         return acc;
       }, {});
       setPermissionMap(permissionGroupsMap);
     }
-  }, [groups]);
+  }, [groups, groupNames]);
 
   const handleAddGroup = (passedGroup) => {
     const groupId = passedGroup.id;

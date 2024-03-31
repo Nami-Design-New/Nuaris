@@ -16,6 +16,7 @@ const CreateUser = () => {
   const [loading, setLoading] = useState(false);
   const [showAssignGroups, setShowAssignGroups] = useState(false);
   const [invitedUserId, setInvitedUserId] = useState(null);
+  const [groupNames, setGroupNames] = useState([]);
   const positions = useSelector((state) => state.positions.positions);
   const user = useSelector((state) => state.user?.user);
   const subUserSet = user?.subuser_set;
@@ -40,12 +41,13 @@ const CreateUser = () => {
       }
       const response = await axios.post("/users/invite-user/", {
         ...formData,
-        parent: subUser[0]?.id
+        parent: subUser[0]?.id,
       });
       if (response?.status === 201 || response?.status === 200) {
         toast.success("Invitation sent successfully");
         setShowAssignGroups(true);
         setInvitedUserId(response?.data?.user_id);
+        setGroupNames(response?.data?.group_names);
       } else {
         toast.error(
           "User with this phone number already exists, check your email if you want to override the phone number."
@@ -90,7 +92,7 @@ const CreateUser = () => {
                         );
                       setFormData({
                         ...formData,
-                        position: Number(selectedOptionId)
+                        position: Number(selectedOptionId),
                       });
                     }}
                   >
@@ -148,7 +150,9 @@ const CreateUser = () => {
             </form>
           </div>
         </div>
-        {showAssignGroups && <AssignGroup invitedUserId={invitedUserId} />}
+        {showAssignGroups && (
+          <AssignGroup invitedUserId={invitedUserId} groupNames={groupNames} />
+        )}
       </div>
     </section>
   );
