@@ -42,6 +42,7 @@ export default function CustomFileUpload({
                 });
               })
               .catch((err) => {
+                load(null);
                 console.error(err);
               });
           },
