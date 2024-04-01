@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
-import PageHeader from "../layout/PageHeader";
-import InputField from "../../ui/form-elements/InputField";
-import axios from "../../../util/axios";
+import PageHeader from "../../layout/PageHeader";
+import InputField from "../../../ui/form-elements/InputField";
+import axios from "../../../../util/axios";
 import { toast } from "react-toastify";
-import SubmitButton from "./../../ui/form-elements/SubmitButton";
-import CheckField from "../../ui/form-elements/CheckField";
-import CustomPagination from "../../ui/CustomPagination";
+import SubmitButton from "../../../ui/form-elements/SubmitButton";
+import CheckField from "../../../ui/form-elements/CheckField";
+import CustomPagination from "../../../ui/CustomPagination";
 import { useSearchParams } from "react-router-dom";
 
 const CreatePermission = () => {

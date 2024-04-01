@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import PageHeader from "../layout/PageHeader";
-import SubmitButton from "./../../ui/form-elements/SubmitButton";
+import PageHeader from "../../layout/PageHeader";
+import SubmitButton from "../../../ui/form-elements/SubmitButton";
 import { useParams, useSearchParams } from "react-router-dom";
-import axios from "../../../util/axios";
+import axios from "../../../../util/axios";
 import { toast } from "react-toastify";
-import CheckField from "../../ui/form-elements/CheckField";
-import CustomPagination from "../../ui/CustomPagination";
+import CheckField from "../../../ui/form-elements/CheckField";
+import CustomPagination from "../../../ui/CustomPagination";
 
 const EditPermissions = () => {
   const [formData, setFormData] = useState({ name: "", permissions: [] });

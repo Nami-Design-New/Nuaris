@@ -97,6 +97,11 @@ const GeneralPriceCard = ({ formData, setFormData, index }) => {
           {/* Extra Hour price */}
           <div className="col-lg-6 col-12 p-2">
             <CustomInputField
+              disabled={
+                formData.prices[index].type === "days" ||
+                formData.prices[index].type === "weeks" ||
+                formData.prices[index].type === "months"
+              }
               label={"Extra Hour Price"}
               name="extra_hour_price"
               hint={"( USD )"}

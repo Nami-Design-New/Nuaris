@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from "react";
-import axios from "./../../../util/axios";
+import axios from "../../../../util/axios";
 import { Link, useSearchParams } from "react-router-dom";
 import { DataTable } from "primereact/datatable";
 import { Button } from "primereact/button";
 import { Column } from "primereact/column";
 import { useSelector } from "react-redux";
-import deleteIcon from "../../../assets/images/delete.svg";
-import editIcon from "../../../assets/images/edit.svg";
-import PageHeader from "../layout/PageHeader";
-import CustomPagination from "../../ui/CustomPagination";
-import TableLoader from "./../../ui/TableLoader";
-import DeleteModal from "../../ui/DeleteModal";
+import deleteIcon from "../../../../assets/images/delete.svg";
+import editIcon from "../../../../assets/images/edit.svg";
+import PageHeader from "../../layout/PageHeader";
+import CustomPagination from "../../../ui/CustomPagination";
+import TableLoader from "../../../ui/TableLoader";
+import DeleteModal from "../../../ui/DeleteModal";
 
 const InviteUser = () => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -30,8 +30,8 @@ const InviteUser = () => {
       axios
         .get(`/employees/?sub_user=${subUser}`, {
           params: {
-            page: currentPage,
-          },
+            page: currentPage
+          }
         })
         .then((res) => {
           setEmployeesCount(res?.data?.count);

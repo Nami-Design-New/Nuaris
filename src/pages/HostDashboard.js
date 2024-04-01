@@ -1,23 +1,31 @@
 import { useEffect, useState } from "react";
+import axios from "../util/axios";
+import { useDispatch } from "react-redux";
 import { Route, Routes } from "react-router-dom";
+import { setPositions } from "../redux/slices/positions";
+
 import NavBar from "../components/dashboard/layout/NavBar";
 import Footer from "../components/dashboard/layout/Footer";
 import SideBar from "../components/dashboard/layout/SideBar";
+
 import Nssm from "../components/dashboard/pages/Nssm";
-import InviteUser from "../components/dashboard/pages/InviteUser";
-import CreateUser from "../components/dashboard/pages/CreateUser";
-import Permissions from "./../components/dashboard/pages/Permissions";
-import CreatePermission from "../components/dashboard/pages/CreatePermission";
-import EditPermissions from "../components/dashboard/pages/EditPermissions";
-import Fleet from "../components/dashboard/pages/Fleet";
-import AddYacht from "../components/dashboard/pages/AddYacht";
+
+import InviteUser from "../components/dashboard/pages/inviteAndPermissions/InviteUser";
+import CreateUser from "../components/dashboard/pages/inviteAndPermissions/CreateUser";
+import Permissions from "./../components/dashboard/pages/inviteAndPermissions/Permissions";
+import CreatePermission from "../components/dashboard/pages/inviteAndPermissions/CreatePermission";
+import EditPermissions from "../components/dashboard/pages/inviteAndPermissions/EditPermissions";
+import EditUser from "../components/dashboard/pages/inviteAndPermissions/EditUser";
+
+import Fleet from "../components/dashboard/pages/fleet/Fleet";
+import AddYacht from "../components/dashboard/pages/fleet/AddYacht";
 import FleetProfile from "../components/dashboard/pages/fleet/FleetProfile";
-import axios from "../util/axios";
-import { useDispatch } from "react-redux";
-import { setPositions } from "../redux/slices/positions";
-import EditUser from "../components/dashboard/pages/EditUser";
-import AddOns from "../components/dashboard/pages/AddOns";
-import AddNewAddOn from "../components/dashboard/pages/AddNewAddOn";
+
+import AddOns from "../components/dashboard/pages/addons/AddOns";
+import AddNewAddOn from "../components/dashboard/pages/addons/AddNewAddOn";
+
+import TripPackages from "../components/dashboard/pages/packages/TripPackages";
+import TripPackagesForm from "../components/dashboard/pages/packages/TripPackagesForm";
 
 const HostDashboard = () => {
   const [sideBarOpen, setSideBarOpen] = useState(false);
@@ -65,6 +73,12 @@ const HostDashboard = () => {
             <Route path="/addons" element={<AddOns />} />
             <Route path="/addons/add-new-addon" element={<AddNewAddOn />} />
             <Route path="/addons/edit-addon/:id" element={<AddNewAddOn />} />
+            {/* trip packages */}
+            <Route path="/trip-packages" element={<TripPackages />} />
+            <Route
+              path="/trip-packages/create-package"
+              element={<TripPackagesForm />}
+            />
             {/* error redirect */}
             <Route path="*" element={<>404 page</>} />
           </Routes>

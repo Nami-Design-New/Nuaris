@@ -2178,7 +2178,7 @@ th:last-child .p-column-header-content {
       margin: 0;
     }
     img {
-      height: 20px;
+      height: 16px;
       @media (max-width: 576px) {
         height: 14px;
       }
@@ -2902,6 +2902,7 @@ small.error {
 .table-container {
   .addon {
     height: 60px;
+    border-radius: 8px;
     object-fit: contain;
   }
 }

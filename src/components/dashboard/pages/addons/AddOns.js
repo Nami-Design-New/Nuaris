@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from "react";
-import PageHeader from "../layout/PageHeader";
+import PageHeader from "../../layout/PageHeader";
 import { Link, useSearchParams } from "react-router-dom";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Button } from "primereact/button";
-import deleteIcon from "../../../assets/images/delete.svg";
-import editIcon from "../../../assets/images/edit.svg";
-import eyeView from "../../../assets/images/eye.svg";
-import AddOnModal from "../layout/AddOnModal";
-import CustomPagination from "../../ui/CustomPagination";
-import axios from "../../../util/axios";
-import TableLoader from "./../../ui/TableLoader";
-import DeleteModal from "../../ui/DeleteModal";
+import deleteIcon from "../../../../assets/images/delete.svg";
+import editIcon from "../../../../assets/images/edit.svg";
+import eyeView from "../../../../assets/images/eye.svg";
+import AddOnModal from "../../layout/addons/AddOnModal";
+import CustomPagination from "../../../ui/CustomPagination";
+import axios from "../../../../util/axios";
+import TableLoader from "../../../ui/TableLoader";
+import DeleteModal from "../../../ui/DeleteModal";
 import { useSelector } from "react-redux";
 
 const AddOns = () => {
@@ -130,13 +130,7 @@ const AddOns = () => {
                 <TableLoader />
               ) : (
                 <div className="table-container p-relative">
-                  <DataTable
-                    value={addonsData}
-                    // paginator
-                    rows={5}
-                    paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
-                    currentPageReportTemplate="{first} to {last} of {totalRecords}"
-                  >
+                  <DataTable value={addonsData}>
                     <Column field="image" body={imageTemplate} header="Image" />
                     <Column field="name" header="Name" />
                     <Column field="category" header="Category " />

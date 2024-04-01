@@ -2,7 +2,7 @@ import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
 import { useEffect, useState } from "react";
 import eyeIcon from "../../../../assets/images/eye.svg";
-import AddOnModal from "./../../layout/AddOnModal";
+import AddOnModal from "./../../layout/addons/AddOnModal";
 import { useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
 import axios from "../../../../util/axios";

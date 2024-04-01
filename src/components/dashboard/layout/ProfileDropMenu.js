@@ -9,13 +9,13 @@ import editIcon from "../../../assets/images/editIcon.svg";
 import { motion } from "framer-motion";
 import axios from "../../../util/axios";
 import { useDispatch } from "react-redux";
-import { logout, setToken } from "../../../redux/slices/authenticatedUserSlice";
+import { logout } from "../../../redux/slices/authenticatedUserSlice";
 
 const ProfileDropMenu = ({
   profileDropDown,
   user,
   subUsers,
-  setProfileDropDown,
+  setProfileDropDown
 }) => {
   const dropdownRef = useRef(null);
   const multiAccounts = subUsers?.length > 1;
@@ -27,7 +27,7 @@ const ProfileDropMenu = ({
   // TODO: handle account switch
   async function handleSwitch(subUserRole) {
     const res = await axios.post(`/users/${user.id}/switch-role/`, {
-      role: subUserRole,
+      role: subUserRole
     });
     console.log("switch role =>", res);
     // TODO: (optional) Enhance
@@ -39,12 +39,12 @@ const ProfileDropMenu = ({
   const variants = {
     open: {
       opacity: 1,
-      height: "max-content",
+      height: "max-content"
     },
     closed: {
       opacity: 0,
-      height: 0,
-    },
+      height: 0
+    }
   };
 
   useEffect(() => {

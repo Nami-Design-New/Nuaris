@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
-import PageHeader from "../layout/PageHeader";
-import deleteIcon from "../../../assets/images/delete.svg";
-import editIcon from "../../../assets/images/edit.svg";
+import PageHeader from "../../layout/PageHeader";
+import deleteIcon from "../../../../assets/images/delete.svg";
+import editIcon from "../../../../assets/images/edit.svg";
 import { Link, useSearchParams } from "react-router-dom";
 import { DataTable } from "primereact/datatable";
 import { Button } from "primereact/button";
 import { Column } from "primereact/column";
-import axios from "./../../../util/axios";
-import DeleteModal from "../../ui/DeleteModal";
-import CustomPagination from "../../ui/CustomPagination";
-import TableLoader from "../../ui/TableLoader";
+import axios from "../../../../util/axios";
+import DeleteModal from "../../../ui/DeleteModal";
+import CustomPagination from "../../../ui/CustomPagination";
+import TableLoader from "../../../ui/TableLoader";
 
 const Permissions = () => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);

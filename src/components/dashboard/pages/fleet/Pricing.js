@@ -5,7 +5,7 @@ import addIcon from "../../../../assets/images/add.svg";
 import { Form } from "react-bootstrap";
 import SeasonCard from "../../layout/fleet/SeasonCard";
 import Vat from "../../layout/Vat";
-import GeneralPriceCard from "./GeneralPriceCard";
+import GeneralPriceCard from "../../layout/fleet/GeneralPriceCard";
 
 import { toast } from "react-toastify";
 import axios from "./../../../../util/axios";
