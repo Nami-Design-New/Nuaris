@@ -11,10 +11,13 @@ import editIcon from "../../../../assets/images/edit.svg";
 import eyeView from "../../../../assets/images/eye.svg";
 import StarsRate from "../../../ui/StarsRate";
 import { Button } from "primereact/button";
+import PackageModal from "../../../../components/dashboard/layout/packages/PackageModal";
 
 const TripPackages = () => {
   const [packegesData, setPackegesData] = useState([]);
   const [packagesCount, setPackagesCount] = useState(0);
+  const [showModal, setShowModal] = useState(false);
+  const [row, setRow] = useState(null);
   const [loading] = useState(false);
 
   // for test
@@ -27,7 +30,7 @@ const TripPackages = () => {
       booking_number: 10,
       last_ordered: "12/12/2022",
       date_added: "12/12/2022",
-      overall_rate: 4
+      overall_rate: 4,
     },
     {
       image: packageImg,
@@ -37,7 +40,7 @@ const TripPackages = () => {
       price_type: "Trip",
       last_ordered: "12/12/2022",
       date_added: "12/12/2022",
-      overall_rate: 3
+      overall_rate: 3,
     },
     {
       image: packageImg,
@@ -47,8 +50,8 @@ const TripPackages = () => {
       price_type: "Person",
       last_ordered: "12/12/2022",
       date_added: "12/12/2022",
-      overall_rate: 5
-    }
+      overall_rate: 5,
+    },
   ];
   const imageTemplate = (item) => {
     return <img src={item?.image} alt={item?.name} className="addon" />;
@@ -68,7 +71,12 @@ const TripPackages = () => {
         <Button>
           <img src={editIcon} alt="edit" />
         </Button>
-        <Button>
+        <Button
+          onClick={() => {
+            setRow(rowData);
+            setShowModal(true);
+          }}
+        >
           <img src={eyeView} alt="view" />
         </Button>
       </div>
@@ -117,6 +125,13 @@ const TripPackages = () => {
             </div>
           </div>
         </div>
+        {row && (
+          <PackageModal
+            data={row}
+            showModal={showModal}
+            setShowModal={setShowModal}
+          />
+        )}
       </div>
     </section>
   );
