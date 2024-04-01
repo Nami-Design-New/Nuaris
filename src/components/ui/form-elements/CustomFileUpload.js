@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from "react";
 import { FilePond, registerPlugin } from "react-filepond";
 import "filepond/dist/filepond.min.css";
 import FilePondPluginFileValidateType from "filepond-plugin-file-validate-type";
@@ -42,6 +41,7 @@ export default function CustomFileUpload({
                 });
               })
               .catch((err) => {
+                load(null);
                 console.error(err);
               });
           },
