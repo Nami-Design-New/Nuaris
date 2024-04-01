@@ -2,7 +2,7 @@ import React from "react";
 
 const TableLoader = () => {
   return (
-    <div className="tableLoader loader--style8" title="7">
+    <div className="tableLoader loader--style8">
       <svg
         version="1.1"
         id="Layer_1"

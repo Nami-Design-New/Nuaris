@@ -50,6 +50,7 @@ const MainInfoForm = ({ setForm, addon }) => {
     if (addon?.attachments[3]) {
       setVideoLink(addon?.attachments[3]);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [addon]);
 
   useEffect(() => {

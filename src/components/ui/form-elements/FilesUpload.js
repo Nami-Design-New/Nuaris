@@ -20,12 +20,12 @@ const FilesUpload = ({
   labelIdle,
   accept,
   allowMultiple,
-  setFormData,
+  setFormData
 }) => {
   const handleFileChange = (files) => {
     setFormData((prevFormData) => ({
       ...prevFormData,
-      [htmlFor]: files && files.length > 0 ? files[0].file : null,
+      [htmlFor]: files && files.length > 0 ? files[0].file : null
     }));
   };
 

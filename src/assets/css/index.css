@@ -2365,7 +2365,7 @@ th:last-child .p-column-header-content {
   margin: 0;
 }
 .stars_rate .stars img {
-  height: 20px;
+  height: 16px;
 }
 @media (max-width: 576px) {
   .stars_rate .stars img {
@@ -3133,6 +3133,7 @@ small.error {
 
 .table-container .addon {
   height: 60px;
+  border-radius: 8px;
   -o-object-fit: contain;
      object-fit: contain;
 }

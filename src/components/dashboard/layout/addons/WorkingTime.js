@@ -11,7 +11,7 @@ const WorkingTime = ({ setForm, addon }) => {
       day,
       hours: [{ from: "00:00", to: "00:00" }],
       selected: false,
-      index,
+      index
     };
   });
   const [formData, setFormData] = useState(formDataInitial);
@@ -22,7 +22,7 @@ const WorkingTime = ({ setForm, addon }) => {
         return {
           ...e,
           selected: true,
-          index: formData.findIndex((obj) => obj.day === e.day),
+          index: formData.findIndex((obj) => obj.day === e.day)
         };
       });
       let newFormData = [...formData];
@@ -32,6 +32,7 @@ const WorkingTime = ({ setForm, addon }) => {
       });
       setFormData(newFormData);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [addon]);
   const [loading, setLoading] = useState(false);
   const handleNext = (e) => {
@@ -51,7 +52,7 @@ const WorkingTime = ({ setForm, addon }) => {
       const reqData = filteredFormData.map((obj) => {
         return {
           day: obj.day,
-          hours: obj.hours,
+          hours: obj.hours
         };
       });
       const dictionary = { working_hours: reqData };

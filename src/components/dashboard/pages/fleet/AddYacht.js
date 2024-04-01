@@ -1,15 +1,15 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import PageHeader from "../layout/PageHeader";
-import SideBar from "../layout/fleet/SideBar";
-import Media from "./fleet/Media";
-import Pricing from "./fleet/Pricing";
-import MoreInfo from "./fleet/MoreInfo";
-import MainInfo from "./fleet/MainInfo";
-import WorkingHours from "./fleet/WorkingHours";
-import AddOnsConnected from "./fleet/AddOnsConnected";
-import BoatSpecification from "./fleet/BoatSpecification";
-import VesselStatusForm from "../layout/fleet/VesselStatusForm";
+import PageHeader from "../../layout/PageHeader";
+import SideBar from "../../layout/fleet/SideBar";
+import Media from "./Media";
+import Pricing from "./Pricing";
+import MoreInfo from "./MoreInfo";
+import MainInfo from "./MainInfo";
+import WorkingHours from "./WorkingHours";
+import AddOnsConnected from "./AddOnsConnected";
+import BoatSpecification from "./BoatSpecification";
+import VesselStatusForm from "../../layout/fleet/VesselStatusForm";
 
 const AddYacht = () => {
   return (
