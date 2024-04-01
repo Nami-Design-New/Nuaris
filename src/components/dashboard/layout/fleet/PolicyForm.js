@@ -194,7 +194,7 @@ const PolicyForm = ({ setForm }) => {
                     </div>
                     <div>
                       <label htmlFor={"firstDaysRefund" + index}>
-                        Days refund is
+                        Refund is
                       </label>
                       <CustomInputField
                         type="number"

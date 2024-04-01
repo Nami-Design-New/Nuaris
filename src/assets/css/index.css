@@ -2914,7 +2914,8 @@ small.error {
 .price_card {
   position: relative;
   display: flex;
-  gap: 16px;
+  align-items: end;
+  gap: 8px;
   background: #ebf3f5;
   padding: 20px 20px 16px;
   border-radius: 12px;
@@ -3361,4 +3362,8 @@ small.error {
 }
 .vessel_status .checkboxs_inputs .bg-active.hidden {
   transform: translateX(200%) !important;
+}
+
+.rmdp-panel-header + div::-webkit-scrollbar {
+  display: none;
 }/*# sourceMappingURL=index.css.map */

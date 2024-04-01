@@ -13,7 +13,7 @@ const SeasonCard = ({ formData, setFormData, index }) => {
       season_prices.splice(index, 1);
       return {
         ...prev,
-        season_prices,
+        season_prices
       };
     });
   }
@@ -24,7 +24,7 @@ const SeasonCard = ({ formData, setFormData, index }) => {
       season_prices[i][e.target.name] = e.target.value;
       return {
         ...prev,
-        season_prices,
+        season_prices
       };
     });
   }
@@ -32,41 +32,43 @@ const SeasonCard = ({ formData, setFormData, index }) => {
   return (
     <div className="col-12 p-2">
       <div className="season_calender_card">
-        <Calendar
-          value={currentCard.dates}
-          onChange={(e) => {
-            const dates = [...e];
-            const timestampsArr = dates.map((e) =>
-              e.map((e) => {
-                const timestamp = e.unix;
-                const dateObject = new Date(timestamp * 1000);
-                return `${dateObject.getFullYear()}/${String(
-                  dateObject.getMonth() + 1
-                ).padStart(2, "0")}/${String(dateObject.getDate()).padStart(
-                  2,
-                  "0"
-                )}`;
-              })
-            );
-            setFormData((prev) => {
-              const season_prices = [...prev.season_prices];
-              season_prices.splice(index, 1);
-              return {
-                ...prev,
-                season_prices: [
-                  ...season_prices,
-                  {
-                    ...currentCard,
-                    dates: timestampsArr,
-                  },
-                ],
-              };
-            });
-          }}
-          multiple
-          range
-          plugins={[<DatePanel />]}
-        />
+        <div className="p-2 ps-0">
+          <Calendar
+            value={currentCard.dates}
+            onChange={(e) => {
+              const dates = [...e];
+              const timestampsArr = dates.map((e) =>
+                e.map((e) => {
+                  const timestamp = e.unix;
+                  const dateObject = new Date(timestamp * 1000);
+                  return `${dateObject.getFullYear()}/${String(
+                    dateObject.getMonth() + 1
+                  ).padStart(2, "0")}/${String(dateObject.getDate()).padStart(
+                    2,
+                    "0"
+                  )}`;
+                })
+              );
+              setFormData((prev) => {
+                const season_prices = [...prev.season_prices];
+                season_prices.splice(index, 1);
+                return {
+                  ...prev,
+                  season_prices: [
+                    ...season_prices,
+                    {
+                      ...currentCard,
+                      dates: timestampsArr
+                    }
+                  ]
+                };
+              });
+            }}
+            multiple
+            range
+            plugins={[<DatePanel />]}
+          />
+        </div>
         <div className="row m-0">
           {/* Minimum rental period */}
           <div className="col-12 p-2 pe-0 ps-0">
@@ -99,7 +101,6 @@ const SeasonCard = ({ formData, setFormData, index }) => {
             <CustomInputField
               name="extra_hour_price"
               label={"Extra Hour Price"}
-              hint={"( USD )"}
               placeholder="00"
               type="number"
               value={currentCard.extra_hour_price}
@@ -111,7 +112,6 @@ const SeasonCard = ({ formData, setFormData, index }) => {
             <CustomInputField
               name="minimum_price"
               label={"Minimum Price"}
-              hint={"( USD )"}
               placeholder="00"
               type="number"
               value={currentCard.minimum_price}
@@ -122,7 +122,7 @@ const SeasonCard = ({ formData, setFormData, index }) => {
         <button
           disabled={formData.season_prices.length === 1}
           style={{
-            opacity: formData.season_prices.length === 1 ? "0.5" : "1",
+            opacity: formData.season_prices.length === 1 ? "0.5" : "1"
           }}
           type="button"
           className="delete_btn"

@@ -1,14 +1,20 @@
 import { useEffect, useState } from "react";
-import CustomInputWithUnit from "../../../ui/form-elements/CustomInputWIthUnit";
 import CustomInputField from "../../../ui/form-elements/CustomInputField";
 import calenderIcon from "../../../../assets/images/calender.svg";
 import addIcon from "../../../../assets/images/add.svg";
 import { Form } from "react-bootstrap";
 import SeasonCard from "../../layout/fleet/SeasonCard";
-import deleteIcon from "../../../../assets/images/delete.svg";
 import Vat from "../../layout/Vat";
+import GeneralPriceCard from "./GeneralPriceCard";
+
+import { toast } from "react-toastify";
+import axios from "./../../../../util/axios";
+import { useNavigate } from "react-router-dom";
 
 const Pricing = () => {
+  const yachtId = sessionStorage.getItem("yacht_id");
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
   const seasonCardInitialData = {
     price: "",
     period: "",
@@ -16,13 +22,14 @@ const Pricing = () => {
     period_type: "hours",
     extra_hour_price: "",
     minimum_price: "",
-    dates: [new Date()],
+    dates: [new Date()]
   };
   const initialPricesData = {
-    price: "",
+    min_booking_period: "",
     type: "hours",
+    price: "",
     extra_hour_price: "",
-    minimum_price: "",
+    minimum_price: ""
   };
   const initialData = {
     prices: [initialPricesData],
@@ -31,38 +38,28 @@ const Pricing = () => {
     period: "",
     period_type: "hours",
     period_price: "",
-    prepayment_percentage: 100,
+    prepayment_percentage: 100
   };
 
   const [formData, setFormData] = useState(initialData);
   const [uponRequest, setUponRequest] = useState(false);
 
-  function handleChangePrice(e, i) {
-    setFormData((prev) => {
-      const prices = [...prev.prices];
-      prices[i][e.target.name] = e.target.value;
-      return {
-        ...prev,
-        prices,
-      };
-    });
-  }
-
   function handleSubmit(e) {
     e.preventDefault();
-    // const responseType = {
-    //   price: [
-    //     {
-    //       minimumRentalPeriod: formData.minimumRentalPeriod,
-    //       price: formData.price,
-    //       extraHourPrice: formData.extraHourPrice,
-    //       minimumPrice: formData.minimumPrice,
-    //       prepaymentPercentage: formData.prepaymentPercentage,
-    //     },
-    //   ],
-    //   season_price: [...formData.season_prices],
-    // };
-    // console.log(responseType);
+    setLoading(true);
+    try {
+      const response = axios.patch(
+        `/yachts/${yachtId}/update-price/`,
+        formData
+      );
+      if (response?.status === 200 || response?.status === 201) {
+        toast.success("Policies Saved Successfully");
+        navigate("/dashboard/fleet/add-yacht/add-ons-connected");
+      }
+    } catch (error) {
+    } finally {
+      setLoading(false);
+    }
   }
 
   useEffect(() => {
@@ -100,7 +97,7 @@ const Pricing = () => {
                     onChange={(e) => {
                       setFormData((prev) => ({
                         ...prev,
-                        prepayment_percentage: e.target.value,
+                        prepayment_percentage: e.target.value
                       }));
                     }}
                   />
@@ -118,7 +115,7 @@ const Pricing = () => {
                           onChange={(e) =>
                             setFormData((prev) => ({
                               ...prev,
-                              period: e.target.value,
+                              period: e.target.value
                             }))
                           }
                         >
@@ -138,7 +135,7 @@ const Pricing = () => {
                           onChange={(e) =>
                             setFormData((prev) => ({
                               ...prev,
-                              period: e.target.value,
+                              period: e.target.value
                             }))
                           }
                         />
@@ -151,7 +148,7 @@ const Pricing = () => {
                         onChange={(e) =>
                           setFormData((prev) => ({
                             ...prev,
-                            period_type: e.target.value,
+                            period_type: e.target.value
                           }))
                         }
                       >
@@ -177,7 +174,7 @@ const Pricing = () => {
                     onChange={(e) => {
                       setFormData((prev) => ({
                         ...prev,
-                        period_price: e.target.value,
+                        period_price: e.target.value
                       }));
                     }}
                   />
@@ -191,7 +188,7 @@ const Pricing = () => {
                       setFormData((prev) => {
                         return {
                           ...prev,
-                          prices: [...prev.prices, initialPricesData],
+                          prices: [...prev.prices, initialPricesData]
                         };
                       });
                     }}
@@ -202,67 +199,12 @@ const Pricing = () => {
                 </div>
                 {formData.prices.map((e, index) => {
                   return (
-                    <div key={index} className="col-12 p-2">
-                      <div className="price_card p-2">
-                        <div className="row m-0 w-100">
-                          {/* Price */}
-                          <div className="col-12 p-2">
-                            <CustomInputWithUnit
-                              value={e.price}
-                              selectValue={e.type}
-                              onChange={(e) => handleChangePrice(e, index)}
-                              selectOnChange={(e) =>
-                                handleChangePrice(e, index)
-                              }
-                              selectName={"type"}
-                              name={"price"}
-                              label="Price"
-                              units={["minute", "hour", "day", "week", "month"]}
-                            />
-                          </div>
-                          {/* Extra Hour price */}
-                          <div className="col-lg-6 col-12 p-2">
-                            <CustomInputField
-                              label={"Extra Hour Price"}
-                              name="extra_hour_price"
-                              hint={"( USD )"}
-                              type="number"
-                              placeholder="00"
-                              value={e.extra_hour_price}
-                              onChange={(e) => handleChangePrice(e, index)}
-                            />
-                          </div>
-                          {/* Min Price */}
-                          <div className="col-lg-6 col-12 p-2">
-                            <CustomInputField
-                              hint={"( USD )"}
-                              label={"Minimum Price"}
-                              name="minimum_price"
-                              type="number"
-                              placeholder="00"
-                              value={e.minimum_price}
-                              onChange={(e) => handleChangePrice(e, index)}
-                            />
-                          </div>
-                        </div>
-                      </div>
-                      <button
-                        onClick={() => {
-                          setFormData((prev) => {
-                            const prices = [...prev.prices];
-                            prices.splice(index, 1);
-                            return {
-                              ...prev,
-                              prices,
-                            };
-                          });
-                        }}
-                        className="price_trash_icon"
-                        type="button"
-                      >
-                        <img src={deleteIcon} alt="delete" />
-                      </button>
-                    </div>
+                    <GeneralPriceCard
+                      key={index}
+                      formData={formData}
+                      setFormData={setFormData}
+                      index={index}
+                    />
                   );
                 })}
                 {/* calender seasons title */}
@@ -278,8 +220,8 @@ const Pricing = () => {
                           ...prev,
                           season_prices: [
                             ...prev.season_prices,
-                            seasonCardInitialData,
-                          ],
+                            seasonCardInitialData
+                          ]
                         };
                       });
                     }}
