@@ -2750,6 +2750,12 @@ small.error {
     background-color: transparent;
     color: $dark;
     border-color: $dark;
+    &:hover {
+      background-color: transparent !important;
+    }
+  }
+  &:hover {
+    background-color: $dark !important;
   }
 }
 .rmdp-panel-body li .b-deselect {

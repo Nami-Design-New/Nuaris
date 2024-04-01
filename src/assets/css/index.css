@@ -2974,6 +2974,12 @@ small.error {
   color: #0d0d0d;
   border-color: #0d0d0d;
 }
+.addon_button.active:hover {
+  background-color: transparent !important;
+}
+.addon_button:hover {
+  background-color: #0d0d0d !important;
+}
 
 .rmdp-panel-body li .b-deselect {
   padding: 0 6px;

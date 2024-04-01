@@ -11,7 +11,7 @@ import CustomPagination from "../../../ui/CustomPagination";
 import { Button } from "primereact/button";
 import { toast } from "react-toastify";
 const AddOnsConnected = () => {
-  const yachtId = sessionStorage.getItem("yacht_id");
+  const yachtId = Number(sessionStorage.getItem("yacht_id"));
   const [row, setRow] = useState({});
   const [searchParams] = useSearchParams();
   const [loading, setLoading] = useState(true);
@@ -29,8 +29,8 @@ const AddOnsConnected = () => {
       axios
         .get(`/addons/?sub_user=${subUser}`, {
           params: {
-            page: currentPage,
-          },
+            page: currentPage
+          }
         })
         .then((res) => {
           setAddonsCount(res?.data?.count);
@@ -54,13 +54,14 @@ const AddOnsConnected = () => {
   };
 
   const connectAddon = async (rowData) => {
+    if (!yachtId) return toast.error("create a yacht first");
     try {
       const isConnected = rowData.yacht === yachtId;
       const action = isConnected ? "disconnect" : "connect";
 
       const response = await axios.patch(`/addons/${rowData?.id}/`, {
         yacht: isConnected ? null : yachtId,
-        sub_user: subUser,
+        sub_user: subUser
       });
 
       if (response.status === 200) {
@@ -69,7 +70,6 @@ const AddOnsConnected = () => {
             action === "connect" ? "Connected" : "Disconnected"
           } successfully`
         );
-
         setAddonsData((prevData) => {
           const updatedData = prevData.map((item) => {
             if (item.id === rowData.id) {
@@ -88,15 +88,25 @@ const AddOnsConnected = () => {
   const actionTemplate = (rowData) => {
     return (
       <div className="actions_cell_addons">
-        <button
-          type="button"
-          onClick={() => connectAddon(rowData)}
-          className={`button addon_button ${
-            rowData.yacht === yachtId ? "" : "active"
-          }`}
-        >
-          {rowData.yacht === yachtId ? "Disconnect" : "Connect"}
-        </button>
+        {yachtId === null ? (
+          <button
+            type="button"
+            onClick={() => connectAddon(rowData)}
+            className="button addon_button active"
+          >
+            Connect
+          </button>
+        ) : (
+          <button
+            type="button"
+            onClick={() => connectAddon(rowData)}
+            className={`button addon_button ${
+              rowData.yacht === yachtId ? "" : "active"
+            }`}
+          >
+            {rowData.yacht === yachtId ? "Disconnect" : "Connect"}
+          </button>
+        )}
         <Button
           onClick={(e) => viewRow(e, rowData)}
           style={{ boxShadow: "none" }}

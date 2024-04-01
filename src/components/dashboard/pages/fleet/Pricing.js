@@ -10,6 +10,7 @@ import GeneralPriceCard from "./GeneralPriceCard";
 import { toast } from "react-toastify";
 import axios from "./../../../../util/axios";
 import { useNavigate } from "react-router-dom";
+import SubmitButton from "../../../ui/form-elements/SubmitButton";
 
 const Pricing = () => {
   const yachtId = sessionStorage.getItem("yacht_id");
@@ -245,9 +246,11 @@ const Pricing = () => {
               </>
             )}
             <div className="col-12 p-2 pt-4 d-flex">
-              <button type="submit" className="save_btn ms-auto">
-                Save
-              </button>
+              <SubmitButton
+                name={"save"}
+                loading={loading}
+                className="save_btn ms-auto"
+              />
             </div>
           </div>
         </form>
