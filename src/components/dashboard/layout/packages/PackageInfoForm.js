@@ -10,7 +10,7 @@ import axios from "./../../../../util/axios";
 import CustomSelectField from "../../../ui/form-elements/CustomSelectField";
 import CommentField from "../../../ui/form-elements/CommentField";
 import SubmitButton from "../../../ui/form-elements/SubmitButton";
-import { createPortal } from "react-dom";
+import CustomDatePicker from "../../../ui/form-elements/CustomDatePicker";
 
 const PackageInfoForm = ({ setForm }) => {
   const user = useSelector((state) => state.user?.user);
@@ -189,9 +189,15 @@ const PackageInfoForm = ({ setForm }) => {
             }))}
           />
         </div>
-        <div className="col-lg-12 p-2">
-          <div className="input-field">
-            <label>Period of package activation </label>
+        <div className="col-lg-12 p-2 input-field">
+          <label>Period of package activation </label>
+          <div className="row px-2">
+            <div className="col-lg-6 col-12 p-2">
+              <CustomDatePicker beforeContent={"From"} />
+            </div>
+            <div className="col-lg-6 col-12 p-2">
+              <CustomDatePicker beforeContent={"To"} />
+            </div>
           </div>
         </div>
         {/* description */}

@@ -436,6 +436,16 @@ $transation: 0.3s ease-in-out;
     width: 100%;
     display: flex;
     flex-direction: column;
+    .main-elements {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      h6 {
+        line-height: 20px;
+        font-size: 16px;
+        font-weight: 500;
+      }
+    }
     .pass-group {
       display: flex;
       button {

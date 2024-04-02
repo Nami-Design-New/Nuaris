@@ -440,6 +440,16 @@ button {
   display: flex;
   flex-direction: column;
 }
+.form-ui .input-field .main-elements {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.form-ui .input-field .main-elements h6 {
+  line-height: 20px;
+  font-size: 16px;
+  font-weight: 500;
+}
 .form-ui .input-field .pass-group {
   display: flex;
 }
@@ -3439,19 +3449,20 @@ small.error {
 .mdl .modal_addons_connected > div div span {
   font-weight: 600;
 }
-.mdl .form-switch {
+
+.form-switch {
   padding: 0;
   display: flex;
   flex-direction: row-reverse;
   justify-content: space-between;
   align-items: center;
 }
-.mdl .form-switch label {
+.form-switch label {
   color: #006980;
   font-size: 16px;
   font-weight: 700;
 }
-.mdl .form-switch input {
+.form-switch input {
   box-shadow: none !important;
   width: 48px;
   height: 24px;
