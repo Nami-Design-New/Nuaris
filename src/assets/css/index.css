@@ -3385,6 +3385,24 @@ small.error {
   display: none;
 }
 
+.mdl .form-switch {
+  padding: 0;
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  align-items: center;
+}
+.mdl .form-switch label {
+  color: #006980;
+  font-size: 16px;
+  font-weight: 700;
+}
+.mdl .form-switch input {
+  box-shadow: none !important;
+  width: 48px;
+  height: 24px;
+  cursor: pointer;
+}
 .mdl.trip_packages .info {
   grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
 }
@@ -3448,23 +3466,4 @@ small.error {
 }
 .mdl .modal_addons_connected > div div span {
   font-weight: 600;
-}
-
-.form-switch {
-  padding: 0;
-  display: flex;
-  flex-direction: row-reverse;
-  justify-content: space-between;
-  align-items: center;
-}
-.form-switch label {
-  color: #006980;
-  font-size: 16px;
-  font-weight: 700;
-}
-.form-switch input {
-  box-shadow: none !important;
-  width: 48px;
-  height: 24px;
-  cursor: pointer;
 }/*# sourceMappingURL=index.css.map */
