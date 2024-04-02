@@ -440,6 +440,16 @@ button {
   display: flex;
   flex-direction: column;
 }
+.form-ui .input-field .main-elements {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.form-ui .input-field .main-elements h6 {
+  line-height: 20px;
+  font-size: 16px;
+  font-weight: 500;
+}
 .form-ui .input-field .pass-group {
   display: flex;
 }
@@ -3373,4 +3383,88 @@ small.error {
 
 .rmdp-panel-header + div::-webkit-scrollbar {
   display: none;
+}
+
+.mdl.trip_packages .info {
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+}
+.mdl .img {
+  border-radius: 8px;
+  overflow: hidden;
+  flex: unset !important;
+  max-width: 220px;
+}
+.mdl .img img {
+  width: 100%;
+  height: 100% !important;
+  -o-object-fit: cover !important;
+     object-fit: cover !important;
+}
+.mdl .header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+.mdl table span,
+.mdl table td {
+  line-height: 20px;
+}
+@media screen and (max-width: 992px) {
+  .mdl .img {
+    max-width: 100%;
+  }
+  .mdl .aboutAddOn {
+    flex-direction: column;
+  }
+}
+.mdl .about {
+  flex: unset !important;
+}
+.mdl .stars_rate {
+  margin: 8px 0;
+}
+.mdl .modal_addons_connected h5 {
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 17.5px;
+  color: #006980;
+}
+.mdl .modal_addons_connected > div {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.mdl .modal_addons_connected > div div {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  line-height: 15px;
+  font-weight: 500;
+  background-color: #eeeeee;
+}
+.mdl .modal_addons_connected > div div span {
+  font-weight: 600;
+}
+
+.form-switch {
+  padding: 0;
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  align-items: center;
+}
+.form-switch label {
+  color: #006980;
+  font-size: 16px;
+  font-weight: 700;
+}
+.form-switch input {
+  box-shadow: none !important;
+  width: 48px;
+  height: 24px;
+  cursor: pointer;
 }/*# sourceMappingURL=index.css.map */

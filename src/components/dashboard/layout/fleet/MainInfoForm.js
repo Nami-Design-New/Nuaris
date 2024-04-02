@@ -20,7 +20,7 @@ const MainInfoForm = ({ setForm }) => {
     try {
       const blob = file.slice(0, file.size, file.type);
       const newFile = new File([blob], `${Date.now()}${file.name.slice(-5)}`, {
-        type: file.type
+        type: file.type,
       });
       const data = await uploadFile(newFile, S3Config);
       return data.location;
@@ -58,7 +58,7 @@ const MainInfoForm = ({ setForm }) => {
     license_expire_date: "",
     preparation_time: "",
     description_en: "",
-    description_ar: ""
+    description_ar: "",
   });
   const [loading, setLoading] = useState(false);
   const user = useSelector((state) => state.user?.user);
@@ -80,7 +80,7 @@ const MainInfoForm = ({ setForm }) => {
       const data = {
         ...formData,
         sub_user: subUser[0]?.id,
-        type: formData.type.toLowerCase()
+        type: formData.type.toLowerCase(),
       };
       const response = await axios.post("/yachts/", data);
       if (response.status === 201) {

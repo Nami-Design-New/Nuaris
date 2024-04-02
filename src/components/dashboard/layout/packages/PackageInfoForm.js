@@ -10,6 +10,7 @@ import axios from "./../../../../util/axios";
 import CustomSelectField from "../../../ui/form-elements/CustomSelectField";
 import CommentField from "../../../ui/form-elements/CommentField";
 import SubmitButton from "../../../ui/form-elements/SubmitButton";
+import CustomDatePicker from "../../../ui/form-elements/CustomDatePicker";
 
 const PackageInfoForm = ({ setForm }) => {
   const user = useSelector((state) => state.user?.user);
@@ -24,7 +25,7 @@ const PackageInfoForm = ({ setForm }) => {
     attachment: Array(3).fill(""),
     name: "",
     yacht: null,
-    license_expiration_date: ""
+    license_expiration_date: "",
   });
 
   useEffect(() => {
@@ -52,7 +53,7 @@ const PackageInfoForm = ({ setForm }) => {
     try {
       const blob = file.slice(0, file.size, file.type);
       const newFile = new File([blob], `${Date.now()}${file.name.slice(-3)}`, {
-        type: file.type
+        type: file.type,
       });
       const data = await uploadFile(newFile, S3Config);
       return data.location;
@@ -71,7 +72,7 @@ const PackageInfoForm = ({ setForm }) => {
         attachment[i] = "";
         return {
           ...prev,
-          attachment: attachment
+          attachment: attachment,
         };
       });
       return;
@@ -87,7 +88,7 @@ const PackageInfoForm = ({ setForm }) => {
         attachment[i] = link;
         return {
           ...prev,
-          attachment: attachment
+          attachment: attachment,
         };
       });
     } catch (error) {
@@ -184,13 +185,19 @@ const PackageInfoForm = ({ setForm }) => {
             }}
             options={yachts?.map((yacht) => ({
               name: yacht.name_en,
-              value: yacht.id
+              value: yacht.id,
             }))}
           />
         </div>
-        <div className="col-lg-12 p-2">
-          <div className="input-field">
-            <label>Period of package activation </label>
+        <div className="col-lg-12 p-2 input-field">
+          <label>Period of package activation </label>
+          <div className="row px-2">
+            <div className="col-lg-6 col-12 p-2">
+              <CustomDatePicker beforeContent={"From"} />
+            </div>
+            <div className="col-lg-6 col-12 p-2">
+              <CustomDatePicker beforeContent={"To"} />
+            </div>
           </div>
         </div>
         {/* description */}
@@ -215,7 +222,7 @@ const PackageInfoForm = ({ setForm }) => {
             onChange={(e) =>
               setFormData({
                 ...formData,
-                license_expiration_date: e.target.value
+                license_expiration_date: e.target.value,
               })
             }
           />
