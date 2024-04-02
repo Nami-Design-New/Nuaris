@@ -3134,6 +3134,24 @@ small.error {
   display: none;
 }
 .mdl {
+  .form-switch {
+  padding: 0;
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  align-items: center;
+  label {
+    color: $main;
+    font-size: 16px;
+    font-weight: 700;
+  }
+  input {
+    box-shadow: none !important;
+    width: 48px;
+    height: 24px;
+    cursor: pointer;
+  }
+}
   &.trip_packages .info {
     grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
   }
@@ -3203,21 +3221,4 @@ small.error {
   }
 }
 
-.form-switch {
-  padding: 0;
-  display: flex;
-  flex-direction: row-reverse;
-  justify-content: space-between;
-  align-items: center;
-  label {
-    color: $main;
-    font-size: 16px;
-    font-weight: 700;
-  }
-  input {
-    box-shadow: none !important;
-    width: 48px;
-    height: 24px;
-    cursor: pointer;
-  }
-}
+
