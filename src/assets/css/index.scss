@@ -3135,23 +3135,23 @@ small.error {
 }
 .mdl {
   .form-switch {
-  padding: 0;
-  display: flex;
-  flex-direction: row-reverse;
-  justify-content: space-between;
-  align-items: center;
-  label {
-    color: $main;
-    font-size: 16px;
-    font-weight: 700;
+    padding: 0;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    align-items: center;
+    label {
+      color: $main;
+      font-size: 16px;
+      font-weight: 700;
+    }
+    input {
+      box-shadow: none !important;
+      width: 48px;
+      height: 24px;
+      cursor: pointer;
+    }
   }
-  input {
-    box-shadow: none !important;
-    width: 48px;
-    height: 24px;
-    cursor: pointer;
-  }
-}
   &.trip_packages .info {
     grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
   }
@@ -3220,5 +3220,61 @@ small.error {
     }
   }
 }
-
-
+.addons_wrap {
+  width: 100%;
+  padding: 16px;
+  border-radius: 12px;
+  background: $inputBG;
+  h6 {
+    color: $gray;
+    font-size: 16px;
+    font-weight: 700;
+  }
+}
+.select_addon_row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+  &:last-child {
+    margin-bottom: 0;
+  }
+  button {
+    min-width: 54px !important;
+    height: 54px;
+    @include centerFlex();
+  }
+  .input-field {
+    input,
+    select {
+      background: $white;
+    }
+    flex: 3;
+    width: 100%;
+    &:last-child {
+      flex: 1;
+    }
+  }
+}
+.price_period_row {
+  padding: 8px;
+  border-radius: 12px;
+  background: $inputBG;
+  .title {
+    @include space-between();
+    h6 {
+      color: $inputHint;
+      font-size: 16px;
+      font-weight: 500;
+      margin-bottom: 0;
+    }
+    button {
+      img {
+        height: 20px;
+      }
+    }
+  }
+  input,
+  select {
+    background: $white !important;
+  }
+}

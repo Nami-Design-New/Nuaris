@@ -30,6 +30,9 @@ export default function CustomInputWithUnit({
           value={selectValue}
           onChange={selectOnChange}
         >
+          <option value={""} disabled>
+            Select
+          </option>
           {units.map((unit, index) => (
             <option key={index} value={unit}>
               {unit}

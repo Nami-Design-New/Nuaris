@@ -3466,4 +3466,67 @@ small.error {
 }
 .mdl .modal_addons_connected > div div span {
   font-weight: 600;
+}
+
+.addons_wrap {
+  width: 100%;
+  padding: 16px;
+  border-radius: 12px;
+  background: #f8f8f8;
+}
+.addons_wrap h6 {
+  color: #777777;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.select_addon_row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.select_addon_row:last-child {
+  margin-bottom: 0;
+}
+.select_addon_row button {
+  min-width: 54px !important;
+  height: 54px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.select_addon_row .input-field {
+  flex: 3;
+  width: 100%;
+}
+.select_addon_row .input-field input,
+.select_addon_row .input-field select {
+  background: #fff;
+}
+.select_addon_row .input-field:last-child {
+  flex: 1;
+}
+
+.price_period_row {
+  padding: 8px;
+  border-radius: 12px;
+  background: #f8f8f8;
+}
+.price_period_row .title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.price_period_row .title h6 {
+  color: #aaaaaa;
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 0;
+}
+.price_period_row .title button img {
+  height: 20px;
+}
+.price_period_row input,
+.price_period_row select {
+  background: #fff !important;
 }/*# sourceMappingURL=index.css.map */

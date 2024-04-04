@@ -16,6 +16,7 @@ const WorkingTime = ({ setForm, addon }) => {
   });
   const [formData, setFormData] = useState(formDataInitial);
   const createdAddOn = sessionStorage.getItem("addon_id");
+
   useEffect(() => {
     if (addon) {
       const newWorkingHours = addon?.working_hours?.map((e) => {
@@ -35,6 +36,7 @@ const WorkingTime = ({ setForm, addon }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [addon]);
   const [loading, setLoading] = useState(false);
+
   const handleNext = (e) => {
     e.preventDefault();
     setForm("Prices");

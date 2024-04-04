@@ -33,7 +33,7 @@ const PolicyForm = ({ setForm }) => {
 
   const handleBack = (e) => {
     e.preventDefault();
-    setForm("Crew");
+    setForm("Package Time & Price");
   };
 
   const handleSubmit = async (e) => {
@@ -49,18 +49,18 @@ const PolicyForm = ({ setForm }) => {
       const rawAllowedItemsContent = convertToRaw(
         allowedItemsEditorState.getCurrentContent()
       );
-      const response = await axios.patch(`/yachts/${createdYacht}/`, {
-        policy: {
-          ...formData,
-          weather_restrictions: JSON.stringify(rawWeatherContent),
-          rules_and_instructions: JSON.stringify(rawRulesContent),
-          allowed_and_not_allowed_items: JSON.stringify(rawAllowedItemsContent)
-        }
-      });
-      if (response) {
-        toast.success("Policies Saved Successfully");
-        navigate("/dashboard/fleet/add-yacht/media-photos");
-      }
+    //   const response = await axios.patch(`/yachts/${createdYacht}/`, {
+    //     policy: {
+    //       ...formData,
+    //       weather_restrictions: JSON.stringify(rawWeatherContent),
+    //       rules_and_instructions: JSON.stringify(rawRulesContent),
+    //       allowed_and_not_allowed_items: JSON.stringify(rawAllowedItemsContent)
+    //     }
+    //   });
+    //   if (response) {
+    //     toast.success("Policies Saved Successfully");
+    //     navigate("/dashboard/fleet/add-yacht/media-photos");
+    //   }
     } catch (error) {
       console.error("Error:", error);
       toast.error("Something went wrong");

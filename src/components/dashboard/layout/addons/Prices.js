@@ -3,30 +3,29 @@ import SubmitButton from "../../../ui/form-elements/SubmitButton";
 import calenderIcon from "../../../../assets/images/calender.svg";
 import addIcon from "../../../../assets/images/add.svg";
 import { useState } from "react";
-import SeasonCard from "../fleet/SeasonCard";
 import InputField from "../../../ui/form-elements/InputField";
 import axios from "./../../../../util/axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import SeasonCard from "./SeasonCard";
 
 const Prices = ({ setForm, addon }) => {
   const createdAddOn = sessionStorage.getItem("addon_id");
   const navigate = useNavigate();
 
   const seasonCardInitialData = {
+    minimum_booking_period: "",
+    minimum_booking_period_type: "",
     price: "",
-    period: "",
-    type: "hours",
-    period_type: "hours",
-    extra_hour_price: "",
+    type: "",
     minimum_price: "",
-    dates: [new Date()],
+    dates: [new Date()]
   };
   const initialData = {
     price: "",
-    price_type: null,
+    price_type: "",
     min_price: "",
-    season_prices: [seasonCardInitialData],
+    season_prices: [seasonCardInitialData]
   };
   const [formData, setFormData] = useState(initialData);
 
@@ -36,7 +35,7 @@ const Prices = ({ setForm, addon }) => {
         price: addon?.price,
         price_type: addon?.price_type,
         min_price: addon?.min_price,
-        season_prices: addon?.season_price,
+        season_prices: addon?.season_price
       });
     }
   }, [addon]);
@@ -53,9 +52,9 @@ const Prices = ({ setForm, addon }) => {
         ...prev.season_prices,
         {
           ...seasonCardInitialData,
-          index: prev.season_prices.length,
-        },
-      ],
+          index: prev.season_prices.length
+        }
+      ]
     }));
   }
 
@@ -63,11 +62,21 @@ const Prices = ({ setForm, addon }) => {
     e.preventDefault();
     setLoading(true);
     try {
-      const response = await axios.patch(`/addons/${createdAddOn}/`, {
+      const updatedSeasonPrices = formData.season_prices.map((season) => ({
+        ...season,
+        dates: season.dates.map((date) => ({
+          to: date[1],
+          from: date[0]
+        })),
+        type: season.type.toLocaleLowerCase()
+      }));
+      const updatedFormData = {
         ...formData,
-        price_type: formData.price_type.toLocaleLowerCase(),
-        season_price: formData.season_prices,
-        season_prices: undefined,
+        season_prices: updatedSeasonPrices
+      };
+      const response = await axios.patch(`/addons/${createdAddOn}/`, {
+        ...updatedFormData,
+        price_type: formData.price_type.toLocaleLowerCase()
       });
       if (response.status === 200) {
         toast.success("Prices Saved Successfully");
@@ -112,10 +121,17 @@ const Prices = ({ setForm, addon }) => {
                   setFormData({ ...formData, price_type: e.target.value });
                 }}
               >
-                <option value={null} disabled>
+                <option value={""} disabled>
                   Select
                 </option>
-                {["Minutes", "Hour", "Trip", "Item"].map((unit, index) => (
+                {[
+                  "30 Minutes",
+                  "1 Hour",
+                  "2 Hours",
+                  "3 Hours",
+                  "Trip",
+                  "Item"
+                ].map((unit, index) => (
                   <option key={index} value={unit}>
                     {unit}
                   </option>
@@ -130,7 +146,7 @@ const Prices = ({ setForm, addon }) => {
             setFormData={setFormData}
             label={"Minimum Price"}
             htmlFor={"min_price"}
-            hint={"UCD"}
+            hint={"( UCD )"}
             type="number"
             placeholder={"00"}
             id={"minPrice"}

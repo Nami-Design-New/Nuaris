@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from "react";
-import fav from "../../../../assets/images/fav.png";
-import CustomFileUpload from "../../../ui/form-elements/CustomFileUpload";
 import { toast } from "react-toastify";
 import { uploadFile } from "react-s3";
 import { S3Config } from "../../../../constants";
-import CustomInputField from "./../../../ui/form-elements/CustomInputField";
 import { useSelector } from "react-redux";
+import fav from "../../../../assets/images/fav.png";
+import CustomFileUpload from "../../../ui/form-elements/CustomFileUpload";
+import CustomInputField from "./../../../ui/form-elements/CustomInputField";
 import axios from "./../../../../util/axios";
 import CustomSelectField from "../../../ui/form-elements/CustomSelectField";
 import CommentField from "../../../ui/form-elements/CommentField";
 import SubmitButton from "../../../ui/form-elements/SubmitButton";
 import CustomDatePicker from "../../../ui/form-elements/CustomDatePicker";
+import AddonsToConnect from "./AddonsToConnect";
 
 const PackageInfoForm = ({ setForm }) => {
   const user = useSelector((state) => state.user?.user);
@@ -18,14 +19,24 @@ const PackageInfoForm = ({ setForm }) => {
     (u) => u.role === user.current_role
   )[0]?.id;
   const [yachts, setYachts] = useState([]);
+  const [addons, setAddons] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [videoLink, setVideoLink] = useState("");
-  const [loading] = useState(false);
   const [fileLoading, setFileLoading] = useState(false);
+
+  const addonsInitial = {
+    addon: "",
+    quantity: ""
+  };
   const [formData, setFormData] = useState({
-    attachment: Array(3).fill(""),
+    sub_user: subUser,
     name: "",
-    yacht: null,
-    license_expiration_date: "",
+    description: "",
+    period_of_activation_from: "",
+    period_of_activation_to: "",
+    yacht: "",
+    images_list: Array(3).fill(""),
+    addons_list: [addonsInitial]
   });
 
   useEffect(() => {
@@ -37,6 +48,14 @@ const PackageInfoForm = ({ setForm }) => {
       .catch((err) => {
         console.log(err);
       });
+    axios
+      .get(`/addons/?sub_user=${subUser}&page_size=1000`)
+      .then((res) => {
+        setAddons(res?.data?.results);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, [subUser]);
 
   const handleNext = (e) => {
@@ -44,7 +63,7 @@ const PackageInfoForm = ({ setForm }) => {
     setForm("Package Time & Price");
   };
 
-  // ========= media ==========//
+  // ========= media ========== //
   const handleUploadMedia = async (file) => {
     if (fileLoading) {
       return "";
@@ -53,7 +72,7 @@ const PackageInfoForm = ({ setForm }) => {
     try {
       const blob = file.slice(0, file.size, file.type);
       const newFile = new File([blob], `${Date.now()}${file.name.slice(-3)}`, {
-        type: file.type,
+        type: file.type
       });
       const data = await uploadFile(newFile, S3Config);
       return data.location;
@@ -64,15 +83,14 @@ const PackageInfoForm = ({ setForm }) => {
       setFileLoading(false);
     }
   };
-
   const handleImagesChange = async (e, i) => {
     if (e?.length === 0) {
       setFormData((prev) => {
-        const attachment = [...prev.attachment];
-        attachment[i] = "";
+        const images_list = [...prev.images_list];
+        images_list[i] = "";
         return {
           ...prev,
-          attachment: attachment,
+          images_list: images_list
         };
       });
       return;
@@ -84,11 +102,11 @@ const PackageInfoForm = ({ setForm }) => {
       const file = e[0].file;
       const link = await handleUploadMedia(file);
       setFormData((prev) => {
-        const attachment = [...prev.attachment];
-        attachment[i] = link;
+        const images_list = [...prev.images_list];
+        images_list[i] = link;
         return {
           ...prev,
-          attachment: attachment,
+          images_list: images_list
         };
       });
     } catch (error) {
@@ -98,7 +116,6 @@ const PackageInfoForm = ({ setForm }) => {
       setFileLoading(false);
     }
   };
-
   const handleVideoChange = async (e) => {
     if (e?.length === 0) {
       setVideoLink("");
@@ -117,8 +134,32 @@ const PackageInfoForm = ({ setForm }) => {
       toast.error("Error uploading video");
     }
   };
+  // ========= end of media ========= //
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      const response = await axios.post("/trip-packages/", {
+        ...formData,
+        video_link: videoLink
+      });
+      if (response.status === 201 || response.status === 200) {
+        toast.success("Package Info Saved Successfully");
+        setForm("Package Time & Price");
+        sessionStorage.setItem("package_id", response.data.id);
+      } else {
+        toast.error("Something went wrong");
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
-    <form className="form-ui">
+    <form className="form-ui" onSubmit={handleSubmit}>
       <div className="row m-0">
         <div className="col-12 p-2">
           <h6 className="form_title">Package Info</h6>
@@ -140,7 +181,7 @@ const PackageInfoForm = ({ setForm }) => {
                     } <img src=${fav} alt="fav"/>`}
                     pannelRatio=".88"
                     files={
-                      formData.attachment[i] ? [formData.attachment[i]] : null
+                      formData.images_list[i] ? [formData.images_list[i]] : null
                     }
                     value
                     allowMultiple={false}
@@ -164,7 +205,7 @@ const PackageInfoForm = ({ setForm }) => {
           />
         </div>
         {/* package name */}
-        <div className="col-lg-6 col-12">
+        <div className="col-lg-6 col-12 p-2">
           <CustomInputField
             label="Package Name"
             name="package_name"
@@ -185,7 +226,7 @@ const PackageInfoForm = ({ setForm }) => {
             }}
             options={yachts?.map((yacht) => ({
               name: yacht.name_en,
-              value: yacht.id,
+              value: yacht.id
             }))}
           />
         </div>
@@ -193,10 +234,28 @@ const PackageInfoForm = ({ setForm }) => {
           <label>Period of package activation </label>
           <div className="row px-2">
             <div className="col-lg-6 col-12 p-2">
-              <CustomDatePicker beforeContent={"From"} />
+              <CustomDatePicker
+                beforeContent={"From"}
+                value={formData.period_of_activation_from}
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    period_of_activation_from: e.target.value
+                  })
+                }
+              />
             </div>
             <div className="col-lg-6 col-12 p-2">
-              <CustomDatePicker beforeContent={"To"} />
+              <CustomDatePicker
+                beforeContent={"To"}
+                value={formData.period_of_activation_to}
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    period_of_activation_to: e.target.value
+                  })
+                }
+              />
             </div>
           </div>
         </div>
@@ -212,21 +271,12 @@ const PackageInfoForm = ({ setForm }) => {
             setFormData={setFormData}
           />
         </div>
-        {/* license expiration date */}
-        <div className="col-12 p-2">
-          <CustomInputField
-            label="License expiration date"
-            name="license_expiration_date"
-            type="date"
-            value={formData.license_expiration_date}
-            onChange={(e) =>
-              setFormData({
-                ...formData,
-                license_expiration_date: e.target.value,
-              })
-            }
-          />
-        </div>
+        <AddonsToConnect
+          formData={formData}
+          addons={addons}
+          setFormData={setFormData}
+          addonsInitial={addonsInitial}
+        />
         <div className="col-12 p-2 pt-4 d-flex gap-3">
           <SubmitButton
             loading={loading}
