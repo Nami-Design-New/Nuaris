@@ -20,8 +20,6 @@ const Media = () => {
     video_link: ""
   });
 
-
-
   const handleUploadMedia = async (file) => {
     if (fileLoading) {
       return "";
@@ -30,7 +28,7 @@ const Media = () => {
     try {
       const blob = file.slice(0, file.size, file.type);
       const newFile = new File([blob], `${Date.now()}${file.name.slice(-3)}`, {
-        type: file.type,
+        type: file.type
       });
       const data = await uploadFile(newFile, S3Config);
       return data.location;
@@ -54,11 +52,9 @@ const Media = () => {
     }
   };
 
-
   const handleImageChange = async (e, i) => {
     if (e?.length === 0) {
       // TODO: Remove the image at index i from the formData (example below)
-
       // setFormData((prev) => {
       //   const attachment = [...prev.attachment];
       //   attachment[i] = "";
