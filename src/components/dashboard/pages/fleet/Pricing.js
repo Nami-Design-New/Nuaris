@@ -18,15 +18,15 @@ const Pricing = () => {
   const seasonCardInitialData = {
     price: "",
     period: "",
-    type: "hours",
-    period_type: "hours",
+    type: "",
+    period_type: "",
     extra_hour_price: "",
     minimum_price: "",
     dates: [new Date()]
   };
   const initialPricesData = {
-    period: 1,
-    period_type: "hours",
+    period: 4,
+    period_type: "",
     price: "",
     extra_hour_price: "",
     minimum_price: ""
