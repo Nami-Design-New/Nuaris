@@ -3255,3 +3255,26 @@ small.error {
     }
   }
 }
+.price_period_row {
+  padding: 8px;
+  border-radius: 12px;
+  background: $inputBG;
+  .title {
+    @include space-between();
+    h6 {
+      color: $inputHint;
+      font-size: 16px;
+      font-weight: 500;
+      margin-bottom: 0;
+    }
+    button {
+      img {
+        height: 20px;
+      }
+    }
+  }
+  input,
+  select {
+    background: $white !important;
+  }
+}

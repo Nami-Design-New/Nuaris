@@ -3505,4 +3505,28 @@ small.error {
 }
 .select_addon_row .input-field:last-child {
   flex: 1;
+}
+
+.price_period_row {
+  padding: 8px;
+  border-radius: 12px;
+  background: #f8f8f8;
+}
+.price_period_row .title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.price_period_row .title h6 {
+  color: #aaaaaa;
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 0;
+}
+.price_period_row .title button img {
+  height: 20px;
+}
+.price_period_row input,
+.price_period_row select {
+  background: #fff !important;
 }/*# sourceMappingURL=index.css.map */

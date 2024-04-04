@@ -11,7 +11,6 @@ import CustomSelectField from "../../../ui/form-elements/CustomSelectField";
 import CommentField from "../../../ui/form-elements/CommentField";
 import SubmitButton from "../../../ui/form-elements/SubmitButton";
 import CustomDatePicker from "../../../ui/form-elements/CustomDatePicker";
-import CancellationPolicy from "../CancellationPolicy";
 import AddonsToConnect from "./AddonsToConnect";
 
 const PackageInfoForm = ({ setForm }) => {
@@ -25,11 +24,6 @@ const PackageInfoForm = ({ setForm }) => {
   const [videoLink, setVideoLink] = useState("");
   const [fileLoading, setFileLoading] = useState(false);
 
-  const cancelationCountInitial = {
-    cancel_before: "",
-    percentage: "",
-    type: "select"
-  };
   const addonsInitial = {
     addon: "",
     quantity: ""
@@ -42,8 +36,7 @@ const PackageInfoForm = ({ setForm }) => {
     period_of_activation_to: "",
     yacht: "",
     images_list: Array(3).fill(""),
-    addons_list: [addonsInitial],
-    cancellation_policy: [cancelationCountInitial]
+    addons_list: [addonsInitial]
   });
 
   useEffect(() => {
@@ -283,11 +276,6 @@ const PackageInfoForm = ({ setForm }) => {
           addons={addons}
           setFormData={setFormData}
           addonsInitial={addonsInitial}
-        />
-        <CancellationPolicy
-          formData={formData}
-          setFormData={setFormData}
-          cancelationCountInitial={cancelationCountInitial}
         />
         <div className="col-12 p-2 pt-4 d-flex gap-3">
           <SubmitButton
