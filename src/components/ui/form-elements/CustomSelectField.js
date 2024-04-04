@@ -3,7 +3,7 @@ export default function CustomSelectField({ options, ...props }) {
     <div className="input-field">
       {props.label && <label>{props.label}</label>}
       <select {...props}>
-        <option selected value={null} disabled>
+        <option selected value={""} disabled>
           Select
         </option>
         {options?.map((option, index) => (

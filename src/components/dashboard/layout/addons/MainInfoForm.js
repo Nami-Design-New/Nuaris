@@ -23,26 +23,27 @@ const MainInfoForm = ({ setForm, addon }) => {
   const [fileLoading, setFileLoading] = useState(false);
   const [loading, setLoading] = useState(false);
   const [videoLink, setVideoLink] = useState("");
+
   const [formData, setFormData] = useState({
     attachment: Array(3).fill(""),
-    name: null,
-    description: null,
-    category: null,
-    quantity: null,
-    yacht: null,
-    vat: null,
+    name: "",
+    description: "",
+    category: "",
+    quantity: "",
+    yacht: "",
+    vat: null
   });
 
   useEffect(() => {
     setFormData({
       ...formData,
-      yacht: addon?.yacht || null,
-      category: addon?.category.toLowerCase() || null,
+      yacht: addon?.yacht || "",
+      category: addon?.category.toLowerCase() || "",
       vat: addon?.vat || null,
-      quantity: addon?.quantity || null,
-      name: addon?.name || null,
-      description: addon?.description || null,
-      attachment: addon?.attachments || Array(3).fill(),
+      quantity: addon?.quantity || "",
+      name: addon?.name || "",
+      description: addon?.description || "",
+      attachment: addon?.attachments || Array(3).fill("")
     });
     if (addon?.yacht) {
       setHasParentYacht(true);
@@ -50,7 +51,7 @@ const MainInfoForm = ({ setForm, addon }) => {
     if (addon?.attachments[3]) {
       setVideoLink(addon?.attachments[3]);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [addon]);
 
   useEffect(() => {
@@ -72,7 +73,7 @@ const MainInfoForm = ({ setForm, addon }) => {
     try {
       const blob = file.slice(0, file.size, file.type);
       const newFile = new File([blob], `${Date.now()}${file.name.slice(-3)}`, {
-        type: file.type,
+        type: file.type
       });
       const data = await uploadFile(newFile, S3Config);
       return data.location;
@@ -91,7 +92,7 @@ const MainInfoForm = ({ setForm, addon }) => {
         attachment[i] = "";
         return {
           ...prev,
-          attachment: attachment,
+          attachment: attachment
         };
       });
       return;
@@ -107,7 +108,7 @@ const MainInfoForm = ({ setForm, addon }) => {
         attachment[i] = link;
         return {
           ...prev,
-          attachment: attachment,
+          attachment: attachment
         };
       });
     } catch (error) {
@@ -159,8 +160,8 @@ const MainInfoForm = ({ setForm, addon }) => {
           yacht: formData.yacht === "select" ? null : formData.yacht,
           sub_user: subUser,
           user: user.id,
-          attachment: attached,
-        },
+          attachment: attached
+        }
       });
       if (res.status === 201 || res.status === 200) {
         toast.success("Addon Main Info Saved Successfully");
@@ -268,7 +269,7 @@ const MainInfoForm = ({ setForm, addon }) => {
               }
               return {
                 value,
-                name: e,
+                name: e
               };
             })}
           />
@@ -306,7 +307,7 @@ const MainInfoForm = ({ setForm, addon }) => {
             }}
             options={yachts?.map((yacht) => ({
               name: yacht.name_en,
-              value: yacht.id,
+              value: yacht.id
             }))}
           />
         </div>
