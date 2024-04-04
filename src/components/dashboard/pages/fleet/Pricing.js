@@ -1,15 +1,14 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { Form } from "react-bootstrap";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 import CustomInputField from "../../../ui/form-elements/CustomInputField";
 import calenderIcon from "../../../../assets/images/calender.svg";
 import addIcon from "../../../../assets/images/add.svg";
-import { Form } from "react-bootstrap";
 import SeasonCard from "../../layout/fleet/SeasonCard";
 import Vat from "../../layout/Vat";
 import GeneralPriceCard from "../../layout/fleet/GeneralPriceCard";
-
-import { toast } from "react-toastify";
 import axios from "./../../../../util/axios";
-import { useNavigate } from "react-router-dom";
 import SubmitButton from "../../../ui/form-elements/SubmitButton";
 
 const Pricing = () => {
@@ -26,8 +25,8 @@ const Pricing = () => {
     dates: [new Date()]
   };
   const initialPricesData = {
-    min_booking_period: "",
-    type: "hours",
+    period: 1,
+    period_type: "hours",
     price: "",
     extra_hour_price: "",
     minimum_price: ""
@@ -36,36 +35,51 @@ const Pricing = () => {
     prices: [initialPricesData],
     season_prices: [seasonCardInitialData],
     vat: [],
-    period: "",
-    period_type: "hours",
-    period_price: "",
-    prepayment_percentage: 100
+    price: "",
+    pre_payment_percentage: 100,
+    minimum_rental_period: "",
+    minimum_rental_period_type: "hours"
   };
 
   const [formData, setFormData] = useState(initialData);
   const [uponRequest, setUponRequest] = useState(false);
 
-  function handleSubmit(e) {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+    if (!yachtId) {
+      toast.error("Create a Yacht first");
+      setLoading(false);
+      return;
+    }
+    const updatedSeasonPrices = formData.season_prices.map((season) => ({
+      ...season,
+      dates: season.dates.map((date) => ({
+        to: date[1],
+        from: date[0]
+      }))
+    }));
+    const updatedFormData = {
+      ...formData,
+      season_prices: updatedSeasonPrices
+    };
     try {
-      const response = axios.patch(
+      const response = await axios.patch(
         `/yachts/${yachtId}/update-price/`,
-        formData
+        updatedFormData
       );
       if (response?.status === 200 || response?.status === 201) {
-        toast.success("Policies Saved Successfully");
+        toast.success("Pricing Saved Successfully");
         navigate("/dashboard/fleet/add-yacht/add-ons-connected");
+      } else {
+        toast.error("Something went wrong");
       }
     } catch (error) {
+      console.error("Error:", error);
     } finally {
       setLoading(false);
     }
-  }
-
-  useEffect(() => {
-    console.log(formData);
-  }, [formData]);
+  };
 
   return (
     <div className="fleet_form__wrapper">
@@ -94,11 +108,11 @@ const Pricing = () => {
                     name="prepaymentPercentage"
                     type="number"
                     placeholder="00"
-                    value={formData.prepayment_percentage}
+                    value={formData.pre_payment_percentage}
                     onChange={(e) => {
                       setFormData((prev) => ({
                         ...prev,
-                        prepayment_percentage: e.target.value
+                        pre_payment_percentage: e.target.value
                       }));
                     }}
                   />
@@ -107,16 +121,16 @@ const Pricing = () => {
                   <div className="input-field">
                     <label htmlFor="period">Minimum rental Period</label>
                     <div className="time-units">
-                      {formData.period_type === "minutes" ? (
+                      {formData.minimum_rental_period_type === "minutes" ? (
                         <select
                           className="units w-100"
                           name="minits"
                           id="minits"
-                          value={formData.period}
+                          value={formData.minimum_rental_period}
                           onChange={(e) =>
                             setFormData((prev) => ({
                               ...prev,
-                              period: e.target.value
+                              minimum_rental_period: e.target.value
                             }))
                           }
                         >
@@ -132,11 +146,11 @@ const Pricing = () => {
                           placeholder="00"
                           name="period"
                           id="period"
-                          value={formData.period}
+                          value={formData.minimum_rental_period}
                           onChange={(e) =>
                             setFormData((prev) => ({
                               ...prev,
-                              period: e.target.value
+                              minimum_rental_period: e.target.value
                             }))
                           }
                         />
@@ -145,11 +159,11 @@ const Pricing = () => {
                         className="units"
                         name="period_type"
                         id="units"
-                        value={formData.period_type}
+                        value={formData.minimum_rental_period_type}
                         onChange={(e) =>
                           setFormData((prev) => ({
                             ...prev,
-                            period_type: e.target.value
+                            minimum_rental_period_type: e.target.value
                           }))
                         }
                       >
@@ -171,11 +185,11 @@ const Pricing = () => {
                     name={"price"}
                     label="Price"
                     placeholder="00"
-                    value={formData.period_price}
+                    value={formData.price}
                     onChange={(e) => {
                       setFormData((prev) => ({
                         ...prev,
-                        period_price: e.target.value
+                        price: e.target.value
                       }));
                     }}
                   />

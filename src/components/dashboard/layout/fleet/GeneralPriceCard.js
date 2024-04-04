@@ -26,19 +26,19 @@ const GeneralPriceCard = ({ formData, setFormData, index }) => {
     });
   }
 
-  if (formData.prices[index].type === "minutes") {
+  if (formData.prices[index].period_type === "minutes") {
     optionsArray = ["15", "30", "45"];
-  } else if (formData.prices[index].type === "hours") {
+  } else if (formData.prices[index].period_type === "hours") {
     optionsArray = Array(12)
       .fill(1)
       .map((e, i) => i + 1);
-  } else if (formData.prices[index].type === "days") {
+  } else if (formData.prices[index].period_type === "days") {
     optionsArray = Array(31)
       .fill(1)
       .map((e, i) => i + 1);
-  } else if (formData.prices[index].type === "weeks") {
+  } else if (formData.prices[index].period_type === "weeks") {
     optionsArray = Array.from({ length: 51 }, (_, i) => i + 2);
-  } else if (formData.prices[index].type === "months") {
+  } else if (formData.prices[index].period_type === "months") {
     optionsArray = Array(12)
       .fill(1)
       .map((e, i) => i + 1);
@@ -55,8 +55,10 @@ const GeneralPriceCard = ({ formData, setFormData, index }) => {
               <div className="time-units">
                 <select
                   className="units w-100"
-                  name="min_booking_time_type"
+                  name="period"
                   id="min_booking_time_type"
+                  value={formData.prices[index].period}
+                  onChange={(e) => handleChangePrice(e, index)}
                 >
                   {optionsArray.map((minit, index) => (
                     <option key={index} value={minit}>
@@ -66,9 +68,9 @@ const GeneralPriceCard = ({ formData, setFormData, index }) => {
                 </select>
                 <select
                   className="units"
-                  name="type"
+                  name="period_type"
                   id="units"
-                  value={formData.prices[index].type}
+                  value={formData.prices[index].period_type}
                   onChange={(e) => handleChangePrice(e, index)}
                 >
                   {["minutes", "hours", "days", "weeks", "months"].map(
@@ -98,9 +100,9 @@ const GeneralPriceCard = ({ formData, setFormData, index }) => {
           <div className="col-lg-6 col-12 p-2">
             <CustomInputField
               disabled={
-                formData.prices[index].type === "days" ||
-                formData.prices[index].type === "weeks" ||
-                formData.prices[index].type === "months"
+                formData.prices[index].period_type === "days" ||
+                formData.prices[index].period_type === "weeks" ||
+                formData.prices[index].period_type === "months"
               }
               label={"Extra Hour Price"}
               name="extra_hour_price"
