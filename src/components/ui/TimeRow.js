@@ -13,18 +13,21 @@ const TimeRow = ({ setFormData, currentObject, index, day }) => {
   }
 
   function handleAddNewHoursRow() {
-    const newObject = currentObject;
-    newObject.hours.push({ from: "00:00", to: "00:00" });
-    setFormData((prev) => {
-      return [...prev.filter((obj) => obj.day !== day), newObject];
-    });
+    if (currentObject.hours.length < 3) {
+      const newObject = { ...currentObject };
+      newObject.hours.push({ from: "00:00", to: "00:00" });
+      setFormData((prev) => [
+        ...prev.filter((obj) => obj.day !== day),
+        newObject
+      ]);
+    }
   }
 
   function handleDeleteCUrrentHours() {
     currentObject.hours.splice(index, 1);
     setFormData((prev) => [
       ...prev.filter((obj) => obj.day !== day),
-      currentObject,
+      currentObject
     ]);
   }
 
@@ -47,7 +50,11 @@ const TimeRow = ({ setFormData, currentObject, index, day }) => {
         />
       </div>
       {index === 0 ? (
-        <button onClick={handleAddNewHoursRow} type="button">
+        <button
+          onClick={handleAddNewHoursRow}
+          disabled={currentObject.hours.length >= 3}
+          type="button"
+        >
           <img src={addIcon} alt="add icon" />
         </button>
       ) : (
