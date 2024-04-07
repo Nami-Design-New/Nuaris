@@ -1,10 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PageHeader from "../../layout/PageHeader";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import TableLoader from "../../../ui/TableLoader";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
-import packageImg from "../../../../assets/images/package.jpg";
 import CustomPagination from "../../../ui/CustomPagination";
 import deleteIcon from "../../../../assets/images/delete.svg";
 import editIcon from "../../../../assets/images/edit.svg";
@@ -12,52 +11,53 @@ import eyeView from "../../../../assets/images/eye.svg";
 import StarsRate from "../../../ui/StarsRate";
 import { Button } from "primereact/button";
 import PackageModal from "../../../../components/dashboard/layout/packages/PackageModal";
+import { useSelector } from "react-redux";
+import axios from "./../../../../util/axios";
+import DeleteModal from "../../../ui/DeleteModal";
 
 const TripPackages = () => {
+  const [loading, setLoading] = useState(true);
   const [packegesData, setPackegesData] = useState([]);
   const [packagesCount, setPackagesCount] = useState(0);
-  const [showModal, setShowModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [row, setRow] = useState(null);
-  const [loading] = useState(false);
+  const [searchParams] = useSearchParams();
+  const currentPage = searchParams.get("page");
+  const [showModal, setShowModal] = useState(false);
+  const user = useSelector((state) => state.user?.user);
+  const subUser = user?.subuser_set?.filter(
+    (u) => u.role === user.current_role
+  )[0]?.id;
 
-  // for test
-  const testData = [
-    {
-      image: packageImg,
-      name: "Package 1",
-      price: 1000,
-      price_type: "Trip",
-      booking_number: 10,
-      last_ordered: "12/12/2022",
-      date_added: "12/12/2022",
-      overall_rate: 4,
-    },
-    {
-      image: packageImg,
-      name: "Package 2",
-      price: 1000,
-      booking_number: 10,
-      price_type: "Trip",
-      last_ordered: "12/12/2022",
-      date_added: "12/12/2022",
-      overall_rate: 3,
-    },
-    {
-      image: packageImg,
-      name: "Package 3",
-      price: 1000,
-      booking_number: 10,
-      price_type: "Person",
-      last_ordered: "12/12/2022",
-      date_added: "12/12/2022",
-      overall_rate: 5,
-    },
-  ];
+  const deletePackage = () => {
+    setShowDeleteModal(false);
+    axios
+      .delete(`/trip-packages/${row.id}/`)
+      .then(() => {
+        setPackegesData((prevData) =>
+          prevData.filter((employee) => employee.id !== row.id)
+        );
+        if (packegesData.length === 1 && currentPage > 1) {
+          const newPage = parseInt(currentPage) - 1;
+          searchParams.set("page", newPage.toString());
+          window.history.replaceState(
+            {},
+            "",
+            `${window.location.pathname}?${searchParams.toString()}`
+          );
+        }
+        setPackagesCount((prevCount) => prevCount - 1);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   const imageTemplate = (item) => {
-    return <img src={item?.image} alt={item?.name} className="addon" />;
+    return <img src={item?.images[0]} alt={item?.name} className="addon" />;
   };
   const rateTemplate = (item) => {
-    return <StarsRate rate={item?.overall_rate} />;
+    return <StarsRate rate={item?.overall_rate || 0} />;
   };
   const bookingNumber = (item) => {
     return <p className="text-center">{item.booking_number}</p>;
@@ -65,23 +65,31 @@ const TripPackages = () => {
   const ActionTemplate = (rowData) => {
     return (
       <div className="actions_cell">
-        <Button>
+        <Button onClick={() => deleteRow(rowData)}>
           <img src={deleteIcon} alt="delete" />
         </Button>
-        <Button>
-          <img src={editIcon} alt="edit" />
-        </Button>
-        <Button
-          onClick={() => {
-            setRow(rowData);
-            setShowModal(true);
-          }}
-        >
+        <Link to={`edit-package/${rowData.id}`}>
+          <Button>
+            <img src={editIcon} alt="edit" />
+          </Button>
+        </Link>
+        <Button onClick={() => viewRow(rowData)}>
           <img src={eyeView} alt="view" />
         </Button>
       </div>
     );
   };
+
+  const deleteRow = (rowData) => {
+    setShowDeleteModal(true);
+    setRow(rowData);
+  };
+
+  const viewRow = (rowData) => {
+    setShowModal(true);
+    setRow(rowData);
+  };
+
   const priceTemplate = (item) => {
     return (
       <div className="price_template">
@@ -90,6 +98,29 @@ const TripPackages = () => {
       </div>
     );
   };
+
+  useEffect(() => {
+    try {
+      axios
+        .get(`/trip-packages/?sub_user=${subUser}`, {
+          params: {
+            page: currentPage
+          }
+        })
+        .then((res) => {
+          setPackagesCount(res?.data?.count);
+          setPackegesData(res?.data?.results);
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    } catch (err) {
+      console.log(err);
+    }
+  }, [currentPage, subUser]);
 
   return (
     <section className="section-main-content">
@@ -107,7 +138,7 @@ const TripPackages = () => {
                 <TableLoader />
               ) : (
                 <div className="table-container p-relative">
-                  <DataTable value={testData}>
+                  <DataTable value={packegesData}>
                     <Column body={imageTemplate} header="Image" />
                     <Column field="name" header="Package Name" />
                     <Column body={priceTemplate} header="Price" />
@@ -133,6 +164,12 @@ const TripPackages = () => {
           />
         )}
       </div>
+      <DeleteModal
+        setShowDeleteModal={setShowDeleteModal}
+        showDeleteModal={showDeleteModal}
+        DeletionTarget={row?.name}
+        onConfirm={deletePackage}
+      />
     </section>
   );
 };

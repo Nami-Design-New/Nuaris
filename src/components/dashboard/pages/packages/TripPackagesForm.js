@@ -1,23 +1,47 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PageHeader from "../../layout/PageHeader";
 import PackageInfoForm from "../../layout/packages/PackageInfoForm";
 import PackagePriceTime from "../../layout/packages/PackagePriceTime";
 import PolicyForm from "../../layout/packages/PolicyForm";
+import { useParams } from "react-router-dom";
+import axios from "./../../../../util/axios";
 
 const TripPackagesForm = () => {
+  const { id } = useParams();
   const [form, setForm] = useState("Package Info");
+  const [tripPackage, setTripPackage] = useState(null);
+  useEffect(() => {
+    if (id) {
+      axios
+        .get(`/trip-packages/${id}/`)
+        .then((res) => {
+          setTripPackage(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }, [id, form]);
+
   let formComponent;
   if (form === "Package Info") {
-    formComponent = <PackageInfoForm setForm={setForm} />;
+    formComponent = (
+      <PackageInfoForm setForm={setForm} tripPackage={tripPackage} />
+    );
   } else if (form === "Package Time & Price") {
-    formComponent = <PackagePriceTime setForm={setForm} />;
+    formComponent = (
+      <PackagePriceTime setForm={setForm} tripPackage={tripPackage} />
+    );
   } else {
     formComponent = <PolicyForm setForm={setForm} />;
   }
   return (
     <section className="section-main-content">
       <header className="flex-header">
-        <PageHeader name="Create Package" />
+        <PageHeader
+          name={id ? "Edit Package" : "Create Package"}
+          removeLast={id ? true : false}
+        />
       </header>
       <div className="row m-0">
         <div className="addon_form_wrapper">

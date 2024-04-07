@@ -9,7 +9,7 @@ import CancellationPolicy from "../CancellationPolicy";
 
 const PolicyForm = ({ setForm }) => {
   const [loading, setLoading] = useState(false);
-  const createdYacht = sessionStorage.getItem("yacht_id");
+  const packageId = sessionStorage.getItem("package_id");
   const navigate = useNavigate();
 
   const [weatherEditorState, setWeatherEditorState] = useState(() =>
@@ -49,18 +49,18 @@ const PolicyForm = ({ setForm }) => {
       const rawAllowedItemsContent = convertToRaw(
         allowedItemsEditorState.getCurrentContent()
       );
-    //   const response = await axios.patch(`/yachts/${createdYacht}/`, {
-    //     policy: {
-    //       ...formData,
-    //       weather_restrictions: JSON.stringify(rawWeatherContent),
-    //       rules_and_instructions: JSON.stringify(rawRulesContent),
-    //       allowed_and_not_allowed_items: JSON.stringify(rawAllowedItemsContent)
-    //     }
-    //   });
-    //   if (response) {
-    //     toast.success("Policies Saved Successfully");
-    //     navigate("/dashboard/fleet/add-yacht/media-photos");
-    //   }
+      const response = await axios.patch(`/trip-packages/${packageId}/`, {
+        policy: {
+          ...formData,
+          weather_restrictions: JSON.stringify(rawWeatherContent),
+          rules_and_instructions: JSON.stringify(rawRulesContent),
+          allowed_and_not_allowed_items: JSON.stringify(rawAllowedItemsContent)
+        }
+      });
+      if (response) {
+        toast.success("Policies Saved Successfully");
+        navigate("/dashboard/trip-packages");
+      }
     } catch (error) {
       console.error("Error:", error);
       toast.error("Something went wrong");

@@ -5,18 +5,21 @@ import PricePeriodRow from "./PricePeriodRow";
 const PricingAccordionItem = ({ formData, setFormData, day, index }) => {
   const currentObject = formData.find((obj) => obj.day === day);
 
+  const handleCheck = (e) => {
+    const { checked } = e.target;
+    setFormData((prev) => {
+      let newFormData = [...prev];
+      newFormData[index].selected = checked;
+      return newFormData;
+    });
+  };
+
   return (
     <Accordion.Item key={day} eventKey={index}>
       <Accordion.Header>
         <Form.Check
           checked={formData[index].selected}
-          onClick={() => {
-            setFormData((prev) => {
-              let newFormData = [...prev];
-              newFormData[index].selected = !newFormData[index].selected;
-              return newFormData;
-            });
-          }}
+          onClick={handleCheck}
           type="switch"
           id={day}
           label={day}
@@ -30,7 +33,9 @@ const PricingAccordionItem = ({ formData, setFormData, day, index }) => {
               setFormData={setFormData}
               currentObject={currentObject}
               index={i}
+              key={i}
               day={day}
+              dayIndex={index}
             />
           ))}
         </div>
