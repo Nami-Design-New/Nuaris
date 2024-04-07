@@ -1,4 +1,3 @@
-import React, { useEffect } from "react";
 import deleteIcon from "../../../../assets/images/delete.svg";
 import addIcon from "../../../../assets/images/addRow.svg";
 import CustomInputField from "./../../../ui/form-elements/CustomInputField";
@@ -12,8 +11,6 @@ const PricePeriodRow = ({
   formData,
   dayIndex
 }) => {
-  console.log(dayIndex);
-  console.log(formData[dayIndex].periods[index]);
   const handleAddRow = () => {
     const tempObj = {...currentObject};
     tempObj.periods.push({
@@ -37,18 +34,19 @@ const PricePeriodRow = ({
   };
 
   function handleChange(value, key, index) {
-    currentObject.periods[index][key] = value;
-    setFormData((prev) => {
-      const currentIndex = prev.findIndex((obj) => obj.day === day);
-      const newFormData = [...prev];
-      newFormData[currentIndex] = currentObject;
-      return newFormData;
+    const tempObj = {...currentObject};
+    tempObj.periods[index][key] = value;
+    
+    // prevent settings the data in all days indexes
+    const newFormData = formData.map((obj) => {
+      if (obj.day === day) {
+        return tempObj;
+      }
+      return obj;
     });
+    
+    setFormData(newFormData);
   }
-
-  useEffect(() => {
-    console.log('t', formData);
-  }, [formData])
 
   return (
     <div className="price_period_row">
@@ -73,17 +71,20 @@ const PricePeriodRow = ({
         </div>
         <div className="col-lg-6 col-12 p-2">
           <CustomInputField
-          value={formData[dayIndex]?.periods[index]?.start_date || ""}
+            value={formData[dayIndex]?.periods[index]?.start_date || ""}
             label="Start time"
             type="datetime-local"
             id="start_date"
             name="start_date"
-            onChange={(e) => handleChange(e.target.value, "start_date", index)}
+            onChange={(e) => {
+              console.log(e.target)
+              handleChange(e.target.value, "start_date", index)
+            }}
           />
         </div>
         <div className="col-lg-6 col-12 p-2">
           <CustomInputField
-          value={formData[dayIndex]?.periods[index]?.end_date || ""}
+            value={formData[dayIndex]?.periods[index]?.end_date || ""}
             label="End time"
             type="datetime-local"
             id="end_date"
@@ -95,6 +96,7 @@ const PricePeriodRow = ({
           <CustomInputWithUnit
             label="Price"
             name={"price"}
+            value={formData[dayIndex]?.periods[index]?.price || ""}
             selectValue={formData[dayIndex]?.periods[index]?.price_type || ""}
             units={["per person", "per trip"]}
             onChange={(e) => handleChange(e.target.value, "price", index)}
