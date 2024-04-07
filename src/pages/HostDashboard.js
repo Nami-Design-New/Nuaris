@@ -79,6 +79,10 @@ const HostDashboard = () => {
               path="/trip-packages/create-package"
               element={<TripPackagesForm />}
             />
+            <Route
+              path="/trip-packages/edit-package/:id"
+              element={<TripPackagesForm />}
+            />
             {/* error redirect */}
             <Route path="*" element={<>404 page</>} />
           </Routes>

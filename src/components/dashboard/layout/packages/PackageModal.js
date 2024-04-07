@@ -13,8 +13,8 @@ const PackageModal = ({ showModal, setShowModal, data }) => {
       customerName: "Hamad Almamy",
       startDate: "01/01/2024",
       startTime: "3:07 am",
-      payment: "cash",
-    },
+      payment: "cash"
+    }
   ];
 
   return (
@@ -59,15 +59,13 @@ const PackageModal = ({ showModal, setShowModal, data }) => {
                 <div className="modal_addons_connected">
                   <h5>Addons Connected</h5>
                   <div>
-                    {Array(2)
-                      .fill(0)
-                      .map((e) => {
-                        return (
-                          <div>
-                            Inflatable Boat <span>x{2}</span>
-                          </div>
-                        );
-                      })}
+                    {data?.addons.map((item) => {
+                      return (
+                        <div>
+                          {item?.addon?.name} <span>x{item.quantity}</span>
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
               </div>

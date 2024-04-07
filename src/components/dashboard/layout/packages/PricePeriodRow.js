@@ -69,7 +69,6 @@ const PricePeriodRow = ({
             type="datetime-local"
             id="start_date"
             name="start_date"
-            required
             onChange={(e) => handleChange(e.target.value, "start_date", index)}
           />
         </div>
@@ -79,7 +78,6 @@ const PricePeriodRow = ({
             type="datetime-local"
             id="end_date"
             name="end_date"
-            required
             onChange={(e) => handleChange(e.target.value, "end_date", index)}
           />
         </div>

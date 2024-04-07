@@ -13,7 +13,7 @@ import SubmitButton from "../../../ui/form-elements/SubmitButton";
 import CustomDatePicker from "../../../ui/form-elements/CustomDatePicker";
 import AddonsToConnect from "./AddonsToConnect";
 
-const PackageInfoForm = ({ setForm }) => {
+const PackageInfoForm = ({ setForm, tripPackage }) => {
   const user = useSelector((state) => state.user?.user);
   const subUser = user?.subuser_set?.filter(
     (u) => u.role === user.current_role
@@ -38,6 +38,23 @@ const PackageInfoForm = ({ setForm }) => {
     images_list: Array(3).fill(""),
     addons_list: [addonsInitial]
   });
+
+  useEffect(() => {
+    setFormData({
+      ...formData,
+      yacht: tripPackage?.yacht || "",
+      name: tripPackage?.name || "",
+      description: tripPackage?.description || "",
+      period_of_activation_from: tripPackage?.period_of_activation_from || "",
+      period_of_activation_to: tripPackage?.period_of_activation_to || "",
+      images_list: tripPackage?.images || Array(3).fill(""),
+      addons_list: tripPackage?.addons || [addonsInitial]
+    });
+    if (tripPackage?.images[3]) {
+      setVideoLink(tripPackage?.images[3]);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tripPackage]);
 
   useEffect(() => {
     axios
@@ -140,9 +157,13 @@ const PackageInfoForm = ({ setForm }) => {
     e.preventDefault();
     setLoading(true);
     try {
-      const response = await axios.post("/trip-packages/", {
-        ...formData,
-        video_link: videoLink
+      const response = await axios.request({
+        method: tripPackage ? "PATCH" : "POST",
+        url: `/trip-packages/${tripPackage ? `${tripPackage.id}/` : ""}`,
+        data: {
+          ...formData,
+          video_link: videoLink
+        }
       });
       if (response.status === 201 || response.status === 200) {
         toast.success("Package Info Saved Successfully");
