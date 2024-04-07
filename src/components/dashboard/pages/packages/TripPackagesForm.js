@@ -15,7 +15,6 @@ const TripPackagesForm = () => {
       axios
         .get(`/trip-packages/${id}/`)
         .then((res) => {
-          console.log(res.data);
           setTripPackage(res.data);
         })
         .catch((err) => {

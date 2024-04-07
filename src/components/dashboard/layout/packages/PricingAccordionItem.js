@@ -35,6 +35,7 @@ const PricingAccordionItem = ({ formData, setFormData, day, index }) => {
               index={i}
               key={i}
               day={day}
+              dayIndex={index}
             />
           ))}
         </div>

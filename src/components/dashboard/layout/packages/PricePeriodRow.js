@@ -9,8 +9,11 @@ const PricePeriodRow = ({
   index,
   currentObject,
   setFormData,
-  formData
+  formData,
+  dayIndex
 }) => {
+  console.log(dayIndex);
+  console.log(formData[dayIndex].periods[index]);
   const handleAddRow = () => {
     currentObject.periods.push({
       start_date: "",
@@ -85,8 +88,7 @@ const PricePeriodRow = ({
           <CustomInputWithUnit
             label="Price"
             name={"price"}
-            value={formData[index].price}
-            selectValue={formData[index].price_type}
+            selectValue={formData[dayIndex].periods[index].price_type}
             units={["per person", "per trip"]}
             onChange={(e) => handleChange(e.target.value, "price", index)}
             selectName="price_type"
