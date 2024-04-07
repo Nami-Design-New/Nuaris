@@ -12,7 +12,7 @@ const PackagePriceTime = ({ setForm, tripPackage }) => {
     start_date: "",
     end_date: "",
     price: "",
-    price_type: "per person"
+    price_type: ""
   };
   const formDataInitial = DAYS.map((day, index) => {
     return {

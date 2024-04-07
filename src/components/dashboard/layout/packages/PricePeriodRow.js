@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import deleteIcon from "../../../../assets/images/delete.svg";
 import addIcon from "../../../../assets/images/addRow.svg";
 import CustomInputField from "./../../../ui/form-elements/CustomInputField";
@@ -15,15 +15,16 @@ const PricePeriodRow = ({
   console.log(dayIndex);
   console.log(formData[dayIndex].periods[index]);
   const handleAddRow = () => {
-    currentObject.periods.push({
+    const tempObj = {...currentObject};
+    tempObj.periods.push({
       start_date: "",
       end_date: "",
       price: "",
-      price_type: ""
+      price_type: "",
     });
     setFormData((prev) => [
-      ...prev.filter((obj) => obj.day !== day),
-      currentObject
+      ...prev,
+      tempObj
     ]);
   };
 
@@ -44,6 +45,10 @@ const PricePeriodRow = ({
       return newFormData;
     });
   }
+
+  useEffect(() => {
+    console.log('t', formData);
+  }, [formData])
 
   return (
     <div className="price_period_row">
@@ -68,6 +73,7 @@ const PricePeriodRow = ({
         </div>
         <div className="col-lg-6 col-12 p-2">
           <CustomInputField
+          value={formData[dayIndex]?.periods[index]?.start_date || ""}
             label="Start time"
             type="datetime-local"
             id="start_date"
@@ -77,6 +83,7 @@ const PricePeriodRow = ({
         </div>
         <div className="col-lg-6 col-12 p-2">
           <CustomInputField
+          value={formData[dayIndex]?.periods[index]?.end_date || ""}
             label="End time"
             type="datetime-local"
             id="end_date"
@@ -88,7 +95,7 @@ const PricePeriodRow = ({
           <CustomInputWithUnit
             label="Price"
             name={"price"}
-            selectValue={formData[dayIndex].periods[index].price_type}
+            selectValue={formData[dayIndex]?.periods[index]?.price_type || ""}
             units={["per person", "per trip"]}
             onChange={(e) => handleChange(e.target.value, "price", index)}
             selectName="price_type"
