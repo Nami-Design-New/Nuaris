@@ -26,6 +26,7 @@ import AddNewAddOn from "../components/dashboard/pages/addons/AddNewAddOn";
 
 import TripPackages from "../components/dashboard/pages/packages/TripPackages";
 import TripPackagesForm from "../components/dashboard/pages/packages/TripPackagesForm";
+import Activities from "../components/dashboard/pages/activites/Activities";
 
 const HostDashboard = () => {
   const [sideBarOpen, setSideBarOpen] = useState(false);
@@ -83,6 +84,8 @@ const HostDashboard = () => {
               path="/trip-packages/edit-package/:id"
               element={<TripPackagesForm />}
             />
+            {/* activities */}
+            <Route path="/activities" element={<Activities />} />
             {/* error redirect */}
             <Route path="*" element={<>404 page</>} />
           </Routes>
