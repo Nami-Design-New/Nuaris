@@ -3,30 +3,32 @@ import axios from "../util/axios";
 import { useDispatch } from "react-redux";
 import { Route, Routes } from "react-router-dom";
 import { setPositions } from "../redux/slices/positions";
-
+// layout elements
 import NavBar from "../components/dashboard/layout/NavBar";
 import Footer from "../components/dashboard/layout/Footer";
 import SideBar from "../components/dashboard/layout/SideBar";
 
 import Nssm from "../components/dashboard/pages/Nssm";
-
+// invite use and permissions
 import InviteUser from "../components/dashboard/pages/inviteAndPermissions/InviteUser";
 import CreateUser from "../components/dashboard/pages/inviteAndPermissions/CreateUser";
 import Permissions from "./../components/dashboard/pages/inviteAndPermissions/Permissions";
 import CreatePermission from "../components/dashboard/pages/inviteAndPermissions/CreatePermission";
 import EditPermissions from "../components/dashboard/pages/inviteAndPermissions/EditPermissions";
 import EditUser from "../components/dashboard/pages/inviteAndPermissions/EditUser";
-
+// fleet
 import Fleet from "../components/dashboard/pages/fleet/Fleet";
 import AddYacht from "../components/dashboard/pages/fleet/AddYacht";
 import FleetProfile from "../components/dashboard/pages/fleet/FleetProfile";
-
+// addons
 import AddOns from "../components/dashboard/pages/addons/AddOns";
 import AddNewAddOn from "../components/dashboard/pages/addons/AddNewAddOn";
-
+// trip packages
 import TripPackages from "../components/dashboard/pages/packages/TripPackages";
 import TripPackagesForm from "../components/dashboard/pages/packages/TripPackagesForm";
+// activities
 import Activities from "../components/dashboard/pages/activites/Activities";
+import ActivitiesForm from "../components/dashboard/pages/activites/ActivitiesForm";
 
 const HostDashboard = () => {
   const [sideBarOpen, setSideBarOpen] = useState(false);
@@ -86,6 +88,10 @@ const HostDashboard = () => {
             />
             {/* activities */}
             <Route path="/activities" element={<Activities />} />
+            <Route
+              path="/activities/add-new-activity"
+              element={<ActivitiesForm />}
+            />
             {/* error redirect */}
             <Route path="*" element={<>404 page</>} />
           </Routes>
