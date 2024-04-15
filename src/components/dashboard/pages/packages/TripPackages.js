@@ -62,6 +62,16 @@ const TripPackages = () => {
   const bookingNumber = (item) => {
     return <p className="text-center">{item.booking_number}</p>;
   };
+
+  const priceTemplate = (item) => {
+    return (
+      <div className="price_template">
+        <h4>{item.price} $ </h4>
+        {/* <span>/ {item.trip_package_days[0].periods[0].price || ""}</span> */}
+      </div>
+    );
+  };
+
   const ActionTemplate = (rowData) => {
     return (
       <div className="actions_cell">
@@ -88,15 +98,6 @@ const TripPackages = () => {
   const viewRow = (rowData) => {
     setShowModal(true);
     setRow(rowData);
-  };
-
-  const priceTemplate = (item) => {
-    return (
-      <div className="price_template">
-        <h4>{item.price} $ </h4>
-        <span>/ {item.price_type}</span>
-      </div>
-    );
   };
 
   useEffect(() => {

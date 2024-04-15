@@ -33,7 +33,7 @@ const TripPackagesForm = () => {
       <PackagePriceTime setForm={setForm} tripPackage={tripPackage} />
     );
   } else {
-    formComponent = <PolicyForm setForm={setForm} />;
+    formComponent = <PolicyForm setForm={setForm} tripPackage={tripPackage} />;
   }
   return (
     <section className="section-main-content">

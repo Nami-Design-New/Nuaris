@@ -489,7 +489,7 @@ $transation: 0.3s ease-in-out;
       gap: 8px;
       display: flex;
       button {
-        width: 60px;
+        width: 54px;
         height: 54px;
         border-radius: 12px;
         @include clearInput();
@@ -502,6 +502,7 @@ $transation: 0.3s ease-in-out;
         outline: none;
         border: 1px solid $inputStroke;
         border-radius: 12px;
+        color: $inputHint;
         background: $inputBG;
         padding: 8px 16px;
       }

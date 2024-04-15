@@ -18,6 +18,12 @@ const sidebarData = [
     label: "Addons"
   },
   {
+    path: "activities",
+    icon: require("../../../assets/images/activities.svg").default,
+    alt: "trip-packages-icon",
+    label: "Activities"
+  },
+  {
     path: "trip-packages",
     icon: require("../../../assets/images/TripPackages.svg").default,
     alt: "trip-packages-icon",
