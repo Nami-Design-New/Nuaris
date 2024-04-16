@@ -1,19 +1,22 @@
 import React, { useState } from "react";
 import PageHeader from "../../layout/PageHeader";
 import MainInfoForm from "../../layout/activites/MainInfoForm";
-import LocationAndHoursForm from "../../layout/activites/LocationAndHoursForm";
 import Prices from "../../layout/activites/Prices";
 import Policy from "../../layout/activites/Policy";
+import WorkingHours from "../../layout/activites/WorkingHours";
+import Location from "../../layout/activites/Location";
 
 const ActivitiesForm = () => {
   const [form, setForm] = useState("Main Info");
   let formComponent;
   if (form === "Main Info") {
     formComponent = <MainInfoForm setForm={setForm} />;
-  } else if (form === "Location & Working hours") {
-    formComponent = <LocationAndHoursForm setForm={setForm} />;
+  } else if (form === "Location") {
+    formComponent = <Location setForm={setForm} />;
   } else if (form === "Prices") {
     formComponent = <Prices setForm={setForm} />;
+  } else if (form === "Working hours") {
+    formComponent = <WorkingHours setForm={setForm} />;
   } else {
     formComponent = <Policy setForm={setForm} />;
   }
@@ -25,7 +28,7 @@ const ActivitiesForm = () => {
       <div className="row m-0">
         <div className="addon_form_wrapper">
           <div className="wizard_tabs">
-            {["Main Info", "Location & Working hours", "Prices", "Policy"].map(
+            {["Main Info", "Location", "Working hours", "Prices", "Policy"].map(
               (fo, i) => (
                 <div
                   key={i}

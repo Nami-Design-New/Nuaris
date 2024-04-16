@@ -123,7 +123,7 @@ const MainInfoForm = ({ setForm }) => {
   // ========= end of media ========= //
 
   const handleNext = (e) => {
-    setForm("Location & Working hours");
+    setForm("Location");
   };
 
   const handleSubmit = async (e) => {

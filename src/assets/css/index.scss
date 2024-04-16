@@ -489,7 +489,7 @@ $transation: 0.3s ease-in-out;
       gap: 8px;
       display: flex;
       button {
-        width: 54px;
+        min-width: 54px;
         height: 54px;
         border-radius: 12px;
         @include clearInput();
@@ -829,7 +829,7 @@ $transation: 0.3s ease-in-out;
   }
   .map {
     position: relative;
-    height: 300px;
+    height: 400px;
     width: 100%;
   }
 }
@@ -3284,4 +3284,7 @@ small.error {
   border-radius: 12px;
   background: $inputBG;
   width: 100%;
+}
+.pac-container{
+  z-index: 99999;
 }
