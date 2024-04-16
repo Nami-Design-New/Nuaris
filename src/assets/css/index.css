@@ -3543,4 +3543,91 @@ small.error {
 
 .pac-container {
   z-index: 99999;
+}
+
+.manage_account_side_bar {
+  width: 100%;
+  border-radius: 24px;
+  background: #fff;
+  gap: 24px;
+  display: flex;
+  padding: 24px 16px;
+  flex-direction: column;
+  transition: 0.3s ease-in-out;
+}
+.manage_account_side_bar .navigation_menu {
+  width: 100%;
+  display: flex;
+  gap: 8px;
+  flex-direction: column;
+}
+.manage_account_side_bar .navigation_menu .nav_item {
+  width: 100%;
+}
+.manage_account_side_bar .navigation_menu .nav_item a {
+  border-radius: 16px;
+  padding: 8px;
+  gap: 14px;
+  width: 100%;
+  color: #0d0d0d;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  transition: 0.3s ease-in-out;
+}
+.manage_account_side_bar .navigation_menu .nav_item a .icon {
+  height: 36px;
+  width: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+}
+.manage_account_side_bar .navigation_menu .nav_item a .icon img {
+  height: 20px;
+}
+.manage_account_side_bar .navigation_menu .nav_item a.active, .manage_account_side_bar .navigation_menu .nav_item a:hover {
+  background: #f8f8f8;
+}
+.manage_account_side_bar .navigation_menu .accordion-item {
+  border: 0 !important;
+}
+.manage_account_side_bar .navigation_menu .accordion-button {
+  border-radius: 16px;
+  padding: 8px;
+  background: transparent;
+  gap: 14px;
+  width: 100%;
+  color: #0d0d0d;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  transition: 0.3s ease-in-out;
+}
+.manage_account_side_bar .navigation_menu .accordion-button:hover {
+  background: #f8f8f8;
+}
+.manage_account_side_bar .navigation_menu .accordion-button .icon {
+  height: 36px;
+  width: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+}
+.manage_account_side_bar .navigation_menu .accordion-button .icon img {
+  height: 20px;
+}
+.manage_account_side_bar .navigation_menu .accordion-button h6 {
+  line-height: 20px;
+  color: #0d0d0d;
+  margin-bottom: 0px;
+}
+.manage_account_side_bar .navigation_menu .accordion-button span {
+  font-size: 12px;
+  color: #777777;
+  line-height: 14px;
+}
+.manage_account_side_bar .navigation_menu .accordion-button:not(.collapsed) {
+  background-color: #f8f8f8;
 }/*# sourceMappingURL=index.css.map */

@@ -29,6 +29,8 @@ import TripPackagesForm from "../components/dashboard/pages/packages/TripPackage
 // activities
 import Activities from "../components/dashboard/pages/activites/Activities";
 import ActivitiesForm from "../components/dashboard/pages/activites/ActivitiesForm";
+// mange account
+import ManageAccount from "../components/dashboard/pages/manage-account/ManageAccount";
 
 const HostDashboard = () => {
   const [sideBarOpen, setSideBarOpen] = useState(false);
@@ -92,6 +94,8 @@ const HostDashboard = () => {
               path="/activities/add-new-activity"
               element={<ActivitiesForm />}
             />
+            {/* manage account */}
+            <Route path="/manage-account" element={<ManageAccount />} />
             {/* error redirect */}
             <Route path="*" element={<>404 page</>} />
           </Routes>
