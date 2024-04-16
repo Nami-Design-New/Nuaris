@@ -3285,6 +3285,90 @@ small.error {
   background: $inputBG;
   width: 100%;
 }
-.pac-container{
+.pac-container {
   z-index: 99999;
+}
+// manage account
+.manage_account_side_bar {
+  width: 100%;
+  border-radius: 24px;
+  background: $white;
+  gap: 24px;
+  display: flex;
+  padding: 24px 16px;
+  flex-direction: column;
+  transition: $transation;
+  .navigation_menu {
+    width: 100%;
+    display: flex;
+    gap: 8px;
+    flex-direction: column;
+    .nav_item {
+      width: 100%;
+      a {
+        border-radius: 16px;
+        padding: 8px;
+        gap: 14px;
+        width: 100%;
+        color: $dark;
+        display: flex;
+        align-items: center;
+        white-space: nowrap;
+        transition: $transation;
+        .icon {
+          height: 36px;
+          width: 36px;
+          @include centerFlex();
+          border-radius: 12px;
+          img {
+            height: 20px;
+          }
+        }
+        &.active,
+        &:hover {
+          background: $inputBG;
+        }
+      }
+    }
+    .accordion-item {
+      border: 0 !important;
+    }
+    .accordion-button {
+      border-radius: 16px;
+      padding: 8px;
+      background: transparent;
+      gap: 14px;
+      width: 100%;
+      color: $dark;
+      display: flex;
+      align-items: center;
+      white-space: nowrap;
+      transition: $transation;
+      &:hover {
+        background: $inputBG;
+      }
+      .icon {
+        height: 36px;
+        width: 36px;
+        @include centerFlex();
+        border-radius: 12px;
+        img {
+          height: 20px;
+        }
+      }
+      h6 {
+        line-height: 20px;
+        color: $dark;
+        margin-bottom: 0px;
+      }
+      span {
+        font-size: 12px;
+        color: $gray;
+        line-height: 14px;
+      }
+      &:not(.collapsed) {
+        background-color: $inputBG;
+      }
+    }
+  }
 }
