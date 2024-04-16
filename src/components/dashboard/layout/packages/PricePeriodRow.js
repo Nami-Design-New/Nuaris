@@ -9,34 +9,43 @@ const PricePeriodRow = ({
   currentObject,
   setFormData,
   formData,
-  dayIndex
+  dayIndex,
 }) => {
   const handleAddRow = () => {
-    const tempObj = {...currentObject};
+    const tempObj = { ...currentObject };
     tempObj.periods.push({
       start_date: "",
       end_date: "",
       price: "",
       price_type: "",
     });
-    setFormData((prev) => [
-      ...prev,
-      tempObj
-    ]);
+    setFormData((prev) => {
+      return prev.map((obj) => {
+        if (obj.day === day) {
+          return tempObj;
+        }
+        return obj;
+      });
+    });
   };
 
   const handleDeleteRow = () => {
-    currentObject.periods.splice(index, 1);
-    setFormData((prev) => [
-      ...prev.filter((obj) => obj.day !== day),
-      currentObject
-    ]);
+    const newObject = { ...currentObject };
+    newObject.periods.splice(index, 1);
+    setFormData((prev) => {
+      return prev.map((obj) => {
+        if (obj.day === day) {
+          return newObject;
+        }
+        return obj;
+      });
+    });
   };
 
   function handleChange(value, key, index) {
-    const tempObj = {...currentObject};
+    const tempObj = { ...currentObject };
     tempObj.periods[index][key] = value;
-    
+
     // prevent settings the data in all days indexes
     const newFormData = formData.map((obj) => {
       if (obj.day === day) {
@@ -44,7 +53,7 @@ const PricePeriodRow = ({
       }
       return obj;
     });
-    
+
     setFormData(newFormData);
   }
 
@@ -77,8 +86,8 @@ const PricePeriodRow = ({
             id="start_date"
             name="start_date"
             onChange={(e) => {
-              console.log(e.target)
-              handleChange(e.target.value, "start_date", index)
+              console.log(e.target);
+              handleChange(e.target.value, "start_date", index);
             }}
           />
         </div>

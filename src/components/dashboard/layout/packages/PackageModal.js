@@ -1,21 +1,54 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Form, Modal } from "react-bootstrap";
 import CountUp from "react-countup";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import StarsRate from "../../../ui/StarsRate";
+import axios from "./../../../../util/axios";
 import packageImg from "../../../../assets/images/package.jpg";
+import { toast } from "react-toastify";
 
-const PackageModal = ({ showModal, setShowModal, data }) => {
+const PackageModal = ({ showModal, setShowModal, data, setPackegesData }) => {
+  const [status, setStatus] = useState(false);
+  useEffect(() => {
+    setStatus(data?.status === "active" ? true : false);
+  }, [data?.status]);
   const tableData = [
     {
       id: "#51465",
       customerName: "Hamad Almamy",
       startDate: "01/01/2024",
       startTime: "3:07 am",
-      payment: "cash"
-    }
+      payment: "cash",
+    },
   ];
+
+  const handleSwitchStatus = async (e) => {
+    setStatus(e.target.checked);
+    const newStatus = e.target.checked ? "active" : "inactive";
+    const res = await axios.patch(`/trip-packages/${data?.id}/`, {
+      status: newStatus,
+    });
+    if (res.status === 200) {
+      setPackegesData((prevData) => {
+        const newData = prevData.map((item) => {
+          if (item?.id === data?.id) {
+            return {
+              ...item,
+              status: newStatus,
+            };
+          }
+          return item;
+        });
+        return newData;
+      });
+      toast.success(
+        newStatus === "active" ? "Package Activated" : "Package Deactivated"
+      );
+    } else {
+      toast.error("Something went wrong");
+    }
+  };
 
   return (
     <Modal
@@ -41,10 +74,11 @@ const PackageModal = ({ showModal, setShowModal, data }) => {
               </div>
               <div className="about">
                 <div className="header">
-                  <h3>{data?.name}</h3>
+                  <h3 className="m-0">{data?.name}</h3>
                   <Form.Check
                     type="switch"
-                    onClick={() => console.log("switch")}
+                    checked={status}
+                    onChange={handleSwitchStatus}
                   />
                 </div>
                 <StarsRate rate={data?.overall_rate || 2} />

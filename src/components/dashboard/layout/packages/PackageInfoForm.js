@@ -26,7 +26,7 @@ const PackageInfoForm = ({ setForm, tripPackage }) => {
 
   const addonsInitial = {
     addon: "",
-    quantity: ""
+    quantity: "",
   };
   const [formData, setFormData] = useState({
     sub_user: subUser,
@@ -36,7 +36,7 @@ const PackageInfoForm = ({ setForm, tripPackage }) => {
     period_of_activation_to: "",
     yacht: "",
     images_list: Array(3).fill(""),
-    addons_list: [addonsInitial]
+    addons_list: [addonsInitial],
   });
 
   useEffect(() => {
@@ -48,7 +48,7 @@ const PackageInfoForm = ({ setForm, tripPackage }) => {
       period_of_activation_from: tripPackage?.period_of_activation_from || "",
       period_of_activation_to: tripPackage?.period_of_activation_to || "",
       images_list: tripPackage?.images || Array(3).fill(""),
-      addons_list: tripPackage?.addons || [addonsInitial]
+      addons_list: tripPackage?.addons || [addonsInitial],
     });
     if (tripPackage?.images[3]) {
       setVideoLink(tripPackage?.images[3]);
@@ -89,7 +89,7 @@ const PackageInfoForm = ({ setForm, tripPackage }) => {
     try {
       const blob = file.slice(0, file.size, file.type);
       const newFile = new File([blob], `${Date.now()}${file.name.slice(-3)}`, {
-        type: file.type
+        type: file.type,
       });
       const data = await uploadFile(newFile, S3Config);
       return data.location;
@@ -107,7 +107,7 @@ const PackageInfoForm = ({ setForm, tripPackage }) => {
         images_list[i] = "";
         return {
           ...prev,
-          images_list: images_list
+          images_list: images_list,
         };
       });
       return;
@@ -123,7 +123,7 @@ const PackageInfoForm = ({ setForm, tripPackage }) => {
         images_list[i] = link;
         return {
           ...prev,
-          images_list: images_list
+          images_list: images_list,
         };
       });
     } catch (error) {
@@ -162,8 +162,8 @@ const PackageInfoForm = ({ setForm, tripPackage }) => {
         url: `/trip-packages/${tripPackage ? `${tripPackage.id}/` : ""}`,
         data: {
           ...formData,
-          video_link: videoLink
-        }
+          video_link: videoLink,
+        },
       });
       if (response.status === 201 || response.status === 200) {
         toast.success("Package Info Saved Successfully");
@@ -247,7 +247,7 @@ const PackageInfoForm = ({ setForm, tripPackage }) => {
             }}
             options={yachts?.map((yacht) => ({
               name: yacht.name_en,
-              value: yacht.id
+              value: yacht.id,
             }))}
           />
         </div>
@@ -261,7 +261,7 @@ const PackageInfoForm = ({ setForm, tripPackage }) => {
                 onChange={(e) =>
                   setFormData({
                     ...formData,
-                    period_of_activation_from: e.target.value
+                    period_of_activation_from: e.target.value,
                   })
                 }
               />
@@ -273,7 +273,7 @@ const PackageInfoForm = ({ setForm, tripPackage }) => {
                 onChange={(e) =>
                   setFormData({
                     ...formData,
-                    period_of_activation_to: e.target.value
+                    period_of_activation_to: e.target.value,
                   })
                 }
               />

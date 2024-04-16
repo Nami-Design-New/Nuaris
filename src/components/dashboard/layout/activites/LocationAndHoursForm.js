@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import MapLocationField from "../../../ui/form-elements/MapLocationField";
 import MapModal from "../../../ui/map-modal/MapModal";
 import DaysAccordion from "../../../ui/DaysAccordion";
@@ -14,26 +14,35 @@ const LocationAndHoursForm = ({ setForm }) => {
     e.preventDefault();
     setForm("Prices");
   };
-
   const handleBack = (e) => {
     e.preventDefault();
     setForm("Main Info");
   };
-
   const formDataInitial = DAYS.map((day, index) => {
     return {
       day,
       hours: [{ from: "00:00", to: "00:00" }],
       selected: false,
-      index
+      index,
     };
   });
   const [timingData, setTimingData] = useState(formDataInitial);
-  const [formData, setFormData] = useState({
+  const [LocationPoint, setLocationPoint] = useState({
     lat: 30.04442,
     lng: 31.235712,
-    ...timingData
   });
+
+  const [formData, setFormData] = useState({
+    location_point: LocationPoint,
+    location_name: serchedPlace,
+    ...timingData,
+  });
+
+  useEffect(() => {
+    setFormData((prev) => {
+      return { ...prev, location_name: serchedPlace };
+    });
+  }, [serchedPlace]);
 
   return (
     <form className="form-ui">
@@ -69,9 +78,9 @@ const LocationAndHoursForm = ({ setForm }) => {
       <MapModal
         showModal={showModal}
         setShowModal={setShowModal}
-        setFormData={setFormData}
+        setFormData={setLocationPoint}
         title="Company Location"
-        formData={formData}
+        formData={LocationPoint}
         setSerchedPlace={setSerchedPlace}
       />
     </form>

@@ -3137,10 +3137,7 @@ small.error {
 .mdl {
   .form-switch {
     padding: 0;
-    display: flex;
-    flex-direction: row-reverse;
-    justify-content: space-between;
-    align-items: center;
+    @include centerFlex();
     label {
       color: $main;
       font-size: 16px;
@@ -3151,6 +3148,7 @@ small.error {
       width: 48px;
       height: 24px;
       cursor: pointer;
+      margin: 0 !important;
     }
   }
   &.trip_packages .info {
@@ -3168,6 +3166,7 @@ small.error {
     }
   }
   .header {
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -3188,6 +3187,7 @@ small.error {
     }
   }
   .about {
+    width: 100%;
     flex: unset !important;
   }
   .stars_rate {
@@ -3278,4 +3278,10 @@ small.error {
   select {
     background: $white !important;
   }
+}
+.what_included {
+  padding: 16px;
+  border-radius: 12px;
+  background: $inputBG;
+  width: 100%;
 }

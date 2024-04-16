@@ -2,16 +2,17 @@ import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { uploadFile } from "react-s3";
 import { S3Config } from "../../../../constants";
+import { Form } from "react-bootstrap";
+import { useSelector } from "react-redux";
 import fav from "../../../../assets/images/fav.png";
 import CustomFileUpload from "./../../../ui/form-elements/CustomFileUpload";
 import CustomInputField from "./../../../ui/form-elements/CustomInputField";
 import CustomSelectField from "./../../../ui/form-elements/CustomSelectField";
 import CommentField from "../../../ui/form-elements/CommentField";
-import axios from "./../../../../util/axios";
-import { useSelector } from "react-redux";
 import Vat from "../Vat";
-import { Form } from "react-bootstrap";
+import axios from "./../../../../util/axios";
 import SubmitButton from "../../../ui/form-elements/SubmitButton";
+import WhatIncluded from "./WhatIncluded";
 
 const MainInfoForm = ({ setForm }) => {
   const user = useSelector((state) => state.user?.user);
@@ -19,19 +20,22 @@ const MainInfoForm = ({ setForm }) => {
     (u) => u.role === user.current_role
   )[0]?.id;
   const [videoLink, setVideoLink] = useState("");
+
   const [loading, setLoading] = useState(false);
   const [fileLoading, setFileLoading] = useState(false);
   const [hasParentYacht, setHasParentYacht] = useState(false);
   const [yachts, setYachts] = useState([]);
+
   const [formData, setFormData] = useState({
+    images: Array(3).fill(""),
     name: "",
-    description: "",
     category: "",
-    yacht: "",
-    need_to_know: "",
+    description: "",
     capacity: "",
     quantity: "",
-    images_list: Array(3).fill("")
+    restrictions: "",
+    yacht: "",
+    vat: null,
   });
 
   useEffect(() => {
@@ -44,6 +48,7 @@ const MainInfoForm = ({ setForm }) => {
         console.log(err);
       });
   }, [subUser]);
+
   // ========= media ========== //
   const handleUploadMedia = async (file) => {
     if (fileLoading) {
@@ -53,7 +58,7 @@ const MainInfoForm = ({ setForm }) => {
     try {
       const blob = file.slice(0, file.size, file.type);
       const newFile = new File([blob], `${Date.now()}${file.name.slice(-3)}`, {
-        type: file.type
+        type: file.type,
       });
       const data = await uploadFile(newFile, S3Config);
       return data.location;
@@ -67,11 +72,11 @@ const MainInfoForm = ({ setForm }) => {
   const handleImagesChange = async (e, i) => {
     if (e?.length === 0) {
       setFormData((prev) => {
-        const images_list = [...prev.images_list];
-        images_list[i] = "";
+        const images = [...prev.images];
+        images[i] = "";
         return {
           ...prev,
-          images_list: images_list
+          images: images,
         };
       });
       return;
@@ -83,11 +88,11 @@ const MainInfoForm = ({ setForm }) => {
       const file = e[0].file;
       const link = await handleUploadMedia(file);
       setFormData((prev) => {
-        const images_list = [...prev.images_list];
-        images_list[i] = link;
+        const images = [...prev.images];
+        images[i] = link;
         return {
           ...prev,
-          images_list: images_list
+          images: images,
         };
       });
     } catch (error) {
@@ -116,11 +121,31 @@ const MainInfoForm = ({ setForm }) => {
     }
   };
   // ========= end of media ========= //
+
   const handleNext = (e) => {
     setForm("Location & Working hours");
   };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      const reponse = await axios.post("/activities/", formData);
+      if (reponse.status === 201 || reponse.status === 200) {
+        toast.success("Activity Created Successfully");
+        setForm("Location & Working hours");
+      } else {
+        toast.error("Something went wrong");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      toast.error("Something went wrong");
+    } finally {
+      setLoading(false);
+    }
+  };
   return (
-    <form className="form-ui">
+    <form className="form-ui" onSubmit={handleSubmit}>
       <div className="row m-0">
         <div className="col-12 p-2">
           <h6 className="form_title">Package Info</h6>
@@ -141,9 +166,7 @@ const MainInfoForm = ({ setForm }) => {
                       i === 0 ? '<label class="mainImg">Main Image</label>' : ""
                     } <img src=${fav} alt="fav"/>`}
                     pannelRatio=".88"
-                    files={
-                      formData.images_list[i] ? [formData.images_list[i]] : null
-                    }
+                    files={formData.images[i] ? [formData.images[i]] : null}
                     value
                     allowMultiple={false}
                     onUpdateFiles={(e) => handleImagesChange(e, i)}
@@ -177,7 +200,7 @@ const MainInfoForm = ({ setForm }) => {
               setFormData((prev) => {
                 return {
                   ...prev,
-                  name: e.target.value
+                  name: e.target.value,
                 };
               })
             }
@@ -194,27 +217,19 @@ const MainInfoForm = ({ setForm }) => {
               setFormData((prev) => {
                 return {
                   ...prev,
-                  category: e.target.value
+                  category: e.target.value,
                 };
               })
             }
             options={[
               {
-                name: "All",
-                value: "all"
+                name: "Shore activities",
+                value: "shore",
               },
               {
-                name: "Yacht",
-                value: "yacht"
+                name: "Water activities",
+                value: "water",
               },
-              {
-                name: "Cabin",
-                value: "cabin"
-              },
-              {
-                name: "Cruise",
-                value: "cruise"
-              }
             ]}
           />
         </div>
@@ -243,7 +258,7 @@ const MainInfoForm = ({ setForm }) => {
               setFormData((prev) => {
                 return {
                   ...prev,
-                  capacity: e.target.value
+                  capacity: e.target.value,
                 };
               })
             }
@@ -262,20 +277,24 @@ const MainInfoForm = ({ setForm }) => {
               setFormData((prev) => {
                 return {
                   ...prev,
-                  quantity: e.target.value
+                  quantity: e.target.value,
                 };
               })
             }
           />
         </div>
+        {/* whats included */}
+        <div className="col-12 p-2">
+          <WhatIncluded />
+        </div>
         {/* Need to know & restrictions about activity */}
         <div className="col-12 p-2">
           <CommentField
-            htmlFor="need_to_know"
+            htmlFor="restrictions"
             label="Need to know & restrictions about activity"
             id="description"
             placeholder="Write here"
-            value={formData.need_to_know}
+            value={formData.restrictions}
             formData={formData}
             setFormData={setFormData}
           />
@@ -300,7 +319,7 @@ const MainInfoForm = ({ setForm }) => {
             }}
             options={yachts?.map((yacht) => ({
               name: yacht.name_en,
-              value: yacht.id
+              value: yacht.id,
             }))}
           />
         </div>
