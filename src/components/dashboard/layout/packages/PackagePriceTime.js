@@ -9,17 +9,17 @@ const PackagePriceTime = ({ setForm, tripPackage }) => {
   const [loading, setLoading] = useState(false);
   const packageId = sessionStorage.getItem("package_id");
   const periodInitial = {
-    start_date: "",
-    end_date: "",
+    start_time: "",
+    end_time: "",
     price: "",
-    price_type: ""
+    price_type: "",
   };
   const formDataInitial = DAYS.map((day, index) => {
     return {
       day,
       periods: [periodInitial],
       selected: false,
-      index
+      index,
     };
   });
   const [formData, setFormData] = useState(formDataInitial);
@@ -30,7 +30,7 @@ const PackagePriceTime = ({ setForm, tripPackage }) => {
         return {
           ...e,
           selected: true,
-          index: formData.findIndex((obj) => obj.day === e.day)
+          index: formData.findIndex((obj) => obj.day === e.day),
         };
       });
       setFormData((prevFormData) => {
@@ -62,11 +62,11 @@ const PackagePriceTime = ({ setForm, tripPackage }) => {
       const reqData = filteredFormData.map((obj) => {
         return {
           day: obj.day,
-          periods: obj.periods
+          periods: obj.periods,
         };
       });
       const dictionary = {
-        trip_package_days: reqData
+        trip_package_days: reqData,
       };
       const response = await axios.patch(
         `/trip-packages/${packageId}/`,

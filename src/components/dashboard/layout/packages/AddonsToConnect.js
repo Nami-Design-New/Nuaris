@@ -27,14 +27,15 @@ const AddonsToConnect = ({ formData, setFormData, addons, addonsInitial }) => {
               <CustomSelectField
                 id={`addon-${index}`}
                 options={addons.map((addon) => ({
-                  name: addon.name
+                  name: addon.name,
+                  value: addon.name,
                 }))}
-                value={addon.addon}
+                value={addons?.find((ad) => ad.id === addon.addon)?.name}
                 onChange={(e) => {
                   const updatedAddonsList = [...formData.addons_list];
-                  updatedAddonsList[index].addon = addons.find(
+                  updatedAddonsList[index].addon = addons?.find(
                     (ad) => ad.name === e.target.value
-                  ).id;
+                  )?.id;
                   setFormData({ ...formData, addons_list: updatedAddonsList });
                 }}
               />

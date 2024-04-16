@@ -66,8 +66,8 @@ const TripPackages = () => {
   const priceTemplate = (item) => {
     return (
       <div className="price_template">
-        <h4>{item.price} $ </h4>
-        {/* <span>/ {item.trip_package_days[0].periods[0].price || ""}</span> */}
+        <h4>{item.trip_package_days[0].periods[0].price} $ </h4>
+        <span>/ {item.trip_package_days[0].periods[0].price_type}</span>
       </div>
     );
   };
