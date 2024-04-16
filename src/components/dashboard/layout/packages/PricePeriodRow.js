@@ -9,43 +9,55 @@ const PricePeriodRow = ({
   currentObject,
   setFormData,
   formData,
-  dayIndex
+  dayIndex,
 }) => {
   const handleAddRow = () => {
-    const tempObj = {...currentObject};
-    tempObj.periods.push({
-      start_date: "",
-      end_date: "",
-      price: "",
-      price_type: "",
-    });
-    setFormData((prev) => [
-      ...prev,
-      tempObj
-    ]);
-  };
-
-  const handleDeleteRow = () => {
-    currentObject.periods.splice(index, 1);
-    setFormData((prev) => [
-      ...prev.filter((obj) => obj.day !== day),
-      currentObject
-    ]);
-  };
-
-  function handleChange(value, key, index) {
-    const tempObj = {...currentObject};
-    tempObj.periods[index][key] = value;
-    
-    // prevent settings the data in all days indexes
-    const newFormData = formData.map((obj) => {
-      if (obj.day === day) {
-        return tempObj;
+    const newFormData = formData.map((obj, idx) => {
+      if (idx === dayIndex) {
+        return {
+          ...obj,
+          periods: [
+            ...obj.periods,
+            {
+              start_time: "",
+              end_time: "",
+              price: "",
+              price_type: "",
+            },
+          ],
+        };
       }
       return obj;
     });
-    
     setFormData(newFormData);
+  };
+
+  const handleDeleteRow = () => {
+    const newFormData = formData.map((obj, idx) => {
+      if (idx === dayIndex) {
+        return {
+          ...obj,
+          periods: obj.periods.filter((_, idx) => idx !== index),
+        };
+      }
+      return obj;
+    });
+    setFormData(newFormData);
+  };
+
+  function handleChange(value, key, index) {
+    setFormData((prevFormData) => {
+      const newFormData = [...prevFormData];
+      const currentDayObject = { ...newFormData[dayIndex] };
+      const currentPeriods = [...currentDayObject.periods];
+      currentPeriods[index] = {
+        ...currentPeriods[index],
+        [key]: value,
+      };
+      currentDayObject.periods = currentPeriods;
+      newFormData[dayIndex] = currentDayObject;
+      return newFormData;
+    });
   }
 
   return (
@@ -71,25 +83,25 @@ const PricePeriodRow = ({
         </div>
         <div className="col-lg-6 col-12 p-2">
           <CustomInputField
-            value={formData[dayIndex]?.periods[index]?.start_date || ""}
+            value={formData[dayIndex]?.periods[index]?.start_time || ""}
             label="Start time"
-            type="datetime-local"
-            id="start_date"
-            name="start_date"
+            type="time"
+            id="start_time"
+            name="start_time"
             onChange={(e) => {
-              console.log(e.target)
-              handleChange(e.target.value, "start_date", index)
+              console.log(e.target);
+              handleChange(e.target.value, "start_time", index);
             }}
           />
         </div>
         <div className="col-lg-6 col-12 p-2">
           <CustomInputField
-            value={formData[dayIndex]?.periods[index]?.end_date || ""}
+            value={formData[dayIndex]?.periods[index]?.end_time || ""}
             label="End time"
-            type="datetime-local"
-            id="end_date"
-            name="end_date"
-            onChange={(e) => handleChange(e.target.value, "end_date", index)}
+            type="time"
+            id="end_time"
+            name="end_time"
+            onChange={(e) => handleChange(e.target.value, "end_time", index)}
           />
         </div>
         <div className="col-12 p-2">

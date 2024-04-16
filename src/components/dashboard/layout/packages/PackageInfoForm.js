@@ -12,6 +12,7 @@ import CommentField from "../../../ui/form-elements/CommentField";
 import SubmitButton from "../../../ui/form-elements/SubmitButton";
 import CustomDatePicker from "../../../ui/form-elements/CustomDatePicker";
 import AddonsToConnect from "./AddonsToConnect";
+import ActivitiesToConnect from "./ActivitiesToConnect";
 
 const PackageInfoForm = ({ setForm, tripPackage }) => {
   const user = useSelector((state) => state.user?.user);
@@ -20,14 +21,20 @@ const PackageInfoForm = ({ setForm, tripPackage }) => {
   )[0]?.id;
   const [yachts, setYachts] = useState([]);
   const [addons, setAddons] = useState([]);
+  const [activities, setActivities] = useState([]);
   const [loading, setLoading] = useState(false);
   const [videoLink, setVideoLink] = useState("");
   const [fileLoading, setFileLoading] = useState(false);
 
   const addonsInitial = {
-    addon: "",
-    quantity: ""
+    addon: null,
+    quantity: "",
   };
+  const activitiesInitial = {
+    activity: null,
+    quantity: "",
+  };
+
   const [formData, setFormData] = useState({
     sub_user: subUser,
     name: "",
@@ -36,7 +43,8 @@ const PackageInfoForm = ({ setForm, tripPackage }) => {
     period_of_activation_to: "",
     yacht: "",
     images_list: Array(3).fill(""),
-    addons_list: [addonsInitial]
+    activities_list: [activitiesInitial],
+    addons_list: [addonsInitial],
   });
 
   useEffect(() => {
@@ -48,7 +56,20 @@ const PackageInfoForm = ({ setForm, tripPackage }) => {
       period_of_activation_from: tripPackage?.period_of_activation_from || "",
       period_of_activation_to: tripPackage?.period_of_activation_to || "",
       images_list: tripPackage?.images || Array(3).fill(""),
-      addons_list: tripPackage?.addons || [addonsInitial]
+      addons_list:
+        tripPackage?.addons?.length > 0
+          ? tripPackage?.addons?.map((a) => ({
+              addon: a?.addon?.id,
+              quantity: a?.quantity,
+            }))
+          : [addonsInitial],
+      activities_list:
+        tripPackage?.activities?.length > 0
+          ? tripPackage?.activities?.map((a) => ({
+              activity: a.activity.id,
+              quantity: a.quantity,
+            }))
+          : [activitiesInitial],
     });
     if (tripPackage?.images[3]) {
       setVideoLink(tripPackage?.images[3]);
@@ -73,6 +94,14 @@ const PackageInfoForm = ({ setForm, tripPackage }) => {
       .catch((err) => {
         console.log(err);
       });
+    axios
+      .get(`/activities/?sub_user=${subUser}&page_size=1000`)
+      .then((res) => {
+        setActivities(res?.data?.results);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, [subUser]);
 
   const handleNext = (e) => {
@@ -89,7 +118,7 @@ const PackageInfoForm = ({ setForm, tripPackage }) => {
     try {
       const blob = file.slice(0, file.size, file.type);
       const newFile = new File([blob], `${Date.now()}${file.name.slice(-3)}`, {
-        type: file.type
+        type: file.type,
       });
       const data = await uploadFile(newFile, S3Config);
       return data.location;
@@ -107,7 +136,7 @@ const PackageInfoForm = ({ setForm, tripPackage }) => {
         images_list[i] = "";
         return {
           ...prev,
-          images_list: images_list
+          images_list: images_list,
         };
       });
       return;
@@ -123,7 +152,7 @@ const PackageInfoForm = ({ setForm, tripPackage }) => {
         images_list[i] = link;
         return {
           ...prev,
-          images_list: images_list
+          images_list: images_list,
         };
       });
     } catch (error) {
@@ -162,8 +191,8 @@ const PackageInfoForm = ({ setForm, tripPackage }) => {
         url: `/trip-packages/${tripPackage ? `${tripPackage.id}/` : ""}`,
         data: {
           ...formData,
-          video_link: videoLink
-        }
+          video_link: videoLink,
+        },
       });
       if (response.status === 201 || response.status === 200) {
         toast.success("Package Info Saved Successfully");
@@ -247,7 +276,7 @@ const PackageInfoForm = ({ setForm, tripPackage }) => {
             }}
             options={yachts?.map((yacht) => ({
               name: yacht.name_en,
-              value: yacht.id
+              value: yacht.id,
             }))}
           />
         </div>
@@ -261,7 +290,7 @@ const PackageInfoForm = ({ setForm, tripPackage }) => {
                 onChange={(e) =>
                   setFormData({
                     ...formData,
-                    period_of_activation_from: e.target.value
+                    period_of_activation_from: e.target.value,
                   })
                 }
               />
@@ -273,7 +302,7 @@ const PackageInfoForm = ({ setForm, tripPackage }) => {
                 onChange={(e) =>
                   setFormData({
                     ...formData,
-                    period_of_activation_to: e.target.value
+                    period_of_activation_to: e.target.value,
                   })
                 }
               />
@@ -297,6 +326,12 @@ const PackageInfoForm = ({ setForm, tripPackage }) => {
           addons={addons}
           setFormData={setFormData}
           addonsInitial={addonsInitial}
+        />
+        <ActivitiesToConnect
+          formData={formData}
+          activities={activities}
+          setFormData={setFormData}
+          activitiesInitial={activitiesInitial}
         />
         <div className="col-12 p-2 pt-4 d-flex gap-3">
           <SubmitButton

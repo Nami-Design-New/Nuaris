@@ -1,13 +1,9 @@
-import React, { useState } from "react";
-import MapLocationField from "../../../ui/form-elements/MapLocationField";
-import MapModal from "../../../ui/map-modal/MapModal";
-import DaysAccordion from "../../../ui/DaysAccordion";
+import React, { useEffect, useState } from "react";
 import { DAYS } from "../../../../constants";
+import DaysAccordion from "../../../ui/DaysAccordion";
 import SubmitButton from "../../../ui/form-elements/SubmitButton";
 
-const LocationAndHoursForm = ({ setForm }) => {
-  const [showModal, setShowModal] = useState(false);
-  const [serchedPlace, setSerchedPlace] = useState("Search on Map");
+const WorkingHours = ({ setForm }) => {
   const [loading, setLoading] = useState(false);
 
   const handleNext = (e) => {
@@ -17,7 +13,7 @@ const LocationAndHoursForm = ({ setForm }) => {
 
   const handleBack = (e) => {
     e.preventDefault();
-    setForm("Main Info");
+    setForm("Location");
   };
 
   const formDataInitial = DAYS.map((day, index) => {
@@ -25,29 +21,20 @@ const LocationAndHoursForm = ({ setForm }) => {
       day,
       hours: [{ from: "00:00", to: "00:00" }],
       selected: false,
-      index
+      index,
     };
   });
+
   const [timingData, setTimingData] = useState(formDataInitial);
   const [formData, setFormData] = useState({
-    lat: 30.04442,
-    lng: 31.235712,
-    ...timingData
+    ...timingData,
   });
 
   return (
     <form className="form-ui">
       <div className="row m-0">
         <div className="col-12 p-2">
-          <h6 className="form_title">Location & Working hours</h6>
-        </div>
-        {/* location */}
-        <div className="col-12 p-2">
-          <MapLocationField
-            htmlFor="companyLocationOnMap"
-            name={serchedPlace}
-            setShowModal={setShowModal}
-          />
+          <h6 className="form_title">Working hours</h6>
         </div>
         <div className="col-12 p-2">
           <DaysAccordion formData={timingData} setFormData={setTimingData} />
@@ -66,16 +53,8 @@ const LocationAndHoursForm = ({ setForm }) => {
           </button>
         </div>
       </div>
-      <MapModal
-        showModal={showModal}
-        setShowModal={setShowModal}
-        setFormData={setFormData}
-        title="Company Location"
-        formData={formData}
-        setSerchedPlace={setSerchedPlace}
-      />
     </form>
   );
 };
 
-export default LocationAndHoursForm;
+export default WorkingHours;

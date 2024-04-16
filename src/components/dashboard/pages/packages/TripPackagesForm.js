@@ -35,6 +35,7 @@ const TripPackagesForm = () => {
   } else {
     formComponent = <PolicyForm setForm={setForm} tripPackage={tripPackage} />;
   }
+
   return (
     <section className="section-main-content">
       <header className="flex-header">

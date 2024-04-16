@@ -16,19 +16,28 @@ const TimeRow = ({ setFormData, currentObject, index, day }) => {
     if (currentObject.hours.length < 3) {
       const newObject = { ...currentObject };
       newObject.hours.push({ from: "00:00", to: "00:00" });
-      setFormData((prev) => [
-        ...prev.filter((obj) => obj.day !== day),
-        newObject
-      ]);
+      setFormData((prev) => {
+        return prev.map((obj) => {
+          if (obj.day === day) {
+            return newObject;
+          }
+          return obj;
+        });
+      });
     }
   }
 
   function handleDeleteCUrrentHours() {
-    currentObject.hours.splice(index, 1);
-    setFormData((prev) => [
-      ...prev.filter((obj) => obj.day !== day),
-      currentObject
-    ]);
+    const newObject = { ...currentObject };
+    newObject.hours.splice(index, 1);
+    setFormData((prev) => {
+      return prev.map((obj) => {
+        if (obj.day === day) {
+          return newObject;
+        }
+        return obj;
+      });
+    });
   }
 
   return (

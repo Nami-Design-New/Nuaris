@@ -14,21 +14,21 @@ const Prices = ({ setForm }) => {
     price: "",
     type: "",
     minimum_price: "",
-    dates: [new Date()]
+    dates: [new Date()],
   };
   const initialPricesData = {
     period: 4,
     period_type: "",
     price: "",
     extra_hour_price: "",
-    minimum_price: ""
+    minimum_price: "",
   };
   const initialData = {
     price: "",
     price_type: "",
     min_price: "",
     prices: [initialPricesData],
-    season_prices: [seasonCardInitialData]
+    season_prices: [seasonCardInitialData],
   };
   const [formData, setFormData] = useState(initialData);
   function handleAddSeasonCard() {
@@ -38,9 +38,9 @@ const Prices = ({ setForm }) => {
         ...prev.season_prices,
         {
           ...seasonCardInitialData,
-          index: prev.season_prices.length
-        }
-      ]
+          index: prev.season_prices.length,
+        },
+      ],
     }));
   }
   const handleNext = (e) => {
@@ -50,7 +50,7 @@ const Prices = ({ setForm }) => {
 
   const handleBack = (e) => {
     e.preventDefault();
-    setForm("Location & Working hours");
+    setForm("Working hours");
   };
 
   return (
@@ -116,7 +116,7 @@ const Prices = ({ setForm }) => {
               setFormData((prev) => {
                 return {
                   ...prev,
-                  prices: [...prev.prices, initialPricesData]
+                  prices: [...prev.prices, initialPricesData],
                 };
               });
             }}

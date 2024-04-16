@@ -1,13 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "./../../../../util/axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { Editor } from "react-draft-wysiwyg";
-import { EditorState, convertToRaw } from "draft-js";
+import { EditorState, convertFromRaw, convertToRaw } from "draft-js";
 import SubmitButton from "../../../ui/form-elements/SubmitButton";
 import CancellationPolicy from "../CancellationPolicy";
 
-const PolicyForm = ({ setForm }) => {
+const PolicyForm = ({ setForm, tripPackage }) => {
   const [loading, setLoading] = useState(false);
   const packageId = sessionStorage.getItem("package_id");
   const navigate = useNavigate();
@@ -25,11 +25,38 @@ const PolicyForm = ({ setForm }) => {
   const cancelationCountInitial = {
     cancel_before: "",
     percentage: "",
-    type: "select"
+    type: "select",
   };
   const [formData, setFormData] = useState({
-    cancellation_policy: [cancelationCountInitial]
+    cancellation_policy: [cancelationCountInitial],
   });
+
+  useEffect(() => {
+    if (tripPackage) {
+      const weatherContent = tripPackage.policy?.weather_restrictions;
+      const rulesContent = tripPackage.policy?.rules_and_instructions;
+      const allowedItemsContent =
+        tripPackage.policy?.allowed_and_not_allowed_items;
+
+      if (weatherContent) {
+        const contentState = convertFromRaw(JSON.parse(weatherContent));
+        const editorState = EditorState.createWithContent(contentState);
+        setWeatherEditorState(editorState);
+      }
+
+      if (rulesContent) {
+        const contentState = convertFromRaw(JSON.parse(rulesContent));
+        const editorState = EditorState.createWithContent(contentState);
+        setRulesEditorState(editorState);
+      }
+
+      if (allowedItemsContent) {
+        const contentState = convertFromRaw(JSON.parse(allowedItemsContent));
+        const editorState = EditorState.createWithContent(contentState);
+        setAllowedItemsEditorState(editorState);
+      }
+    }
+  }, [tripPackage]);
 
   const handleBack = (e) => {
     e.preventDefault();
@@ -54,8 +81,8 @@ const PolicyForm = ({ setForm }) => {
           ...formData,
           weather_restrictions: JSON.stringify(rawWeatherContent),
           rules_and_instructions: JSON.stringify(rawRulesContent),
-          allowed_and_not_allowed_items: JSON.stringify(rawAllowedItemsContent)
-        }
+          allowed_and_not_allowed_items: JSON.stringify(rawAllowedItemsContent),
+        },
       });
       if (response) {
         toast.success("Policies Saved Successfully");

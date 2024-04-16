@@ -22,8 +22,8 @@ const TripPackages = () => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [row, setRow] = useState(null);
   const [searchParams] = useSearchParams();
-  const currentPage = searchParams.get("page");
   const [showModal, setShowModal] = useState(false);
+  const currentPage = searchParams.get("page");
   const user = useSelector((state) => state.user?.user);
   const subUser = user?.subuser_set?.filter(
     (u) => u.role === user.current_role
@@ -66,8 +66,8 @@ const TripPackages = () => {
   const priceTemplate = (item) => {
     return (
       <div className="price_template">
-        <h4>{item.price} $ </h4>
-        {/* <span>/ {item.trip_package_days[0].periods[0].price || ""}</span> */}
+        <h4>{item.trip_package_days[0].periods[0].price} $ </h4>
+        <span>/ {item.trip_package_days[0].periods[0].price_type}</span>
       </div>
     );
   };
@@ -105,8 +105,8 @@ const TripPackages = () => {
       axios
         .get(`/trip-packages/?sub_user=${subUser}`, {
           params: {
-            page: currentPage
-          }
+            page: currentPage,
+          },
         })
         .then((res) => {
           setPackagesCount(res?.data?.count);
@@ -160,6 +160,7 @@ const TripPackages = () => {
         {row && (
           <PackageModal
             data={row}
+            setPackegesData={setPackegesData}
             showModal={showModal}
             setShowModal={setShowModal}
           />
