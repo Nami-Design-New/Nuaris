@@ -11,6 +11,7 @@ const MapModal = ({
   title,
   target,
   setSerchedPlace,
+  showLocationFirst
 }) => {
   const [mapLoaded, setMapLoaded] = useState(false);
 
@@ -47,6 +48,7 @@ const MapModal = ({
                   formData={formData}
                   setFormData={setFormData}
                   setSerchedPlace={setSerchedPlace}
+                  showLocationFirst={showLocationFirst}
                 />
               )}
             </div>

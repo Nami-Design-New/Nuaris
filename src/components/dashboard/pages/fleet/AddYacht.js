@@ -19,8 +19,10 @@ const AddYacht = () => {
       </header>
       <div className="row m-0">
         <div className="col-lg-4 col-12 p-2">
-          <SideBar />
-          <VesselStatusForm />
+          <div className="sideBar_wrap">
+            <SideBar />
+            <VesselStatusForm />
+          </div>
         </div>
         <div className="col-lg-8 col-12 p-2">
           <Routes>

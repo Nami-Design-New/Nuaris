@@ -1,6 +1,8 @@
 import React from "react";
 import PageHeader from "../../layout/PageHeader";
 import SideBar from "../../layout/manage-account/SideBar";
+import { Route, Routes } from "react-router-dom";
+import ProfileInfo from "./ProfileInfo";
 
 const ManageAccount = () => {
   return (
@@ -13,7 +15,11 @@ const ManageAccount = () => {
           <SideBar />
         </div>
         <div className="col-lg-8 col-12 p-2">
-            oo
+          <main className="routes_wrapper">
+            <Routes>
+              <Route path="/" element={<ProfileInfo />} />
+            </Routes>
+          </main>
         </div>
       </div>
     </section>

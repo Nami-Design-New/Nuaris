@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   user: {},
-  access_token: "",
+  access_token: ""
 };
 
 export const authenticatedUserSlice = createSlice({
@@ -18,8 +18,8 @@ export const authenticatedUserSlice = createSlice({
     logout: (state) => {
       state.user = {};
       state.access_token = "";
-    },
-  },
+    }
+  }
 });
 
 export const { setUser, setToken, logout } = authenticatedUserSlice.actions;

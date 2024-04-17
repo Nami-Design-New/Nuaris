@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import ReactFlagsSelect from "react-flags-select";
@@ -17,9 +17,19 @@ const CreateUser = () => {
   const [showAssignGroups, setShowAssignGroups] = useState(false);
   const [invitedUserId, setInvitedUserId] = useState(null);
   const [groupNames, setGroupNames] = useState([]);
-  const positions = useSelector((state) => state.positions.positions);
+  const [positions, setPositions] = useState([]);
   const user = useSelector((state) => state.user?.user);
   const subUserSet = user?.subuser_set;
+
+  useEffect(() => {
+    async function fetchPositions() {
+      const res = await axios.get(`/positions/?page_size=1000`);
+      if (res.status === 200) {
+        setPositions(res?.data?.results);
+      }
+    }
+    fetchPositions();
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -41,7 +51,7 @@ const CreateUser = () => {
       }
       const response = await axios.post("/users/invite-user/", {
         ...formData,
-        parent: subUser[0]?.id,
+        parent: subUser[0]?.id
       });
       if (response?.status === 201 || response?.status === 200) {
         toast.success("Invitation sent successfully");
@@ -92,14 +102,14 @@ const CreateUser = () => {
                         );
                       setFormData({
                         ...formData,
-                        position: Number(selectedOptionId),
+                        position: Number(selectedOptionId)
                       });
                     }}
                   >
                     <option value="select" disabled>
                       Select
                     </option>
-                    {positions?.results?.map((option) => (
+                    {positions?.map((option) => (
                       <option
                         key={option.id}
                         id={option.id}

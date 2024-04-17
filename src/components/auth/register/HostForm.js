@@ -30,7 +30,7 @@ const HostForm = ({ setFormSelection }) => {
     city: "'Asir",
     role: "host",
     lat: 30.04442,
-    lng: 31.235712,
+    lng: 31.235712
   });
 
   const fetchCitiesForCountry = (countryCode) => {
@@ -57,7 +57,7 @@ const HostForm = ({ setFormSelection }) => {
         ...formData,
         city: cityName,
         lat: Number(selectedCity.latitude).toFixed(6),
-        lng: Number(selectedCity.longitude).toFixed(6),
+        lng: Number(selectedCity.longitude).toFixed(6)
       });
     }
   };
@@ -71,8 +71,8 @@ const HostForm = ({ setFormSelection }) => {
         headers: {
           Accept: "*/*",
           "Content-Type": "multipart/form-data",
-          Authorization: null,
-        },
+          Authorization: null
+        }
       });
 
       if (res?.response?.data?.non_field_errors) {
@@ -98,7 +98,6 @@ const HostForm = ({ setFormSelection }) => {
       setLoading(false);
     }
   };
-  // console.log(errors);
 
   return (
     <form onSubmit={handleSubmit} className="form-ui">

@@ -1184,6 +1184,7 @@ $transation: 0.3s ease-in-out;
               border: 1px solid $inputStroke;
               @include centerFlex();
               position: absolute;
+              background: $white;
               right: 102px;
               bottom: 56px;
               img {
@@ -1555,6 +1556,10 @@ th:last-child .p-column-header-content {
 .p-datatable {
   position: unset;
 }
+.sideBar_wrap {
+  position: sticky;
+  top: 100px;
+}
 .fleet_side_bar {
   width: 100%;
   border-radius: 24px;
@@ -1661,197 +1666,6 @@ th:last-child .p-column-header-content {
       }
     }
   }
-  .bg_white_card {
-    padding: 16px;
-    background: $white;
-    border-radius: 24px;
-    .form-ui {
-      .form_title {
-        font-weight: 500;
-        color: $inputHint;
-        font-size: 16px;
-      }
-      .member_card {
-        display: flex;
-        flex-direction: column;
-        gap: 16px;
-        padding: 16px;
-        background: $inputBG;
-        border-radius: 12px;
-        .card_header {
-          font-size: 12px;
-          font-weight: 500;
-          line-height: 15px;
-          color: $main;
-          margin: 0;
-        }
-        .card_row {
-          display: flex;
-          align-items: center;
-          gap: 8px;
-          div {
-            width: 100%;
-          }
-        }
-        input,
-        .flag-select button {
-          background-color: $white !important;
-        }
-        label {
-          font-weight: 500;
-        }
-      }
-      &.timesRow {
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-      }
-    }
-    .form_title {
-      font-weight: 500;
-      color: $inputHint;
-      font-size: 16px;
-    }
-    .request_photo_session {
-      padding: 24px;
-      border-radius: 16px;
-      background: $main10;
-      display: flex;
-      align-items: center;
-      @media (max-width: 768px) {
-        flex-direction: column-reverse;
-        align-items: flex-start;
-      }
-      gap: 32px;
-      .bread_crumb {
-        flex: 1;
-        @include centerFlex();
-      }
-      .content {
-        flex: 3;
-        h5 {
-          font-size: 24px;
-          font-weight: 500;
-          line-height: 29px;
-        }
-        p {
-          margin-bottom: 8px;
-          line-height: 24px;
-          color: $text;
-        }
-        button {
-          height: 44px;
-          color: $main;
-          padding: 0 24px;
-          border-radius: 12px;
-          border: 1px solid $main;
-        }
-      }
-    }
-    .photos {
-      display: flex;
-      gap: 8px;
-      @media (max-width: 768px) {
-        flex-wrap: wrap;
-        .files {
-          width: calc(50% - 4px);
-        }
-      }
-    }
-    .time_row {
-      display: flex;
-      gap: 8px;
-      button {
-        min-width: 48px;
-        @include centerFlex();
-        img {
-          height: 18px;
-        }
-      }
-    }
-    .uponRequest {
-      width: 100%;
-      background: $main10;
-      padding: 12px 24px;
-      border-radius: 60px;
-      border: 1px solid $main25;
-      .form-switch {
-        padding: 0;
-        display: flex;
-        flex-direction: row-reverse;
-        justify-content: space-between;
-        align-items: center;
-        label {
-          color: $main;
-          font-size: 16px;
-          font-weight: 700;
-        }
-        input {
-          box-shadow: none !important;
-          width: 48px;
-          height: 24px;
-          cursor: pointer;
-        }
-      }
-    }
-    .addSeason {
-      h6 {
-        color: $dark;
-        font-size: 16px;
-        font-weight: 700;
-      }
-    }
-    .topography {
-      font-size: 14px;
-      font-weight: 400;
-      line-height: 18px;
-      color: $main;
-    }
-    .vat_container {
-      padding: 16px;
-      border-radius: 12px;
-      gap: 16px;
-      display: flex;
-      flex-direction: column;
-      background: $inputBG;
-      .country_field {
-        @include space-between();
-        padding: 12px 16px;
-        border-radius: 12px;
-        background: $white;
-        border: 1px solid $inputStroke;
-        .country {
-          display: flex;
-          align-items: center;
-          gap: 12px;
-          h6 {
-            margin: 0;
-            color: $dark;
-          }
-        }
-        .form-switch {
-          display: flex;
-          align-items: center;
-          flex-direction: row-reverse;
-          padding: 0;
-          gap: 12px;
-          width: 80px;
-          label {
-            color: $dark;
-            font-weight: 600;
-          }
-          input {
-            box-shadow: none !important;
-            margin: 0;
-            float: none;
-            width: 40px;
-            cursor: pointer;
-            height: 20px;
-          }
-        }
-      }
-    }
-  }
   .elements {
     display: flex;
     gap: 16px;
@@ -1869,6 +1683,197 @@ th:last-child .p-column-header-content {
   }
   .parent_yacht_label {
     @include space-between();
+  }
+}
+.bg_white_card {
+  padding: 16px;
+  background: $white;
+  border-radius: 24px;
+  .form-ui {
+    .form_title {
+      font-weight: 500;
+      color: $inputHint;
+      font-size: 16px;
+    }
+    .member_card {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      padding: 16px;
+      background: $inputBG;
+      border-radius: 12px;
+      .card_header {
+        font-size: 12px;
+        font-weight: 500;
+        line-height: 15px;
+        color: $main;
+        margin: 0;
+      }
+      .card_row {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        div {
+          width: 100%;
+        }
+      }
+      input,
+      .flag-select button {
+        background-color: $white !important;
+      }
+      label {
+        font-weight: 500;
+      }
+    }
+    &.timesRow {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+  }
+  .form_title {
+    font-weight: 500;
+    color: $inputHint;
+    font-size: 16px;
+  }
+  .request_photo_session {
+    padding: 24px;
+    border-radius: 16px;
+    background: $main10;
+    display: flex;
+    align-items: center;
+    @media (max-width: 768px) {
+      flex-direction: column-reverse;
+      align-items: flex-start;
+    }
+    gap: 32px;
+    .bread_crumb {
+      flex: 1;
+      @include centerFlex();
+    }
+    .content {
+      flex: 3;
+      h5 {
+        font-size: 24px;
+        font-weight: 500;
+        line-height: 29px;
+      }
+      p {
+        margin-bottom: 8px;
+        line-height: 24px;
+        color: $text;
+      }
+      button {
+        height: 44px;
+        color: $main;
+        padding: 0 24px;
+        border-radius: 12px;
+        border: 1px solid $main;
+      }
+    }
+  }
+  .photos {
+    display: flex;
+    gap: 8px;
+    @media (max-width: 768px) {
+      flex-wrap: wrap;
+      .files {
+        width: calc(50% - 4px);
+      }
+    }
+  }
+  .time_row {
+    display: flex;
+    gap: 8px;
+    button {
+      min-width: 48px;
+      @include centerFlex();
+      img {
+        height: 18px;
+      }
+    }
+  }
+  .uponRequest {
+    width: 100%;
+    background: $main10;
+    padding: 12px 24px;
+    border-radius: 60px;
+    border: 1px solid $main25;
+    .form-switch {
+      padding: 0;
+      display: flex;
+      flex-direction: row-reverse;
+      justify-content: space-between;
+      align-items: center;
+      label {
+        color: $main;
+        font-size: 16px;
+        font-weight: 700;
+      }
+      input {
+        box-shadow: none !important;
+        width: 48px;
+        height: 24px;
+        cursor: pointer;
+      }
+    }
+  }
+  .addSeason {
+    h6 {
+      color: $dark;
+      font-size: 16px;
+      font-weight: 700;
+    }
+  }
+  .topography {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 18px;
+    color: $main;
+  }
+  .vat_container {
+    padding: 16px;
+    border-radius: 12px;
+    gap: 16px;
+    display: flex;
+    flex-direction: column;
+    background: $inputBG;
+    .country_field {
+      @include space-between();
+      padding: 12px 16px;
+      border-radius: 12px;
+      background: $white;
+      border: 1px solid $inputStroke;
+      .country {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        h6 {
+          margin: 0;
+          color: $dark;
+        }
+      }
+      .form-switch {
+        display: flex;
+        align-items: center;
+        flex-direction: row-reverse;
+        padding: 0;
+        gap: 12px;
+        width: 80px;
+        label {
+          color: $dark;
+          font-weight: 600;
+        }
+        input {
+          box-shadow: none !important;
+          margin: 0;
+          float: none;
+          width: 40px;
+          cursor: pointer;
+          height: 20px;
+        }
+      }
+    }
   }
 }
 .policy_form {
@@ -3293,6 +3298,8 @@ small.error {
   width: 100%;
   border-radius: 24px;
   background: $white;
+  position: sticky;
+  top: 100px;
   gap: 24px;
   display: flex;
   padding: 24px 16px;
@@ -3344,9 +3351,6 @@ small.error {
       align-items: center;
       white-space: nowrap;
       transition: $transation;
-      &:hover {
-        background: $inputBG;
-      }
       .icon {
         height: 36px;
         width: 36px;
@@ -3366,8 +3370,88 @@ small.error {
         color: $gray;
         line-height: 14px;
       }
-      &:not(.collapsed) {
-        background-color: $inputBG;
+    }
+    .accordion-body {
+      padding: 8px 0 0 24px;
+    }
+    .sub_navigation_menu {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      .sub_nav_item {
+        a {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          padding: 0 10px;
+          border-radius: 8px;
+          span {
+            color: $dark;
+            font-size: 14px;
+          }
+          img {
+            filter: brightness(0);
+          }
+          &.active {
+            background: $main10;
+            img {
+              filter: brightness(1);
+            }
+          }
+        }
+      }
+    }
+  }
+}
+.routes_wrapper {
+  width: 100%;
+  .profile_info_wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    .input-field {
+      &.files {
+        .filepond--root .filepond--drop-label {
+          min-height: 100% !important;
+          label {
+            color: #e2e2e2 !important;
+            font-family: "Outfit", sans-serif !important;
+            font-weight: 900 !important;
+            font-size: 40px !important;
+          }
+        }
+      }
+    }
+  }
+}
+.language_select_grid {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  .language_select {
+    cursor: pointer;
+    input {
+      display: none;
+      &:checked + .content {
+        background: $main10;
+        border-color: $main;
+        span {
+          color: $main;
+        }
+      }
+    }
+    .content {
+      padding: 4px 24px;
+      border: 1px solid $lightGray;
+      border-radius: 8px;
+      transition: $transation;
+      span {
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 20px;
+        color: $dark;
+        transition: $transation;
       }
     }
   }

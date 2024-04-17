@@ -5,6 +5,7 @@ import inovice from "../../../../assets/images/inovice.svg";
 import langage from "../../../../assets/images/langauge.svg";
 import walletSettings from "../../../../assets/images/wallet-settings.svg";
 import payment from "../../../../assets/images/payment.svg";
+import arrowSub from "../../../../assets/images/subArrow.svg";
 import { Accordion } from "react-bootstrap";
 
 const SideBar = () => {
@@ -19,7 +20,7 @@ const SideBar = () => {
             Profile info
           </NavLink>
         </li>
-        <Accordion defaultActiveKey="0">
+        <Accordion defaultActiveKey={null}>
           <Accordion.Item eventKey="0">
             <Accordion.Header>
               <div className="icon" style={{ background: "#CFE2FF" }}>
@@ -30,11 +31,38 @@ const SideBar = () => {
                 <span>(coming soon)</span>
               </div>
             </Accordion.Header>
-            <Accordion.Body></Accordion.Body>
+            <Accordion.Body>
+              <ul className="sub_navigation_menu">
+                <li className="sub_nav_item">
+                  <NavLink className="active">
+                    <img src={arrowSub} alt="arrow" />
+                    <span>Subscriptions period</span>
+                  </NavLink>
+                </li>
+                <li className="sub_nav_item">
+                  <NavLink>
+                    <img src={arrowSub} alt="arrow" />
+                    <span>Subscriptions statement </span>
+                  </NavLink>
+                </li>
+                <li className="sub_nav_item">
+                  <NavLink>
+                    <img src={arrowSub} alt="arrow" />
+                    <span>Offers on Subscription</span>
+                  </NavLink>
+                </li>
+                <li className="sub_nav_item">
+                  <NavLink>
+                    <img src={arrowSub} alt="arrow" />
+                    <span>Saved cards</span>
+                  </NavLink>
+                </li>
+              </ul>
+            </Accordion.Body>
           </Accordion.Item>
           <Accordion.Item eventKey="1">
             <Accordion.Header>
-              <div className="icon" style={{ background: "#CFE2FF" }}>
+              <div className="icon" style={{ background: "#E0CFFC" }}>
                 <img src={payment} alt="invoice" />
               </div>
               <div className="d-flex flex-column">
@@ -42,7 +70,22 @@ const SideBar = () => {
                 <span>(coming soon)</span>
               </div>
             </Accordion.Header>
-            <Accordion.Body></Accordion.Body>
+            <Accordion.Body>
+              <ul className="sub_navigation_menu">
+                <li className="sub_nav_item">
+                  <NavLink className="active">
+                    <img src={arrowSub} alt="arrow" />
+                    <span>Choose receiving payments</span>
+                  </NavLink>
+                </li>
+                <li className="sub_nav_item">
+                  <NavLink>
+                    <img src={arrowSub} alt="arrow" />
+                    <span>Register VAT</span>
+                  </NavLink>
+                </li>
+              </ul>
+            </Accordion.Body>
           </Accordion.Item>
         </Accordion>
         <li className="nav_item">

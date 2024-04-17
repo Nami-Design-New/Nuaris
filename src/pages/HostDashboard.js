@@ -1,13 +1,10 @@
-import { useEffect, useState } from "react";
-import axios from "../util/axios";
-import { useDispatch } from "react-redux";
+import { useState } from "react";
 import { Route, Routes } from "react-router-dom";
-import { setPositions } from "../redux/slices/positions";
 // layout elements
 import NavBar from "../components/dashboard/layout/NavBar";
 import Footer from "../components/dashboard/layout/Footer";
 import SideBar from "../components/dashboard/layout/SideBar";
-
+// nav pages
 import Nssm from "../components/dashboard/pages/Nssm";
 // invite use and permissions
 import InviteUser from "../components/dashboard/pages/inviteAndPermissions/InviteUser";
@@ -34,17 +31,6 @@ import ManageAccount from "../components/dashboard/pages/manage-account/ManageAc
 
 const HostDashboard = () => {
   const [sideBarOpen, setSideBarOpen] = useState(false);
-  const dispatch = useDispatch();
-
-  async function getAllData() {
-    const positions = axios.get("/positions/?page_size=1000");
-    const [positionsData] = await Promise.all([positions]);
-    dispatch(setPositions(positionsData.data));
-  }
-  useEffect(() => {
-    getAllData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   return (
     <>
