@@ -25,7 +25,7 @@ const UserNameForm = ({ setShowLoginForm, userTypeSelected }) => {
   const requestOptions = {
     method: "POST",
     url: "/users/login/",
-    data: { ...formData, role: userTypeSelected },
+    data: { ...formData, role: userTypeSelected }
   };
 
   const handleSubmit = async (e) => {
@@ -43,9 +43,9 @@ const UserNameForm = ({ setShowLoginForm, userTypeSelected }) => {
       setCookie("refreshToken", res.data.refresh_token, {
         path: "/",
         expires: new Date(new Date().getTime() + 20 * 60 * 60 * 1000),
-        secure: true,
+        secure: true
       });
-      toast.success("Login successful");
+      toast.success("Welcome to Nuaris");
       navigate("/dashboard");
     } catch (error) {
       toast.error("Incorrect username or password");

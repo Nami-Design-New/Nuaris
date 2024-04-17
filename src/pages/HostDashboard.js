@@ -81,7 +81,7 @@ const HostDashboard = () => {
               element={<ActivitiesForm />}
             />
             {/* manage account */}
-            <Route path="/manage-account" element={<ManageAccount />} />
+            <Route path="/manage-account/*" element={<ManageAccount />} />
             {/* error redirect */}
             <Route path="*" element={<>404 page</>} />
           </Routes>

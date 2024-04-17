@@ -3,6 +3,7 @@ import PageHeader from "../../layout/PageHeader";
 import SideBar from "../../layout/manage-account/SideBar";
 import { Route, Routes } from "react-router-dom";
 import ProfileInfo from "./ProfileInfo";
+import RegisterVat from "./RegisterVat";
 
 const ManageAccount = () => {
   return (
@@ -18,6 +19,11 @@ const ManageAccount = () => {
           <main className="routes_wrapper">
             <Routes>
               <Route path="/" element={<ProfileInfo />} />
+              <Route path="/register-vat" element={<RegisterVat />} />
+              <Route
+                path="/inovice-design-settings"
+                element={<RegisterVat />}
+              />
             </Routes>
           </main>
         </div>

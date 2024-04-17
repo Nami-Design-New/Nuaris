@@ -33,6 +33,7 @@ const AddYacht = () => {
             <Route path="/pricing" element={<Pricing />} />
             <Route path="/add-ons-connected" element={<AddOnsConnected />} />
             <Route path="/more-info" element={<MoreInfo />} />
+            <Route path="*" element={<MainInfo />} />
           </Routes>
         </div>
       </div>

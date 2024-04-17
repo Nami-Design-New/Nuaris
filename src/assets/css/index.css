@@ -3675,4 +3675,8 @@ small.error {
   line-height: 20px;
   color: #0d0d0d;
   transition: 0.3s ease-in-out;
+}
+
+.disabled {
+  pointer-events: none;
 }/*# sourceMappingURL=index.css.map */
