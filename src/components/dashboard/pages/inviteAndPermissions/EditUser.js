@@ -20,7 +20,17 @@ export default function EditUser() {
   const { employeeId } = useParams();
   const [employee, setEmployee] = useState({});
   const [loading, setLoading] = useState(false);
-  const positions = useSelector((state) => state.positions.positions?.results);
+  const [positions, setPositions] = useState([]);
+
+  useEffect(() => {
+    async function fetchPositions() {
+      const res = await axios.get(`/positions/?page_size=1000`);
+      if (res.status === 200) {
+        setPositions(res?.data?.results);
+      }
+    }
+    fetchPositions();
+  }, []);
 
   useEffect(() => {
     try {
@@ -49,7 +59,7 @@ export default function EditUser() {
     try {
       const response = await axios.put(`/employees/${employee.id}/`, {
         ...employee,
-        sub_user: subUser,
+        sub_user: subUser
       });
       toast.success("User updated successfully");
       console.log(response);
@@ -98,7 +108,7 @@ export default function EditUser() {
                           position: positions?.find(
                             (option) => option.name === selectedOption
                           )?.id,
-                          position_name: selectedOption,
+                          position_name: selectedOption
                         });
                       }}
                     >

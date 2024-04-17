@@ -1260,6 +1260,7 @@ button {
   align-items: center;
   justify-content: center;
   position: absolute;
+  background: #fff;
   right: 102px;
   bottom: 56px;
 }
@@ -1666,6 +1667,11 @@ th:last-child .p-column-header-content {
   position: unset;
 }
 
+.sideBar_wrap {
+  position: sticky;
+  top: 100px;
+}
+
 .fleet_side_bar {
   width: 100%;
   border-radius: 24px;
@@ -1787,240 +1793,6 @@ th:last-child .p-column-header-content {
 .addon_form_wrapper .wizard_tabs .wizard_tab:hover h6 {
   color: #006980;
 }
-.fleet_form__wrapper .bg_white_card,
-.addon_form_wrapper .bg_white_card {
-  padding: 16px;
-  background: #fff;
-  border-radius: 24px;
-}
-.fleet_form__wrapper .bg_white_card .form-ui .form_title,
-.addon_form_wrapper .bg_white_card .form-ui .form_title {
-  font-weight: 500;
-  color: #aaaaaa;
-  font-size: 16px;
-}
-.fleet_form__wrapper .bg_white_card .form-ui .member_card,
-.addon_form_wrapper .bg_white_card .form-ui .member_card {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  padding: 16px;
-  background: #f8f8f8;
-  border-radius: 12px;
-}
-.fleet_form__wrapper .bg_white_card .form-ui .member_card .card_header,
-.addon_form_wrapper .bg_white_card .form-ui .member_card .card_header {
-  font-size: 12px;
-  font-weight: 500;
-  line-height: 15px;
-  color: #006980;
-  margin: 0;
-}
-.fleet_form__wrapper .bg_white_card .form-ui .member_card .card_row,
-.addon_form_wrapper .bg_white_card .form-ui .member_card .card_row {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.fleet_form__wrapper .bg_white_card .form-ui .member_card .card_row div,
-.addon_form_wrapper .bg_white_card .form-ui .member_card .card_row div {
-  width: 100%;
-}
-.fleet_form__wrapper .bg_white_card .form-ui .member_card input,
-.fleet_form__wrapper .bg_white_card .form-ui .member_card .flag-select button,
-.addon_form_wrapper .bg_white_card .form-ui .member_card input,
-.addon_form_wrapper .bg_white_card .form-ui .member_card .flag-select button {
-  background-color: #fff !important;
-}
-.fleet_form__wrapper .bg_white_card .form-ui .member_card label,
-.addon_form_wrapper .bg_white_card .form-ui .member_card label {
-  font-weight: 500;
-}
-.fleet_form__wrapper .bg_white_card .form-ui.timesRow,
-.addon_form_wrapper .bg_white_card .form-ui.timesRow {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-.fleet_form__wrapper .bg_white_card .form_title,
-.addon_form_wrapper .bg_white_card .form_title {
-  font-weight: 500;
-  color: #aaaaaa;
-  font-size: 16px;
-}
-.fleet_form__wrapper .bg_white_card .request_photo_session,
-.addon_form_wrapper .bg_white_card .request_photo_session {
-  padding: 24px;
-  border-radius: 16px;
-  background: #ebf3f5;
-  display: flex;
-  align-items: center;
-  gap: 32px;
-}
-@media (max-width: 768px) {
-  .fleet_form__wrapper .bg_white_card .request_photo_session,
-  .addon_form_wrapper .bg_white_card .request_photo_session {
-    flex-direction: column-reverse;
-    align-items: flex-start;
-  }
-}
-.fleet_form__wrapper .bg_white_card .request_photo_session .bread_crumb,
-.addon_form_wrapper .bg_white_card .request_photo_session .bread_crumb {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.fleet_form__wrapper .bg_white_card .request_photo_session .content,
-.addon_form_wrapper .bg_white_card .request_photo_session .content {
-  flex: 3;
-}
-.fleet_form__wrapper .bg_white_card .request_photo_session .content h5,
-.addon_form_wrapper .bg_white_card .request_photo_session .content h5 {
-  font-size: 24px;
-  font-weight: 500;
-  line-height: 29px;
-}
-.fleet_form__wrapper .bg_white_card .request_photo_session .content p,
-.addon_form_wrapper .bg_white_card .request_photo_session .content p {
-  margin-bottom: 8px;
-  line-height: 24px;
-  color: #666b88;
-}
-.fleet_form__wrapper .bg_white_card .request_photo_session .content button,
-.addon_form_wrapper .bg_white_card .request_photo_session .content button {
-  height: 44px;
-  color: #006980;
-  padding: 0 24px;
-  border-radius: 12px;
-  border: 1px solid #006980;
-}
-.fleet_form__wrapper .bg_white_card .photos,
-.addon_form_wrapper .bg_white_card .photos {
-  display: flex;
-  gap: 8px;
-}
-@media (max-width: 768px) {
-  .fleet_form__wrapper .bg_white_card .photos,
-  .addon_form_wrapper .bg_white_card .photos {
-    flex-wrap: wrap;
-  }
-  .fleet_form__wrapper .bg_white_card .photos .files,
-  .addon_form_wrapper .bg_white_card .photos .files {
-    width: calc(50% - 4px);
-  }
-}
-.fleet_form__wrapper .bg_white_card .time_row,
-.addon_form_wrapper .bg_white_card .time_row {
-  display: flex;
-  gap: 8px;
-}
-.fleet_form__wrapper .bg_white_card .time_row button,
-.addon_form_wrapper .bg_white_card .time_row button {
-  min-width: 48px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.fleet_form__wrapper .bg_white_card .time_row button img,
-.addon_form_wrapper .bg_white_card .time_row button img {
-  height: 18px;
-}
-.fleet_form__wrapper .bg_white_card .uponRequest,
-.addon_form_wrapper .bg_white_card .uponRequest {
-  width: 100%;
-  background: #ebf3f5;
-  padding: 12px 24px;
-  border-radius: 60px;
-  border: 1px solid #bfd5d8;
-}
-.fleet_form__wrapper .bg_white_card .uponRequest .form-switch,
-.addon_form_wrapper .bg_white_card .uponRequest .form-switch {
-  padding: 0;
-  display: flex;
-  flex-direction: row-reverse;
-  justify-content: space-between;
-  align-items: center;
-}
-.fleet_form__wrapper .bg_white_card .uponRequest .form-switch label,
-.addon_form_wrapper .bg_white_card .uponRequest .form-switch label {
-  color: #006980;
-  font-size: 16px;
-  font-weight: 700;
-}
-.fleet_form__wrapper .bg_white_card .uponRequest .form-switch input,
-.addon_form_wrapper .bg_white_card .uponRequest .form-switch input {
-  box-shadow: none !important;
-  width: 48px;
-  height: 24px;
-  cursor: pointer;
-}
-.fleet_form__wrapper .bg_white_card .addSeason h6,
-.addon_form_wrapper .bg_white_card .addSeason h6 {
-  color: #0d0d0d;
-  font-size: 16px;
-  font-weight: 700;
-}
-.fleet_form__wrapper .bg_white_card .topography,
-.addon_form_wrapper .bg_white_card .topography {
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 18px;
-  color: #006980;
-}
-.fleet_form__wrapper .bg_white_card .vat_container,
-.addon_form_wrapper .bg_white_card .vat_container {
-  padding: 16px;
-  border-radius: 12px;
-  gap: 16px;
-  display: flex;
-  flex-direction: column;
-  background: #f8f8f8;
-}
-.fleet_form__wrapper .bg_white_card .vat_container .country_field,
-.addon_form_wrapper .bg_white_card .vat_container .country_field {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 12px 16px;
-  border-radius: 12px;
-  background: #fff;
-  border: 1px solid #f2f2f2;
-}
-.fleet_form__wrapper .bg_white_card .vat_container .country_field .country,
-.addon_form_wrapper .bg_white_card .vat_container .country_field .country {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-.fleet_form__wrapper .bg_white_card .vat_container .country_field .country h6,
-.addon_form_wrapper .bg_white_card .vat_container .country_field .country h6 {
-  margin: 0;
-  color: #0d0d0d;
-}
-.fleet_form__wrapper .bg_white_card .vat_container .country_field .form-switch,
-.addon_form_wrapper .bg_white_card .vat_container .country_field .form-switch {
-  display: flex;
-  align-items: center;
-  flex-direction: row-reverse;
-  padding: 0;
-  gap: 12px;
-  width: 80px;
-}
-.fleet_form__wrapper .bg_white_card .vat_container .country_field .form-switch label,
-.addon_form_wrapper .bg_white_card .vat_container .country_field .form-switch label {
-  color: #0d0d0d;
-  font-weight: 600;
-}
-.fleet_form__wrapper .bg_white_card .vat_container .country_field .form-switch input,
-.addon_form_wrapper .bg_white_card .vat_container .country_field .form-switch input {
-  box-shadow: none !important;
-  margin: 0;
-  float: none;
-  width: 40px;
-  cursor: pointer;
-  height: 20px;
-}
 .fleet_form__wrapper .elements,
 .addon_form_wrapper .elements {
   display: flex;
@@ -2042,6 +1814,204 @@ th:last-child .p-column-header-content {
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+.bg_white_card {
+  padding: 16px;
+  background: #fff;
+  border-radius: 24px;
+}
+.bg_white_card .form-ui .form_title {
+  font-weight: 500;
+  color: #aaaaaa;
+  font-size: 16px;
+}
+.bg_white_card .form-ui .member_card {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px;
+  background: #f8f8f8;
+  border-radius: 12px;
+}
+.bg_white_card .form-ui .member_card .card_header {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 15px;
+  color: #006980;
+  margin: 0;
+}
+.bg_white_card .form-ui .member_card .card_row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.bg_white_card .form-ui .member_card .card_row div {
+  width: 100%;
+}
+.bg_white_card .form-ui .member_card input,
+.bg_white_card .form-ui .member_card .flag-select button {
+  background-color: #fff !important;
+}
+.bg_white_card .form-ui .member_card label {
+  font-weight: 500;
+}
+.bg_white_card .form-ui.timesRow {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.bg_white_card .form_title {
+  font-weight: 500;
+  color: #aaaaaa;
+  font-size: 16px;
+}
+.bg_white_card .request_photo_session {
+  padding: 24px;
+  border-radius: 16px;
+  background: #ebf3f5;
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+@media (max-width: 768px) {
+  .bg_white_card .request_photo_session {
+    flex-direction: column-reverse;
+    align-items: flex-start;
+  }
+}
+.bg_white_card .request_photo_session .bread_crumb {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.bg_white_card .request_photo_session .content {
+  flex: 3;
+}
+.bg_white_card .request_photo_session .content h5 {
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 29px;
+}
+.bg_white_card .request_photo_session .content p {
+  margin-bottom: 8px;
+  line-height: 24px;
+  color: #666b88;
+}
+.bg_white_card .request_photo_session .content button {
+  height: 44px;
+  color: #006980;
+  padding: 0 24px;
+  border-radius: 12px;
+  border: 1px solid #006980;
+}
+.bg_white_card .photos {
+  display: flex;
+  gap: 8px;
+}
+@media (max-width: 768px) {
+  .bg_white_card .photos {
+    flex-wrap: wrap;
+  }
+  .bg_white_card .photos .files {
+    width: calc(50% - 4px);
+  }
+}
+.bg_white_card .time_row {
+  display: flex;
+  gap: 8px;
+}
+.bg_white_card .time_row button {
+  min-width: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.bg_white_card .time_row button img {
+  height: 18px;
+}
+.bg_white_card .uponRequest {
+  width: 100%;
+  background: #ebf3f5;
+  padding: 12px 24px;
+  border-radius: 60px;
+  border: 1px solid #bfd5d8;
+}
+.bg_white_card .uponRequest .form-switch {
+  padding: 0;
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  align-items: center;
+}
+.bg_white_card .uponRequest .form-switch label {
+  color: #006980;
+  font-size: 16px;
+  font-weight: 700;
+}
+.bg_white_card .uponRequest .form-switch input {
+  box-shadow: none !important;
+  width: 48px;
+  height: 24px;
+  cursor: pointer;
+}
+.bg_white_card .addSeason h6 {
+  color: #0d0d0d;
+  font-size: 16px;
+  font-weight: 700;
+}
+.bg_white_card .topography {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 18px;
+  color: #006980;
+}
+.bg_white_card .vat_container {
+  padding: 16px;
+  border-radius: 12px;
+  gap: 16px;
+  display: flex;
+  flex-direction: column;
+  background: #f8f8f8;
+}
+.bg_white_card .vat_container .country_field {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border-radius: 12px;
+  background: #fff;
+  border: 1px solid #f2f2f2;
+}
+.bg_white_card .vat_container .country_field .country {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.bg_white_card .vat_container .country_field .country h6 {
+  margin: 0;
+  color: #0d0d0d;
+}
+.bg_white_card .vat_container .country_field .form-switch {
+  display: flex;
+  align-items: center;
+  flex-direction: row-reverse;
+  padding: 0;
+  gap: 12px;
+  width: 80px;
+}
+.bg_white_card .vat_container .country_field .form-switch label {
+  color: #0d0d0d;
+  font-weight: 600;
+}
+.bg_white_card .vat_container .country_field .form-switch input {
+  box-shadow: none !important;
+  margin: 0;
+  float: none;
+  width: 40px;
+  cursor: pointer;
+  height: 20px;
 }
 
 .policy_form .header {
@@ -3549,6 +3519,8 @@ small.error {
   width: 100%;
   border-radius: 24px;
   background: #fff;
+  position: sticky;
+  top: 100px;
   gap: 24px;
   display: flex;
   padding: 24px 16px;
@@ -3604,9 +3576,6 @@ small.error {
   white-space: nowrap;
   transition: 0.3s ease-in-out;
 }
-.manage_account_side_bar .navigation_menu .accordion-button:hover {
-  background: #f8f8f8;
-}
 .manage_account_side_bar .navigation_menu .accordion-button .icon {
   height: 36px;
   width: 36px;
@@ -3628,6 +3597,86 @@ small.error {
   color: #777777;
   line-height: 14px;
 }
-.manage_account_side_bar .navigation_menu .accordion-button:not(.collapsed) {
-  background-color: #f8f8f8;
+.manage_account_side_bar .navigation_menu .accordion-body {
+  padding: 8px 0 0 24px;
+}
+.manage_account_side_bar .navigation_menu .sub_navigation_menu {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.manage_account_side_bar .navigation_menu .sub_navigation_menu .sub_nav_item a {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 10px;
+  border-radius: 8px;
+}
+.manage_account_side_bar .navigation_menu .sub_navigation_menu .sub_nav_item a span {
+  color: #0d0d0d;
+  font-size: 14px;
+}
+.manage_account_side_bar .navigation_menu .sub_navigation_menu .sub_nav_item a img {
+  filter: brightness(0);
+}
+.manage_account_side_bar .navigation_menu .sub_navigation_menu .sub_nav_item a.active {
+  background: #ebf3f5;
+}
+.manage_account_side_bar .navigation_menu .sub_navigation_menu .sub_nav_item a.active img {
+  filter: brightness(1);
+}
+
+.routes_wrapper {
+  width: 100%;
+}
+.routes_wrapper .profile_info_wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.routes_wrapper .profile_info_wrapper .input-field.files .filepond--root .filepond--drop-label {
+  min-height: 100% !important;
+}
+.routes_wrapper .profile_info_wrapper .input-field.files .filepond--root .filepond--drop-label label {
+  color: #e2e2e2 !important;
+  font-family: "Outfit", sans-serif !important;
+  font-weight: 900 !important;
+  font-size: 40px !important;
+}
+
+.language_select_grid {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.language_select_grid .language_select {
+  cursor: pointer;
+}
+.language_select_grid .language_select input {
+  display: none;
+}
+.language_select_grid .language_select input:checked + .content {
+  background: #ebf3f5;
+  border-color: #006980;
+}
+.language_select_grid .language_select input:checked + .content span {
+  color: #006980;
+}
+.language_select_grid .language_select .content {
+  padding: 4px 24px;
+  border: 1px solid #eeeeee;
+  border-radius: 8px;
+  transition: 0.3s ease-in-out;
+}
+.language_select_grid .language_select .content span {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+  color: #0d0d0d;
+  transition: 0.3s ease-in-out;
+}
+
+.disabled {
+  pointer-events: none;
 }/*# sourceMappingURL=index.css.map */

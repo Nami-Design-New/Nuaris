@@ -147,11 +147,6 @@ const Media = () => {
                                 ? '<label class="mainImg">Main Image</label>'
                                 : ""
                             } <img src=${fav} alt="fav"/>`}
-                            // files={
-                            //   formData.image[i]
-                            //     ? [formData.image[i]]
-                            //     : null
-                            // }
                             onUpdateFiles={(e) => handleImageChange(e, i)}
                           />
                         </Fragment>
