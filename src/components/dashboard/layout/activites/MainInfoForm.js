@@ -193,7 +193,7 @@ const MainInfoForm = ({ setForm }) => {
           <CustomInputField
             label="Activity Name"
             value={formData.name}
-            placeHolder="Write here"
+            placeholder="Write here"
             name="name"
             id="name"
             onChange={(e) =>
@@ -250,7 +250,7 @@ const MainInfoForm = ({ setForm }) => {
           <CustomInputField
             label="Capacity"
             value={formData.capacity}
-            placeHolder="00"
+            placeholder="00"
             type="number"
             name="capacity"
             id="capacity"

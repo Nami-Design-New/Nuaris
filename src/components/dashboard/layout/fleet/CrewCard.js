@@ -6,7 +6,7 @@ import GenderSelect from "../../../ui/GenderSelect";
 const CrewCard = ({ index, setFormData }) => {
   const [memberData, setMemberData] = useState({
     name: "",
-    nationality: "EG",
+    nationality: "SA",
     gender: "male"
   });
 
