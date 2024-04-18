@@ -49,7 +49,7 @@ const Location = ({ setForm }) => {
         <div className="col-12 p-2">
           <CustomInputField
             label={"Location Name"}
-            placeHolder={"write here"}
+            placeholder={"write here"}
             value={formData.location_name}
             onChange={(e) =>
               setFormData({ ...formData, location_name: e.target.value })

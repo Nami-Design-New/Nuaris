@@ -3425,6 +3425,9 @@ small.error {
     }
   }
 }
+.ReactFlagsSelect-module_selectOptions__3LNBJ {
+  max-height: 208px;
+}
 .language_select_grid {
   display: flex;
   align-items: center;
@@ -3458,4 +3461,30 @@ small.error {
 }
 .disabled {
   pointer-events: none;
+}
+.add_vat {
+  background: #34b53a;
+  border-radius: 8px;
+  padding: 12px 20px;
+  color: $white;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+}
+.vat_row {
+  padding: 16px 8px;
+  background: $inputBG;
+  border-radius: 12px;
+  .ReactFlagsSelect-module_selectBtn__19wW7,
+  .input-field input {
+    background: $white !important;
+  }
+}
+.form_check_label {
+  @include space-between();
+  button {
+    img {
+      height: 18px;
+    }
+  }
 }

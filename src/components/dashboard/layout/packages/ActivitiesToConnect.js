@@ -52,7 +52,7 @@ const ActivitiesToConnect = ({
                 }}
               />
               <CustomInputField
-                placeHolder="Quantity"
+                placeholder="Quantity"
                 type="number"
                 value={activity.quantity}
                 onChange={(e) => {

@@ -11,7 +11,7 @@ const CrewForm = ({ setForm }) => {
   const [crewNumber, setCrewNumber] = useState(1);
   const initialMemberData = {
     name: "",
-    nationality: "EG",
+    nationality: "SA",
     gender: "male",
   };
 

@@ -40,7 +40,7 @@ const AddonsToConnect = ({ formData, setFormData, addons, addonsInitial }) => {
                 }}
               />
               <CustomInputField
-                placeHolder="Quantity"
+                placeholder="Quantity"
                 type="number"
                 value={addon.quantity}
                 onChange={(e) => {
