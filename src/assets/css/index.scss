@@ -3488,3 +3488,94 @@ small.error {
     }
   }
 }
+.invoice_design_wrapper .form-ui {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  .buttons {
+    display: flex;
+    gap: 10px;
+    .preview_modal {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0 32px;
+      border: 1px solid $dark;
+      border-radius: 12px;
+      white-space: nowrap;
+    }
+  }
+}
+.select_grid {
+  display: grid;
+  gap: 8px;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  label {
+    width: 100%;
+    cursor: pointer;
+    input {
+      display: none;
+      &:checked + .content {
+        background: $main10;
+        border-color: $main;
+        h6 {
+          color: $main;
+        }
+      }
+    }
+    .content {
+      border: 1px solid $inputStroke;
+      background: $inputBG;
+      height: 54px;
+      border-radius: 12px;
+      @include centerFlex();
+      h6 {
+        margin: 0;
+      }
+    }
+  }
+}
+.switches_grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  @media screen and (max-width: 568px) {
+    grid-template-columns: repeat(1, 1fr);
+    gap: 12px;
+  }
+  .switch_field {
+    .form-switch {
+      display: flex;
+      padding: 0;
+      justify-content: space-between;
+      flex-direction: row-reverse;
+      align-content: center;
+      flex-wrap: wrap;
+      input {
+        width: 40px;
+        height: 20px;
+        margin: auto 0;
+      }
+    }
+  }
+}
+.invoice_template_1 {
+  background: $inputBG;
+  padding: 32px 24px;
+  border-top: 8px solid $main;
+  border-bottom: 8px solid $main;
+  .header {
+    @include space-between();
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      .img {
+        height: 82px;
+        img {
+          height: 100%;
+        }
+      }
+    }
+  }
+}

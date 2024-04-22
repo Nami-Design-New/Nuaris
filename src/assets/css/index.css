@@ -3712,4 +3712,103 @@ small.error {
 }
 .form_check_label button img {
   height: 18px;
+}
+
+.invoice_design_wrapper .form-ui {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.invoice_design_wrapper .form-ui .buttons {
+  display: flex;
+  gap: 10px;
+}
+.invoice_design_wrapper .form-ui .buttons .preview_modal {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 32px;
+  border: 1px solid #0d0d0d;
+  border-radius: 12px;
+  white-space: nowrap;
+}
+
+.select_grid {
+  display: grid;
+  gap: 8px;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+.select_grid label {
+  width: 100%;
+  cursor: pointer;
+}
+.select_grid label input {
+  display: none;
+}
+.select_grid label input:checked + .content {
+  background: #ebf3f5;
+  border-color: #006980;
+}
+.select_grid label input:checked + .content h6 {
+  color: #006980;
+}
+.select_grid label .content {
+  border: 1px solid #f2f2f2;
+  background: #f8f8f8;
+  height: 54px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.select_grid label .content h6 {
+  margin: 0;
+}
+
+.switches_grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+@media screen and (max-width: 568px) {
+  .switches_grid {
+    grid-template-columns: repeat(1, 1fr);
+    gap: 12px;
+  }
+}
+.switches_grid .switch_field .form-switch {
+  display: flex;
+  padding: 0;
+  justify-content: space-between;
+  flex-direction: row-reverse;
+  align-content: center;
+  flex-wrap: wrap;
+}
+.switches_grid .switch_field .form-switch input {
+  width: 40px;
+  height: 20px;
+  margin: auto 0;
+}
+
+.invoice_template_1 {
+  background: #f8f8f8;
+  padding: 32px 24px;
+  border-top: 8px solid #006980;
+  border-bottom: 8px solid #006980;
+}
+.invoice_template_1 .header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.invoice_template_1 .header .logo {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.invoice_template_1 .header .logo .img {
+  height: 82px;
+}
+.invoice_template_1 .header .logo .img img {
+  height: 100%;
 }/*# sourceMappingURL=index.css.map */

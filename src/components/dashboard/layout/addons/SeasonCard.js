@@ -13,7 +13,7 @@ const SeasonCard = ({ formData, setFormData, index }) => {
       season_prices.splice(index, 1);
       return {
         ...prev,
-        season_prices
+        season_prices,
       };
     });
   }
@@ -24,7 +24,7 @@ const SeasonCard = ({ formData, setFormData, index }) => {
       season_prices[i][e.target.name] = e.target.value;
       return {
         ...prev,
-        season_prices
+        season_prices,
       };
     });
   }
@@ -58,9 +58,9 @@ const SeasonCard = ({ formData, setFormData, index }) => {
                     ...season_prices,
                     {
                       ...currentCard,
-                      dates: timestampsArr
-                    }
-                  ]
+                      dates: timestampsArr,
+                    },
+                  ],
                 };
               });
             }}
@@ -69,7 +69,7 @@ const SeasonCard = ({ formData, setFormData, index }) => {
             plugins={[<DatePanel />]}
           />
         </div>
-        <div className="row m-0">
+        <div className="row m-0 w-100">
           {/* Minimum rental period */}
           <div className="col-12 p-2 pe-0 ps-0">
             <CustomInputWithUnit
@@ -99,7 +99,7 @@ const SeasonCard = ({ formData, setFormData, index }) => {
                 "2 Hours",
                 "3 Hours",
                 "Trip",
-                "Item"
+                "Item",
               ]}
             />
           </div>
@@ -118,7 +118,7 @@ const SeasonCard = ({ formData, setFormData, index }) => {
         <button
           disabled={formData.season_prices.length === 1}
           style={{
-            opacity: formData.season_prices.length === 1 ? "0.5" : "1"
+            opacity: formData.season_prices.length === 1 ? "0.5" : "1",
           }}
           type="button"
           className="delete_btn"
