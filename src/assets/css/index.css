@@ -738,16 +738,6 @@ button {
 .form-ui .addItem.active label i {
   color: #0d0d0d;
 }
-.form-ui .save_btn {
-  border: none;
-  background: none;
-  outline: none;
-  height: 52px;
-  width: 200px;
-  background: #006980;
-  color: #fff;
-  border-radius: 12px;
-}
 .form-ui .next_btn {
   width: 74px;
   border: none;
@@ -4109,4 +4099,21 @@ small.error {
   font-weight: 500;
   line-height: 36px;
   color: #0d0d0d;
+}
+
+.destinations {
+  display: grid;
+  gap: 8px;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+}
+
+.save_btn {
+  border: none;
+  background: none;
+  outline: none;
+  height: 52px;
+  width: 200px;
+  background: #006980;
+  color: #fff;
+  border-radius: 12px;
 }/*# sourceMappingURL=index.css.map */

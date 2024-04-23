@@ -41,7 +41,7 @@ const NavBar = ({ setSideBarOpen, sideBarOpen }) => {
             <NavLink to="/dashboard/NSSM">NSSM</NavLink>
           </li>
           <li>
-            <NavLink to="/dashboard/Bookings-scheduling">
+            <NavLink to="/dashboard/bookings-scheduling">
               Bookings & scheduling
             </NavLink>
           </li>

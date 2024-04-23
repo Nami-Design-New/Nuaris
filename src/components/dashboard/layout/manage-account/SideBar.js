@@ -1,7 +1,7 @@
 import React from "react";
 import profileIcon from "../../../../assets/images/profile.svg";
 import invoice from "../../../../assets/images/invoice.svg";
-import langage from "../../../../assets/images/langauge.svg";
+// import langage from "../../../../assets/images/langauge.svg";
 import walletSettings from "../../../../assets/images/wallet-settings.svg";
 import payment from "../../../../assets/images/payment.svg";
 import arrowSub from "../../../../assets/images/subArrow.svg";
@@ -92,21 +92,21 @@ const SideBar = () => {
           </Accordion.Item>
         </Accordion>
         <li className="nav_item">
-          <NavLink end to="/dashboard/manage-account/invoice-design-settings">
+          <NavLink end to="invoice-design-settings">
             <div className="icon" style={{ background: "#F8D7DA" }}>
               <img src={invoice} alt="invoice design settings" />
             </div>
             Invoice Design Settings
           </NavLink>
         </li>
-        <li className="nav_item">
-          <NavLink end to="/dashboard/manage-account/language-settings">
+        {/* <li className="nav_item">
+          <NavLink end to="language-settings">
             <div className="icon" style={{ background: "#D1E7DD" }}>
               <img src={langage} alt="Language settings" />
             </div>
             Language settings
           </NavLink>
-        </li>
+        </li> */}
       </ul>
     </aside>
   );
