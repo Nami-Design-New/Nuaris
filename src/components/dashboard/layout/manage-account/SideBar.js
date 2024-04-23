@@ -1,6 +1,6 @@
 import React from "react";
 import profileIcon from "../../../../assets/images/profile.svg";
-import inovice from "../../../../assets/images/inovice.svg";
+import invoice from "../../../../assets/images/invoice.svg";
 import langage from "../../../../assets/images/langauge.svg";
 import walletSettings from "../../../../assets/images/wallet-settings.svg";
 import payment from "../../../../assets/images/payment.svg";
@@ -92,9 +92,9 @@ const SideBar = () => {
           </Accordion.Item>
         </Accordion>
         <li className="nav_item">
-          <NavLink end to="/dashboard/manage-account/inovice-design-settings">
+          <NavLink end to="/dashboard/manage-account/invoice-design-settings">
             <div className="icon" style={{ background: "#F8D7DA" }}>
-              <img src={inovice} alt="inovice design settings" />
+              <img src={invoice} alt="invoice design settings" />
             </div>
             Invoice Design Settings
           </NavLink>

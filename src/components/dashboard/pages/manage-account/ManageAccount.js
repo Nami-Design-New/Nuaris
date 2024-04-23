@@ -4,6 +4,7 @@ import SideBar from "../../layout/manage-account/SideBar";
 import { Route, Routes } from "react-router-dom";
 import ProfileInfo from "./ProfileInfo";
 import RegisterVat from "./RegisterVat";
+import InvoiceDesign from "./InvoiceDesign";
 
 const ManageAccount = () => {
   return (
@@ -21,8 +22,8 @@ const ManageAccount = () => {
               <Route path="/" element={<ProfileInfo />} />
               <Route path="/register-vat" element={<RegisterVat />} />
               <Route
-                path="/inovice-design-settings"
-                element={<RegisterVat />}
+                path="/invoice-design-settings"
+                element={<InvoiceDesign />}
               />
             </Routes>
           </main>

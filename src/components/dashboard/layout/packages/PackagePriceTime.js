@@ -8,12 +8,14 @@ import { toast } from "react-toastify";
 const PackagePriceTime = ({ setForm, tripPackage }) => {
   const [loading, setLoading] = useState(false);
   const packageId = sessionStorage.getItem("package_id");
+
   const periodInitial = {
     start_time: "",
     end_time: "",
     price: "",
     price_type: "",
   };
+
   const formDataInitial = DAYS.map((day, index) => {
     return {
       day,

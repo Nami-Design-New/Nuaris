@@ -14,9 +14,35 @@ const VatRow = ({ index, formData, setFormData, deleteVat }) => {
     setFormData([...formData]);
   };
 
+  // const fetchVatRate = async () => {
+  //   try {
+  //     const response = await fetch(
+  //       `https://api.vatlookup.eu/rates/${formData[index]?.country}`
+  //     );
+  //     const data = await response.json();
+
+  //     if (!response.ok) {
+  //       throw new Error(data.error || "Failed to fetch VAT rate data.");
+  //     }
+
+  //     if (data.error) {
+  //     } else if (data.standard_rate) {
+  //     } else {
+  //     }
+  //   } catch (error) {}
+  // };
+
+  // useEffect(() => {
+  //   fetchVatRate();
+  //
+  // }, [formData?.[index]?.country]);
+
   return (
     <div className="vat_row form-ui">
       <div className="row m-0">
+        <div className="col-12 p-2 d-flex justify-content-end pt-0 pb-0">
+          <Form.Check id={`vat_activation_${index}`} type="switch" />
+        </div>
         <div className="col-12 p-2">
           <div className="input-field">
             <label htmlFor="companyLocation" className="form_check_label">
@@ -42,14 +68,13 @@ const VatRow = ({ index, formData, setFormData, deleteVat }) => {
             className="form_check_label"
           >
             VAT Registration Number
-            <Form.Check id={`registration_number_${index}`} type="switch" />
           </label>
           <CustomInputField
             placeholder="XXXX XXXX XXXX XXXX"
             name={`registration_number_${index}`}
             type="number"
-            value={formData[index]?.registration_number}
-            onChange={(e) => handleInputChange(e, "registration_number")}
+            value={formData[index]?.number}
+            onChange={(e) => handleInputChange(e, "number")}
             id={`registration_number_${index}`}
           />
         </div>
@@ -57,12 +82,11 @@ const VatRow = ({ index, formData, setFormData, deleteVat }) => {
         <div className="col-12 p-2">
           <label htmlFor={`vat_value_${index}`} className="form_check_label">
             Vat Value
-            <Form.Check id={`vat_value_${index}`} type="switch" />
           </label>
           <CustomInputField
             placeholder="00"
-            value={formData[index]?.vat_value}
-            onChange={(e) => handleInputChange(e, "vat_value")}
+            value={formData[index]?.value}
+            onChange={(e) => handleInputChange(e, "value")}
             name={`vat_value_${index}`}
             id={`vat_value_${index}`}
             type="number"

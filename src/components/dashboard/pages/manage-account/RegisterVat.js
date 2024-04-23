@@ -5,8 +5,8 @@ import SubmitButton from "../../../ui/form-elements/SubmitButton";
 const RegisterVat = () => {
   const initialVatData = {
     country: "SA",
-    vat_value: "",
-    registration_number: "",
+    value: "",
+    number: "",
   };
   const [formData, setFormData] = useState([initialVatData]);
 
