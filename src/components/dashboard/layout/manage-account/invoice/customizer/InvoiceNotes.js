@@ -1,6 +1,6 @@
 import React from "react";
 
-const InvoiceNotes = () => {
+const InvoiceNotes = ({ invoiceDesign, setInvoiceDesign }) => {
   return (
     <div className="bg_white_card">
       <div className="row m-0">
@@ -11,6 +11,13 @@ const InvoiceNotes = () => {
               name="cancelation"
               id="cancelation"
               placeholder="Write here"
+              value={invoiceDesign.cnacellation_policy}
+              onChange={(e) =>
+                setInvoiceDesign({
+                  ...invoiceDesign,
+                  cnacellation_policy: e.target.value,
+                })
+              }
             ></textarea>
           </div>
         </div>
@@ -21,6 +28,13 @@ const InvoiceNotes = () => {
               name="cancelation"
               id="cancelation"
               placeholder="Write here"
+              value={invoiceDesign.client_notes}
+              onChange={(e) =>
+                setInvoiceDesign({
+                  ...invoiceDesign,
+                  client_notes: e.target.value,
+                })
+              }
             ></textarea>
           </div>
         </div>
