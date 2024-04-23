@@ -725,14 +725,6 @@ $transation: 0.3s ease-in-out;
       }
     }
   }
-  .save_btn {
-    @include clearInput();
-    height: 52px;
-    width: 200px;
-    background: $main;
-    color: $white;
-    border-radius: 12px;
-  }
   .next_btn {
     width: 74px;
     @include clearInput();
@@ -3871,4 +3863,17 @@ small.error {
       }
     }
   }
+}
+.destinations {
+  display: grid;
+  gap: 8px;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+}
+.save_btn {
+  @include clearInput();
+  height: 52px;
+  width: 200px;
+  background: $main;
+  color: $white;
+  border-radius: 12px;
 }
