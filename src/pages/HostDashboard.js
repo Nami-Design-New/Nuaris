@@ -21,6 +21,8 @@ import Activities from "../components/dashboard/pages/activites/Activities";
 import ActivitiesForm from "../components/dashboard/pages/activites/ActivitiesForm";
 import ManageAccount from "../components/dashboard/pages/manage-account/ManageAccount";
 import Destination from "../components/dashboard/pages/destination/Destination";
+import BookingAndScheduling from "../components/dashboard/pages/booking/BookingAndScheduling";
+import Booking from "../components/dashboard/pages/booking/Booking";
 
 const HostDashboard = () => {
   const [sideBarOpen, setSideBarOpen] = useState(false);
@@ -32,6 +34,12 @@ const HostDashboard = () => {
         <NavBar setSideBarOpen={setSideBarOpen} sideBarOpen={sideBarOpen} />
         <main className="main_wrapper">
           <Routes>
+            {/* booking and scheduling */}
+            <Route
+              path="/bookings-scheduling/*"
+              element={<BookingAndScheduling />}
+            />
+            <Route path="/bookings-scheduling/booking" element={<Booking />} />
             <Route path="/NSSM" element={<Nssm />} />
             {/* invite-user */}
             <Route path="/invite-user/" element={<InviteUser />} />
