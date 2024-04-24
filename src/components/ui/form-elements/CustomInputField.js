@@ -4,7 +4,7 @@ export default function CustomInputField({ label, hint, ...props }) {
       <label>
         {label} {hint && <span className="hint">{hint}</span>}
       </label>
-      <input {...props} />
+      <input className="form-control" {...props} />
     </div>
   );
 }

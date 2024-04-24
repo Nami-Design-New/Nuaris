@@ -3878,3 +3878,6 @@ small.error {
   color: $white;
   border-radius: 12px;
 }
+.form-control:focus {
+  box-shadow: none !important;
+}
