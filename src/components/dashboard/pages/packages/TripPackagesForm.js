@@ -24,16 +24,28 @@ const TripPackagesForm = () => {
   }, [id, form]);
 
   let formComponent;
-  if (form === "Package Info") {
-    formComponent = (
-      <PackageInfoForm setForm={setForm} tripPackage={tripPackage} />
-    );
-  } else if (form === "Package Time & Price") {
-    formComponent = (
-      <PackagePriceTime setForm={setForm} tripPackage={tripPackage} />
-    );
-  } else {
-    formComponent = <PolicyForm setForm={setForm} tripPackage={tripPackage} />;
+
+  switch (form) {
+    case "Package Info":
+      formComponent = (
+        <PackageInfoForm setForm={setForm} tripPackage={tripPackage} />
+      );
+      break;
+    case "Package Time & Price":
+      formComponent = (
+        <PackagePriceTime setForm={setForm} tripPackage={tripPackage} />
+      );
+      break;
+    case "Policy":
+      formComponent = (
+        <PolicyForm setForm={setForm} tripPackage={tripPackage} />
+      );
+      break;
+    default:
+      formComponent = (
+        <PackageInfoForm setForm={setForm} tripPackage={tripPackage} />
+      );
+      break;
   }
 
   return (

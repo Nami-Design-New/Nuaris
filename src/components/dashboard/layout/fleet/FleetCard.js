@@ -42,8 +42,8 @@ export default function FleetCard({ fleet }) {
           </div>
         </div>
         <p className="card-location">
-          <img src={locationIcon} alt="location pin" /> 100
-          <span>/ hour</span>
+          <img src={locationIcon} alt="location pin" />{" "}
+          {fleet?.prices[0]?.price + " / " + fleet?.prices[0]?.period_type}
         </p>
       </div>
     </Link>

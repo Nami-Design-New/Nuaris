@@ -5,7 +5,7 @@ export default function SettingsModal({ isOpen, setIsOpen }) {
   const variants = {
     open: {
       opacity: 1,
-      height: "170px",
+      height: "162px",
     },
     closed: {
       opacity: 0,

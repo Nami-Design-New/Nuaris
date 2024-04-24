@@ -10,37 +10,44 @@ const LoginForm = ({
   setShowLoginForm,
   SetShowOtpForm,
   formData,
-  setFormData,
+  setFormData
 }) => {
   const [formType, setFormType] = useState("userNameAndPassword");
   let formComponent;
-
-  if (formType === "userNameAndPassword") {
-    formComponent = (
-      <UserNameForm
-        setShowLoginForm={setShowLoginForm}
-        userTypeSelected={userTypeSelected}
-      />
-    );
-  } else if (formType === "email") {
-    formComponent = (
-      <EmailForm
-        userTypeSelected={userTypeSelected}
-        setShowLoginForm={setShowLoginForm}
-        SetShowOtpForm={SetShowOtpForm}
-        formData={formData}
-        setFormData={setFormData}
-      />
-    );
-  } else {
-    formComponent = (
-      <PhoneForm
-        setShowLoginForm={setShowLoginForm}
-        SetShowOtpForm={SetShowOtpForm}
-        formData={formData}
-        setFormData={setFormData}
-      />
-    );
+  
+  switch (formType) {
+    case "userNameAndPassword":
+      formComponent = (
+        <UserNameForm
+          setShowLoginForm={setShowLoginForm}
+          userTypeSelected={userTypeSelected}
+        />
+      );
+      break;
+    case "email":
+      formComponent = (
+        <EmailForm
+          userTypeSelected={userTypeSelected}
+          setShowLoginForm={setShowLoginForm}
+          SetShowOtpForm={SetShowOtpForm}
+          formData={formData}
+          setFormData={setFormData}
+        />
+      );
+      break;
+    case "phone":
+      formComponent = (
+        <PhoneForm
+          setShowLoginForm={setShowLoginForm}
+          SetShowOtpForm={SetShowOtpForm}
+          formData={formData}
+          setFormData={setFormData}
+        />
+      );
+      break;
+    default:
+      formComponent = <UserNameForm setShowLoginForm={setShowLoginForm} />;
+      break;
   }
 
   return (

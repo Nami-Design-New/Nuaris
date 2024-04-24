@@ -7,15 +7,24 @@ import PolicyForm from "../../layout/fleet/PolicyForm";
 const MainInfo = () => {
   const [form, setForm] = useState("Main Info");
   let formComponent;
-  if (form === "Main Info") {
-    formComponent = <MainInfoForm setForm={setForm} />;
-  } else if (form === "Location") {
-    formComponent = <LocationForm setForm={setForm} />;
-  } else if (form === "Crew") {
-    formComponent = <CrewForm setForm={setForm} />;
-  } else {
-    formComponent = <PolicyForm setForm={setForm} />;
+  switch (form) {
+    case "Main Info":
+      formComponent = <MainInfoForm setForm={setForm} />;
+      break;
+    case "Location":
+      formComponent = <LocationForm setForm={setForm} />;
+      break;
+    case "Crew":
+      formComponent = <CrewForm setForm={setForm} />;
+      break;
+    case "Policy":
+      formComponent = <PolicyForm setForm={setForm} />;
+      break;
+    default:
+      formComponent = <MainInfoForm setForm={setForm} />;
+      break;
   }
+
   return (
     <div className="fleet_form__wrapper">
       <div className="wizard_tabs">
