@@ -519,6 +519,7 @@ button {
 .form-ui .input-field textarea {
   width: 100%;
   height: 54px;
+  display: block;
   outline: none;
   border: 1px solid #f2f2f2;
   border-radius: 12px;

@@ -514,6 +514,7 @@ $transation: 0.3s ease-in-out;
     textarea {
       width: 100%;
       height: 54px;
+      display: block;
       outline: none;
       border: 1px solid $inputStroke;
       border-radius: 12px;
