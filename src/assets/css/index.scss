@@ -679,7 +679,7 @@ $transation: 0.3s ease-in-out;
     display: flex;
     gap: 8px;
     .units {
-      width: 140px;
+      width: 160px;
     }
   }
   .addItem {
@@ -2078,10 +2078,11 @@ th:last-child .p-column-header-content {
 }
 .badge {
   font-weight: 400;
-  border-radius: $borderRadius;
-  padding: 4px 8px;
+  border-radius: 40px;
+  padding: 0 12px;
   color: $white;
   background-color: $gray;
+  line-height: 26px;
   cursor: default;
   font-size: 12px;
   text-transform: capitalize;
@@ -3509,7 +3510,7 @@ small.error {
     width: 100%;
     cursor: pointer;
     input {
-      display: none;
+      display: none !important;
       &:checked + .content {
         background: $main10;
         border-color: $main;
@@ -3880,4 +3881,225 @@ small.error {
 }
 .form-control:focus {
   box-shadow: none !important;
+}
+.pathes {
+  display: grid;
+  gap: 8px;
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  .path {
+    @include centerFlex();
+    border: 1px solid $main;
+    background: $main10;
+    padding: 16px 20px;
+    line-height: 20px;
+    border-radius: 12px;
+    cursor: pointer;
+  }
+}
+.inner_card {
+  .form_title {
+    font-size: 20px;
+    font-weight: 500;
+  }
+  .form-switch {
+    padding: 0;
+    input {
+      cursor: pointer;
+      width: 40px !important;
+      height: 20px !important;
+      vertical-align: middle;
+    }
+  }
+}
+.booking_card {
+  width: 100%;
+  background: $inputBG;
+  border-radius: 12px;
+  overflow: hidden;
+  .img {
+    aspect-ratio: 1 / .9;
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .badge {
+      position: absolute;
+      &.bage-top-left {
+        top: 10px;
+        left: 10px;
+      }
+      &.bage-top-right {
+        top: 10px;
+        right: 10px;
+      }
+    }
+  }
+  .about_card {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 16px;
+    .title {
+      font-size: 18px;
+      font-weight: 500;
+      line-height: 20.16px;
+      color: $dark;
+      margin: 0;
+    }
+    .price {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      img {
+        height: 16px;
+      }
+      p {
+        line-height: 20px;
+        margin: 0;
+        span {
+          color: $gray;
+          line-height: inherit;
+        }
+        .value {
+          font-size: 18px;
+          color: $dark;
+          font-weight: 600;
+        }
+      }
+    }
+    .duration {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      p {
+        line-height: 20px;
+        color: $gray;
+        font-weight: 500;
+        margin: 0;
+      }
+      b {
+        margin: 0;
+        line-height: 20px;
+      }
+    }
+    button {
+      height: 42px;
+      width: 100%;
+      border-radius: 12px;
+      font-weight: 500;
+      &.stroked {
+        border: 1px solid $main;
+        color: $main;
+      }
+      &.filled {
+        background: $main;
+        color: $white;
+      }
+    }
+  }
+}
+.payment_wapper,
+.require_id_wrapper {
+  background: $inputBG;
+  border-radius: 12px;
+  padding: 6px;
+  .checkboxs_inputs {
+    display: flex;
+    width: 100%;
+    height: 54px;
+    background: $white;
+    border-radius: 12px;
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    label {
+      cursor: pointer;
+      flex: 1;
+      @include centerFlex();
+      span {
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 20px;
+        color: $dark;
+        cursor: pointer;
+        transition: .25s ease-in-out;
+      }
+      input {
+        display: none;
+        appearance: none;
+        &:checked + span {
+          color: $white;
+        }
+      }
+    }
+    .bg-active {
+      transition: .25s ease-in-out;
+      position: absolute;
+      content: "";
+      top: 0;
+      transform: translateX(100%);
+      height: 100%;
+      width: 50%;
+      z-index: -1;
+      background: $main;
+      border-radius: 12px;
+      &.left {
+        transform: translateX(0%);
+      }
+    }
+  }
+  .input-field input {
+    background: $white;
+    border-color: $white;
+  }
+}
+.require_id_wrapper {
+  background: $main10;
+}
+.path_footer {
+  padding-top: 12px;
+  @include space-between();
+  button {
+    padding: 0 28px;
+    border-radius: 12px;
+    height: 52px;
+    &.stroked {
+      border: 1px solid $dark;
+    }
+    &.filled {
+      background: $main;
+      color: $white;
+    }
+  }
+}
+.id_row {
+  display: flex;
+  align-items: end;
+  padding-bottom: 12px;
+  gap: 12px;
+  .add_button {
+    height: 54px;
+    width: 54px;
+    button {
+      @include centerFlex();
+      height: 100%;
+    }
+  }
+}
+.addons_wrapper {
+  display: flex;
+  align-items: end;
+  gap: 12px;
+  .add_button {
+    width: 54px;
+    height: 54px;
+    button {
+      @include centerFlex();
+      height: 100%;
+    }
+  }
 }

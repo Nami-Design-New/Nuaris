@@ -6,28 +6,41 @@ const ResetForm = ({
   setResetPasswordStep,
   formData,
   setFormData,
-  setOtpFromResponse,
+  setOtpFromResponse
 }) => {
   const [formType, setFormType] = useState("email");
-
   let formComponent;
-  if (formType === "email") {
-    formComponent = (
-      <EmailForm
-        formData={formData}
-        setFormData={setFormData}
-        setOtpFromResponse={setOtpFromResponse}
-        setResetPasswordStep={setResetPasswordStep}
-      />
-    );
-  } else {
-    formComponent = (
-      <PhoneForm
-        formData={formData}
-        setFormData={setFormData}
-        setResetPasswordStep={setResetPasswordStep}
-      />
-    );
+
+  switch (formType) {
+    case "email":
+      formComponent = (
+        <EmailForm
+          formData={formData}
+          setFormData={setFormData}
+          setOtpFromResponse={setOtpFromResponse}
+          setResetPasswordStep={setResetPasswordStep}
+        />
+      );
+      break;
+    case "phone":
+      formComponent = (
+        <PhoneForm
+          formData={formData}
+          setFormData={setFormData}
+          setResetPasswordStep={setResetPasswordStep}
+        />
+      );
+      break;
+    default:
+      formComponent = (
+        <EmailForm
+          formData={formData}
+          setFormData={setFormData}
+          setOtpFromResponse={setOtpFromResponse}
+          setResetPasswordStep={setResetPasswordStep}
+        />
+      );
+      break;
   }
 
   return (

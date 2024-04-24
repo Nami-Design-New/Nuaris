@@ -691,7 +691,7 @@ button {
   gap: 8px;
 }
 .form-ui .time-units .units {
-  width: 140px;
+  width: 160px;
 }
 .form-ui .addItem {
   padding: 8px;
@@ -2220,10 +2220,11 @@ th:last-child .p-column-header-content {
 
 .badge {
   font-weight: 400;
-  border-radius: 12px;
-  padding: 4px 8px;
+  border-radius: 40px;
+  padding: 0 12px;
   color: #fff;
   background-color: #777777;
+  line-height: 26px;
   cursor: default;
   font-size: 12px;
   text-transform: capitalize;
@@ -3735,7 +3736,7 @@ small.error {
   cursor: pointer;
 }
 .select_grid label input {
-  display: none;
+  display: none !important;
 }
 .select_grid label input:checked + .content {
   background: #ebf3f5;
@@ -4121,4 +4122,252 @@ small.error {
 
 .form-control:focus {
   box-shadow: none !important;
+}
+
+.pathes {
+  display: grid;
+  gap: 8px;
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+}
+.pathes .path {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #006980;
+  background: #ebf3f5;
+  padding: 16px 20px;
+  line-height: 20px;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.inner_card .form_title {
+  font-size: 20px;
+  font-weight: 500;
+}
+.inner_card .form-switch {
+  padding: 0;
+}
+.inner_card .form-switch input {
+  cursor: pointer;
+  width: 40px !important;
+  height: 20px !important;
+  vertical-align: middle;
+}
+
+.booking_card {
+  width: 100%;
+  background: #f8f8f8;
+  border-radius: 12px;
+  overflow: hidden;
+}
+.booking_card .img {
+  aspect-ratio: 1/0.9;
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+}
+.booking_card .img img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+.booking_card .img .badge {
+  position: absolute;
+}
+.booking_card .img .badge.bage-top-left {
+  top: 10px;
+  left: 10px;
+}
+.booking_card .img .badge.bage-top-right {
+  top: 10px;
+  right: 10px;
+}
+.booking_card .about_card {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 16px;
+}
+.booking_card .about_card .title {
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 20.16px;
+  color: #0d0d0d;
+  margin: 0;
+}
+.booking_card .about_card .price {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.booking_card .about_card .price img {
+  height: 16px;
+}
+.booking_card .about_card .price p {
+  line-height: 20px;
+  margin: 0;
+}
+.booking_card .about_card .price p span {
+  color: #777777;
+  line-height: inherit;
+}
+.booking_card .about_card .price p .value {
+  font-size: 18px;
+  color: #0d0d0d;
+  font-weight: 600;
+}
+.booking_card .about_card .duration {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+.booking_card .about_card .duration p {
+  line-height: 20px;
+  color: #777777;
+  font-weight: 500;
+  margin: 0;
+}
+.booking_card .about_card .duration b {
+  margin: 0;
+  line-height: 20px;
+}
+.booking_card .about_card button {
+  height: 42px;
+  width: 100%;
+  border-radius: 12px;
+  font-weight: 500;
+}
+.booking_card .about_card button.stroked {
+  border: 1px solid #006980;
+  color: #006980;
+}
+.booking_card .about_card button.filled {
+  background: #006980;
+  color: #fff;
+}
+
+.payment_wapper,
+.require_id_wrapper {
+  background: #f8f8f8;
+  border-radius: 12px;
+  padding: 6px;
+}
+.payment_wapper .checkboxs_inputs,
+.require_id_wrapper .checkboxs_inputs {
+  display: flex;
+  width: 100%;
+  height: 54px;
+  background: #fff;
+  border-radius: 12px;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+.payment_wapper .checkboxs_inputs label,
+.require_id_wrapper .checkboxs_inputs label {
+  cursor: pointer;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.payment_wapper .checkboxs_inputs label span,
+.require_id_wrapper .checkboxs_inputs label span {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+  color: #0d0d0d;
+  cursor: pointer;
+  transition: 0.25s ease-in-out;
+}
+.payment_wapper .checkboxs_inputs label input,
+.require_id_wrapper .checkboxs_inputs label input {
+  display: none;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+}
+.payment_wapper .checkboxs_inputs label input:checked + span,
+.require_id_wrapper .checkboxs_inputs label input:checked + span {
+  color: #fff;
+}
+.payment_wapper .checkboxs_inputs .bg-active,
+.require_id_wrapper .checkboxs_inputs .bg-active {
+  transition: 0.25s ease-in-out;
+  position: absolute;
+  content: "";
+  top: 0;
+  transform: translateX(100%);
+  height: 100%;
+  width: 50%;
+  z-index: -1;
+  background: #006980;
+  border-radius: 12px;
+}
+.payment_wapper .checkboxs_inputs .bg-active.left,
+.require_id_wrapper .checkboxs_inputs .bg-active.left {
+  transform: translateX(0%);
+}
+.payment_wapper .input-field input,
+.require_id_wrapper .input-field input {
+  background: #fff;
+  border-color: #fff;
+}
+
+.require_id_wrapper {
+  background: #ebf3f5;
+}
+
+.path_footer {
+  padding-top: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.path_footer button {
+  padding: 0 28px;
+  border-radius: 12px;
+  height: 52px;
+}
+.path_footer button.stroked {
+  border: 1px solid #0d0d0d;
+}
+.path_footer button.filled {
+  background: #006980;
+  color: #fff;
+}
+
+.id_row {
+  display: flex;
+  align-items: end;
+  padding-bottom: 12px;
+  gap: 12px;
+}
+.id_row .add_button {
+  height: 54px;
+  width: 54px;
+}
+.id_row .add_button button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.addons_wrapper {
+  display: flex;
+  align-items: end;
+  gap: 12px;
+}
+.addons_wrapper .add_button {
+  width: 54px;
+  height: 54px;
+}
+.addons_wrapper .add_button button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
 }/*# sourceMappingURL=index.css.map */

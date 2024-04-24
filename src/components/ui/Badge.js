@@ -1,4 +1,4 @@
-export default function Badge({ state, content }) {
+export default function Badge({ state, content, position }) {
   let stateClass;
 
   switch (state) {
@@ -16,5 +16,7 @@ export default function Badge({ state, content }) {
       break;
   }
 
-  return <div className={`badge ${stateClass}`}>{content}</div>;
+  return (
+    <div className={`badge bage-${position} ${stateClass}`}>{content}</div>
+  );
 }

@@ -9,17 +9,28 @@ import Location from "../../layout/activites/Location";
 const ActivitiesForm = () => {
   const [form, setForm] = useState("Main Info");
   let formComponent;
-  if (form === "Main Info") {
-    formComponent = <MainInfoForm setForm={setForm} />;
-  } else if (form === "Location") {
-    formComponent = <Location setForm={setForm} />;
-  } else if (form === "Prices") {
-    formComponent = <Prices setForm={setForm} />;
-  } else if (form === "Working hours") {
-    formComponent = <WorkingHours setForm={setForm} />;
-  } else {
-    formComponent = <Policy setForm={setForm} />;
+
+  switch (form) {
+    case "Main Info":
+      formComponent = <MainInfoForm setForm={setForm} />;
+      break;
+    case "Location":
+      formComponent = <Location setForm={setForm} />;
+      break;
+    case "Prices":
+      formComponent = <Prices setForm={setForm} />;
+      break;
+    case "Working hours":
+      formComponent = <WorkingHours setForm={setForm} />;
+      break;
+    case "Policy":
+      formComponent = <Policy setForm={setForm} />;
+      break;
+    default:
+      formComponent = <MainInfoForm setForm={setForm} />;
+      break;
   }
+
   return (
     <section className="section-main-content">
       <header className="flex-header">

@@ -25,13 +25,22 @@ const AddNewAddOn = () => {
     }
   }, [id, form]);
   let formComponent;
-  if (form === "Main Info") {
-    formComponent = <MainInfoForm setForm={setForm} addon={addon} />;
-  } else if (form === "Working Time") {
-    formComponent = <WorkingTime setForm={setForm} addon={addon} />;
-  } else {
-    formComponent = <Prices setForm={setForm} addon={addon} />;
+
+  switch (form) {
+    case "Main Info":
+      formComponent = <MainInfoForm setForm={setForm} addon={addon} />;
+      break;
+    case "Working Time":
+      formComponent = <WorkingTime setForm={setForm} addon={addon} />;
+      break;
+    case "Prices":
+      formComponent = <Prices setForm={setForm} addon={addon} />;
+      break;
+    default:
+      formComponent = <MainInfoForm setForm={setForm} addon={addon} />;
+      break;
   }
+
   return (
     <section className="section-main-content">
       <header className="flex-header">
