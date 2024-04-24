@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import CustomRadioInput from "../../ui/CustomRadioInput";
+import CustomRadioInput from "../../../ui/CustomRadioInput";
 import { useEffect, useRef, useState } from "react";
 export default function SettingsModal({ isOpen, setIsOpen }) {
   const variants = {

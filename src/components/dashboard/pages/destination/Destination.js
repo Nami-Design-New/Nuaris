@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import PageHeader from "../../layout/PageHeader";
+import PageHeader from "../../layout/shared/PageHeader";
 import CheckField from "../../../ui/form-elements/CheckField";
-import AddDestinationModal from "../../layout/AddDestinationModal";
+import AddDestinationModal from "./AddDestinationModal";
 
 const Destination = () => {
   const [showAddDestinationModal, setShowAddDestinationModal] = useState(false);

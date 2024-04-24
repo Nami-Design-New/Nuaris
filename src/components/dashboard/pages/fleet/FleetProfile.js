@@ -1,5 +1,5 @@
 import { Link, useParams } from "react-router-dom";
-import PageHeader from "../../layout/PageHeader";
+import PageHeader from "../../layout/shared/PageHeader";
 import editIcon from "../../../../assets/images/edit.svg";
 import shareIcon from "../../../../assets/images/share.svg";
 import FleetProfileInfo from "../../layout/fleet/FleetProfileInfo";

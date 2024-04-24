@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import PageHeader from "../../layout/PageHeader";
+import PageHeader from "../../layout/shared/PageHeader";
 import deleteIcon from "../../../../assets/images/delete.svg";
 import editIcon from "../../../../assets/images/edit.svg";
 import { Link, useSearchParams } from "react-router-dom";

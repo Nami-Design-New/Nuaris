@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import PageHeader from "../../layout/PageHeader";
+import PageHeader from "../../layout/shared/PageHeader";
 import PackageInfoForm from "../../layout/packages/PackageInfoForm";
 import PackagePriceTime from "../../layout/packages/PackagePriceTime";
 import PolicyForm from "../../layout/packages/PolicyForm";

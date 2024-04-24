@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import PageHeader from "../../layout/PageHeader";
+import PageHeader from "../../layout/shared/PageHeader";
 import SubmitButton from "../../../ui/form-elements/SubmitButton";
 import { useParams, useSearchParams } from "react-router-dom";
 import axios from "../../../../util/axios";

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import CancellationPolicy from "../CancellationPolicy";
+import CancellationPolicy from "../shared/CancellationPolicy";
 import SubmitButton from "../../../ui/form-elements/SubmitButton";
 import { EditorState, convertToRaw } from "draft-js";
 import { Editor } from "react-draft-wysiwyg";

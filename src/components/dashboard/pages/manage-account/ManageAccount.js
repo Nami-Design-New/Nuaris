@@ -1,5 +1,5 @@
 import React from "react";
-import PageHeader from "../../layout/PageHeader";
+import PageHeader from "../../layout/shared/PageHeader";
 import SideBar from "../../layout/manage-account/SideBar";
 import { Route, Routes } from "react-router-dom";
 import ProfileInfo from "./ProfileInfo";

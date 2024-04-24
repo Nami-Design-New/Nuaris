@@ -4117,4 +4117,8 @@ small.error {
   background: #006980;
   color: #fff;
   border-radius: 12px;
+}
+
+.form-control:focus {
+  box-shadow: none !important;
 }/*# sourceMappingURL=index.css.map */

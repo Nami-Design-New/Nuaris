@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import PageHeader from "../../layout/PageHeader";
+import PageHeader from "../../layout/shared/PageHeader";
 import MainInfoForm from "../../layout/activites/MainInfoForm";
 import Prices from "../../layout/activites/Prices";
 import Policy from "../../layout/activites/Policy";

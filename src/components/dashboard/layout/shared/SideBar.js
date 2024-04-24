@@ -1,7 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import logo from "../../../assets/images/logoH.svg";
-import fav from "../../../assets/images/fav.svg";
+import logo from "../../../../assets/images/logoH.svg";
+import fav from "../../../../assets/images/fav.svg";
 import sidebarData from "./sidebarData";
 
 const SideBar = ({ sideBarOpen, setSideBarOpen }) => {

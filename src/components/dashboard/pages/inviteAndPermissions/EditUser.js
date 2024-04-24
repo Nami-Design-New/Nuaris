@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import PageHeader from "../../layout/PageHeader";
+import PageHeader from "../../layout/shared/PageHeader";
 import { useEffect, useRef, useState } from "react";
 import axios from "../../../../util/axios";
 import NameField from "../../../ui/form-elements/NameField";
@@ -7,7 +7,7 @@ import ReactFlagsSelect from "react-flags-select";
 import InputField from "../../../ui/form-elements/InputField";
 import PhoneField from "../../../ui/form-elements/PhoneField";
 import SubmitButton from "../../../ui/form-elements/SubmitButton";
-import AssignGroup from "../../layout/AssignGroup";
+import AssignGroup from "./AssignGroup";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 

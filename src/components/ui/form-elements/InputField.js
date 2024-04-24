@@ -18,6 +18,7 @@ const InputField = ({
       </label>
       <input
         placeholder={placeholder}
+        className="form-control"
         type={type}
         id={id}
         name={id}

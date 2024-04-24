@@ -5,7 +5,7 @@ import walledIcon from "../../../../assets/images/wallet.svg";
 import captainIcon from "../../../../assets/images/captain.svg";
 import StarsRate from "../../../ui/StarsRate";
 import hashIcon from "../../../../assets/images/hash.svg";
-import RateModal from "../RateModal";
+import RateModal from "../shared/RateModal";
 import { useState } from "react";
 
 export default function FleetProfileInfo({ fleet }) {

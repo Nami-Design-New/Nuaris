@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import PageHeader from "../../layout/PageHeader";
+import PageHeader from "../../layout/shared/PageHeader";
 import { Link, useSearchParams } from "react-router-dom";
 import TableLoader from "../../../ui/TableLoader";
 import { DataTable } from "primereact/datatable";

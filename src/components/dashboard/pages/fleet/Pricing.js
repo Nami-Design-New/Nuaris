@@ -6,7 +6,7 @@ import CustomInputField from "../../../ui/form-elements/CustomInputField";
 import calenderIcon from "../../../../assets/images/calender.svg";
 import addIcon from "../../../../assets/images/add.svg";
 import SeasonCard from "../../layout/fleet/SeasonCard";
-import Vat from "../../layout/Vat";
+import Vat from "../../layout/shared/Vat";
 import GeneralPriceCard from "../../layout/fleet/GeneralPriceCard";
 import axios from "./../../../../util/axios";
 import SubmitButton from "../../../ui/form-elements/SubmitButton";

@@ -7,7 +7,7 @@ import InputField from "../../../ui/form-elements/InputField";
 import CommentField from "../../../ui/form-elements/CommentField";
 import CustomSelectField from "../../../ui/form-elements/CustomSelectField";
 import SubmitButton from "../../../ui/form-elements/SubmitButton";
-import Vat from "../Vat";
+import Vat from "../shared/Vat";
 import fav from "../../../../assets/images/fav.png";
 import { toast } from "react-toastify";
 import axios from "../../../../util/axios";

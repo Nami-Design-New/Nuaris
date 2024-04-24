@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import PageHeader from "../../layout/PageHeader";
+import PageHeader from "../../layout/shared/PageHeader";
 import FleetCardsGrid from "../../layout/fleet/FleetCardsGrid";
 
 export default function Fleet() {

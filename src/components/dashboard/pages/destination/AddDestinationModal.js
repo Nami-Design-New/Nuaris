@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
-import SubmitButton from "../../ui/form-elements/SubmitButton";
-import CustomInputField from "../../ui/form-elements/CustomInputField";
-import MapWithMarker from "../../ui/map-modal/MapWithMarker";
+import SubmitButton from "../../../ui/form-elements/SubmitButton";
+import CustomInputField from "../../../ui/form-elements/CustomInputField";
+import MapWithMarker from "../../../ui/map-modal/MapWithMarker";
 
 const AddDestinationModal = ({ showModal, setShowModal }) => {
   const [loading, setLoading] = useState(false);

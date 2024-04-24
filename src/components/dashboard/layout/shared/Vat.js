@@ -1,6 +1,6 @@
 import React from "react";
-import saudiaFlag from "../../../assets/images/saudiArabia.svg";
-import qtr from "../../../assets/images/qtr.svg";
+import saudiaFlag from "../../../../assets/images/saudiArabia.svg";
+import qtr from "../../../../assets/images/qtr.svg";
 import { Form } from "react-bootstrap";
 
 const Vat = () => {

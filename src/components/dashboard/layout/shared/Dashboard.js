@@ -1,17 +1,17 @@
-import HostDashboard from "../../../pages/HostDashboard";
-import AgentDashboard from "../../../pages/AgentDashboard";
-import { ROLES } from "../../../constants";
-import UserSupport from "../../../pages/UserSupport";
+import HostDashboard from "../../../../pages/HostDashboard";
+import AgentDashboard from "../../../../pages/AgentDashboard";
+import { ROLES } from "../../../../constants";
+import UserSupport from "../../../../pages/UserSupport";
 import { useCookies } from "react-cookie";
 import { useJwt } from "react-jwt";
 import { useNavigate } from "react-router-dom";
-import axios from "../../../util/axios";
+import axios from "../../../../util/axios";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setToken,
   setUser,
-} from "../../../redux/slices/authenticatedUserSlice";
+} from "../../../../redux/slices/authenticatedUserSlice";
 
 export default function Dashboard() {
   const [cookies] = useCookies();
