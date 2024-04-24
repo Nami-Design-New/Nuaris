@@ -6,7 +6,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Logout from "./pages/Logout";
 import ResetPassword from "./pages/ResetPassword";
-import Dashboard from "./components/dashboard/layout/Dashboard";
+import Dashboard from "./components/dashboard/layout/shared/Dashboard";
 
 import { store } from "./redux/store";
 import { Provider } from "react-redux";

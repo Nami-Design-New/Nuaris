@@ -1,15 +1,15 @@
 import React, { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import invite from "../../../assets/images/inviteUser.svg";
-import manage from "../../../assets/images/manageAccount.svg";
-import addAcc from "../../../assets/images/addAcc.svg";
-import logoutIcon from "../../../assets/images/logout.svg";
-import fav from "../../../assets/images/fav.svg";
-import editIcon from "../../../assets/images/editIcon.svg";
+import invite from "../../../../assets/images/inviteUser.svg";
+import manage from "../../../../assets/images/manageAccount.svg";
+import addAcc from "../../../../assets/images/addAcc.svg";
+import logoutIcon from "../../../../assets/images/logout.svg";
+import fav from "../../../../assets/images/fav.svg";
+import editIcon from "../../../../assets/images/editIcon.svg";
 import { motion } from "framer-motion";
-import axios from "../../../util/axios";
+import axios from "../../../../util/axios";
 import { useDispatch } from "react-redux";
-import { logout } from "../../../redux/slices/authenticatedUserSlice";
+import { logout } from "../../../../redux/slices/authenticatedUserSlice";
 
 const ProfileDropMenu = ({
   profileDropDown,

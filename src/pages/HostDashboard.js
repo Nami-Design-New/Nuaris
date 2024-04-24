@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Route, Routes } from "react-router-dom";
-import NavBar from "../components/dashboard/layout/NavBar";
-import Footer from "../components/dashboard/layout/Footer";
-import SideBar from "../components/dashboard/layout/SideBar";
+import NavBar from "../components/dashboard/layout/shared/NavBar";
+import Footer from "../components/dashboard/layout/shared/Footer";
+import SideBar from "../components/dashboard/layout/shared/SideBar";
 import Nssm from "../components/dashboard/pages/Nssm";
 import InviteUser from "../components/dashboard/pages/inviteAndPermissions/InviteUser";
 import CreateUser from "../components/dashboard/pages/inviteAndPermissions/CreateUser";

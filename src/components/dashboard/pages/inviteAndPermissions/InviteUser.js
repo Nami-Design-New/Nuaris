@@ -7,7 +7,7 @@ import { Column } from "primereact/column";
 import { useSelector } from "react-redux";
 import deleteIcon from "../../../../assets/images/delete.svg";
 import editIcon from "../../../../assets/images/edit.svg";
-import PageHeader from "../../layout/PageHeader";
+import PageHeader from "../../layout/shared/PageHeader";
 import CustomPagination from "../../../ui/CustomPagination";
 import TableLoader from "../../../ui/TableLoader";
 import DeleteModal from "../../../ui/DeleteModal";

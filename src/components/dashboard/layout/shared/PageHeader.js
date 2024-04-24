@@ -1,4 +1,4 @@
-import useRoutes from "../../../hooks/useRoutes";
+import useRoutes from "../../../../hooks/useRoutes";
 import RoutePath from "./RoutePath";
 
 const PageHeader = ({ name, hint, currentName, removeLast }) => {

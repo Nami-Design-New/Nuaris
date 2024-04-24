@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import CheckField from "../../ui/form-elements/CheckField";
-import CustomPagination from "./../../ui/CustomPagination";
+import CheckField from "../../../ui/form-elements/CheckField";
+import CustomPagination from "../../../ui/CustomPagination";
 import { useSearchParams } from "react-router-dom";
-import axios from "./../../../util/axios";
-import ConfirmModal from "../../ui/ConfirmModal";
+import axios from "../../../../util/axios";
+import ConfirmModal from "../../../ui/ConfirmModal";
 import { toast } from "react-toastify";
 
 const AssignGroup = ({ invitedUserId, groupNames }) => {

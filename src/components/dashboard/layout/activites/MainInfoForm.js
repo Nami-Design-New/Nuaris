@@ -9,7 +9,7 @@ import CustomFileUpload from "./../../../ui/form-elements/CustomFileUpload";
 import CustomInputField from "./../../../ui/form-elements/CustomInputField";
 import CustomSelectField from "./../../../ui/form-elements/CustomSelectField";
 import CommentField from "../../../ui/form-elements/CommentField";
-import Vat from "../Vat";
+import Vat from "../shared/Vat";
 import axios from "./../../../../util/axios";
 import SubmitButton from "../../../ui/form-elements/SubmitButton";
 import WhatIncluded from "./WhatIncluded";

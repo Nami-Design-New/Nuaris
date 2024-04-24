@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import avatar from "../../../assets/images/av1.png";
+import avatar from "../../../../assets/images/av1.png";
 import { motion } from "framer-motion";
 import { useEffect, useRef } from "react";
 

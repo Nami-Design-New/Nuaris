@@ -3,7 +3,7 @@ import { useState } from "react";
 import MainInfoForm from "../../layout/addons/MainInfoForm";
 import WorkingTime from "../../layout/addons/WorkingTime";
 import Prices from "../../layout/addons/Prices";
-import PageHeader from "../../layout/PageHeader";
+import PageHeader from "../../layout/shared/PageHeader";
 import { useParams } from "react-router-dom";
 import axios from "../../../../util/axios";
 

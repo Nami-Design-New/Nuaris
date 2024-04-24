@@ -1,7 +1,7 @@
 import React from "react";
-import add from "../../../assets/images/add.svg";
-import trashIcon from "../../../assets/images/delete.svg";
-import CustomInputField from "../../ui/form-elements/CustomInputField";
+import add from "../../../../assets/images/add.svg";
+import trashIcon from "../../../../assets/images/delete.svg";
+import CustomInputField from "../../../ui/form-elements/CustomInputField";
 
 const CancellationPolicy = ({
   formData,

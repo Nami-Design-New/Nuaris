@@ -3,7 +3,7 @@ import handWave from "../../../assets/images/waving-hand.svg";
 import axios from "../../../util/axios";
 import { toast } from "react-toastify";
 import { useCookies } from "react-cookie";
-import Otpcontainer from "../../../shared/Otpcontainer";
+import Otpcontainer from "../../ui/Otpcontainer";
 import SubmitButton from "./../../ui/form-elements/SubmitButton";
 import FormBackButton from "../../ui/form-elements/FormBackButton";
 import { useNavigate } from "react-router-dom";

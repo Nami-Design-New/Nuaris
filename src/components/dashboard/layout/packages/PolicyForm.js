@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { Editor } from "react-draft-wysiwyg";
 import { EditorState, convertFromRaw, convertToRaw } from "draft-js";
 import SubmitButton from "../../../ui/form-elements/SubmitButton";
-import CancellationPolicy from "../CancellationPolicy";
+import CancellationPolicy from "../shared/CancellationPolicy";
 
 const PolicyForm = ({ setForm, tripPackage }) => {
   const [loading, setLoading] = useState(false);

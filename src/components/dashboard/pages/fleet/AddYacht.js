@@ -1,6 +1,6 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import PageHeader from "../../layout/PageHeader";
+import PageHeader from "../../layout/shared/PageHeader";
 import SideBar from "../../layout/fleet/SideBar";
 import Media from "./Media";
 import Pricing from "./Pricing";

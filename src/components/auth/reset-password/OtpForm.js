@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Otpcontainer from "./../../../shared/Otpcontainer";
+import Otpcontainer from "../../ui/Otpcontainer";
 import { toast } from "react-toastify";
 import SubmitButton from "./../../ui/form-elements/SubmitButton";
 

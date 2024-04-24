@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
-import settingsIcon from "../../../assets/images/settings.svg";
-import notificationIcon from "../../../assets/images/notification.svg";
-import fav from "../../../assets/images/fav.svg";
+import settingsIcon from "../../../../assets/images/settings.svg";
+import notificationIcon from "../../../../assets/images/notification.svg";
+import fav from "../../../../assets/images/fav.svg";
 import ProfileDropMenu from "./ProfileDropMenu";
 import { useSelector } from "react-redux";
 import NotificationModal from "./NotificationModal";
