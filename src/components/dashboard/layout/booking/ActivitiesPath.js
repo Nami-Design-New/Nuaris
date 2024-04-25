@@ -16,7 +16,7 @@ const ActivitiesPath = ({ setPath }) => {
               <div class="col-12 p-2">
                 <h6 class="form_title">Activities Path</h6>
               </div>
-              <div className="col-2 p-2">
+              <div className="col-lg-2 col-5 p-2">
                 <CustomSelectField
                   label="Price type"
                   id="price_type"
@@ -28,7 +28,7 @@ const ActivitiesPath = ({ setPath }) => {
                   ]}
                 />
               </div>
-              <div className="col-10 p-2">
+              <div className="col-lg-10 col-7 p-2">
                 <CustomSelectField
                   label="Location"
                   id="location"

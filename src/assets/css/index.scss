@@ -1312,6 +1312,9 @@ $transation: 0.3s ease-in-out;
       gap: 24px;
       display: flex;
       flex-direction: column;
+      @media screen and (max-width: 576px) {
+        padding: 24px 8px;
+      }
       .card_header {
         display: flex;
         align-items: center;
@@ -1684,6 +1687,9 @@ th:last-child .p-column-header-content {
   padding: 16px;
   background: $white;
   border-radius: 24px;
+  @media screen and (max-width: 576px) {
+    padding: 16px 8px;
+  }
   .form-ui {
     .form_title {
       font-weight: 500;
@@ -3885,7 +3891,7 @@ small.error {
 .pathes {
   display: grid;
   gap: 8px;
-  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   .path {
     @include centerFlex();
     border: 1px solid $main;
@@ -4067,6 +4073,11 @@ small.error {
     padding: 0 28px;
     border-radius: 12px;
     height: 52px;
+    @media screen and (max-width: 576px) {
+      height: 48px;
+      padding: 0 14px;
+      font-size: 14px;
+    }
     &.stroked {
       border: 1px solid $dark;
     }
