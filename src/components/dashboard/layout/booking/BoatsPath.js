@@ -14,8 +14,8 @@ const BoatsPath = ({ setPath }) => {
         <div className="col-12 p-2">
           <div className="inner_card gap-0">
             <div className="row m-0">
-              <div class="col-12 p-2">
-                <h6 class="form_title">Boats Path</h6>
+              <div className="col-12 p-2">
+                <h6 className="form_title">Boats Path</h6>
               </div>
               <div className="col-lg-6 col-12 p-2">
                 <CustomSelectField
@@ -56,7 +56,7 @@ const BoatsPath = ({ setPath }) => {
                 <div className="require_id_wrapper">
                   <div className="row m-0">
                     <div className="col-12 p-2 d-flex align-items-center justify-content-between">
-                      <label htmlFor="require_id" class="form_title">
+                      <label htmlFor="require_id" className="form_title">
                         Require ID
                       </label>
                       <Form.Check

@@ -1312,6 +1312,9 @@ $transation: 0.3s ease-in-out;
       gap: 24px;
       display: flex;
       flex-direction: column;
+      @media screen and (max-width: 576px) {
+        padding: 24px 8px;
+      }
       .card_header {
         display: flex;
         align-items: center;
@@ -1608,6 +1611,9 @@ th:last-child .p-column-header-content {
     padding: 16px 24px;
     background: $white;
     border-radius: 24px;
+    @media screen and (max-width: 576px) {
+      padding: 16px 8px;
+    }
     &::after {
       content: "";
       width: calc(100% - 48px);
@@ -1619,15 +1625,15 @@ th:last-child .p-column-header-content {
       transform: translateY(-50%);
     }
     @media (max-width: 768px) {
-      flex-direction: column;
-      align-items: flex-start;
-      &::after {
+      overflow-x: scroll;
+      &::-webkit-scrollbar {
         display: none;
       }
     }
     .wizard_tab {
       display: flex;
       gap: 8px;
+      white-space: nowrap;
       align-items: center;
       background: $white !important;
       z-index: 3;
@@ -1684,6 +1690,9 @@ th:last-child .p-column-header-content {
   padding: 16px;
   background: $white;
   border-radius: 24px;
+  @media screen and (max-width: 576px) {
+    padding: 16px 8px;
+  }
   .form-ui {
     .form_title {
       font-weight: 500;
@@ -3885,7 +3894,7 @@ small.error {
 .pathes {
   display: grid;
   gap: 8px;
-  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   .path {
     @include centerFlex();
     border: 1px solid $main;
@@ -4067,6 +4076,11 @@ small.error {
     padding: 0 28px;
     border-radius: 12px;
     height: 52px;
+    @media screen and (max-width: 576px) {
+      height: 48px;
+      padding: 0 14px;
+      font-size: 14px;
+    }
     &.stroked {
       border: 1px solid $dark;
     }
@@ -4102,4 +4116,265 @@ small.error {
       height: 100%;
     }
   }
+}
+.bookings_filter {
+  width: 100%;
+  display: flex;
+  height: 54px;
+  border-radius: 12px;
+  background: $main10;
+  position: relative;
+  isolation: isolate;
+  .activeTab {
+    transition: .25s ease-in-out;
+    position: absolute;
+    content: "";
+    top: 0;
+    transform: translateX(0);
+    height: 100%;
+    width: calc(100% / 3);
+    z-index: -1;
+    background: $main;
+    border-radius: 12px;
+    &.previous {
+      transform: translateX(100%);
+    }
+    &.canceled {
+      transform: translateX(200%);
+    }
+  }
+  .tab {
+    width: 100%;
+    @include centerFlex();
+    cursor: pointer;
+    h6 {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 400;
+      color: $gray;
+      transition: $transation;
+    }
+    &.active {
+      h6 {
+        color: $white;
+      }
+    }
+  }
+}
+.booking_modal {
+  display: flex;
+  gap: 24px;
+  flex-direction: column;
+  .strocked_wrapper {
+    width: 100%;
+    border: 1px solid $inputBG;
+    border-radius: 12px;
+    padding: 8px;
+    .title {
+      font-size: 14px;
+      font-weight: 500;
+      color: $inputHint;
+      margin: 0;
+    }
+    .img {
+      border-radius: 12px;
+      overflow: hidden;
+      height: 100%;
+      width: 100%;
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+      }
+    }
+    .content {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding: 8px 0;
+      .title {
+        color: $dark;
+        font-size: 20px;
+        font-weight: 500;
+      }
+      .sub {
+        color: $main;
+        font-size: 16px;
+        font-weight: 500;
+      }
+      p {
+        font-size: 14px;
+        color: $gray;
+        line-height: 22px;
+        margin: 0;
+      }
+      .info {
+        display: flex;
+        align-items: center;
+        gap: 54px;
+        p {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          color: $dark;
+          font-size: 14px;
+          font-weight: 400;
+          line-height: 22px;
+          span {
+            line-height: inherit;
+          }
+          img {
+            height: 16px;
+          }
+        }
+      }
+      .whatIncluded {
+        padding-top: 8px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        h6 {
+          font-size: 16px;
+          font-weight: 500;
+          color: $main;
+          margin: 0;
+        }
+        .includes {
+          display: flex;
+          gap: 8px;
+          align-items: center;
+          flex-wrap: wrap;
+          p {
+            background: $lightGray;
+            padding: 4px 8px;
+            border-radius: 4px;
+            line-height: 22px;
+            display: flex;
+            color: $dark;
+            align-items: center;
+            gap: 4px;
+            span {
+              color: $dark;
+              font-weight: 600;
+              font-size: 14px;
+              line-height: inherit;
+            }
+          }
+        }
+      }
+    }
+    .bg_main10_card {
+      padding: 12px;
+      border-radius: 12px;
+      background: $main10;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      p {
+        color: $gray;
+        margin: 0;
+        font-size: 16px;
+      }
+      h6 {
+        color: $dark;
+        font-weight: 600;
+        font-size: 16px;
+        margin: 0;
+        span {
+          font-size: 14px;
+          line-height: inherit;
+        }
+      }
+    }
+    .list_info {
+      @include space-between();
+      p {
+        color: $gray;
+        margin: 0;
+        font-size: 16px;
+      }
+      h6 {
+        color: $dark;
+        padding: 0 8px;
+        font-size: 16px;
+        font-weight: 500;
+        margin: 0;
+      }
+    }
+    .table {
+      width: 100%;
+      table {
+        width: 100%;
+        thead {
+          border-color: $inputBG !important;
+          th {
+            font-size: 16px;
+            font-weight: 500;
+            color: $dark;
+            background: $inputBG;
+            white-space: nowrap;
+            text-align: center;
+            &:nth-child(1) {
+              width: 100%;
+              text-align: start;
+            }
+          }
+        }
+        tbody {
+          tr {
+            border-bottom: 1px solid $inputStroke;
+            &:last-child {
+              border: 0;
+            }
+          }
+          td {
+            font-size: 16px;
+            font-weight: 400;
+            color: $dark;
+            text-align: center;
+            &:nth-child(1) {
+              width: 100%;
+              text-align: start;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+// full calender
+.fc-next-button,
+.fc-prev-button,
+.fc-today-button {
+  box-shadow: none !important;
+  border-color: $main !important;
+  background: $main !important;
+}
+.fc-col-header-cell-cushion,
+.fc-daygrid-day-number {
+  color: $dark !important;
+}
+.fc-daygrid-day {
+  padding: 8px !important;
+  &.fc-day-today {
+    background: $main10 !important;
+  }
+}
+.fc-event-title-container {
+  padding: 4px 8px;
+}
+.fc-h-event .fc-event-title-container {
+  padding: 2px;
+}
+.fc-h-event {
+  background: $main;
+  border-color: $main;
+}
+.fc-daygrid-day-events {
+  min-height: 2em;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }

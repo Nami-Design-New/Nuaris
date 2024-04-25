@@ -11,8 +11,8 @@ const BookingInfoForm = ({ setPath }) => {
         <div className="col-12 p-2">
           <div className="inner_card gap-0">
             <div className="row m-0">
-              <div class="col-12 p-2">
-                <h6 class="form_title">Booking info</h6>
+              <div className="col-12 p-2">
+                <h6 className="form_title">Booking info</h6>
               </div>
               <div className="col-lg-4 col-md-6 col-12 p-2">
                 <CustomInputField
