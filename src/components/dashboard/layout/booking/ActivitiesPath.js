@@ -13,8 +13,8 @@ const ActivitiesPath = ({ setPath }) => {
         <div className="col-12 p-2">
           <div className="inner_card gap-0">
             <div className="row m-0">
-              <div class="col-12 p-2">
-                <h6 class="form_title">Activities Path</h6>
+              <div className="col-12 p-2">
+                <h6 className="form_title">Activities Path</h6>
               </div>
               <div className="col-lg-2 col-5 p-2">
                 <CustomSelectField

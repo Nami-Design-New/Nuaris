@@ -5,37 +5,21 @@ import deleteIcon from "../../../../assets/images/delete.svg";
 import CustomInputField from "../../../ui/form-elements/CustomInputField";
 
 const VatRow = ({ index, formData, setFormData, deleteVat }) => {
+  
   const handleSelectCountry = (code) => {
-    formData[index].country = code;
-    setFormData([...formData]);
+    const updatedFormData = [...formData];
+    updatedFormData[index] = { ...updatedFormData[index], country: code };
+    setFormData(updatedFormData);
   };
+
   const handleInputChange = (e, name) => {
-    formData[index][name] = e.target.value;
-    setFormData([...formData]);
+    const updatedFormData = [...formData];
+    updatedFormData[index] = {
+      ...updatedFormData[index],
+      [name]: e.target.value
+    };
+    setFormData(updatedFormData);
   };
-
-  // const fetchVatRate = async () => {
-  //   try {
-  //     const response = await fetch(
-  //       `https://api.vatlookup.eu/rates/${formData[index]?.country}`
-  //     );
-  //     const data = await response.json();
-
-  //     if (!response.ok) {
-  //       throw new Error(data.error || "Failed to fetch VAT rate data.");
-  //     }
-
-  //     if (data.error) {
-  //     } else if (data.standard_rate) {
-  //     } else {
-  //     }
-  //   } catch (error) {}
-  // };
-
-  // useEffect(() => {
-  //   fetchVatRate();
-  //
-  // }, [formData?.[index]?.country]);
 
   return (
     <div className="vat_row form-ui">

@@ -6,7 +6,7 @@ const Payment = ({ paymentType, setPaymentType }) => {
     <div className="payment_wapper">
       <div className="row m-0">
         <div className="col-12 p-2">
-          <h6 class="form_title">Payment</h6>
+          <h6 className="form_title">Payment</h6>
         </div>
         <div className="col-12 p-2">
           <div className="checkboxs_inputs">
