@@ -41,7 +41,9 @@ const ProfileInfoForm = () => {
         licence_number: user.licence_number || "",
         registration_number: user.registration_number || "",
         lat: user.lat || 30.04442,
-        lng: user.lng || 31.235712
+        lng: user.lng || 31.235712,
+        about: user.about || "",
+        currency: user.currency || "SAR"
       };
     });
 
@@ -336,6 +338,9 @@ const ProfileInfoForm = () => {
             <CustomSelectField
               label="Currency"
               value={formData.currency}
+              onChange={(e) =>
+                setFormData({ ...formData, currency: e.target.value })
+              }
               name="currency"
               id="currency"
               options={[

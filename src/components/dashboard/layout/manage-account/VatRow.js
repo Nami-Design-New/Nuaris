@@ -5,7 +5,6 @@ import deleteIcon from "../../../../assets/images/delete.svg";
 import CustomInputField from "../../../ui/form-elements/CustomInputField";
 
 const VatRow = ({ index, formData, setFormData, deleteVat }) => {
-  
   const handleSelectCountry = (code) => {
     const updatedFormData = [...formData];
     updatedFormData[index] = { ...updatedFormData[index], country: code };
@@ -64,17 +63,9 @@ const VatRow = ({ index, formData, setFormData, deleteVat }) => {
         </div>
         {/* Vat Value */}
         <div className="col-12 p-2">
-          <label htmlFor={`vat_value_${index}`} className="form_check_label">
-            Vat Value
-          </label>
-          <CustomInputField
-            placeholder="00"
-            value={formData[index]?.value}
-            onChange={(e) => handleInputChange(e, "value")}
-            name={`vat_value_${index}`}
-            id={`vat_value_${index}`}
-            type="number"
-          />
+          <h6 className="value_placeholder">
+            Vat Value: <span>15%</span>
+          </h6>
         </div>
       </div>
     </div>
