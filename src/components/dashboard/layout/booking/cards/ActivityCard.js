@@ -3,7 +3,7 @@ import activity from "../../../../../assets/images/yacht1.jpeg";
 import wallet from "../../../../../assets/images/wallet.svg";
 import Badge from "../../../../ui/Badge";
 
-const ActivityCard = () => {
+const ActivityCard = ({ handleBook }) => {
   return (
     <div className="booking_card">
       <div className="img">
@@ -23,7 +23,7 @@ const ActivityCard = () => {
           <p>Duration: </p>
           <b>3 days</b>
         </div>
-        <button className="stroked">
+        <button className="stroked" onClick={handleBook}>
           <span>Book</span>
         </button>
       </div>

@@ -3,7 +3,7 @@ import Badge from "../../../../ui/Badge";
 import packageImg from "../../../../../assets/images/package.jpg";
 import wallet from "../../../../../assets/images/wallet.svg";
 
-const TripPackageCard = () => {
+const TripPackageCard = ({ handleBook }) => {
   return (
     <div className="booking_card">
       <div className="img">
@@ -23,7 +23,7 @@ const TripPackageCard = () => {
           <p>Duration: </p>
           <b>4 days</b>
         </div>
-        <button className="stroked">
+        <button className="stroked" onClick={handleBook}>
           <span>Book</span>
         </button>
       </div>

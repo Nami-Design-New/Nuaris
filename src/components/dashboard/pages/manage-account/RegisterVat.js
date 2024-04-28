@@ -3,12 +3,18 @@ import VatRow from "../../layout/manage-account/VatRow";
 import SubmitButton from "../../../ui/form-elements/SubmitButton";
 import { toast } from "react-toastify";
 import axios from "./../../../../util/axios";
+import { useSelector } from "react-redux";
 
 const RegisterVat = () => {
+  const user = useSelector((state) => state.user?.user);
+  const subUser = user?.subuser_set?.filter(
+    (u) => u.role === user.current_role
+  )[0]?.id;
+
   const initialVatData = {
     country: "SA",
-    value: "",
-    number: ""
+    number: "",
+    sub_user: subUser
   };
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState([initialVatData]);
@@ -26,12 +32,8 @@ const RegisterVat = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      const response = axios.post("/vats/", formData);
-      if (response.status === 201 || response.status === 200) {
-        toast.success("VAT Registered Successfully");
-      } else {
-        toast.error("Something went wrong");
-      }
+      axios.post("/vats/bulk-create/", formData);
+      toast.success("VAT Created Successfully");
     } catch (error) {
       console.error("Error:", error);
       toast.error("Something went wrong");

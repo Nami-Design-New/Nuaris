@@ -3,9 +3,11 @@ import CustomSelectField from "../../../ui/form-elements/CustomSelectField";
 import ActivityCard from "./cards/ActivityCard";
 import CustomInputField from "./../../../ui/form-elements/CustomInputField";
 import Payment from "./cards/Payment";
+import ActivityModal from "./modals/ActivityModal";
 
 const ActivitiesPath = ({ setPath }) => {
   const [paymentType, setPaymentType] = useState("full payment");
+  const [showModal, setShowModal] = useState(false);
 
   return (
     <div className="form-ui">
@@ -40,16 +42,16 @@ const ActivitiesPath = ({ setPath }) => {
                 />
               </div>
               <div className="col-lg-3 col-md-6 col-12 p-2">
-                <ActivityCard />
+                <ActivityCard handleBook={() => setShowModal(true)} />
               </div>
               <div className="col-lg-3 col-md-6 col-12 p-2">
-                <ActivityCard />
+                <ActivityCard handleBook={() => setShowModal(true)} />
               </div>
               <div className="col-lg-3 col-md-6 col-12 p-2">
-                <ActivityCard />
+                <ActivityCard handleBook={() => setShowModal(true)} />
               </div>
               <div className="col-lg-3 col-md-6 col-12 p-2">
-                <ActivityCard />
+                <ActivityCard handleBook={() => setShowModal(true)} />
               </div>
               <div className="col-12 p-2">
                 <CustomInputField
@@ -81,6 +83,7 @@ const ActivitiesPath = ({ setPath }) => {
           </div>
         </div>
       </div>
+      <ActivityModal showModal={showModal} setShowModal={setShowModal} />
     </div>
   );
 };

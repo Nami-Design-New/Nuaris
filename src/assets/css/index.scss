@@ -4378,3 +4378,119 @@ small.error {
   flex-direction: column;
   gap: 8px;
 }
+.value_placeholder {
+  margin: 0;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  font-size: 16px;
+  color: $dark;
+  span {
+    font-size: 18px;
+  }
+}
+.reservations {
+  padding: 8px;
+  border-radius: 12px;
+  background: $inputBG;
+  .title {
+    font-size: 16px !important;
+    font-weight: 400 !important;
+    @include space-between();
+    .bookType {
+      display: flex;
+      gap: 32px;
+      p {
+        padding: 4px 8px;
+        border-radius: 4px;
+        line-height: 22px;
+        position: relative;
+        margin: 0;
+        display: flex;
+        color: $dark;
+        align-items: center;
+        gap: 4px;
+        font-size: 14px;
+        &::after {
+          content: "";
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
+          left: -16px;
+          min-width: 18px;
+          height: 18px;
+          border-radius: 50%;
+        }
+        &.availble {
+          &::after {
+            background: $white;
+          }
+        }
+        &.fullyBooked {
+          &::after {
+            background: $inputHint;
+          }
+        }
+      }
+    }
+  }
+  .reservation_card {
+    padding: 12px 12px;
+    gap: 8px;
+    border-radius: 8px;
+    border: 1px solid $white;
+    display: flex;
+    flex-direction: column;
+    p {
+      margin-bottom: 4px;
+      line-height: 24px;
+      width: fit-content;
+      border-bottom: 1px solid $main25;
+    }
+    h6 {
+      margin: 0;
+      font-weight: 400;
+      color: $gray;
+      font-size: 14px;
+      @include space-between();
+      span {
+        font-weight: 600;
+        color: $dark;
+        line-height: inherit;
+      }
+    }
+    &.availble {
+      background: $white;
+    }
+    &.fullyBooked {
+      background: $inputHint;
+      border-color: $inputHint;
+      p {
+        color: $white;
+        border-color: $white;
+      }
+      h6 {
+        color: $white;
+        span {
+          font-weight: 400;
+          color: $white;
+        }
+      }
+    }
+    &.reserv {
+      background: $main;
+      border-color: $main;
+      p {
+        color: $white;
+      }
+      h6 {
+        color: $white;
+        span {
+          font-weight: 400;
+          color: $white;
+        }
+      }
+    }
+  }
+}

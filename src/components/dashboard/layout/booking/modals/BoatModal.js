@@ -1,13 +1,13 @@
 import React from "react";
 import { Modal } from "react-bootstrap";
-import activity from "../../../../../assets/images/yacht1.jpeg";
 import Badge from "../../../../ui/Badge";
-import CustomSelectField from "./../../../../ui/form-elements/CustomSelectField";
-import CustomInputField from "./../../../../ui/form-elements/CustomInputField";
+import boat from "../../../../../assets/images/yacht2.jpeg";
+import Reservations from "./Reservations";
+import CustomSelectField from "../../../../ui/form-elements/CustomSelectField";
+import CustomInputField from "../../../../ui/form-elements/CustomInputField";
 import TextField from "../../../../ui/form-elements/TextField";
-import ActivityReservations from "./ActivityReservations";
 
-const ActivityModal = ({ showModal, setShowModal }) => {
+const BoatModal = ({ showModal, setShowModal }) => {
   return (
     <Modal
       show={showModal}
@@ -25,35 +25,25 @@ const ActivityModal = ({ showModal, setShowModal }) => {
             </div>
             <div className="col-lg-6 col-12 p-2">
               <div className="img">
-                <img src={activity} alt="activity" />
+                <img src={boat} alt="boat" />
               </div>
             </div>
             <div className="col-lg-6 col-12 p-2">
               <div className="content">
-                <h3 className="title">Maritime Adventures</h3>
-                <h6 className="sub">Water activities</h6>
+                <h3 className="title">Santa Maria</h3>
+                <h6 className="sub">Expert assistance </h6>
                 <p>
-                  Maritime Adventures offers a thrilling voyage into the heart
-                  of aquatic exploration. Embark on a journey filled with
-                  exhilarating activities, from sailing across pristine waters
-                  to casting lines for the catch of the day. Whether you seek
-                  tranquil moments amidst breathtaking scenery or crave the
-                  adrenaline rush of water sports, our group promises
-                  unforgettable experiences tailored to every adventurer's
-                  desires. Join us aboard and unlock the endless possibilities
-                  that the open sea has to offer
+                  It is a long established fact that a reader will be distracted
+                  by the readable content of a page when looking at its layout.
+                  The point of using Lorem Ipsum is that it has a more-or-less
+                  normal distribution of letters, as opposed to using 'Content
+                  here, content here', making it look like readable English.
+                  Many desktop publishing packages and web page editors now use
+                  Lorem Ipsum as their default model text, and a search for
+                  'lorem ipsum' will uncover many web sites still in their
+                  infancy. Various versions have evolved over the years,
+                  sometimes by accident, sometimes on purpose
                 </p>
-                <div className="whatIncluded">
-                  <h6>Whats including</h6>
-                  <div className="includes">
-                    <p>
-                      Hot drinks <span>Ultimate</span>
-                    </p>
-                    <p>
-                      Hot drinks <span>Ultimate</span>
-                    </p>
-                  </div>
-                </div>
               </div>
             </div>
             <div className="col-lg-3 col-md-6 col-12 p-2">
@@ -83,9 +73,9 @@ const ActivityModal = ({ showModal, setShowModal }) => {
               </div>
             </div>
             <div className="col-12 p-2">
-              <ActivityReservations />
+              <Reservations />
             </div>
-            <div className="col-lg-6 col-12 p-2">
+            <div className="col-lg-4 col-12 p-2">
               <CustomSelectField
                 label="Rental type"
                 id="rental_type"
@@ -96,21 +86,24 @@ const ActivityModal = ({ showModal, setShowModal }) => {
                 ]}
               />
             </div>
-            <div className="col-lg-6 col-12 p-2">
+            <div className="col-lg-4 col-12 p-2">
+              <CustomSelectField
+                label="Rental period"
+                id="rental_period"
+                name="rental_period"
+                options={[
+                  { name: "day", value: "day" },
+                  { name: "week", value: "week" },
+                  { name: "month", value: "month" }
+                ]}
+              />
+            </div>
+            <div className="col-lg-4 col-12 p-2">
               <CustomInputField
                 label="Booking start at"
                 id="booking_start_at"
                 name="booking_start_at"
                 type="time"
-              />
-            </div>
-            <div className="col-12 p-2">
-              <CustomInputField
-                label="Number of person"
-                id="number_of_person"
-                name="number_of_person"
-                type="number"
-                placeholder="00"
               />
             </div>
             <div className="col-12 p-2">
@@ -131,4 +124,4 @@ const ActivityModal = ({ showModal, setShowModal }) => {
   );
 };
 
-export default ActivityModal;
+export default BoatModal;

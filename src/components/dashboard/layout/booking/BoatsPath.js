@@ -5,9 +5,11 @@ import Payment from "./cards/Payment";
 import { Form } from "react-bootstrap";
 import IdRow from "./cards/IdRow";
 import AddonRow from "./cards/AddonRow";
+import BoatModal from "./modals/BoatModal";
 
 const BoatsPath = ({ setPath }) => {
   const [paymentType, setPaymentType] = useState("full payment");
+  const [showModal, setShowModal] = useState(false);
   return (
     <div className="form-ui">
       <div className="row m-0">
@@ -40,16 +42,16 @@ const BoatsPath = ({ setPath }) => {
                 />
               </div>
               <div className="col-lg-3 col-md-6 col-12 p-2">
-                <BoatCard />
+                <BoatCard handleBook={() => setShowModal(true)} />
               </div>
               <div className="col-lg-3 col-md-6 col-12 p-2">
-                <BoatCard />
+                <BoatCard handleBook={() => setShowModal(true)} />
               </div>
               <div className="col-lg-3 col-md-6 col-12 p-2">
-                <BoatCard />
+                <BoatCard handleBook={() => setShowModal(true)} />
               </div>
               <div className="col-lg-3 col-md-6 col-12 p-2">
-                <BoatCard />
+                <BoatCard handleBook={() => setShowModal(true)} />
               </div>
               <AddonRow />
               <div className="col-12 p-2">
@@ -89,6 +91,7 @@ const BoatsPath = ({ setPath }) => {
           </div>
         </div>
       </div>
+      <BoatModal showModal={showModal} setShowModal={setShowModal} />
     </div>
   );
 };

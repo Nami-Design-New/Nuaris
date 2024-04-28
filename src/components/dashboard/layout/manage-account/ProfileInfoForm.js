@@ -30,6 +30,15 @@ const ProfileInfoForm = () => {
     setFormData((prev) => {
       return {
         ...prev,
+        location_on_map: serchedPlace
+      };
+    });
+  }, [serchedPlace]);
+
+  useEffect(() => {
+    setFormData((prev) => {
+      return {
+        ...prev,
         first_name: user.first_name || "",
         last_name: user.last_name || "",
         logo: user.logo || null,
@@ -41,7 +50,10 @@ const ProfileInfoForm = () => {
         licence_number: user.licence_number || "",
         registration_number: user.registration_number || "",
         lat: user.lat || 30.04442,
-        lng: user.lng || 31.235712
+        lng: user.lng || 31.235712,
+        about: user.about || "",
+        currency: user.currency || "SAR",
+        location_on_map: user.location_on_map || ""
       };
     });
 
@@ -336,6 +348,9 @@ const ProfileInfoForm = () => {
             <CustomSelectField
               label="Currency"
               value={formData.currency}
+              onChange={(e) =>
+                setFormData({ ...formData, currency: e.target.value })
+              }
               name="currency"
               id="currency"
               options={[
@@ -352,7 +367,7 @@ const ProfileInfoForm = () => {
               htmlFor="companyLocationOnMap"
               label="Company Location"
               hint="(on map)"
-              name={serchedPlace}
+              name={formData.location_on_map}
               setShowModal={setShowModal}
             />
           </div>
