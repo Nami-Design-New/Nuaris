@@ -5,9 +5,11 @@ import Payment from "./cards/Payment";
 import { Form } from "react-bootstrap";
 import IdRow from "./cards/IdRow";
 import TripPackagesModal from "./modals/TripPackagesModal";
+import PaymentModal from "./modals/PaymentModal";
 
 const TripPackagesPath = ({ setPath }) => {
   const [paymentType, setPaymentType] = useState("full payment");
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [showModal, setShowModal] = useState(false);
   return (
     <div className="form-ui">
@@ -91,6 +93,10 @@ const TripPackagesPath = ({ setPath }) => {
         </div>
       </div>
       <TripPackagesModal showModal={showModal} setShowModal={setShowModal} />
+      <PaymentModal
+        showModal={showPaymentModal}
+        setShowModal={setShowPaymentModal}
+      />
     </div>
   );
 };

@@ -8,7 +8,7 @@ const ActivityReservations = () => {
           <h6 className="title">Reservations</h6>
         </div>
         <div className="col-lg-3 col-md-6 col-12 p-2">
-          <div className="reservation_card availble">
+          <div className="reservation_card reserv">
             <h6>
               Start <span>02:00 pm</span>
             </h6>
@@ -18,7 +18,7 @@ const ActivityReservations = () => {
           </div>
         </div>
         <div className="col-lg-3 col-md-6 col-12 p-2">
-          <div className="reservation_card fullyBooked">
+          <div className="reservation_card reserv">
             <h6>
               Start <span>02:00 pm</span>
             </h6>
@@ -28,7 +28,7 @@ const ActivityReservations = () => {
           </div>
         </div>
         <div className="col-lg-3 col-md-6 col-12 p-2">
-          <div className="reservation_card availble">
+          <div className="reservation_card reserv">
             <h6>
               Start <span>02:00 pm</span>
             </h6>
@@ -38,7 +38,7 @@ const ActivityReservations = () => {
           </div>
         </div>
         <div className="col-lg-3 col-md-6 col-12 p-2">
-          <div className="reservation_card availble">
+          <div className="reservation_card reserv">
             <h6>
               Start <span>02:00 pm</span>
             </h6>
