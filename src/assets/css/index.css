@@ -4624,6 +4624,57 @@ small.error {
   width: 100%;
   text-align: start;
 }
+.booking_modal .strocked_wrapper .payment_tabs {
+  width: 100%;
+  display: flex;
+  height: 54px;
+  border-radius: 12px;
+  background: #fff;
+  border: 1px solid #f2f2f2;
+  position: relative;
+  isolation: isolate;
+}
+.booking_modal .strocked_wrapper .payment_tabs .activeTab {
+  transition: 0.25s ease-in-out;
+  position: absolute;
+  border: 0;
+  content: "";
+  top: 0;
+  transform: translateX(0);
+  height: 100%;
+  width: 50%;
+  z-index: -1;
+  background: #ffda8b;
+  border-radius: 12px;
+}
+.booking_modal .strocked_wrapper .payment_tabs .activeTab.card {
+  transform: translateX(100%);
+}
+.booking_modal .strocked_wrapper .payment_tabs .tab {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.booking_modal .strocked_wrapper .payment_tabs .tab h6 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 400;
+  color: #0d0d0d;
+  transition: 0.3s ease-in-out;
+}
+.booking_modal .strocked_wrapper .media {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.booking_modal .strocked_wrapper .media .checkField {
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
 
 .fc-next-button,
 .fc-prev-button,
@@ -4645,6 +4696,10 @@ small.error {
   background: #ebf3f5 !important;
 }
 
+.fc-timegrid-divider {
+  display: none;
+}
+
 .fc-event-title-container {
   padding: 4px 8px;
 }
@@ -4664,6 +4719,26 @@ small.error {
   display: flex;
   flex-direction: column;
   gap: 8px;
+}
+
+.fc-button-group button {
+  background: #006980 !important;
+  border-color: #006980 !important;
+  box-shadow: none !important;
+}
+
+.fc-list-empty {
+  background: #f8f8f8 !important;
+}
+
+.fc-theme-standard .fc-list {
+  border-color: #f2f2f2 !important;
+}
+
+.fc-list-empty-cushion {
+  color: #aaaaaa;
+  font-size: 32px;
+  font-weight: 600;
 }
 
 .value_placeholder {
@@ -4721,7 +4796,7 @@ small.error {
   background: #fff;
 }
 .reservations .title .bookType p.fullyBooked::after {
-  background: #aaaaaa;
+  background: #006980;
 }
 .reservations .reservation_card {
   padding: 12px 12px;
@@ -4783,4 +4858,44 @@ small.error {
 .reservations .reservation_card.reserv h6 span {
   font-weight: 400;
   color: #fff;
+}
+
+.table {
+  margin: 0;
+}
+
+input[type=checkbox] {
+  width: 16px;
+  -webkit-appearance: none !important;
+     -moz-appearance: none !important;
+          appearance: none !important;
+  width: 16px !important;
+  height: 16px !important;
+  border: none !important;
+  position: relative;
+  background: none !important;
+  cursor: pointer;
+}
+input[type=checkbox]::after {
+  position: absolute;
+  right: 50%;
+  transform: translate(50%, -50%);
+  top: 50%;
+  content: "";
+  font-family: "FontAwesome";
+  width: 16px;
+  height: 16px;
+  border: 1px solid #f2f2f2;
+  border-radius: 2px;
+  font-size: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #006980;
+}
+input[type=checkbox]:checked::after {
+  content: "\f00c";
+  background: #006980;
+  color: #fff;
+  border-color: #006980;
 }/*# sourceMappingURL=index.css.map */

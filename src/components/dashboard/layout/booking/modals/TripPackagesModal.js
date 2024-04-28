@@ -4,7 +4,7 @@ import packageImg from "../../../../../assets/images/package.jpg";
 import Badge from "../../../../ui/Badge";
 import PackageReservations from "./PackageReservations";
 import TextField from "../../../../ui/form-elements/TextField";
-import CustomInputField from "../../../../ui/form-elements/CustomInputField";
+import CustomSelectField from "./../../../../ui/form-elements/CustomSelectField";
 
 const TripPackagesModal = ({ showModal, setShowModal }) => {
   return (
@@ -73,12 +73,22 @@ const TripPackagesModal = ({ showModal, setShowModal }) => {
               <PackageReservations />
             </div>
             <div className="col-12 p-2">
-              <CustomInputField
+              <CustomSelectField
                 label="Number of person"
                 id="number_of_person"
                 name="number_of_person"
-                type="number"
-                placeholder="00"
+                options={[
+                  { value: "1", name: "1" },
+                  { value: "2", name: "2" },
+                  { value: "3", name: "3" },
+                  { value: "4", name: "4" },
+                  { value: "5", name: "5" },
+                  { value: "6", name: "6" },
+                  { value: "7", name: "7" },
+                  { value: "8", name: "8" },
+                  { value: "9", name: "9" },
+                  { value: "10", name: "10" }
+                ]}
               />
             </div>
             <div className="col-12 p-2">

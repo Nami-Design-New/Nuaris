@@ -25,8 +25,8 @@ const PackageReservations = () => {
           </div>
         </div>
         <div className="col-lg-4 col-12 p-2">
-          <div className="reservation_card availble">
-            <p>4 Available</p>
+          <div className="reservation_card reserv">
+            <p>0 Available</p>
             <h6>
               Start <span>01/01/2024 02:30 pm</span>
             </h6>
@@ -37,7 +37,7 @@ const PackageReservations = () => {
         </div>
         <div className="col-lg-4 col-12 p-2">
           <div className="reservation_card reserv">
-            <p>4 Available</p>
+            <p>0 Available</p>
             <h6>
               Start <span>01/01/2024 02:30 pm</span>
             </h6>
@@ -47,7 +47,7 @@ const PackageReservations = () => {
           </div>
         </div>
         <div className="col-lg-4 col-12 p-2">
-          <div className="reservation_card fullyBooked">
+          <div className="reservation_card availble">
             <p>4 Available</p>
             <h6>
               Start <span>01/01/2024 02:30 pm</span>

@@ -4,9 +4,11 @@ import ActivityCard from "./cards/ActivityCard";
 import CustomInputField from "./../../../ui/form-elements/CustomInputField";
 import Payment from "./cards/Payment";
 import ActivityModal from "./modals/ActivityModal";
+import PaymentModal from "./modals/PaymentModal";
 
 const ActivitiesPath = ({ setPath }) => {
   const [paymentType, setPaymentType] = useState("full payment");
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
   return (
@@ -74,7 +76,12 @@ const ActivitiesPath = ({ setPath }) => {
                     Back
                   </button>
                   <div className="d-flex gap-2">
-                    <button className="stroked">Preview</button>
+                    <button
+                      className="stroked"
+                      onClick={() => setShowPaymentModal(true)}
+                    >
+                      Preview
+                    </button>
                     <button className="filled">Add More Booking</button>
                   </div>
                 </div>
@@ -84,6 +91,10 @@ const ActivitiesPath = ({ setPath }) => {
         </div>
       </div>
       <ActivityModal showModal={showModal} setShowModal={setShowModal} />
+      <PaymentModal
+        showModal={showPaymentModal}
+        setShowModal={setShowPaymentModal}
+      />
     </div>
   );
 };

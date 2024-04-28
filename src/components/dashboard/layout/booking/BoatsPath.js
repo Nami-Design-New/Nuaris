@@ -6,9 +6,11 @@ import { Form } from "react-bootstrap";
 import IdRow from "./cards/IdRow";
 import AddonRow from "./cards/AddonRow";
 import BoatModal from "./modals/BoatModal";
+import PaymentModal from "./modals/PaymentModal";
 
 const BoatsPath = ({ setPath }) => {
   const [paymentType, setPaymentType] = useState("full payment");
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [showModal, setShowModal] = useState(false);
   return (
     <div className="form-ui">
@@ -92,6 +94,10 @@ const BoatsPath = ({ setPath }) => {
         </div>
       </div>
       <BoatModal showModal={showModal} setShowModal={setShowModal} />
+      <PaymentModal
+        showModal={showPaymentModal}
+        setShowModal={setShowPaymentModal}
+      />
     </div>
   );
 };
