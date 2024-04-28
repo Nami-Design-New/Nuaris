@@ -3,6 +3,8 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { State } from "country-state-city";
 import { useNavigate } from "react-router";
+import { uploadFile } from "react-s3";
+import { S3Config } from "../../../constants";
 import ReactFlagsSelect from "react-flags-select";
 // ui elements
 import InputField from "../../ui/form-elements/InputField";
@@ -11,11 +13,12 @@ import BackButton from "./../../ui/form-elements/BackButton";
 import SelectField from "./../../ui/form-elements/SelectField";
 import PasswordField from "../../ui/form-elements/PasswordField";
 import SubmitButton from "./../../ui/form-elements/SubmitButton";
-import LogoUploadField from "./../../ui/form-elements/LogoUploadField";
+import CustomFileUpload from "../../ui/form-elements/CustomFileUpload";
 
 const AgentForm = ({ setFormSelection }) => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [fileLoading, setFileLoading] = useState(false);
   const [cities, setCities] = useState([]);
   const [cityForCountry, setCityForCountry] = useState(null);
   const [selectedCountry, setSelectedCountry] = useState("SA");
@@ -23,8 +26,58 @@ const AgentForm = ({ setFormSelection }) => {
   const [formData, setFormData] = useState({
     role: "agent",
     country: "SA",
-    city: "'Asir",
+    city: "'Asir"
   });
+
+  // ========= media ========== //
+  const handleUploadMedia = async (file) => {
+    if (fileLoading) {
+      return "";
+    }
+    setFileLoading(true);
+    try {
+      const blob = file.slice(0, file.size, file.type);
+      const newFile = new File([blob], `${Date.now()}${file.name.slice(-3)}`, {
+        type: file.type
+      });
+      const data = await uploadFile(newFile, S3Config);
+      return data.location;
+    } catch (error) {
+      console.error("Error uploading file:", error);
+      throw error;
+    } finally {
+      setFileLoading(false);
+    }
+  };
+  const handleImagesChange = async (e, i) => {
+    if (e?.length === 0) {
+      setFormData((prev) => {
+        return {
+          ...prev,
+          logo: null
+        };
+      });
+      return;
+    }
+    if (fileLoading) {
+      return;
+    }
+    try {
+      const file = e[0].file;
+      const link = await handleUploadMedia(file);
+      setFormData((prev) => {
+        return {
+          ...prev,
+          logo: link
+        };
+      });
+    } catch (error) {
+      console.error("Error handling image upload:", error);
+      toast.error("Error uploading image");
+    } finally {
+      setFileLoading(false);
+    }
+  };
 
   // get cities for each country
   const fetchCitiesForCountry = (countryCode) => {
@@ -51,7 +104,7 @@ const AgentForm = ({ setFormSelection }) => {
         ...formData,
         city: cityName,
         lat: Number(selectedCity.latitude).toFixed(6),
-        lng: Number(selectedCity.longitude).toFixed(6),
+        lng: Number(selectedCity.longitude).toFixed(6)
       });
     }
   };
@@ -59,13 +112,13 @@ const AgentForm = ({ setFormSelection }) => {
   /* form Submit requirments [Host Register] */
   const headersList = {
     Accept: "*/*",
-    "Content-Type": "multipart/form-data",
+    "Content-Type": "multipart/form-data"
   };
   const requestOptions = {
     method: "POST",
     url: "/users/",
     headers: headersList,
-    data: formData,
+    data: formData
   };
   const handleSubmit = async (e) => {
     setLoading(true);
@@ -124,10 +177,15 @@ const AgentForm = ({ setFormSelection }) => {
           </div>
           {/* logo */}
           <div className="col-lg-6 col-12 p-2">
-            <LogoUploadField
-              htmlFor="logo"
+            <CustomFileUpload
+              pannelRatio={0.3666}
               label="Upload Your Logo"
-              setFormData={setFormData}
+              labelIdle={"LOGO"}
+              companyLogo={true}
+              hint="(PNG or JPG)"
+              accept={["image/png", "image/jpeg"]}
+              files={formData.logo ? [formData.logo] : []}
+              onUpdateFiles={handleImagesChange}
             />
           </div>
           {/* email */}

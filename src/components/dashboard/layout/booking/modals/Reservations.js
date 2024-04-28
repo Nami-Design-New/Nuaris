@@ -8,7 +8,7 @@ const Reservations = () => {
           <h6 className="title">Reservations</h6>
         </div>
         <div className="col-lg-4 col-12 p-2">
-          <div className="reservation_card availble">
+          <div className="reservation_card reserv">
             <h6>
               Start <span>01/01/2024 02:30 pm</span>
             </h6>
@@ -18,7 +18,7 @@ const Reservations = () => {
           </div>
         </div>
         <div className="col-lg-4 col-12 p-2">
-          <div className="reservation_card fullyBooked">
+          <div className="reservation_card reserv">
             <h6>
               Start <span>01/01/2024 02:30 pm</span>
             </h6>
@@ -28,7 +28,7 @@ const Reservations = () => {
           </div>
         </div>
         <div className="col-lg-4 col-12 p-2">
-          <div className="reservation_card availble">
+          <div className="reservation_card reserv">
             <h6>
               Start <span>01/01/2024 02:30 pm</span>
             </h6>

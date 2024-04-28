@@ -20,9 +20,10 @@ export default function CustomFileUpload({
   allowMultiple = false,
   onUpdateFiles,
   files,
+  companyLogo
 }) {
   return (
-    <div className="input-field files">
+    <div className={`input-field ${companyLogo ? "" : "files"}`}>
       <label>
         {label} <span>{hint}</span>
       </label>
@@ -44,7 +45,7 @@ export default function CustomFileUpload({
                 load(null);
                 console.error(err);
               });
-          },
+          }
         }}
         allowMultiple={allowMultiple}
         stylePanelLayout="compact"
