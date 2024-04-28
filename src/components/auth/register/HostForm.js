@@ -3,6 +3,8 @@ import axios from "../../../util/axios";
 import { toast } from "react-toastify";
 import { State } from "country-state-city";
 import { useNavigate } from "react-router";
+import { uploadFile } from "react-s3";
+import { S3Config } from "../../../constants";
 import ReactFlagsSelect from "react-flags-select";
 // ui elements
 import MapModal from "./../../ui/map-modal/MapModal";
@@ -12,12 +14,13 @@ import BackButton from "./../../ui/form-elements/BackButton";
 import SelectField from "./../../ui/form-elements/SelectField";
 import PasswordField from "../../ui/form-elements/PasswordField";
 import SubmitButton from "./../../ui/form-elements/SubmitButton";
-import LogoUploadField from "./../../ui/form-elements/LogoUploadField";
 import MapLocationField from "./../../ui/form-elements/MapLocationField";
+import CustomFileUpload from "./../../ui/form-elements/CustomFileUpload";
 
 const HostForm = ({ setFormSelection }) => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [fileLoading, setFileLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [cities, setCities] = useState([]);
   const [cityForCountry, setCityForCountry] = useState(null);
@@ -30,8 +33,68 @@ const HostForm = ({ setFormSelection }) => {
     city: "'Asir",
     role: "host",
     lat: 30.04442,
-    lng: 31.235712
+    lng: 31.235712,
+    location_on_map: ""
   });
+
+  useEffect(() => {
+    setFormData((prev) => {
+      return {
+        ...prev,
+        location_on_map: serchedPlace
+      };
+    });
+  }, [serchedPlace]);
+
+  // ========= media ========== //
+  const handleUploadMedia = async (file) => {
+    if (fileLoading) {
+      return "";
+    }
+    setFileLoading(true);
+    try {
+      const blob = file.slice(0, file.size, file.type);
+      const newFile = new File([blob], `${Date.now()}${file.name.slice(-3)}`, {
+        type: file.type
+      });
+      const data = await uploadFile(newFile, S3Config);
+      return data.location;
+    } catch (error) {
+      console.error("Error uploading file:", error);
+      throw error;
+    } finally {
+      setFileLoading(false);
+    }
+  };
+  const handleImagesChange = async (e, i) => {
+    if (e?.length === 0) {
+      setFormData((prev) => {
+        return {
+          ...prev,
+          logo: null
+        };
+      });
+      return;
+    }
+    if (fileLoading) {
+      return;
+    }
+    try {
+      const file = e[0].file;
+      const link = await handleUploadMedia(file);
+      setFormData((prev) => {
+        return {
+          ...prev,
+          logo: link
+        };
+      });
+    } catch (error) {
+      console.error("Error handling image upload:", error);
+      toast.error("Error uploading image");
+    } finally {
+      setFileLoading(false);
+    }
+  };
 
   const fetchCitiesForCountry = (countryCode) => {
     const citiesArray = State.getStatesOfCountry(countryCode);
@@ -124,10 +187,15 @@ const HostForm = ({ setFormSelection }) => {
           </div>
           {/* logo */}
           <div className="col-lg-6 col-12 p-2">
-            <LogoUploadField
-              htmlFor="logo"
+            <CustomFileUpload
+              pannelRatio={0.3666}
               label="Upload Your Logo"
-              setFormData={setFormData}
+              labelIdle={"LOGO"}
+              companyLogo={true}
+              hint="(PNG or JPG)"
+              accept={["image/png", "image/jpeg"]}
+              files={formData.logo ? [formData.logo] : []}
+              onUpdateFiles={handleImagesChange}
             />
           </div>
           {/* email */}
