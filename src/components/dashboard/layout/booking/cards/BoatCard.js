@@ -3,7 +3,7 @@ import Badge from "../../../../ui/Badge";
 import boat from "../../../../../assets/images/yacht2.jpeg";
 import wallet from "../../../../../assets/images/wallet.svg";
 
-const BoatCard = () => {
+const BoatCard = ({ handleBook }) => {
   return (
     <div className="booking_card">
       <div className="img">
@@ -19,7 +19,7 @@ const BoatCard = () => {
             <span className="value">100$</span> <span>/ hour</span>
           </p>
         </div>
-        <button className="stroked">
+        <button className="stroked" onClick={handleBook}>
           <span>Book</span>
         </button>
       </div>

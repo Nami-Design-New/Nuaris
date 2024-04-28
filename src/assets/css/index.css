@@ -4668,14 +4668,119 @@ small.error {
 
 .value_placeholder {
   margin: 0;
-  color: #777777;
   font-weight: 600;
   display: flex;
-  font-size: 14px;
   align-items: center;
   gap: 32px;
+  font-size: 16px;
+  color: #0d0d0d;
 }
 .value_placeholder span {
   font-size: 18px;
+}
+
+.reservations {
+  padding: 8px;
+  border-radius: 12px;
+  background: #f8f8f8;
+}
+.reservations .title {
+  font-size: 16px !important;
+  font-weight: 400 !important;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.reservations .title .bookType {
+  display: flex;
+  gap: 32px;
+}
+.reservations .title .bookType p {
+  padding: 4px 8px;
+  border-radius: 4px;
+  line-height: 22px;
+  position: relative;
+  margin: 0;
+  display: flex;
   color: #0d0d0d;
+  align-items: center;
+  gap: 4px;
+  font-size: 14px;
+}
+.reservations .title .bookType p::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: -16px;
+  min-width: 18px;
+  height: 18px;
+  border-radius: 50%;
+}
+.reservations .title .bookType p.availble::after {
+  background: #fff;
+}
+.reservations .title .bookType p.fullyBooked::after {
+  background: #aaaaaa;
+}
+.reservations .reservation_card {
+  padding: 12px 12px;
+  gap: 8px;
+  border-radius: 8px;
+  border: 1px solid #fff;
+  display: flex;
+  flex-direction: column;
+}
+.reservations .reservation_card p {
+  margin-bottom: 4px;
+  line-height: 24px;
+  width: -moz-fit-content;
+  width: fit-content;
+  border-bottom: 1px solid #bfd5d8;
+}
+.reservations .reservation_card h6 {
+  margin: 0;
+  font-weight: 400;
+  color: #777777;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.reservations .reservation_card h6 span {
+  font-weight: 600;
+  color: #0d0d0d;
+  line-height: inherit;
+}
+.reservations .reservation_card.availble {
+  background: #fff;
+}
+.reservations .reservation_card.fullyBooked {
+  background: #aaaaaa;
+  border-color: #aaaaaa;
+}
+.reservations .reservation_card.fullyBooked p {
+  color: #fff;
+  border-color: #fff;
+}
+.reservations .reservation_card.fullyBooked h6 {
+  color: #fff;
+}
+.reservations .reservation_card.fullyBooked h6 span {
+  font-weight: 400;
+  color: #fff;
+}
+.reservations .reservation_card.reserv {
+  background: #006980;
+  border-color: #006980;
+}
+.reservations .reservation_card.reserv p {
+  color: #fff;
+}
+.reservations .reservation_card.reserv h6 {
+  color: #fff;
+}
+.reservations .reservation_card.reserv h6 span {
+  font-weight: 400;
+  color: #fff;
 }/*# sourceMappingURL=index.css.map */

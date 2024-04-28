@@ -4,9 +4,11 @@ import TripPackageCard from "./cards/TripPackageCard";
 import Payment from "./cards/Payment";
 import { Form } from "react-bootstrap";
 import IdRow from "./cards/IdRow";
+import TripPackagesModal from "./modals/TripPackagesModal";
 
 const TripPackagesPath = ({ setPath }) => {
   const [paymentType, setPaymentType] = useState("full payment");
+  const [showModal, setShowModal] = useState(false);
   return (
     <div className="form-ui">
       <div className="row m-0">
@@ -39,16 +41,16 @@ const TripPackagesPath = ({ setPath }) => {
                 />
               </div>
               <div className="col-lg-3 col-md-6 col-12 p-2">
-                <TripPackageCard />
+                <TripPackageCard handleBook={() => setShowModal(true)} />
               </div>
               <div className="col-lg-3 col-md-6 col-12 p-2">
-                <TripPackageCard />
+                <TripPackageCard handleBook={() => setShowModal(true)} />
               </div>
               <div className="col-lg-3 col-md-6 col-12 p-2">
-                <TripPackageCard />
+                <TripPackageCard handleBook={() => setShowModal(true)} />
               </div>
               <div className="col-lg-3 col-md-6 col-12 p-2">
-                <TripPackageCard />
+                <TripPackageCard handleBook={() => setShowModal(true)} />
               </div>
               <div className="col-12 p-2">
                 <div className="require_id_wrapper">
@@ -88,6 +90,7 @@ const TripPackagesPath = ({ setPath }) => {
           </div>
         </div>
       </div>
+      <TripPackagesModal showModal={showModal} setShowModal={setShowModal} />
     </div>
   );
 };
