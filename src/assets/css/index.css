@@ -4675,6 +4675,41 @@ small.error {
   align-items: center;
   gap: 2px;
 }
+.booking_modal .strocked_wrapper .media input[type=checkbox] {
+  width: 16px;
+  -webkit-appearance: none !important;
+     -moz-appearance: none !important;
+          appearance: none !important;
+  width: 16px !important;
+  height: 16px !important;
+  border: none !important;
+  position: relative;
+  background: none !important;
+  cursor: pointer;
+}
+.booking_modal .strocked_wrapper .media input[type=checkbox]::after {
+  position: absolute;
+  right: 50%;
+  transform: translate(50%, -50%);
+  top: 50%;
+  content: "";
+  font-family: "FontAwesome";
+  width: 16px;
+  height: 16px;
+  border: 1px solid #f2f2f2;
+  border-radius: 2px;
+  font-size: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #006980;
+}
+.booking_modal .strocked_wrapper .media input[type=checkbox]:checked::after {
+  content: "\f00c";
+  background: #006980;
+  color: #fff;
+  border-color: #006980;
+}
 
 .fc-next-button,
 .fc-prev-button,
@@ -4862,40 +4897,4 @@ small.error {
 
 .table {
   margin: 0;
-}
-
-input[type=checkbox] {
-  width: 16px;
-  -webkit-appearance: none !important;
-     -moz-appearance: none !important;
-          appearance: none !important;
-  width: 16px !important;
-  height: 16px !important;
-  border: none !important;
-  position: relative;
-  background: none !important;
-  cursor: pointer;
-}
-input[type=checkbox]::after {
-  position: absolute;
-  right: 50%;
-  transform: translate(50%, -50%);
-  top: 50%;
-  content: "";
-  font-family: "FontAwesome";
-  width: 16px;
-  height: 16px;
-  border: 1px solid #f2f2f2;
-  border-radius: 2px;
-  font-size: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #006980;
-}
-input[type=checkbox]:checked::after {
-  content: "\f00c";
-  background: #006980;
-  color: #fff;
-  border-color: #006980;
 }/*# sourceMappingURL=index.css.map */

@@ -4388,6 +4388,37 @@ small.error {
         align-items: center;
         gap: 2px;
       }
+      input[type="checkbox"] {
+        width: 16px;
+        appearance: none !important;
+        width: 16px !important;
+        height: 16px !important;
+        border: none !important;
+        position: relative;
+        background: none !important;
+        cursor: pointer;
+        &::after {
+          position: absolute;
+          right: 50%;
+          transform: translate(50%, -50%);
+          top: 50%;
+          content: "";
+          font-family: "FontAwesome";
+          width: 16px;
+          height: 16px;
+          border: 1px solid $inputStroke;
+          border-radius: 2px;
+          font-size: 10px;
+          @include centerFlex();
+          color: $main;
+        }
+        &:checked::after {
+          content: "\f00c";
+          background: $main;
+          color: #fff;
+          border-color: $main;
+        }
+      }
     }
   }
 }
@@ -4566,34 +4597,4 @@ small.error {
 .table {
   margin: 0;
 }
-input[type="checkbox"] {
-  width: 16px;
-  appearance: none !important;
-  width: 16px !important;
-  height: 16px !important;
-  border: none !important;
-  position: relative;
-  background: none !important;
-  cursor: pointer;
-  &::after {
-    position: absolute;
-    right: 50%;
-    transform: translate(50%, -50%);
-    top: 50%;
-    content: "";
-    font-family: "FontAwesome";
-    width: 16px;
-    height: 16px;
-    border: 1px solid $inputStroke;
-    border-radius: 2px;
-    font-size: 10px;
-    @include centerFlex();
-    color: $main;
-  }
-  &:checked::after {
-    content: "\f00c";
-    background: $main;
-    color: #fff;
-    border-color: $main;
-  }
-}
+
