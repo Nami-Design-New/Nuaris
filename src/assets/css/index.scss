@@ -3927,7 +3927,7 @@ small.error {
   border-radius: 12px;
   overflow: hidden;
   .img {
-    aspect-ratio: 1 / .9;
+    aspect-ratio: 1 / 0.9;
     position: relative;
     border-radius: 12px;
     overflow: hidden;
@@ -4036,7 +4036,7 @@ small.error {
         line-height: 20px;
         color: $dark;
         cursor: pointer;
-        transition: .25s ease-in-out;
+        transition: 0.25s ease-in-out;
       }
       input {
         display: none;
@@ -4047,7 +4047,7 @@ small.error {
       }
     }
     .bg-active {
-      transition: .25s ease-in-out;
+      transition: 0.25s ease-in-out;
       position: absolute;
       content: "";
       top: 0;
@@ -4127,7 +4127,7 @@ small.error {
   position: relative;
   isolation: isolate;
   .activeTab {
-    transition: .25s ease-in-out;
+    transition: 0.25s ease-in-out;
     position: absolute;
     content: "";
     top: 0;
@@ -4352,7 +4352,7 @@ small.error {
       position: relative;
       isolation: isolate;
       .activeTab {
-        transition: .25s ease-in-out;
+        transition: 0.25s ease-in-out;
         position: absolute;
         border: 0;
         content: "";
@@ -4598,3 +4598,17 @@ small.error {
   margin: 0;
 }
 
+.rowActivation {
+  width: 50px;
+  height: 30px;
+  position: relative;
+  .form-switch {
+    width: 100%;
+    height: 100%;
+    input {
+      position: absolute;
+      top: 0;
+      left: 42px;
+    }
+  }
+}

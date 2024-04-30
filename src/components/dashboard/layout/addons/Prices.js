@@ -8,8 +8,10 @@ import axios from "./../../../../util/axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import SeasonCard from "./SeasonCard";
+import { useSelector } from "react-redux";
 
 const Prices = ({ setForm, addon }) => {
+  const currency = useSelector((state) => state.user?.user?.currency);
   const createdAddOn = sessionStorage.getItem("addon_id");
   const navigate = useNavigate();
 
@@ -19,13 +21,13 @@ const Prices = ({ setForm, addon }) => {
     price: "",
     type: "",
     minimum_price: "",
-    dates: [new Date()]
+    dates: [new Date()],
   };
   const initialData = {
     price: "",
     price_type: "",
     min_price: "",
-    season_prices: [seasonCardInitialData]
+    season_prices: [seasonCardInitialData],
   };
   const [formData, setFormData] = useState(initialData);
 
@@ -35,7 +37,7 @@ const Prices = ({ setForm, addon }) => {
         price: addon?.price,
         price_type: addon?.price_type,
         min_price: addon?.min_price,
-        season_prices: addon?.season_price
+        season_prices: addon?.season_price,
       });
     }
   }, [addon]);
@@ -52,9 +54,9 @@ const Prices = ({ setForm, addon }) => {
         ...prev.season_prices,
         {
           ...seasonCardInitialData,
-          index: prev.season_prices.length
-        }
-      ]
+          index: prev.season_prices.length,
+        },
+      ],
     }));
   }
 
@@ -66,17 +68,17 @@ const Prices = ({ setForm, addon }) => {
         ...season,
         dates: season.dates.map((date) => ({
           to: date[1],
-          from: date[0]
+          from: date[0],
         })),
-        type: season.type.toLocaleLowerCase()
+        type: season.type.toLocaleLowerCase(),
       }));
       const updatedFormData = {
         ...formData,
-        season_prices: updatedSeasonPrices
+        season_prices: updatedSeasonPrices,
       };
       const response = await axios.patch(`/addons/${createdAddOn}/`, {
         ...updatedFormData,
-        price_type: formData.price_type.toLocaleLowerCase()
+        price_type: formData.price_type.toLocaleLowerCase(),
       });
       if (response.status === 200) {
         toast.success("Prices Saved Successfully");
@@ -130,7 +132,7 @@ const Prices = ({ setForm, addon }) => {
                   "2 Hours",
                   "3 Hours",
                   "Trip",
-                  "Item"
+                  "Item",
                 ].map((unit, index) => (
                   <option key={index} value={unit}>
                     {unit}
@@ -146,7 +148,7 @@ const Prices = ({ setForm, addon }) => {
             setFormData={setFormData}
             label={"Minimum Price"}
             htmlFor={"min_price"}
-            hint={"( UCD )"}
+            hint={`( ${currency} )`}
             type="number"
             placeholder={"00"}
             id={"minPrice"}

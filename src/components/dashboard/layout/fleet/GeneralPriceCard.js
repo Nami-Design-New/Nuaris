@@ -1,8 +1,10 @@
 import React from "react";
 import deleteIcon from "../../../../assets/images/delete.svg";
 import CustomInputField from "../../../ui/form-elements/CustomInputField";
+import { useSelector } from "react-redux";
 
 const GeneralPriceCard = ({ formData, setFormData, index }) => {
+  const currency = useSelector((state) => state.user?.user?.currency);
   let optionsArray = [];
   function handleChangePrice(e, i) {
     setFormData((prev) => {
@@ -10,7 +12,7 @@ const GeneralPriceCard = ({ formData, setFormData, index }) => {
       prices[i][e.target.name] = e.target.value;
       return {
         ...prev,
-        prices
+        prices,
       };
     });
   }
@@ -21,7 +23,7 @@ const GeneralPriceCard = ({ formData, setFormData, index }) => {
       prices.splice(i, 1);
       return {
         ...prev,
-        prices
+        prices,
       };
     });
   }
@@ -89,7 +91,7 @@ const GeneralPriceCard = ({ formData, setFormData, index }) => {
             <CustomInputField
               label="Price"
               name="price"
-              hint={"( USD )"}
+              hint={`( ${currency} )`}
               type="number"
               placeholder="00"
               value={formData.prices[index].price}
@@ -106,7 +108,7 @@ const GeneralPriceCard = ({ formData, setFormData, index }) => {
               }
               label={"Extra Hour Price"}
               name="extra_hour_price"
-              hint={"( USD )"}
+              hint={`( ${currency} )`}
               type="number"
               placeholder="00"
               value={formData.prices[index].extra_hour_price}
@@ -116,7 +118,7 @@ const GeneralPriceCard = ({ formData, setFormData, index }) => {
           {/* Min Price */}
           <div className="col-lg-6 col-12 p-2">
             <CustomInputField
-              hint={"( USD )"}
+              hint={`( ${currency} )`}
               label={"Minimum Price"}
               name="minimum_price"
               type="number"
@@ -129,7 +131,7 @@ const GeneralPriceCard = ({ formData, setFormData, index }) => {
         <button
           disabled={formData.prices.length === 1}
           style={{
-            opacity: formData.prices.length === 1 ? "0.5" : "1"
+            opacity: formData.prices.length === 1 ? "0.5" : "1",
           }}
           type="button"
           className="delete_btn"
@@ -145,7 +147,7 @@ const GeneralPriceCard = ({ formData, setFormData, index }) => {
             prices.splice(index, 1);
             return {
               ...prev,
-              prices
+              prices,
             };
           });
         }}

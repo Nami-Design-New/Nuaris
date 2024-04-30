@@ -33,7 +33,7 @@ const HostForm = ({ setFormSelection }) => {
     city: "'Asir",
     role: "host",
     lat: 30.04442,
-    lng: 31.235712,
+    lng: 46.6753,
     location_on_map: ""
   });
 
