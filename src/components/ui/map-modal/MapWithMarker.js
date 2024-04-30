@@ -7,7 +7,7 @@ const MapWithMarker = ({
   setFormData,
   setSerchedPlace,
   target,
-  showLocationFirst
+  showLocationFirst,
 }) => {
   const [markerPosition, setMarkerPosition] = useState({});
   const [searchInput, setSearchInput] = useState("");
@@ -17,18 +17,18 @@ const MapWithMarker = ({
     if (showLocationFirst) {
       reverseGeocodeMarkerPosition({
         lat: Number(formData.lat),
-        lng: Number(formData.lng)
+        lng: Number(formData.lng),
       });
     }
     if (target) {
       setMarkerPosition({
         lat: Number(formData?.[target]?.lat),
-        lng: Number(formData?.[target]?.lng)
+        lng: Number(formData?.[target]?.lng),
       });
     } else {
       setMarkerPosition({
         lat: Number(formData.lat),
-        lng: Number(formData.lng)
+        lng: Number(formData.lng),
       });
     }
     reverseGeocodeMarkerPosition();
@@ -42,14 +42,14 @@ const MapWithMarker = ({
         ...formData,
         [target]: {
           lat: coord.lat.toFixed(6),
-          lng: coord.lng.toFixed(6)
-        }
+          lng: coord.lng.toFixed(6),
+        },
       });
     } else {
       setFormData({
         ...formData,
         lat: coord.lat.toFixed(6),
-        lng: coord.lng.toFixed(6)
+        lng: coord.lng.toFixed(6),
       });
     }
     console.log(coord);
@@ -78,7 +78,7 @@ const MapWithMarker = ({
       const selectedPlace = places[0];
       const position = {
         lat: selectedPlace.geometry.location.lat(),
-        lng: selectedPlace.geometry.location.lng()
+        lng: selectedPlace.geometry.location.lng(),
       };
       setMarkerPosition(position);
       if (target) {
@@ -86,14 +86,14 @@ const MapWithMarker = ({
           ...formData,
           [target]: {
             lat: position.lat.toFixed(6),
-            lng: position.lng.toFixed(6)
-          }
+            lng: position.lng.toFixed(6),
+          },
         });
       } else {
         setFormData({
           ...formData,
           lat: position.lat.toFixed(6),
-          lng: position.lng.toFixed(6)
+          lng: position.lng.toFixed(6),
         });
       }
       setSearchInput(selectedPlace.name);
@@ -105,12 +105,18 @@ const MapWithMarker = ({
     setSearchInput(event.target.value);
   };
 
+  const handleSearchInputKeyPress = (event) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+    }
+  };
+
   return (
     <GoogleMap
       mapContainerStyle={{
         width: "100%",
         height: "400px",
-        borderRadius: "12px"
+        borderRadius: "12px",
       }}
       zoom={10}
       center={markerPosition}
@@ -122,7 +128,7 @@ const MapWithMarker = ({
         onDragEnd={(e) => {
           handleMarkerDragEnd({
             lat: e.latLng.lat(),
-            lng: e.latLng.lng()
+            lng: e.latLng.lng(),
           });
         }}
       />
@@ -136,6 +142,7 @@ const MapWithMarker = ({
           className="mapSearchInput"
           value={searchInput}
           onChange={handleInputChange}
+          onKeyDown={handleSearchInputKeyPress}
         />
       </StandaloneSearchBox>
     </GoogleMap>
