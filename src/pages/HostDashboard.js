@@ -23,6 +23,7 @@ import ManageAccount from "../components/dashboard/pages/manage-account/ManageAc
 import Destination from "../components/dashboard/pages/destination/Destination";
 import Booking from "../components/dashboard/pages/booking-scheduling/Booking";
 import Scheduling from "../components/dashboard/pages/booking-scheduling/Scheduling";
+import Packages from "../components/dashboard/pages/Packages";
 
 const HostDashboard = () => {
   const [sideBarOpen, setSideBarOpen] = useState(false);
@@ -58,6 +59,7 @@ const HostDashboard = () => {
             <Route path="/fleet" element={<Fleet />} />
             <Route path="/fleet/:fleetId" element={<FleetProfile />} />
             <Route path="/fleet/add-yacht/*" element={<AddYacht />} />
+            <Route path="/fleet/edit-yacht/:id/*" element={<AddYacht />} />
             {/* add ons */}
             <Route path="/addons" element={<AddOns />} />
             <Route path="/addons/add-new-addon" element={<AddNewAddOn />} />
@@ -80,6 +82,8 @@ const HostDashboard = () => {
             />
             {/* destionation */}
             <Route path="/destination" element={<Destination />} />
+            {/* packeges */}
+            <Route path="/packages" element={<Packages />} />
             {/* manage account */}
             <Route path="/manage-account/*" element={<ManageAccount />} />
             {/* error redirect */}

@@ -1,32 +1,40 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import SubmitButton from "../../../ui/form-elements/SubmitButton";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-const VesselStatusForm = () => {
+const VesselStatusForm = ({ yacht }) => {
   const [loading, setLoading] = useState(false);
   const yacht_id = sessionStorage.getItem("yacht_id");
   const [formData, setFormData] = useState({
     status: "inactive",
-    inactivity_time_from: null,
-    inactivity_time_to: null,
+    inactivity_time_from: undefined,
+    inactivity_time_to: undefined,
   });
+
+  useEffect(() => {
+    if (yacht) {
+      setFormData({
+        status: yacht?.status || "inactive",
+        inactivity_time_from: yacht?.inactivity_time_from,
+        inactivity_time_to: yacht?.inactivity_time_to,
+      });
+    }
+  }, [yacht]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    if (!yacht_id) {
+    if (!yacht_id && !yacht?.id) {
       toast.error("create a yacht first");
       setLoading(false);
       return;
     }
     try {
-      const response = await axios.patch(`/yachts/${yacht_id}/`, formData);
+      let url = yacht?.id ? `yachts/${yacht?.id}/` : `yachts/${yacht_id}/`;
+      const response = await axios.patch(url, formData);
       if (response.status === 200) {
         toast.success("Vessel Status Updated Successfully");
-        setFormData({
-          inactivity_time_from: null,
-          inactivity_time_to: null,
-        });
       } else {
         toast.error("Something went wrong");
       }
@@ -69,6 +77,8 @@ const VesselStatusForm = () => {
                   setFormData({
                     ...formData,
                     status: "inactive",
+                    inactivity_time_from: undefined,
+                    inactivity_time_to: undefined,
                   });
                 }}
               />
@@ -84,6 +94,8 @@ const VesselStatusForm = () => {
                   setFormData({
                     ...formData,
                     status: "hidden",
+                    inactivity_time_from: undefined,
+                    inactivity_time_to: undefined,
                   });
                 }}
               />
@@ -102,7 +114,7 @@ const VesselStatusForm = () => {
                   id="from"
                   name="from"
                   required
-                  value={formData.inactivity_time_from}
+                  value={formData?.inactivity_time_from}
                   onChange={(e) => {
                     setFormData({
                       ...formData,
@@ -121,7 +133,7 @@ const VesselStatusForm = () => {
                   id="to"
                   name="to"
                   required
-                  value={formData.inactivity_time_to}
+                  value={formData?.inactivity_time_to}
                   onChange={(e) => {
                     setFormData({
                       ...formData,

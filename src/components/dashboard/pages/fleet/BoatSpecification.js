@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import InputField from "../../../ui/form-elements/InputField";
 import SelectField from "./../../../ui/form-elements/SelectField";
 import InputWithUnit from "./../../../ui/form-elements/InputWithUnit";
@@ -8,7 +8,7 @@ import SubmitButton from "./../../../ui/form-elements/SubmitButton";
 import { FUEL, YRARS } from "../../../../constants";
 import { useNavigate } from "react-router-dom";
 
-const BoatSpecification = () => {
+const BoatSpecification = ({ yacht }) => {
   const createdYacht = sessionStorage.getItem("yacht_id");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -27,17 +27,46 @@ const BoatSpecification = () => {
     king_beds: "",
     sofa_beds: "",
     fuel: "select",
-    accept_sleeping_arrangement: false
+    accept_sleeping_arrangement: false,
   });
+
+  useEffect(() => {
+    if (yacht) {
+      setFormData({
+        capacity: yacht?.capacity,
+        year_of_manufacture: yacht?.year_of_manufacture,
+        depth: yacht?.depth,
+        length: yacht?.length,
+        engine_quantity: yacht?.engine_quantity,
+        engine_size: yacht?.engine_size,
+        bathrooms: yacht?.bathrooms,
+        sleeping_cabins: yacht?.sleeping_cabins,
+        single_beds: yacht?.single_beds,
+        double_beds: yacht?.double_beds,
+        queen_beds: yacht?.queen_beds,
+        king_beds: yacht?.king_beds,
+        sofa_beds: yacht?.sofa_beds,
+        fuel: yacht?.fuel,
+        accept_sleeping_arrangement: yacht?.accept_sleeping_arrangement,
+      });
+    }
+  }, [yacht]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     try {
-      const response = await axios.patch(`/yachts/${createdYacht}/`, formData);
+      let url = yacht?.id
+        ? `/yachts/${yacht?.id}/`
+        : `/yachts/${createdYacht}/`;
+      const response = await axios.patch(url, formData);
       if (response.status === 200) {
-        toast.success("Boat Specification Saved Successfully");
-        navigate("/dashboard/fleet/add-yacht/working-hours");
+        yacht
+          ? toast.success("Boat Specification Updated Successfully")
+          : toast.success("Boat Specification Saved Successfully");
+        yacht
+          ? navigate(`/dashboard/fleet/add-yacht/${yacht?.id}/working-hours`)
+          : navigate("/dashboard/fleet/add-yacht/working-hours");
       } else {
         toast.error("Something went wrong");
       }
@@ -48,6 +77,7 @@ const BoatSpecification = () => {
       setLoading(false);
     }
   };
+
   return (
     <div className="fleet_form__wrapper">
       <form className="form-ui specifications" onSubmit={handleSubmit}>
@@ -264,7 +294,7 @@ const BoatSpecification = () => {
                       onChange={() => {
                         setFormData({
                           ...formData,
-                          accept_sleeping_arrangement: true
+                          accept_sleeping_arrangement: true,
                         });
                       }}
                     />
@@ -279,7 +309,7 @@ const BoatSpecification = () => {
                       onChange={() => {
                         setFormData({
                           ...formData,
-                          accept_sleeping_arrangement: false
+                          accept_sleeping_arrangement: false,
                         });
                       }}
                     />

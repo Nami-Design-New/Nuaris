@@ -13,6 +13,7 @@ import axios from "./../../../../util/axios";
 export default function FleetProfile() {
   const [fleet, setFleet] = useState({});
   const { fleetId } = useParams();
+
   useEffect(() => {
     const fetchFleet = async () => {
       try {
@@ -30,7 +31,7 @@ export default function FleetProfile() {
       <header className="flex-header">
         <PageHeader currentName={fleet?.name_en} name={fleet?.name_en} />
         <div className="utility-buttons">
-          <Link to={""}>
+          <Link to={`/dashboard/fleet/edit-yacht/${fleetId}/`}>
             <img src={editIcon} alt="edit icon" />
             Edit
           </Link>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import InputField from "../../../ui/form-elements/InputField";
 import SelectField from "./../../../ui/form-elements/SelectField";
 import CommentField from "./../../../ui/form-elements/CommentField";
@@ -12,7 +12,7 @@ import { uploadFile } from "react-s3";
 import CustomFileUpload from "../../../ui/form-elements/CustomFileUpload";
 window.Buffer = window.Buffer || require("buffer").Buffer;
 
-const MainInfoForm = ({ setForm }) => {
+const MainInfoForm = ({ setForm, yacht }) => {
   // ======== start file upload configration =======//
   const [fileLoading, setFileLoading] = useState(false);
   const handleUploadMedia = async (file) => {
@@ -60,6 +60,25 @@ const MainInfoForm = ({ setForm }) => {
     description_en: "",
     description_ar: "",
   });
+
+  useEffect(() => {
+    if (yacht) {
+      setFormData({
+        type: yacht?.type,
+        brand: yacht?.brand,
+        name_en: yacht?.name_en,
+        name_ar: yacht?.name_ar,
+        number: yacht?.number,
+        license_number: yacht?.license_number,
+        license_file: yacht?.license_file,
+        license_expire_date: yacht?.license_expire_date,
+        preparation_time: yacht?.preparation_time,
+        description_en: yacht?.description_en,
+        description_ar: yacht?.description_ar,
+      });
+    }
+  }, [yacht]);
+
   const [loading, setLoading] = useState(false);
   const user = useSelector((state) => state.user?.user);
   const subUserSet = user?.subuser_set;
@@ -82,10 +101,16 @@ const MainInfoForm = ({ setForm }) => {
         sub_user: subUser[0]?.id,
         type: formData.type.toLowerCase(),
       };
-      const response = await axios.post("/yachts/", data);
-      if (response.status === 201) {
+      const response = await axios.request({
+        url: yacht?.id ? `/yachts/${yacht.id}/` : "/yachts/",
+        method: yacht ? "PATCH" : "POST",
+        data,
+      });
+      if (response.status === 201 || response.status === 200) {
         setForm("Location");
-        toast.success("Main Info Saved Successfully");
+        yacht
+          ? toast.success("Main Info Updated Successfully")
+          : toast.success("Main Info Saved Successfully");
         sessionStorage.setItem("yacht_id", response?.data?.id);
       } else {
         toast.error("Something went wrong");
@@ -97,6 +122,7 @@ const MainInfoForm = ({ setForm }) => {
       setLoading(false);
     }
   };
+  
   return (
     <form className="form-ui" onSubmit={handleSubmit}>
       <div className="row m-0">

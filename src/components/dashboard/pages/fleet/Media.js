@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { useEffect, useState } from "react";
 import photoSessionImg from "../../../../assets/images/photoSession.svg";
 import fav from "../../../../assets/images/fav.png";
 import CustomFileUpload from "../../../ui/form-elements/CustomFileUpload";
@@ -10,16 +10,24 @@ import SubmitButton from "../../../ui/form-elements/SubmitButton";
 import { S3Config } from "../../../../constants";
 window.Buffer = window.Buffer || require("buffer").Buffer;
 
-const Media = () => {
+const Media = ({ yacht }) => {
   const createdYacht = sessionStorage.getItem("yacht_id");
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [fileLoading, setFileLoading] = useState(false);
   const [formData, setFormData] = useState({
     image: Array(5).fill(""),
-    video_link: ""
+    video_link: "",
   });
 
+  useEffect(() => {
+    setFormData({
+      image: yacht?.images || Array(5).fill(""),
+      video_link: yacht?.video_link || "",
+    });
+  }, [yacht]);
+
+  // ========= media ========== //
   const handleUploadMedia = async (file) => {
     if (fileLoading) {
       return "";
@@ -28,7 +36,7 @@ const Media = () => {
     try {
       const blob = file.slice(0, file.size, file.type);
       const newFile = new File([blob], `${Date.now()}${file.name.slice(-3)}`, {
-        type: file.type
+        type: file.type,
       });
       const data = await uploadFile(newFile, S3Config);
       return data.location;
@@ -40,59 +48,84 @@ const Media = () => {
     }
   };
 
-  const handleVideoChange = async (e) => {
+  const handleImagesChange = async (e, i) => {
+    if (e?.length === 0) {
+      setFormData((prev) => {
+        const image = [...prev.image];
+        image[i] = "";
+        return {
+          ...prev,
+          image: image,
+        };
+      });
+      return;
+    }
+    if (fileLoading) {
+      return;
+    }
     try {
       const file = e[0].file;
       const link = await handleUploadMedia(file);
-      setFormData((prev) => ({ ...prev, video_link: link }));
+      setFormData((prev) => {
+        const image = [...prev.image];
+        image[i] = link;
+        return {
+          ...prev,
+          image: image,
+        };
+      });
+    } catch (error) {
+      console.error("Error handling image upload:", error);
+      toast.error("Error uploading image");
+    } finally {
+      setFileLoading(false);
+    }
+  };
+
+  const handleVideoChange = async (e) => {
+    if (e?.length === 0) {
+      setFormData({
+        ...formData,
+        video_link: "",
+      });
+      return;
+    }
+    if (fileLoading) {
+      return;
+    }
+    try {
+      const file = e[0].file;
+      const link = await handleUploadMedia(file);
+      setFormData({
+        ...formData,
+        video_link: link,
+      });
     } catch (error) {
       console.error("Error handling video upload:", error);
       setFileLoading(false);
       toast.error("Error uploading video");
     }
   };
-
-  const handleImageChange = async (e, i) => {
-    if (e?.length === 0) {
-      // TODO: Remove the image at index i from the formData (example below)
-      // setFormData((prev) => {
-      //   const attachment = [...prev.attachment];
-      //   attachment[i] = "";
-      //   return {
-      //     ...prev,
-      //     attachment: attachment,
-      //   };
-      // });
-      // return;
-    }
-    if (fileLoading) {
-      return;
-    }
-    try {
-      if (!fileLoading) {
-        const file = e[0].file;
-        const link = await handleUploadMedia(file);
-        setFormData((prev) => {
-          const image = [...prev.image];
-          image[i] = link;
-          return { ...prev, image };
-        });
-      }
-    } catch (error) {
-      console.error("Error handling image upload:", error);
-      setFileLoading(false);
-      toast.error("Error uploading image");
-    }
-  };
+  // ========= end of media ========= //
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     try {
-      const response = await axios.patch(`/yachts/${createdYacht}/`, formData);
+      let url = yacht?.id
+        ? `/yachts/${yacht?.id}/`
+        : `/yachts/${createdYacht}/`;
+
+      const response = await axios.patch(url, formData);
       if (response.status === 200) {
-        toast.success("Yacht Media Saved Successfully");
-        navigate("/dashboard/fleet/add-yacht/boat-specification");
+        yacht
+          ? toast.success("Yacht Media Updated Successfully")
+          : toast.success("Yacht Media Saved Successfully");
+        yacht
+          ? navigate(
+              `/dashboard/fleet/add-yacht/${yacht?.id}/boat-specification`
+            )
+          : navigate("/dashboard/fleet/add-yacht/boat-specification");
       } else {
         toast.error("Something went wrong");
       }
@@ -136,22 +169,21 @@ const Media = () => {
                 <div className="photos">
                   {Array(5)
                     .fill(0)
-                    .map((_, i) => {
-                      return (
-                        <Fragment key={i}>
-                          <CustomFileUpload
-                            pannelRatio={".88"}
-                            accept={["image/png", "image/jpeg"]}
-                            labelIdle={`${
-                              i === 0
-                                ? '<label class="mainImg">Main Image</label>'
-                                : ""
-                            } <img src=${fav} alt="fav"/>`}
-                            onUpdateFiles={(e) => handleImageChange(e, i)}
-                          />
-                        </Fragment>
-                      );
-                    })}
+                    .map((_, i) => (
+                      <CustomFileUpload
+                        key={i}
+                        labelIdle={`${
+                          i === 0
+                            ? '<label class="mainImg">Main Image</label>'
+                            : ""
+                        } <img src=${fav} alt="fav"/>`}
+                        pannelRatio=".88"
+                        files={formData.image[i] ? [formData.image[i]] : null}
+                        value
+                        allowMultiple={false}
+                        onUpdateFiles={(e) => handleImagesChange(e, i)}
+                      />
+                    ))}
                 </div>
               </div>
             </div>
@@ -161,8 +193,10 @@ const Media = () => {
                 label="Upload Video"
                 hint="( Max Size 20MB )"
                 labelIdle="Drag & Drop your files or Browse"
-                pannelRatio=".245"
+                pannelRatio=".283"
                 accept={["video/*"]}
+                allowMultiple={false}
+                files={formData?.video_link ? [formData?.video_link] : null}
                 onUpdateFiles={(e) => handleVideoChange(e)}
               />
             </div>

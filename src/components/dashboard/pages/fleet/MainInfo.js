@@ -4,18 +4,19 @@ import LocationForm from "./../../layout/fleet/LocationForm";
 import CrewForm from "./../../layout/fleet/CrewForm";
 import PolicyForm from "../../layout/fleet/PolicyForm";
 
-const MainInfo = () => {
+const MainInfo = ({ yacht }) => {
   const [form, setForm] = useState("Main Info");
+
   let formComponent;
   switch (form) {
     case "Main Info":
-      formComponent = <MainInfoForm setForm={setForm} />;
+      formComponent = <MainInfoForm setForm={setForm} yacht={yacht} />;
       break;
     case "Location":
       formComponent = <LocationForm setForm={setForm} />;
       break;
     case "Crew":
-      formComponent = <CrewForm setForm={setForm} />;
+      formComponent = <CrewForm setForm={setForm} yacht={yacht} />;
       break;
     case "Policy":
       formComponent = <PolicyForm setForm={setForm} />;

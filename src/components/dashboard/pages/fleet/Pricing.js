@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Form } from "react-bootstrap";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
@@ -11,7 +11,7 @@ import GeneralPriceCard from "../../layout/fleet/GeneralPriceCard";
 import axios from "./../../../../util/axios";
 import SubmitButton from "../../../ui/form-elements/SubmitButton";
 
-const Pricing = () => {
+const Pricing = ({ yacht }) => {
   const yachtId = sessionStorage.getItem("yacht_id");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -22,55 +22,73 @@ const Pricing = () => {
     period_type: "",
     extra_hour_price: "",
     minimum_price: "",
-    dates: [new Date()]
+    dates: [new Date()],
   };
   const initialPricesData = {
     period: 4,
-    period_type: "",
+    period_type: "minutes",
     price: "",
     extra_hour_price: "",
-    minimum_price: ""
+    minimum_price: "",
   };
   const initialData = {
     prices: [initialPricesData],
     season_prices: [seasonCardInitialData],
-    vat: [],
+    vat: null,
     price: "",
     pre_payment_percentage: 100,
     minimum_rental_period: "",
-    minimum_rental_period_type: "hours"
+    minimum_rental_period_type: "hours",
   };
 
   const [formData, setFormData] = useState(initialData);
   const [uponRequest, setUponRequest] = useState(false);
 
+  useEffect(() => {
+    if (yacht) {
+      setFormData({
+        prices: yacht?.prices,
+        season_prices: yacht?.season_prices,
+        vat: yacht?.vat,
+        price: yacht?.price,
+        pre_payment_percentage: yacht?.pre_payment_percentage,
+        minimum_rental_period: yacht?.minimum_rental_period,
+        minimum_rental_period_type: yacht?.minimum_rental_period_type,
+      });
+    }
+  }, [yacht]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    if (!yachtId) {
+    if (!yachtId && !yacht?.id) {
       toast.error("Create a Yacht first");
       setLoading(false);
       return;
     }
-    const updatedSeasonPrices = formData.season_prices.map((season) => ({
+    const updatedSeasonPrices = formData?.season_prices.map((season) => ({
       ...season,
       dates: season.dates.map((date) => ({
         to: date[1],
-        from: date[0]
-      }))
+        from: date[0],
+      })),
     }));
     const updatedFormData = {
       ...formData,
-      season_prices: updatedSeasonPrices
+      season_prices: updatedSeasonPrices,
     };
     try {
-      const response = await axios.patch(
-        `/yachts/${yachtId}/update-price/`,
-        updatedFormData
-      );
+      let url = yacht?.id ? `/yachts/${yacht?.id}/` : `/yachts/${yachtId}/`;
+      const response = await axios.patch(url, updatedFormData);
       if (response?.status === 200 || response?.status === 201) {
-        toast.success("Pricing Saved Successfully");
-        navigate("/dashboard/fleet/add-yacht/add-ons-connected");
+        yacht
+          ? toast.success("Pricing Updated Successfully")
+          : toast.success("Pricing Saved Successfully");
+        yacht
+          ? navigate(
+              `/dashboard/fleet/add-yacht/${yacht?.id}/add-ons-connected`
+            )
+          : navigate("/dashboard/fleet/add-yacht/add-ons-connected");
       } else {
         toast.error("Something went wrong");
       }
@@ -108,11 +126,11 @@ const Pricing = () => {
                     name="prepaymentPercentage"
                     type="number"
                     placeholder="00"
-                    value={formData.pre_payment_percentage}
+                    value={formData?.pre_payment_percentage}
                     onChange={(e) => {
                       setFormData((prev) => ({
                         ...prev,
-                        pre_payment_percentage: e.target.value
+                        pre_payment_percentage: e.target.value,
                       }));
                     }}
                   />
@@ -121,16 +139,16 @@ const Pricing = () => {
                   <div className="input-field">
                     <label htmlFor="period">Minimum rental Period</label>
                     <div className="time-units">
-                      {formData.minimum_rental_period_type === "minutes" ? (
+                      {formData?.minimum_rental_period_type === "minutes" ? (
                         <select
                           className="units w-100"
                           name="minits"
                           id="minits"
-                          value={formData.minimum_rental_period}
+                          value={formData?.minimum_rental_period}
                           onChange={(e) =>
                             setFormData((prev) => ({
                               ...prev,
-                              minimum_rental_period: e.target.value
+                              minimum_rental_period: e.target.value,
                             }))
                           }
                         >
@@ -146,11 +164,11 @@ const Pricing = () => {
                           placeholder="00"
                           name="period"
                           id="period"
-                          value={formData.minimum_rental_period}
+                          value={formData?.minimum_rental_period}
                           onChange={(e) =>
                             setFormData((prev) => ({
                               ...prev,
-                              minimum_rental_period: e.target.value
+                              minimum_rental_period: e.target.value,
                             }))
                           }
                         />
@@ -159,11 +177,11 @@ const Pricing = () => {
                         className="units"
                         name="period_type"
                         id="units"
-                        value={formData.minimum_rental_period_type}
+                        value={formData?.minimum_rental_period_type}
                         onChange={(e) =>
                           setFormData((prev) => ({
                             ...prev,
-                            minimum_rental_period_type: e.target.value
+                            minimum_rental_period_type: e.target.value,
                           }))
                         }
                       >
@@ -185,11 +203,11 @@ const Pricing = () => {
                     name={"price"}
                     label="Price"
                     placeholder="00"
-                    value={formData.price}
+                    value={formData?.price}
                     onChange={(e) => {
                       setFormData((prev) => ({
                         ...prev,
-                        price: e.target.value
+                        price: e.target.value,
                       }));
                     }}
                   />
@@ -203,7 +221,7 @@ const Pricing = () => {
                       setFormData((prev) => {
                         return {
                           ...prev,
-                          prices: [...prev.prices, initialPricesData]
+                          prices: [...prev.prices, initialPricesData],
                         };
                       });
                     }}
@@ -212,7 +230,7 @@ const Pricing = () => {
                     <img src={addIcon} alt="addIcon" />
                   </button>
                 </div>
-                {formData.prices.map((e, index) => {
+                {formData?.prices?.map((e, index) => {
                   return (
                     <GeneralPriceCard
                       key={index}
@@ -235,8 +253,8 @@ const Pricing = () => {
                           ...prev,
                           season_prices: [
                             ...prev.season_prices,
-                            seasonCardInitialData
-                          ]
+                            seasonCardInitialData,
+                          ],
                         };
                       });
                     }}
@@ -246,7 +264,7 @@ const Pricing = () => {
                   </button>
                 </div>
                 {/* calender seasons cards */}
-                {formData.season_prices.map((_, rowIndex) => (
+                {formData?.season_prices?.map((_, rowIndex) => (
                   <SeasonCard
                     key={rowIndex}
                     formData={formData}

@@ -2007,8 +2007,19 @@ th:last-child .p-column-header-content {
       gap: 10px;
       padding: 12px;
       img {
-        width: 20px;
         height: 20px;
+      }
+    }
+    @media screen and (max-width: 576px) {
+      gap: 0;
+      padding: 8px;
+      a,
+      button {
+        font-size: 16px;
+        gap: 4px;
+        img {
+          height: 18px;
+        }
       }
     }
   }
@@ -2753,7 +2764,15 @@ small.error {
   box-shadow: none !important;
   border-radius: 8px;
 }
-
+.rmdp-arrow-container {
+  padding: 2px 0 2px 2px;
+  &:hover {
+    background-color: $main;
+  }
+  &.rmdp-left {
+    padding: 2px 2px 2px 0;
+  }
+}
 .actions_cell_addons {
   width: max-content;
   display: flex;

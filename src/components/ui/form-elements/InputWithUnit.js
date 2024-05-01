@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 const InputWithUnit = ({
   htmlFor,
@@ -6,24 +6,36 @@ const InputWithUnit = ({
   units,
   hint,
   formData,
-  setFormData
+  setFormData,
 }) => {
-  const [unit, setUnit] = useState(units[0]);
-  const [value, setValue] = useState("");
+  const initialValue = formData[htmlFor] ? formData[htmlFor].split(" ")[0] : "";
+  const initialUnit = formData[htmlFor]
+    ? formData[htmlFor].split(" ")[1]
+    : units[0];
 
-  const handleUnitChange = (e) => {
-    setUnit(e.target.value);
-    handleChange(value, e.target.value);
-  };
+  const [value, setValue] = useState(initialValue);
+  const [unit, setUnit] = useState(initialUnit);
+
+  useEffect(() => {
+    setFormData((prev) => ({
+      ...prev,
+      [htmlFor]: `${value} ${unit}`,
+    }));
+  }, [value, unit, setFormData, htmlFor]);
+
+  useEffect(() => {
+    const formDataValue = formData[htmlFor] ? formData[htmlFor].split(" ") : [];
+    const newValue = formDataValue[0] || "";
+    const newUnit = formDataValue[1] || units[0];
+    setValue(newValue);
+    setUnit(newUnit);
+  }, [formData, htmlFor, units]);
 
   const handleValueChange = (e) => {
     setValue(e.target.value);
-    handleChange(e.target.value, unit);
   };
-
-  const handleChange = (newValue, newUnit) => {
-    const combined = `${newValue} ${newUnit}`;
-    setFormData({ ...formData, [htmlFor]: combined });
+  const handleUnitChange = (e) => {
+    setUnit(e.target.value);
   };
 
   return (
