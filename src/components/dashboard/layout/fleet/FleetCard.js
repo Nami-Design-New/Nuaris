@@ -8,12 +8,26 @@ import female from "../../../../assets/images/female.svg";
 import { COUNTRIES_NAMES } from "../../../../constants";
 
 export default function FleetCard({ fleet }) {
+  let badge;
   const getCountryName = (countryCode) => {
     return COUNTRIES_NAMES[countryCode] || countryCode;
   };
+  switch (fleet?.status) {
+    case "active":
+      badge = <Badge state={1} content={"Available"} />;
+      break;
+    case "hidden":
+      badge = <Badge state={0} content={"Hidden"} />;
+      break;
+    case "inactive":
+      badge = <Badge state={2} content={"Inactive"} />;
+      break;
+    default:
+      break;
+  }
   return (
     <Link className="fleet-card" to={`/dashboard/fleet/${fleet?.id}`}>
-      <Badge state={1} content={"available"} />
+      {badge}
       <div className="image-container">
         <img
           loading="lazy"

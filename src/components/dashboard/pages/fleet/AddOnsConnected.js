@@ -10,7 +10,8 @@ import TableLoader from "../../../ui/TableLoader";
 import CustomPagination from "../../../ui/CustomPagination";
 import { Button } from "primereact/button";
 import { toast } from "react-toastify";
-const AddOnsConnected = () => {
+
+const AddOnsConnected = ({ yacht }) => {
   const yachtId = Number(sessionStorage.getItem("yacht_id"));
   const [row, setRow] = useState({});
   const [searchParams] = useSearchParams();
@@ -29,8 +30,8 @@ const AddOnsConnected = () => {
       axios
         .get(`/addons/?sub_user=${subUser}`, {
           params: {
-            page: currentPage
-          }
+            page: currentPage,
+          },
         })
         .then((res) => {
           setAddonsCount(res?.data?.count);
@@ -54,14 +55,15 @@ const AddOnsConnected = () => {
   };
 
   const connectAddon = async (rowData) => {
-    if (!yachtId) return toast.error("create a yacht first");
+    const currentYachtId = yacht?.id || yachtId;
+    if (!currentYachtId) return toast.error("Create a yacht first");
     try {
-      const isConnected = rowData.yacht === yachtId;
+      const isConnected = rowData.yacht === currentYachtId;
       const action = isConnected ? "disconnect" : "connect";
 
       const response = await axios.patch(`/addons/${rowData?.id}/`, {
-        yacht: isConnected ? null : yachtId,
-        sub_user: subUser
+        yacht: isConnected ? null : currentYachtId,
+        sub_user: subUser,
       });
 
       if (response.status === 200) {
@@ -73,7 +75,7 @@ const AddOnsConnected = () => {
         setAddonsData((prevData) => {
           const updatedData = prevData.map((item) => {
             if (item.id === rowData.id) {
-              item.yacht = isConnected ? null : yachtId;
+              item.yacht = isConnected ? null : currentYachtId;
             }
             return item;
           });
@@ -88,25 +90,15 @@ const AddOnsConnected = () => {
   const actionTemplate = (rowData) => {
     return (
       <div className="actions_cell_addons">
-        {yachtId === null ? (
-          <button
-            type="button"
-            onClick={() => connectAddon(rowData)}
-            className="button addon_button active"
-          >
-            Connect
-          </button>
-        ) : (
-          <button
-            type="button"
-            onClick={() => connectAddon(rowData)}
-            className={`button addon_button ${
-              rowData.yacht === yachtId ? "" : "active"
-            }`}
-          >
-            {rowData.yacht === yachtId ? "Disconnect" : "Connect"}
-          </button>
-        )}
+        <button
+          type="button"
+          onClick={() => connectAddon(rowData)}
+          className={`button addon_button ${
+            rowData.yacht === (yacht?.id || yachtId) ? "" : "active"
+          }`}
+        >
+          {rowData.yacht === (yacht?.id || yachtId) ? "Disconnect" : "Connect"}
+        </button>
         <Button
           onClick={(e) => viewRow(e, rowData)}
           style={{ boxShadow: "none" }}

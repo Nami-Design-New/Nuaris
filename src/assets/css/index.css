@@ -2157,8 +2157,22 @@ th:last-child .p-column-header-content {
 }
 .flex-header .utility-buttons a img,
 .flex-header .utility-buttons button img {
-  width: 20px;
   height: 20px;
+}
+@media screen and (max-width: 576px) {
+  .flex-header .utility-buttons {
+    gap: 0;
+    padding: 8px;
+  }
+  .flex-header .utility-buttons a,
+  .flex-header .utility-buttons button {
+    font-size: 16px;
+    gap: 4px;
+  }
+  .flex-header .utility-buttons a img,
+  .flex-header .utility-buttons button img {
+    height: 18px;
+  }
 }
 
 .fleet-card {
@@ -2940,6 +2954,16 @@ small.error {
 .rmdp-shadow {
   box-shadow: none !important;
   border-radius: 8px;
+}
+
+.rmdp-arrow-container {
+  padding: 2px 0 2px 2px;
+}
+.rmdp-arrow-container:hover {
+  background-color: #006980;
+}
+.rmdp-arrow-container.rmdp-left {
+  padding: 2px 2px 2px 0;
 }
 
 .actions_cell_addons {

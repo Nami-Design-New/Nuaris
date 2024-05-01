@@ -1,23 +1,31 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CustomInputField from "../../../ui/form-elements/CustomInputField";
 import CrewCard from "./CrewCard";
 import { toast } from "react-toastify";
 import SubmitButton from "../../../ui/form-elements/SubmitButton";
 import axios from "../../../../util/axios";
 
-const CrewForm = ({ setForm }) => {
+const CrewForm = ({ setForm, yacht }) => {
   const createdYacht = sessionStorage.getItem("yacht_id");
   const [loading, setLoading] = useState(false);
   const [crewNumber, setCrewNumber] = useState(1);
   const initialMemberData = {
     name: "",
     nationality: "SA",
-    gender: "male",
+    gender: "male"
   };
 
   const [formData, setFormData] = useState({
-    crew: [initialMemberData],
+    crew: [initialMemberData]
   });
+
+  useEffect(() => {
+    setCrewNumber(yacht?.crews?.length || 1);
+    setFormData({
+      crew: yacht?.crews || [initialMemberData]
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [yacht]);
 
   const handleNext = (e) => {
     e.preventDefault();
@@ -43,9 +51,14 @@ const CrewForm = ({ setForm }) => {
     e.preventDefault();
     setLoading(true);
     try {
-      const response = await axios.patch(`/yachts/${createdYacht}/`, formData);
+      let url = yacht?.id
+        ? `/yachts/${yacht?.id}/`
+        : `/yachts/${createdYacht}/`;
+      const response = await axios.patch(url, formData);
       if (response.status === 200) {
-        toast.success("Crew Info Saved Successfully");
+        yacht
+          ? toast.success("Crew Info Updated Successfully")
+          : toast.success("Crew Info Saved Successfully");
         setForm("Policy");
       } else {
         toast.error("Something went wrong");
@@ -68,7 +81,7 @@ const CrewForm = ({ setForm }) => {
         ...prev,
         crew: Array(+value)
           .fill(0)
-          .map(() => ({ ...initialMemberData })),
+          .map(() => ({ ...initialMemberData }))
       }));
     }
   };

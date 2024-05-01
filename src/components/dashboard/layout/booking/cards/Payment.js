@@ -44,7 +44,7 @@ const Payment = ({ paymentType, setPaymentType }) => {
         {paymentType === "advanced payment" && (
           <div className="col-12 p-2">
             <CustomInputField
-              label="Enter the percentage (minimum 50%)"
+              label="Advanced Amount paid (Minimum 50%)"
               id=" percentage"
               name="percentage"
               type="number"

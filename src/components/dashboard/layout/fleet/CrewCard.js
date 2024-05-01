@@ -3,7 +3,7 @@ import InputField from "../../../ui/form-elements/InputField";
 import ReactFlagsSelect from "react-flags-select";
 import GenderSelect from "../../../ui/GenderSelect";
 
-const CrewCard = ({ index, setFormData }) => {
+const CrewCard = ({ index, formData, setFormData }) => {
   const [memberData, setMemberData] = useState({
     name: "",
     nationality: "SA",

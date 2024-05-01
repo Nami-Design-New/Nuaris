@@ -12,7 +12,7 @@ const GeneralPriceCard = ({ formData, setFormData, index }) => {
       prices[i][e.target.name] = e.target.value;
       return {
         ...prev,
-        prices,
+        prices
       };
     });
   }
@@ -23,24 +23,24 @@ const GeneralPriceCard = ({ formData, setFormData, index }) => {
       prices.splice(i, 1);
       return {
         ...prev,
-        prices,
+        prices
       };
     });
   }
 
-  if (formData.prices[index].period_type === "minutes") {
+  if (formData?.prices[index].period_type === "minutes") {
     optionsArray = ["15", "30", "45"];
-  } else if (formData.prices[index].period_type === "hours") {
+  } else if (formData?.prices[index].period_type === "hours") {
     optionsArray = Array(12)
       .fill(1)
       .map((e, i) => i + 1);
-  } else if (formData.prices[index].period_type === "days") {
+  } else if (formData?.prices[index].period_type === "days") {
     optionsArray = Array(31)
       .fill(1)
       .map((e, i) => i + 1);
-  } else if (formData.prices[index].period_type === "weeks") {
+  } else if (formData?.prices[index].period_type === "weeks") {
     optionsArray = Array.from({ length: 51 }, (_, i) => i + 2);
-  } else if (formData.prices[index].period_type === "months") {
+  } else if (formData?.prices[index].period_type === "months") {
     optionsArray = Array(12)
       .fill(1)
       .map((e, i) => i + 1);
@@ -59,7 +59,7 @@ const GeneralPriceCard = ({ formData, setFormData, index }) => {
                   className="units w-100"
                   name="period"
                   id="min_booking_time_type"
-                  value={formData.prices[index].period}
+                  value={formData?.prices[index].period}
                   onChange={(e) => handleChangePrice(e, index)}
                 >
                   {optionsArray.map((minit, index) => (
@@ -72,7 +72,7 @@ const GeneralPriceCard = ({ formData, setFormData, index }) => {
                   className="units"
                   name="period_type"
                   id="units"
-                  value={formData.prices[index].period_type}
+                  value={formData?.prices[index].period_type}
                   onChange={(e) => handleChangePrice(e, index)}
                 >
                   {["minutes", "hours", "days", "weeks", "months"].map(
@@ -94,7 +94,7 @@ const GeneralPriceCard = ({ formData, setFormData, index }) => {
               hint={`( ${currency} )`}
               type="number"
               placeholder="00"
-              value={formData.prices[index].price}
+              value={formData?.prices[index].price}
               onChange={(e) => handleChangePrice(e, index)}
             />
           </div>
@@ -102,16 +102,16 @@ const GeneralPriceCard = ({ formData, setFormData, index }) => {
           <div className="col-lg-6 col-12 p-2">
             <CustomInputField
               disabled={
-                formData.prices[index].period_type === "days" ||
-                formData.prices[index].period_type === "weeks" ||
-                formData.prices[index].period_type === "months"
+                formData?.prices[index].period_type === "days" ||
+                formData?.prices[index].period_type === "weeks" ||
+                formData?.prices[index].period_type === "months"
               }
               label={"Extra Hour Price"}
               name="extra_hour_price"
               hint={`( ${currency} )`}
               type="number"
               placeholder="00"
-              value={formData.prices[index].extra_hour_price}
+              value={formData?.prices[index].extra_hour_price}
               onChange={(e) => handleChangePrice(e, index)}
             />
           </div>
@@ -123,19 +123,19 @@ const GeneralPriceCard = ({ formData, setFormData, index }) => {
               name="minimum_price"
               type="number"
               placeholder="00"
-              value={formData.prices[index].minimum_price}
+              value={formData?.prices[index].minimum_price}
               onChange={(e) => handleChangePrice(e, index)}
             />
           </div>
         </div>
         <button
-          disabled={formData.prices.length === 1}
+          disabled={formData?.prices.length === 1}
           style={{
-            opacity: formData.prices.length === 1 ? "0.5" : "1",
+            opacity: formData?.prices.length === 1 ? "0.5" : "1"
           }}
           type="button"
           className="delete_btn"
-          onClick={handleDeletePriceCard}
+          onClick={() => handleDeletePriceCard(index)}
         >
           <img src={deleteIcon} alt="deleteIcon" />
         </button>
@@ -147,7 +147,7 @@ const GeneralPriceCard = ({ formData, setFormData, index }) => {
             prices.splice(index, 1);
             return {
               ...prev,
-              prices,
+              prices
             };
           });
         }}
