@@ -146,7 +146,7 @@ const Prices = ({ setForm }) => {
           </button>
         </div>
         {/* calender seasons cards */}
-        {formData.season_prices.map((_, rowIndex) => (
+        {formData?.season_prices.map((_, rowIndex) => (
           <SeasonCard
             key={rowIndex}
             formData={formData}

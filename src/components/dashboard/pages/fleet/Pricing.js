@@ -67,20 +67,9 @@ const Pricing = ({ yacht }) => {
       setLoading(false);
       return;
     }
-    const updatedSeasonPrices = formData?.season_prices.map((season) => ({
-      ...season,
-      dates: season.dates.map((date) => ({
-        to: date[1],
-        from: date[0]
-      }))
-    }));
-    const updatedFormData = {
-      ...formData,
-      season_prices: updatedSeasonPrices
-    };
     try {
       let url = yacht?.id ? `/yachts/${yacht?.id}/` : `/yachts/${yachtId}/`;
-      const response = await axios.patch(url, updatedFormData);
+      const response = await axios.patch(url, formData);
       if (response?.status === 200 || response?.status === 201) {
         yacht
           ? toast.success("Pricing Updated Successfully")

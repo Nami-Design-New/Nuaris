@@ -57,7 +57,7 @@ const SeasonCard = ({ formData, setFormData, index }) => {
           <Calendar
             value={initialDates}
             onChange={(dates) => {
-              const updatedSeasonPrices = [...formData.season_prices];
+              const updatedSeasonPrices = [...formData?.season_prices];
               updatedSeasonPrices[index].dates = dates.map((dateRange) => {
                 if (dateRange[0] && dateRange[1]) {
                   return {
