@@ -21,25 +21,26 @@ const Prices = ({ setForm, addon }) => {
     price: "",
     type: "",
     minimum_price: "",
-    dates: [new Date()],
+    dates: [new Date()]
   };
   const initialData = {
     price: "",
     price_type: "",
     min_price: "",
-    season_prices: [seasonCardInitialData],
+    season_prices: [seasonCardInitialData]
   };
   const [formData, setFormData] = useState(initialData);
 
   useEffect(() => {
     if (addon) {
       setFormData({
-        price: addon?.price,
-        price_type: addon?.price_type,
-        min_price: addon?.min_price,
-        season_prices: addon?.season_price,
+        price: addon?.price || "",
+        price_type: addon?.price_type || "",
+        min_price: addon?.min_price || "",
+        season_prices: addon?.season_price || [seasonCardInitialData]
       });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [addon]);
 
   const [loading, setLoading] = useState(false);
@@ -54,9 +55,9 @@ const Prices = ({ setForm, addon }) => {
         ...prev.season_prices,
         {
           ...seasonCardInitialData,
-          index: prev.season_prices.length,
-        },
-      ],
+          index: prev.season_prices.length
+        }
+      ]
     }));
   }
 
@@ -64,21 +65,21 @@ const Prices = ({ setForm, addon }) => {
     e.preventDefault();
     setLoading(true);
     try {
-      const updatedSeasonPrices = formData.season_prices.map((season) => ({
+      const updatedSeasonPrices = formData?.season_prices?.map((season) => ({
         ...season,
         dates: season.dates.map((date) => ({
           to: date[1],
-          from: date[0],
+          from: date[0]
         })),
-        type: season.type.toLocaleLowerCase(),
+        type: season.type.toLocaleLowerCase()
       }));
       const updatedFormData = {
         ...formData,
-        season_prices: updatedSeasonPrices,
+        season_prices: updatedSeasonPrices
       };
       const response = await axios.patch(`/addons/${createdAddOn}/`, {
         ...updatedFormData,
-        price_type: formData.price_type.toLocaleLowerCase(),
+        price_type: formData.price_type.toLocaleLowerCase()
       });
       if (response.status === 200) {
         toast.success("Prices Saved Successfully");
@@ -132,7 +133,7 @@ const Prices = ({ setForm, addon }) => {
                   "2 Hours",
                   "3 Hours",
                   "Trip",
-                  "Item",
+                  "Item"
                 ].map((unit, index) => (
                   <option key={index} value={unit}>
                     {unit}
@@ -165,7 +166,7 @@ const Prices = ({ setForm, addon }) => {
           </button>
         </div>
         {/* calender seasons cards */}
-        {formData.season_prices.map((_, rowIndex) => (
+        {formData?.season_prices?.map((_, rowIndex) => (
           <SeasonCard
             key={rowIndex}
             formData={formData}

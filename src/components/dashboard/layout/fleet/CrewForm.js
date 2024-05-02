@@ -1,26 +1,24 @@
 import { useEffect, useState } from "react";
-import CustomInputField from "../../../ui/form-elements/CustomInputField";
 import CrewCard from "./CrewCard";
 import { toast } from "react-toastify";
 import SubmitButton from "../../../ui/form-elements/SubmitButton";
 import axios from "../../../../util/axios";
+import addRow from "../../../../assets/images/add.svg";
 
 const CrewForm = ({ setForm, yacht }) => {
   const createdYacht = sessionStorage.getItem("yacht_id");
   const [loading, setLoading] = useState(false);
-  const [crewNumber, setCrewNumber] = useState(1);
+
   const initialMemberData = {
     name: "",
     nationality: "SA",
     gender: "male"
   };
-
   const [formData, setFormData] = useState({
     crew: [initialMemberData]
   });
 
   useEffect(() => {
-    setCrewNumber(yacht?.crews?.length || 1);
     setFormData({
       crew: yacht?.crews || [initialMemberData]
     });
@@ -37,14 +35,57 @@ const CrewForm = ({ setForm, yacht }) => {
     setForm("Location");
   };
 
-  const handleChange = (e) => {
+  const handleAddRow = (e) => {
+    e.preventDefault();
+    setFormData((prev) => ({
+      ...prev,
+      crew: [...prev.crew, initialMemberData]
+    }));
+  };
+
+  const handleDeleteRow = (e, index) => {
+    e.preventDefault();
+    setFormData((prev) => ({
+      ...prev,
+      crew: prev.crew.filter((_, i) => i !== index)
+    }));
+  };
+
+  const handleChange = (e, i) => {
     const { name, value } = e.target;
-    console.log(value);
-    if (+value > 20) {
-      toast.warning("Maximum crew members allowed is 20");
-    } else {
-      setFormData((prev) => ({ ...prev, [name]: value }));
-    }
+    setFormData((prev) => ({
+      ...prev,
+      crew: prev?.crew?.map((member, index) => {
+        if (index === i) {
+          return { ...member, [name]: value };
+        }
+        return member;
+      })
+    }));
+  };
+
+  const handleNationalityChange = (countryCode, i) => {
+    setFormData((prev) => ({
+      ...prev,
+      crew: prev?.crew?.map((member, index) => {
+        if (index === i) {
+          return { ...member, nationality: countryCode };
+        }
+        return member;
+      })
+    }));
+  };
+
+  const handleGenderChange = (gender, i) => {
+    setFormData((prev) => ({
+      ...prev,
+      crew: prev?.crew?.map((member, index) => {
+        if (index === i) {
+          return { ...member, gender };
+        }
+        return member;
+      })
+    }));
   };
 
   const handleSubmit = async (e) => {
@@ -70,52 +111,30 @@ const CrewForm = ({ setForm, yacht }) => {
     }
   };
 
-  const handleCrewNumberChange = (e) => {
-    if (e.target.value > 20) {
-      toast.error("Maximum crew members is 20");
-      setCrewNumber(20);
-    } else {
-      setCrewNumber(e.target.value);
-      const { value } = e.target;
-      setFormData((prev) => ({
-        ...prev,
-        crew: Array(+value)
-          .fill(0)
-          .map(() => ({ ...initialMemberData }))
-      }));
-    }
-  };
-
   return (
     <form className="form-ui" onSubmit={handleSubmit}>
       <div className="row m-0">
-        <div className="col-12 p-2">
-          <h6 className="form_title">Crew</h6>
+        <div className="col-12 p-2 d-flex align-items-center justify-content-between">
+          <h6 className="form_title m-0">Crew</h6>
+          <button
+            disabled={formData.crew.length === 20}
+            onClick={(e) => handleAddRow(e)}
+          >
+            <img src={addRow} alt="add-row" />
+          </button>
         </div>
-        {/* Number of Crew */}
-        <div className="col-12 p-2">
-          <CustomInputField
-            name="number"
-            label="Number of Crew"
-            placeholder="0"
-            type="number"
-            value={crewNumber}
-            onChange={handleCrewNumberChange}
+        {formData?.crew?.map((member, i) => (
+          <CrewCard
+            key={i}
+            index={i}
+            member={member}
+            onChange={handleChange}
+            onDelete={handleDeleteRow}
+            lenght={formData?.crew?.length}
+            handleGenderChange={handleGenderChange}
+            handleNationalityChange={handleNationalityChange}
           />
-        </div>
-        {Array(+crewNumber)
-          .fill(0)
-          .map((_, i) => {
-            return (
-              <CrewCard
-                key={i}
-                index={i}
-                formData={formData.crew[i] || {}}
-                setFormData={setFormData}
-                handleChange={handleChange}
-              />
-            );
-          })}
+        ))}
         <div className="col-12 p-2 pt-4 d-flex gap-3 ">
           <button className="next_btn" onClick={handleBack}>
             Back

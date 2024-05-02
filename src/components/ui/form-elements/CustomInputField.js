@@ -1,7 +1,7 @@
 export default function CustomInputField({ label, hint, ...props }) {
   return (
     <div className="input-field">
-      <label>
+      <label htmlFor={props.id}>
         {label} {hint && <span className="hint">{hint}</span>}
       </label>
       <input className="form-control" {...props} />

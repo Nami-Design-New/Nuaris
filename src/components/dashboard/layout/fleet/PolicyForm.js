@@ -39,9 +39,12 @@ const PolicyForm = ({ setForm, yacht }) => {
   useEffect(() => {
     if (yacht) {
       setFormData({
-        cancellation_policy: yacht?.cancellation_policy
+        cancellation_policy: yacht?.cancellation_policy || [
+          cancelationCountInitial
+        ]
       });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [yacht]);
 
   const handleSubmit = async (e) => {

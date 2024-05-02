@@ -1843,7 +1843,7 @@ th:last-child .p-column-header-content {
   border-radius: 12px;
 }
 .bg_white_card .form-ui .member_card .card_header {
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 500;
   line-height: 15px;
   color: #006980;
@@ -4936,4 +4936,8 @@ small.error {
   position: absolute;
   top: 0;
   left: 42px;
+}
+
+.ReactFlagsSelect-module_flagsSelect__2pfa2 {
+  padding-bottom: 0;
 }/*# sourceMappingURL=index.css.map */

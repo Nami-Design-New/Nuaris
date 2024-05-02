@@ -47,15 +47,16 @@ const Pricing = ({ yacht }) => {
   useEffect(() => {
     if (yacht) {
       setFormData({
-        prices: yacht?.prices,
-        season_prices: yacht?.season_prices,
-        vat: yacht?.vat,
-        price: yacht?.price,
-        pre_payment_percentage: yacht?.pre_payment_percentage,
-        minimum_rental_period: yacht?.minimum_rental_period,
-        minimum_rental_period_type: yacht?.minimum_rental_period_type
+        prices: yacht?.prices || [initialPricesData],
+        season_prices: yacht?.season_prices || [seasonCardInitialData],
+        vat: yacht?.vat || null,
+        price: yacht?.price || "",
+        pre_payment_percentage: yacht?.pre_payment_percentage || 100,
+        minimum_rental_period: yacht?.minimum_rental_period || "",
+        minimum_rental_period_type: yacht?.minimum_rental_period_type || "hours"
       });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [yacht]);
 
   const handleSubmit = async (e) => {

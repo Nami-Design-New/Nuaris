@@ -16,11 +16,14 @@ const MainInfoForm = ({ setForm, yacht }) => {
   // ======== start file upload configration =======//
   const [fileLoading, setFileLoading] = useState(false);
   const handleUploadMedia = async (file) => {
+    if (fileLoading) {
+      return "";
+    }
     setFileLoading(true);
     try {
       const blob = file.slice(0, file.size, file.type);
-      const newFile = new File([blob], `${Date.now()}${file.name.slice(-5)}`, {
-        type: file.type,
+      const newFile = new File([blob], `${Date.now()}${file.name.slice(-3)}`, {
+        type: file.type
       });
       const data = await uploadFile(newFile, S3Config);
       return data.location;
@@ -32,19 +35,28 @@ const MainInfoForm = ({ setForm, yacht }) => {
     }
   };
 
-  const handleFileChange = async (e, i) => {
-    try {
-      if (!fileLoading) {
-        const file = e[0].file;
-        const link = await handleUploadMedia(file);
-        setFormData((prev) => ({ ...prev, license_file: link }));
-      }
-    } catch (error) {
-      console.error("Error handling image upload:", error);
+  const handleFileChange = async (e) => {
+    if (!e || e.length === 0) {
       setFileLoading(false);
-      toast.error("Error uploading image");
+      return;
+    }
+    if (fileLoading) {
+      return;
+    }
+    try {
+      const file = e[0].file;
+      const link = await handleUploadMedia(file);
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        license_file: link
+      }));
+    } catch (error) {
+      console.error("Error handling File upload:", error);
+      setFileLoading(false);
+      toast.error("Error uploading file");
     }
   };
+
   // ======== end file upload configuration =======//
 
   const [formData, setFormData] = useState({
@@ -58,7 +70,7 @@ const MainInfoForm = ({ setForm, yacht }) => {
     license_expire_date: "",
     preparation_time: "",
     description_en: "",
-    description_ar: "",
+    description_ar: ""
   });
 
   useEffect(() => {
@@ -74,7 +86,7 @@ const MainInfoForm = ({ setForm, yacht }) => {
         license_expire_date: yacht?.license_expire_date,
         preparation_time: yacht?.preparation_time,
         description_en: yacht?.description_en,
-        description_ar: yacht?.description_ar,
+        description_ar: yacht?.description_ar
       });
     }
   }, [yacht]);
@@ -99,12 +111,12 @@ const MainInfoForm = ({ setForm, yacht }) => {
       const data = {
         ...formData,
         sub_user: subUser[0]?.id,
-        type: formData.type.toLowerCase(),
+        type: formData.type.toLowerCase()
       };
       const response = await axios.request({
         url: yacht?.id ? `/yachts/${yacht.id}/` : "/yachts/",
         method: yacht ? "PATCH" : "POST",
-        data,
+        data
       });
       if (response.status === 201 || response.status === 200) {
         setForm("Location");
@@ -122,7 +134,7 @@ const MainInfoForm = ({ setForm, yacht }) => {
       setLoading(false);
     }
   };
-  
+
   return (
     <form className="form-ui" onSubmit={handleSubmit}>
       <div className="row m-0">
