@@ -49,7 +49,7 @@ const ProfileInfoForm = () => {
         city: user.city || "",
         licence_number: user.licence_number || "",
         registration_number: user.registration_number || "",
-        lat: user.lat || 30.04442,
+        lat: user.lat || 24.7136,
         lng: user.lng || 46.6753,
         about: user.about || "",
         currency: user.currency || "SAR",

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "./../../../../util/axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
@@ -7,7 +7,7 @@ import { EditorState, convertToRaw } from "draft-js";
 import SubmitButton from "../../../ui/form-elements/SubmitButton";
 import CancellationPolicy from "../shared/CancellationPolicy";
 
-const PolicyForm = ({ setForm }) => {
+const PolicyForm = ({ setForm, yacht }) => {
   const [loading, setLoading] = useState(false);
   const createdYacht = sessionStorage.getItem("yacht_id");
   const navigate = useNavigate();
@@ -36,6 +36,14 @@ const PolicyForm = ({ setForm }) => {
     setForm("Crew");
   };
 
+  useEffect(() => {
+    if (yacht) {
+      setFormData({
+        cancellation_policy: yacht?.cancellation_policy
+      });
+    }
+  }, [yacht]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -49,7 +57,10 @@ const PolicyForm = ({ setForm }) => {
       const rawAllowedItemsContent = convertToRaw(
         allowedItemsEditorState.getCurrentContent()
       );
-      const response = await axios.patch(`/yachts/${createdYacht}/`, {
+      let url = yacht?.id
+        ? `/yachts/${yacht?.id}/`
+        : `/yachts/${createdYacht}/`;
+      const response = await axios.patch(url, {
         policy: {
           ...formData,
           weather_restrictions: JSON.stringify(rawWeatherContent),
@@ -58,8 +69,12 @@ const PolicyForm = ({ setForm }) => {
         }
       });
       if (response) {
-        toast.success("Policies Saved Successfully");
-        navigate("/dashboard/fleet/add-yacht/media-photos");
+        yacht
+          ? toast.success("Policies Updated Successfully")
+          : toast.success("Policies Saved Successfully");
+        yacht
+          ? navigate(`/dashboard/fleet/add-yacht/${yacht?.id}/media-photos`)
+          : navigate("/dashboard/fleet/add-yacht/media-photos");
       }
     } catch (error) {
       console.error("Error:", error);
