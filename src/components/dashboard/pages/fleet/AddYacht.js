@@ -33,7 +33,7 @@ const AddYacht = () => {
   return (
     <section className="section-main-content">
       <header className="flex-header">
-        <PageHeader name="Add a new yacht / boat" />
+        <PageHeader name={yacht ? "Edit yacht / boat" : "Add a new yacht / boat"} />
       </header>
       <div className="row m-0">
         <div className="col-lg-4 col-12 p-2">

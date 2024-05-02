@@ -16,7 +16,7 @@ const CancellationPolicy = ({
           <button
             type="button"
             onClick={() => {
-              if (formData.cancellation_policy.length < 5) {
+              if (formData?.cancellation_policy?.length < 5) {
                 setFormData((prev) => ({
                   ...prev,
                   cancellation_policy: [
@@ -26,12 +26,12 @@ const CancellationPolicy = ({
                 }));
               }
             }}
-            disabled={formData.cancellation_policy.length >= 5}
+            disabled={formData?.cancellation_policy?.length >= 5}
           >
             <img src={add} alt="add" />
           </button>
         </div>
-        {formData.cancellation_policy.map((policy, index) => {
+        {formData?.cancellation_policy?.map((policy, index) => {
           return (
             <div key={index} className="col-12 p-0 pt-2 pb-2 policy_cancel">
               <div className="policyRow">
@@ -46,7 +46,7 @@ const CancellationPolicy = ({
                       value={policy.cancel_before}
                       onChange={(e) => {
                         const updatedPolicies = [
-                          ...formData.cancellation_policy
+                          ...formData?.cancellation_policy
                         ];
                         updatedPolicies[index].cancel_before = +e.target.value;
                         setFormData((prevFormData) => ({
@@ -62,7 +62,7 @@ const CancellationPolicy = ({
                       value={policy.type}
                       onChange={(e) => {
                         const updatedPolicies = [
-                          ...formData.cancellation_policy
+                          ...formData?.cancellation_policy
                         ];
                         updatedPolicies[index].type = e.target.value;
                         setFormData((prevFormData) => ({
@@ -90,7 +90,7 @@ const CancellationPolicy = ({
                     placeholder="00"
                     value={policy.percentage}
                     onChange={(e) => {
-                      const updatedPolicies = [...formData.cancellation_policy];
+                      const updatedPolicies = [...formData?.cancellation_policy];
                       updatedPolicies[index].percentage = Number(
                         e.target.value
                       );
@@ -106,9 +106,9 @@ const CancellationPolicy = ({
               <button
                 className="trash_btn"
                 type="button"
-                disabled={formData.cancellation_policy.length <= 1}
+                disabled={formData?.cancellation_policy?.length <= 1}
                 onClick={() => {
-                  const updatedPolicies = formData.cancellation_policy.filter(
+                  const updatedPolicies = formData?.cancellation_policy.filter(
                     (_, idx) => idx !== index
                   );
                   setFormData((prevFormData) => ({

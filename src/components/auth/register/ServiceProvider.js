@@ -33,7 +33,7 @@ const ServiceProvider = ({ setFormSelection }) => {
     role: "support_user",
     country: "SA",
     city: "'Asir",
-    lat: "30.044420",
+    lat: "24.71360",
     lng: "46.6753",
     location_on_map: ""
   });

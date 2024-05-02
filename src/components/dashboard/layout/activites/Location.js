@@ -18,7 +18,7 @@ const Location = ({ setForm }) => {
   };
 
   const [LocationPoint, setLocationPoint] = useState({
-    lat: 30.04442,
+    lat: 24.7136,
     lng: 46.6753,
   });
 

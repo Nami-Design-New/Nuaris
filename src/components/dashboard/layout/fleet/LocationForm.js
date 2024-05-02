@@ -6,8 +6,9 @@ import MapModal from "../../../ui/map-modal/MapModal";
 import { toast } from "react-toastify";
 import axios from "./../../../../util/axios";
 import SubmitButton from "../../../ui/form-elements/SubmitButton";
+import CustomInputField from "../../../ui/form-elements/CustomInputField";
 
-const LocationForm = ({ setForm }) => {
+const LocationForm = ({ setForm, yacht }) => {
   const createdYacht = sessionStorage.getItem("yacht_id");
   const [showModalVessel, setShowModalVessel] = useState(false);
   const [showModalMeeting, setShowModalMeeting] = useState(false);
@@ -17,55 +18,64 @@ const LocationForm = ({ setForm }) => {
   const [selectedCountry, setSelectedCountry] = useState("SA");
   const [cities, setCities] = useState([]);
   const [loading, setLoading] = useState(false);
+
   const [formData, setFormData] = useState({
     city: "select",
     country: "SA",
     location: {
-      lat: 0,
-      lng: 0
+      lat: 24.7136,
+      lng: 46.6753
     },
     meeting_location: {
-      lat: 0,
-      lng: 0
+      lat: 24.7136,
+      lng: 46.6753
     }
   });
 
   const fetchCitiesForCountry = (countryCode) => {
     const citiesArray = State.getStatesOfCountry(countryCode);
-    console.log(citiesArray);
     const citiesNames = citiesArray.map((city) => city.name);
     setCities(citiesArray);
     setCityForCountry(citiesNames);
-    setFormData({ ...formData, country: countryCode });
   };
-  useEffect(() => {
-    fetchCitiesForCountry(selectedCountry);
-    // eslint-disable-next-line
-  }, []);
+
   // Handle country selection
   const handleSelectCountry = (countryCode) => {
     setSelectedCountry(countryCode);
     setFormData({ ...formData, country: countryCode });
     fetchCitiesForCountry(countryCode);
   };
+
   // Handle city selection
   const handleSelectCity = (cityName) => {
     const selectedCity = cities.find((city) => city.name === cityName);
     if (selectedCity) {
       setFormData({
         ...formData,
-        city: cityName,
-        location: {
-          lat: Number(selectedCity.latitude).toFixed(6),
-          lng: Number(selectedCity.longitude).toFixed(6)
-        },
-        meeting_location: {
-          lat: Number(selectedCity.latitude).toFixed(6),
-          lng: Number(selectedCity.longitude).toFixed(6)
-        }
+        city: cityName
       });
     }
   };
+
+  useEffect(() => {
+    if (
+      yacht?.city &&
+      yacht?.country &&
+      yacht?.location &&
+      yacht?.meeting_location
+    ) {
+      setFormData({
+        city: yacht?.city,
+        country: yacht?.country,
+        location: yacht?.location,
+        meeting_location: yacht?.meeting_location
+      });
+    }
+    setSelectedCountry(yacht?.country);
+    fetchCitiesForCountry(yacht?.country);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [yacht]);
 
   const handleNext = (e) => {
     e.preventDefault();
@@ -80,9 +90,14 @@ const LocationForm = ({ setForm }) => {
     e.preventDefault();
     setLoading(true);
     try {
-      const response = await axios.patch(`/yachts/${createdYacht}/`, formData);
+      let url = yacht?.id
+        ? `/yachts/${yacht?.id}/`
+        : `/yachts/${createdYacht}/`;
+      const response = await axios.patch(url, formData);
       if (response.status === 200) {
-        toast.success("Location Saved Successfully");
+        yacht
+          ? toast.success("Location Updated Successfully")
+          : toast.success("Location Saved Successfully");
         setForm("Crew");
       } else {
         toast.error("Something went wrong");
@@ -142,6 +157,16 @@ const LocationForm = ({ setForm }) => {
             </select>
           </div>
         </div>
+        {/* marina */}
+        <div className="col-12 p-2">
+          <CustomInputField
+            label="Vessel Location"
+            hint="( Marina )"
+            id="marina"
+            name="marina"
+            placeholder="write marina name"
+          />
+        </div>
         {/* vessel location lat & lng */}
         <div className="col-12 p-2">
           <MapLocationField
@@ -183,6 +208,7 @@ const LocationForm = ({ setForm }) => {
         formData={formData}
         target="location"
         title="Vessel Location"
+        showLocationFirst={yacht ? true : false}
         setSerchedPlace={setVesselLocation}
       />
       {/* map modal meeting location */}
@@ -193,6 +219,7 @@ const LocationForm = ({ setForm }) => {
         formData={formData}
         target="meeting_location"
         title="Meeting Location"
+        showLocationFirst={yacht ? true : false}
         setSerchedPlace={setMeetingLocation}
       />
     </form>

@@ -16,13 +16,13 @@ const SeasonCard = ({ formData, setFormData, index }) => {
           new DateObject().set({
             year: Number(e?.from?.split("/")[0]),
             month: Number(e?.from?.split("/")[1]),
-            day: Number(e?.from?.split("/")[2]),
+            day: Number(e?.from?.split("/")[2])
           }),
           new DateObject().set({
             year: Number(e?.to?.split("/")[0]),
             month: Number(e?.to?.split("/")[1]),
-            day: Number(e?.to?.split("/")[2]),
-          }),
+            day: Number(e?.to?.split("/")[2])
+          })
         ])
       );
     }
@@ -34,7 +34,7 @@ const SeasonCard = ({ formData, setFormData, index }) => {
       season_prices.splice(index, 1);
       return {
         ...prev,
-        season_prices,
+        season_prices
       };
     });
   }
@@ -45,7 +45,7 @@ const SeasonCard = ({ formData, setFormData, index }) => {
       season_prices[i][e.target.name] = e.target.value;
       return {
         ...prev,
-        season_prices,
+        season_prices
       };
     });
   }
@@ -62,15 +62,14 @@ const SeasonCard = ({ formData, setFormData, index }) => {
                 if (dateRange[0] && dateRange[1]) {
                   return {
                     from: dateRange[0].format("YYYY/MM/DD"),
-                    to: dateRange[1].format("YYYY/MM/DD"),
+                    to: dateRange[1].format("YYYY/MM/DD")
                   };
                 }
                 return null;
               });
-
               setFormData((prevFormData) => ({
                 ...prevFormData,
-                season_prices: updatedSeasonPrices,
+                season_prices: updatedSeasonPrices
               }));
             }}
             multiple
@@ -131,7 +130,7 @@ const SeasonCard = ({ formData, setFormData, index }) => {
         <button
           disabled={formData?.season_prices.length === 1}
           style={{
-            opacity: formData?.season_prices.length === 1 ? "0.5" : "1",
+            opacity: formData?.season_prices.length === 1 ? "0.5" : "1"
           }}
           type="button"
           className="delete_btn"

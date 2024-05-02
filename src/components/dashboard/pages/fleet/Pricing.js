@@ -22,14 +22,14 @@ const Pricing = ({ yacht }) => {
     period_type: "",
     extra_hour_price: "",
     minimum_price: "",
-    dates: [new Date()],
+    dates: [new Date()]
   };
   const initialPricesData = {
     period: 4,
     period_type: "minutes",
     price: "",
     extra_hour_price: "",
-    minimum_price: "",
+    minimum_price: ""
   };
   const initialData = {
     prices: [initialPricesData],
@@ -38,7 +38,7 @@ const Pricing = ({ yacht }) => {
     price: "",
     pre_payment_percentage: 100,
     minimum_rental_period: "",
-    minimum_rental_period_type: "hours",
+    minimum_rental_period_type: "hours"
   };
 
   const [formData, setFormData] = useState(initialData);
@@ -53,7 +53,7 @@ const Pricing = ({ yacht }) => {
         price: yacht?.price,
         pre_payment_percentage: yacht?.pre_payment_percentage,
         minimum_rental_period: yacht?.minimum_rental_period,
-        minimum_rental_period_type: yacht?.minimum_rental_period_type,
+        minimum_rental_period_type: yacht?.minimum_rental_period_type
       });
     }
   }, [yacht]);
@@ -70,12 +70,12 @@ const Pricing = ({ yacht }) => {
       ...season,
       dates: season.dates.map((date) => ({
         to: date[1],
-        from: date[0],
-      })),
+        from: date[0]
+      }))
     }));
     const updatedFormData = {
       ...formData,
-      season_prices: updatedSeasonPrices,
+      season_prices: updatedSeasonPrices
     };
     try {
       let url = yacht?.id ? `/yachts/${yacht?.id}/` : `/yachts/${yachtId}/`;
@@ -130,7 +130,7 @@ const Pricing = ({ yacht }) => {
                     onChange={(e) => {
                       setFormData((prev) => ({
                         ...prev,
-                        pre_payment_percentage: e.target.value,
+                        pre_payment_percentage: e.target.value
                       }));
                     }}
                   />
@@ -148,7 +148,7 @@ const Pricing = ({ yacht }) => {
                           onChange={(e) =>
                             setFormData((prev) => ({
                               ...prev,
-                              minimum_rental_period: e.target.value,
+                              minimum_rental_period: e.target.value
                             }))
                           }
                         >
@@ -168,7 +168,7 @@ const Pricing = ({ yacht }) => {
                           onChange={(e) =>
                             setFormData((prev) => ({
                               ...prev,
-                              minimum_rental_period: e.target.value,
+                              minimum_rental_period: e.target.value
                             }))
                           }
                         />
@@ -181,7 +181,7 @@ const Pricing = ({ yacht }) => {
                         onChange={(e) =>
                           setFormData((prev) => ({
                             ...prev,
-                            minimum_rental_period_type: e.target.value,
+                            minimum_rental_period_type: e.target.value
                           }))
                         }
                       >
@@ -207,7 +207,7 @@ const Pricing = ({ yacht }) => {
                     onChange={(e) => {
                       setFormData((prev) => ({
                         ...prev,
-                        price: e.target.value,
+                        price: e.target.value
                       }));
                     }}
                   />
@@ -221,7 +221,7 @@ const Pricing = ({ yacht }) => {
                       setFormData((prev) => {
                         return {
                           ...prev,
-                          prices: [...prev.prices, initialPricesData],
+                          prices: [...prev.prices, initialPricesData]
                         };
                       });
                     }}
@@ -253,8 +253,8 @@ const Pricing = ({ yacht }) => {
                           ...prev,
                           season_prices: [
                             ...prev.season_prices,
-                            seasonCardInitialData,
-                          ],
+                            seasonCardInitialData
+                          ]
                         };
                       });
                     }}

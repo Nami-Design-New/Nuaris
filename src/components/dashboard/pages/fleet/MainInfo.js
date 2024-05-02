@@ -13,16 +13,16 @@ const MainInfo = ({ yacht }) => {
       formComponent = <MainInfoForm setForm={setForm} yacht={yacht} />;
       break;
     case "Location":
-      formComponent = <LocationForm setForm={setForm} />;
+      formComponent = <LocationForm setForm={setForm} yacht={yacht} />;
       break;
     case "Crew":
       formComponent = <CrewForm setForm={setForm} yacht={yacht} />;
       break;
     case "Policy":
-      formComponent = <PolicyForm setForm={setForm} />;
+      formComponent = <PolicyForm setForm={setForm} yacht={yacht} />;
       break;
     default:
-      formComponent = <MainInfoForm setForm={setForm} />;
+      formComponent = <MainInfoForm setForm={setForm} yacht={yacht} />;
       break;
   }
 
