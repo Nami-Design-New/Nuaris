@@ -1708,7 +1708,7 @@ th:last-child .p-column-header-content {
       background: $inputBG;
       border-radius: 12px;
       .card_header {
-        font-size: 12px;
+        font-size: 14px;
         font-weight: 500;
         line-height: 15px;
         color: $main;
@@ -4630,4 +4630,7 @@ small.error {
       left: 42px;
     }
   }
+}
+.ReactFlagsSelect-module_flagsSelect__2pfa2 {
+  padding-bottom: 0;
 }

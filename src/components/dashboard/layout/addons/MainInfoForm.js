@@ -164,7 +164,9 @@ const MainInfoForm = ({ setForm, addon }) => {
         }
       });
       if (res.status === 201 || res.status === 200) {
-        toast.success("Addon Main Info Saved Successfully");
+        addon
+          ? toast.success("Addon Main Info Updated Successfully")
+          : toast.success("Addon Main Info Saved Successfully");
         setForm("Working Time");
         sessionStorage.setItem("addon_id", res?.data?.id);
       } else {

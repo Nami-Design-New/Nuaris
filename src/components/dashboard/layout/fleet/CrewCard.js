@@ -1,64 +1,40 @@
-import React, { useEffect, useState } from "react";
-import InputField from "../../../ui/form-elements/InputField";
+import React from "react";
+import trashIcon from "../../../../assets/images/delete.svg";
 import ReactFlagsSelect from "react-flags-select";
 import GenderSelect from "../../../ui/GenderSelect";
+import CustomInputField from "./../../../ui/form-elements/CustomInputField";
 
-const CrewCard = ({ index, formData, setFormData }) => {
-  const [memberData, setMemberData] = useState({
-    name: "",
-    nationality: "SA",
-    gender: "male"
-  });
-
-  useEffect(() => {
-    setFormData((prev) => {
-      const updatedCrewMembers = [...prev.crew];
-      updatedCrewMembers[index] = memberData;
-      return {
-        ...prev,
-        crew: updatedCrewMembers
-      };
-    });
-  }, [index, memberData, setFormData]);
-
-  const handleNameChange = (e) => {
-    const { value } = e.target;
-    setMemberData((prev) => ({
-      ...prev,
-      name: value
-    }));
-  };
-
-  const handleNationalityChange = (code) => {
-    setMemberData((prev) => ({
-      ...prev,
-      nationality: code
-    }));
-  };
-
-  const handleGenderChange = (gender) => {
-    setMemberData((prev) => ({
-      ...prev,
-      gender: gender
-    }));
-  };
-
+const CrewCard = ({
+  index,
+  member,
+  lenght,
+  onChange,
+  onDelete,
+  handleGenderChange,
+  handleNationalityChange
+}) => {
   return (
     <div className="col-12 p-2">
       <div className="member_card">
-        <p className="card_header">Crew member {index + 1}</p>
+        <div className="d-flex align-items-center justify-content-between">
+          <p className="card_header">Crew member {index + 1}</p>
+          <button
+            style={{ opacity: lenght === 1 ? 0.5 : 1 }}
+            disabled={lenght === 1}
+            onClick={(e) => onDelete(e, index)}
+          >
+            <img src={trashIcon} alt="delete" />
+          </button>
+        </div>
         <div className="card_row">
           <div>
-            <InputField
-              htmlFor="name"
+            <CustomInputField
               label="Name"
+              name="name"
               placeholder="Ex: Mahmoud"
-              type="text"
               id={`crewName_${index}`}
-              value={memberData.name}
-              formData={memberData}
-              setFormData={setMemberData}
-              onChange={handleNameChange}
+              value={member?.name}
+              onChange={(e) => onChange(e, index)}
             />
           </div>
           <div>
@@ -66,19 +42,17 @@ const CrewCard = ({ index, formData, setFormData }) => {
             <ReactFlagsSelect
               searchable={true}
               selectedSize={false}
-              selected={memberData.nationality}
+              selected={member?.nationality}
               id={`nationality_${index}`}
-              blacklistCountries={["IL"]}
               className="flag-select"
-              onSelect={handleNationalityChange}
+              onSelect={(code) => handleNationalityChange(code, index)}
             />
           </div>
         </div>
         <div className="card_row">
           <GenderSelect
             index={index}
-            formData={memberData}
-            setFormData={setMemberData}
+            formData={member}
             onChange={handleGenderChange}
           />
         </div>
