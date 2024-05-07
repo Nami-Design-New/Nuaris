@@ -32,7 +32,7 @@ const Prices = ({ setForm, addon }) => {
   const [formData, setFormData] = useState(initialData);
 
   useEffect(() => {
-    if (addon) {
+    if (addon && Object.keys(addon?.season_price).length > 0) {
       setFormData({
         price: addon?.price || "",
         price_type: addon?.price_type || "",

@@ -5,9 +5,12 @@ import captainIcon from "../../../../assets/images/captain.svg";
 import Badge from "../../../ui/Badge";
 import male from "../../../../assets/images/male.svg";
 import female from "../../../../assets/images/female.svg";
+import walletIcon from "../../../../assets/images/wallet.svg";
 import { COUNTRIES_NAMES } from "../../../../constants";
+import { useSelector } from "react-redux";
 
 export default function FleetCard({ fleet }) {
+  const currency = useSelector((state) => state.user?.user?.currency);
   let badge;
   const getCountryName = (countryCode) => {
     return COUNTRIES_NAMES[countryCode] || countryCode;
@@ -56,8 +59,12 @@ export default function FleetCard({ fleet }) {
           </div>
         </div>
         <p className="card-location">
-          <img src={locationIcon} alt="location pin" />{" "}
-          {fleet?.prices[0]?.price + " / " + fleet?.prices[0]?.period_type}
+          <img src={walletIcon} alt="location pin" />{" "}
+          {fleet?.prices[0]?.price +
+            " " +
+            currency +
+            " / " +
+            fleet?.prices[0]?.period_type}
         </p>
       </div>
     </Link>
