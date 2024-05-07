@@ -7,18 +7,21 @@ import SubmitButton from "../../../ui/form-elements/SubmitButton";
 import CheckField from "../../../ui/form-elements/CheckField";
 import CustomPagination from "../../../ui/CustomPagination";
 import { useSearchParams } from "react-router-dom";
+import TableLoader from "../../../ui/TableLoader";
 
 const CreatePermission = () => {
   const formRef = useRef(null);
   const [permissions, setPermissions] = useState([]);
   const [permissionsCount, setPermissionsCount] = useState(0);
   const [formData, setFormData] = useState({ permission_ids: [] });
+  const [loader, setLoader] = useState(false);
   const [loading, setLoading] = useState(false);
   const [searchParams] = useSearchParams();
   const currentPage = searchParams.get("page");
 
   useEffect(() => {
     try {
+      setLoader(true);
       axios
         .get(`/permissions/?page_size=9`, {
           params: {
@@ -37,6 +40,8 @@ const CreatePermission = () => {
         });
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoader(false);
     }
   }, [currentPage]);
 
@@ -103,18 +108,24 @@ const CreatePermission = () => {
                   Choose permissions to assign to group
                 </h6>
               </div>
-              {permissions?.map((p) => (
-                <div className="col-lg-4 col-md-6 col-12 p-2" key={p.id}>
-                  <CheckField
-                    label={p.codename}
-                    name={p.name}
-                    id={p.id}
-                    onChange={(e) => handleAddPermission(e, p.id)}
-                  />
-                </div>
-              ))}
-              {permissionsCount > 0 && (
-                <CustomPagination count={permissionsCount} pageSize={9} />
+              {loader ? (
+                <TableLoader />
+              ) : (
+                <>
+                  {permissions?.map((p) => (
+                    <div className="col-lg-4 col-md-6 col-12 p-2" key={p.id}>
+                      <CheckField
+                        label={p.codename}
+                        name={p.name}
+                        id={p.id}
+                        onChange={(e) => handleAddPermission(e, p.id)}
+                      />
+                    </div>
+                  ))}
+                  {permissionsCount > 0 && (
+                    <CustomPagination count={permissionsCount} pageSize={9} />
+                  )}
+                </>
               )}
               <div className="col-12 p-2 d-flex justify-content-end">
                 <SubmitButton

@@ -6,11 +6,13 @@ import axios from "../../../../util/axios";
 import { toast } from "react-toastify";
 import CheckField from "../../../ui/form-elements/CheckField";
 import CustomPagination from "../../../ui/CustomPagination";
+import TableLoader from "../../../ui/TableLoader";
 
 const EditPermissions = () => {
   const [formData, setFormData] = useState({ name: "", permissions: [] });
   const [permissionMap, setPermissionMap] = useState({});
   const [loading, setLoading] = useState(false);
+  const [loader, setLoader] = useState(false);
   const { groupId } = useParams();
   const [permissions, setPermissions] = useState([]);
   const [permissionsCount, setPermissionsCount] = useState(0);
@@ -20,13 +22,14 @@ const EditPermissions = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setLoader(true);
         const groupResponse = await axios.get(`/groups/${groupId}/`);
         const permissionsResponse = await axios.get(`/permissions/`, {
-          params: { page: currentPage, page_size: 9 },
+          params: { page: currentPage, page_size: 9 }
         });
         setFormData({
           name: groupResponse.data.name,
-          permissions: groupResponse.data.permissions,
+          permissions: groupResponse.data.permissions
         });
         const groupPermissionMap = {};
         groupResponse.data.permissions.forEach((permission) => {
@@ -37,6 +40,8 @@ const EditPermissions = () => {
         setPermissions(permissionsResponse.data.results);
       } catch (error) {
         console.error("Error fetching data:", error);
+      } finally {
+        setLoader(false);
       }
     };
     fetchData();
@@ -45,7 +50,7 @@ const EditPermissions = () => {
   const handleAddPermission = (permission) => {
     const updatedMap = {
       ...permissionMap,
-      [permission.id]: !permissionMap[permission.id],
+      [permission.id]: !permissionMap[permission.id]
     };
     setPermissionMap(updatedMap);
     const updatedPermissions = updatedMap[permission.id]
@@ -63,7 +68,7 @@ const EditPermissions = () => {
       setLoading(true);
       const response = await axios.patch(`/groups/${groupId}/`, {
         name: formData.name,
-        permission_ids,
+        permission_ids
       });
       if (response?.status === 200 || response?.status === 201) {
         setLoading(false);
@@ -109,19 +114,25 @@ const EditPermissions = () => {
                   Assign Group Permissions to employee
                 </h6>
               </div>
-              {permissions.map((p) => (
-                <div className="col-lg-4 col-md-6 col-12 p-2" key={p.id}>
-                  <CheckField
-                    label={p.codename}
-                    name={p.name}
-                    id={p.id}
-                    checked={permissionMap[p.id] || false}
-                    onChange={() => handleAddPermission(p)}
-                  />
-                </div>
-              ))}
-              {permissionsCount > 0 && (
-                <CustomPagination count={permissionsCount} pageSize={9} />
+              {loader ? (
+                <TableLoader minHeight="200px" />
+              ) : (
+                <>
+                  {permissions.map((p) => (
+                    <div className="col-lg-4 col-md-6 col-12 p-2" key={p.id}>
+                      <CheckField
+                        label={p.codename}
+                        name={p.name}
+                        id={p.id}
+                        checked={permissionMap[p.id] || false}
+                        onChange={() => handleAddPermission(p)}
+                      />
+                    </div>
+                  ))}
+                  {permissionsCount > 0 && (
+                    <CustomPagination count={permissionsCount} pageSize={9} />
+                  )}
+                </>
               )}
               <div className="col-12 p-2 d-flex justify-content-end">
                 <SubmitButton
