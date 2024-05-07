@@ -121,10 +121,10 @@ const Prices = ({ setForm, addon }) => {
                   Select
                 </option>
                 {[
-                  "30 Minutes",
-                  "1 Hour",
-                  "2 Hours",
-                  "3 Hours",
+                  "30 M",
+                  "1 H",
+                  "2 H",
+                  "3 H",
                   "Trip",
                   "Item"
                 ].map((unit, index) => (
