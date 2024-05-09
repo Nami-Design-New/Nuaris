@@ -28,6 +28,7 @@ const TripPackages = () => {
   const subUser = user?.subuser_set?.filter(
     (u) => u.role === user.current_role
   )[0]?.id;
+  const currency = useSelector((state) => state.user?.user?.currency);
 
   const deletePackage = () => {
     setShowDeleteModal(false);
@@ -71,7 +72,9 @@ const TripPackages = () => {
         if (firstPeriod.price && firstPeriod.price_type) {
           return (
             <div className="price_template">
-              <h4>{firstPeriod.price} $ </h4>
+              <h4>
+                {firstPeriod.price} {currency}{" "}
+              </h4>
               <span>/ {firstPeriod.price_type}</span>
             </div>
           );

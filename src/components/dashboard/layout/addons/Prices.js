@@ -120,18 +120,13 @@ const Prices = ({ setForm, addon }) => {
                 <option value={""} disabled>
                   Select
                 </option>
-                {[
-                  "30 M",
-                  "1 H",
-                  "2 H",
-                  "3 H",
-                  "Trip",
-                  "Item"
-                ].map((unit, index) => (
-                  <option key={index} value={unit}>
-                    {unit}
-                  </option>
-                ))}
+                {["30 M", "1 H", "2 H", "3 H", "Trip", "Item"].map(
+                  (unit, index) => (
+                    <option key={index} value={unit}>
+                      {unit}
+                    </option>
+                  )
+                )}
               </select>
             </div>
           </div>

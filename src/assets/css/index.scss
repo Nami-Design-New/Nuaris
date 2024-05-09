@@ -109,10 +109,10 @@ $transation: 0.3s ease-in-out;
       flex: 2;
     }
     flex: 1;
-    padding: 60px 80px;
+    padding: 50px 80px;
     display: flex;
-    gap: 60px;
     align-items: flex-start;
+    justify-content: space-between;
     flex-direction: column;
     @media (max-width: 576px) {
       padding: 32px 24px;
@@ -179,7 +179,10 @@ $transation: 0.3s ease-in-out;
       flex: 1 1;
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      justify-content: flex-end;
+      @media screen and (min-width: 1600px) {
+        justify-content: center;
+      }
       .head {
         color: $dark;
         font-size: 32px;

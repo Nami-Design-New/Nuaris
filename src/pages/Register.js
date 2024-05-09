@@ -53,7 +53,10 @@ const Register = () => {
       </div>
       <div
         className="right-side"
-        style={{ backgroundImage: `url(${regiesterImage})` }}
+        style={{
+          backgroundImage: `url(${regiesterImage})`,
+          backgroundPosition: "50% 72%"
+        }}
       />
     </section>
   );

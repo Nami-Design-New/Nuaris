@@ -23,6 +23,7 @@ const AddOns = () => {
   const [addonsCount, setAddonsCount] = useState(0);
   const [showModal, setShowModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const currency = useSelector((state) => state.user?.user?.currency);
   const user = useSelector((state) => state.user?.user);
   const subUser = user?.subuser_set?.filter(
     (u) => u.role === user.current_role
@@ -84,7 +85,9 @@ const AddOns = () => {
   const priceTemplate = (item) => {
     return (
       <div className="price_template">
-        <h4>{item.price} $ </h4>
+        <h4>
+          {item.price} {currency}{" "}
+        </h4>
         <span>/ {item.price_type}</span>
       </div>
     );

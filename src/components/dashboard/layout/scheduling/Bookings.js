@@ -8,10 +8,12 @@ import eyeView from "../../../../assets/images/eye.svg";
 import BoatPathBooking from "./modals/BoatPathBooking";
 import ActivityPathBooking from "./modals/ActivityPathBooking";
 import TripPackagePathBooking from "./modals/TripPackagePathBooking";
+import { useSelector } from "react-redux";
 
 const Bookings = () => {
   const [filter, setFilter] = useState("upcoming");
   const [showBoatBookingModal, setShowBoatBookingModal] = useState(false);
+  const currency = useSelector((state) => state.user?.user?.currency);
   const [showActivityBookingModal, setShowActivityBookingModal] =
     useState(false);
   const [showTripPackageBookingModal, setShowTripPackageBookingModal] =
@@ -79,7 +81,9 @@ const Bookings = () => {
   const priceTemplate = (item) => {
     return (
       <div className="price_template">
-        <h4>{item.price} $ </h4>
+        <h4>
+          {item.price} {currency}{" "}
+        </h4>
         <span>/ {item.price_type}</span>
       </div>
     );
