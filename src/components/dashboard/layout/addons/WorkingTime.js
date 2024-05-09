@@ -18,7 +18,7 @@ const WorkingTime = ({ setForm, addon }) => {
   const createdAddOn = sessionStorage.getItem("addon_id");
 
   useEffect(() => {
-    if (addon) {
+    if (addon && Object.keys(addon?.working_hours).length > 0) {
       const newWorkingHours = addon?.working_hours?.map((e) => {
         return {
           ...e,
@@ -35,6 +35,7 @@ const WorkingTime = ({ setForm, addon }) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [addon]);
+  
   const [loading, setLoading] = useState(false);
 
   const handleNext = (e) => {

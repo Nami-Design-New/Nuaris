@@ -64,12 +64,21 @@ const TripPackages = () => {
   };
 
   const priceTemplate = (item) => {
-    return (
-      <div className="price_template">
-        <h4>{item.trip_package_days[0].periods[0].price} $ </h4>
-        <span>/ {item.trip_package_days[0].periods[0].price_type}</span>
-      </div>
-    );
+    if (item.trip_package_days && item.trip_package_days.length > 0) {
+      const firstDay = item.trip_package_days[0];
+      if (firstDay.periods && firstDay.periods.length > 0) {
+        const firstPeriod = firstDay.periods[0];
+        if (firstPeriod.price && firstPeriod.price_type) {
+          return (
+            <div className="price_template">
+              <h4>{firstPeriod.price} $ </h4>
+              <span>/ {firstPeriod.price_type}</span>
+            </div>
+          );
+        }
+      }
+    }
+    return null;
   };
 
   const ActionTemplate = (rowData) => {
@@ -105,8 +114,8 @@ const TripPackages = () => {
       axios
         .get(`/trip-packages/?sub_user=${subUser}`, {
           params: {
-            page: currentPage,
-          },
+            page: currentPage
+          }
         })
         .then((res) => {
           setPackagesCount(res?.data?.count);

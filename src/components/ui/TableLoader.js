@@ -1,8 +1,11 @@
 import React from "react";
 
-const TableLoader = () => {
+const TableLoader = ({ minHeight }) => {
   return (
-    <div className="tableLoader loader--style8">
+    <div
+      className="tableLoader loader--style8"
+      style={{ minHeight: minHeight }}
+    >
       <svg
         version="1.1"
         id="Layer_1"

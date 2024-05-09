@@ -104,10 +104,10 @@ const SeasonCard = ({ formData, setFormData, index }) => {
               selectName={"type"}
               label={"Price"}
               units={[
-                "30 Minutes",
-                "1 Hour",
-                "2 Hours",
-                "3 Hours",
+                "30 M",
+                "1 H",
+                "2 H",
+                "3 H",
                 "Trip",
                 "Item"
               ]}

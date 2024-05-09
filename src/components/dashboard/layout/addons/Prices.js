@@ -32,7 +32,7 @@ const Prices = ({ setForm, addon }) => {
   const [formData, setFormData] = useState(initialData);
 
   useEffect(() => {
-    if (addon) {
+    if (addon && Object.keys(addon?.season_price).length > 0) {
       setFormData({
         price: addon?.price || "",
         price_type: addon?.price_type || "",
@@ -121,10 +121,10 @@ const Prices = ({ setForm, addon }) => {
                   Select
                 </option>
                 {[
-                  "30 Minutes",
-                  "1 Hour",
-                  "2 Hours",
-                  "3 Hours",
+                  "30 M",
+                  "1 H",
+                  "2 H",
+                  "3 H",
                   "Trip",
                   "Item"
                 ].map((unit, index) => (

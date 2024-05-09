@@ -7,9 +7,12 @@ import StarsRate from "../../../ui/StarsRate";
 import hashIcon from "../../../../assets/images/hash.svg";
 import RateModal from "../shared/RateModal";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 
 export default function FleetProfileInfo({ fleet }) {
   const [isOpen, setIsOpen] = useState(false);
+  const currency = useSelector((state) => state.user?.user?.currency);
+
   const getCrewGenders = () => {
     const genders = fleet?.crews?.map((crew) => crew?.gender);
     const allMale = genders?.every((gender) => gender.toLowerCase() === "male");
@@ -53,8 +56,12 @@ export default function FleetProfileInfo({ fleet }) {
             <FleetInfoMiniCard
               icon={walledIcon}
               title="Price"
-              text={"100$"}
-              per={"hour"}
+              text={
+                fleet?.prices?.length > 0
+                  ? fleet.prices[0].price + " " + currency
+                  : ""
+              }
+              per={fleet?.prices?.length > 0 ? fleet.prices[0].period_type : ""}
             />
             <FleetInfoMiniCard
               icon={captainIcon}

@@ -13,7 +13,7 @@ const PackagePriceTime = ({ setForm, tripPackage }) => {
     start_time: "",
     end_time: "",
     price: "",
-    price_type: "",
+    price_type: ""
   };
 
   const formDataInitial = DAYS.map((day, index) => {
@@ -21,7 +21,7 @@ const PackagePriceTime = ({ setForm, tripPackage }) => {
       day,
       periods: [periodInitial],
       selected: false,
-      index,
+      index
     };
   });
   const [formData, setFormData] = useState(formDataInitial);
@@ -32,7 +32,7 @@ const PackagePriceTime = ({ setForm, tripPackage }) => {
         return {
           ...e,
           selected: true,
-          index: formData.findIndex((obj) => obj.day === e.day),
+          index: formData.findIndex((obj) => obj.day === e.day)
         };
       });
       setFormData((prevFormData) => {
@@ -54,7 +54,7 @@ const PackagePriceTime = ({ setForm, tripPackage }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!packageId) {
+    if (!packageId && !tripPackage?.id) {
       toast.error("create a package first");
       return;
     }
@@ -64,16 +64,16 @@ const PackagePriceTime = ({ setForm, tripPackage }) => {
       const reqData = filteredFormData.map((obj) => {
         return {
           day: obj.day,
-          periods: obj.periods,
+          periods: obj.periods
         };
       });
       const dictionary = {
-        trip_package_days: reqData,
+        trip_package_days: reqData
       };
-      const response = await axios.patch(
-        `/trip-packages/${packageId}/`,
-        dictionary
-      );
+      let url = tripPackage?.id
+        ? `/trip-packages/${tripPackage?.id}/`
+        : `/trip-packages/${packageId}/`;
+      const response = await axios.patch(url, dictionary);
       if (response.status === 200) {
         toast.success("Package Time & Price Saved Successfully");
         setForm("Policy");
@@ -90,7 +90,7 @@ const PackagePriceTime = ({ setForm, tripPackage }) => {
 
   return (
     <form className="form-ui" onSubmit={handleSubmit}>
-      <div className="row">
+      <div className="row m-0">
         <div className="col-12 p-2">
           <h6 className="form_title">Package Time & Price</h6>
         </div>
