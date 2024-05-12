@@ -28,12 +28,16 @@ const RegisterVat = () => {
     setFormData(formData.filter((_, i) => i !== index));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     try {
-      axios.post("/vats/bulk-create/", formData);
-      toast.success("VAT Created Successfully");
+      const response = await axios.post("/vats/bulk-create/", formData);
+      if (response.status === 201 || response.status === 200) {
+        toast.success("VAT Created Successfully");
+      } else {
+        toast.error("Something went wrong");
+      }
     } catch (error) {
       console.error("Error:", error);
       toast.error("Something went wrong");

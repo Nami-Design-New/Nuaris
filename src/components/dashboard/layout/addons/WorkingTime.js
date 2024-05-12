@@ -35,7 +35,7 @@ const WorkingTime = ({ setForm, addon }) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [addon]);
-  
+
   const [loading, setLoading] = useState(false);
 
   const handleNext = (e) => {

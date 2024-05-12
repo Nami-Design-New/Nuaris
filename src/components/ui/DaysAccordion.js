@@ -1,3 +1,4 @@
+import React from "react";
 import { Accordion } from "react-bootstrap";
 import DayAccordionItem from "./DayAccordionItem";
 import { DAYS } from "../../constants";

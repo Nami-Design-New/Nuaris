@@ -3489,6 +3489,7 @@ small.error {
 }
 .disabled {
   pointer-events: none;
+  opacity: .5;
 }
 .add_vat {
   background: #34b53a;
@@ -4636,4 +4637,42 @@ small.error {
 }
 .ReactFlagsSelect-module_flagsSelect__2pfa2 {
   padding-bottom: 0;
+}
+.addon_prices_row {
+  display: flex;
+  gap: 16px;
+  padding: 8px;
+  position: relative;
+  &::after {
+    content: "";
+    width: calc(100% - 16px);
+    bottom: -8px;
+    left: 8px;
+    position: absolute;
+    height: 1px;
+    background: $inputStroke;
+    display: none;
+  }
+  @media screen and (max-width: 768px) {
+    flex-direction: column;
+    padding: 16px 8px;
+    &::after {
+      display: block;
+    }
+  }
+  .inner_wrap {
+    width: 100%;
+    display: flex;
+    gap: 16px;
+    align-items: flex-end;
+    button {
+      height: 54px;
+      @include centerFlex();
+    }
+  }
+  &.last {
+    &::after {
+      display: none;
+    }
+  }
 }
