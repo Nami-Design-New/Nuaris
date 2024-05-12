@@ -3,7 +3,7 @@ import deleteIcon from "../../../../assets/images/delete.svg";
 import CustomInputField from "../../../ui/form-elements/CustomInputField";
 import { useSelector } from "react-redux";
 
-const GeneralPriceCard = ({ formData, setFormData, index }) => {
+const GeneralPriceCard = ({ formData, setFormData, index, hasDeleteBtn }) => {
   const currency = useSelector((state) => state.user?.user?.currency);
   let optionsArray = [];
   function handleChangePrice(e, i) {
@@ -128,17 +128,19 @@ const GeneralPriceCard = ({ formData, setFormData, index }) => {
             />
           </div>
         </div>
-        <button
-          disabled={formData?.prices.length === 1}
-          style={{
-            opacity: formData?.prices.length === 1 ? "0.5" : "1"
-          }}
-          type="button"
-          className="delete_btn"
-          onClick={() => handleDeletePriceCard(index)}
-        >
-          <img src={deleteIcon} alt="deleteIcon" />
-        </button>
+        {hasDeleteBtn && (
+          <button
+            disabled={formData?.prices.length === 1}
+            style={{
+              opacity: formData?.prices.length === 1 ? "0.5" : "1"
+            }}
+            type="button"
+            className="delete_btn"
+            onClick={() => handleDeletePriceCard(index)}
+          >
+            <img src={deleteIcon} alt="deleteIcon" />
+          </button>
+        )}
       </div>
       <button
         onClick={() => {

@@ -46,15 +46,19 @@ const Pricing = ({ yacht }) => {
 
   useEffect(() => {
     if (yacht) {
-      setFormData({
-        prices: yacht?.prices || [initialPricesData],
-        season_prices: yacht?.season_prices || [seasonCardInitialData],
-        vat: yacht?.vat || null,
-        price: yacht?.price || "",
-        pre_payment_percentage: yacht?.pre_payment_percentage || 100,
-        minimum_rental_period: yacht?.minimum_rental_period || "",
-        minimum_rental_period_type: yacht?.minimum_rental_period_type || "hours"
-      });
+      setFormData((prev) => ({
+        ...prev,
+        prices: yacht?.prices?.length > 0 ? yacht.prices : [initialPricesData],
+        season_prices:
+          yacht?.season_prices?.length > 0
+            ? yacht.season_prices
+            : [seasonCardInitialData],
+        vat: yacht.vat || null,
+        price: yacht.price || "",
+        pre_payment_percentage: yacht.pre_payment_percentage || 100,
+        minimum_rental_period: yacht.minimum_rental_period || "",
+        minimum_rental_period_type: yacht.minimum_rental_period_type || "hours"
+      }));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [yacht]);
@@ -62,6 +66,14 @@ const Pricing = ({ yacht }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+    if (
+      formData.pre_payment_percentage < 50 ||
+      formData.pre_payment_percentage > 100
+    ) {
+      toast.error("Advanced Payment percentage must be between 50% and 100%");
+      setLoading(false);
+      return;
+    }
     if (!yachtId && !yacht?.id) {
       toast.error("Create a Yacht first");
       setLoading(false);
@@ -106,130 +118,133 @@ const Pricing = ({ yacht }) => {
                 />
               </div>
             </div>
+            {/* Prepayment percentage */}
+            <div className="col-12 p-2">
+              <CustomInputField
+                hint={"( Minimum 50% )"}
+                label={"Advanced Payment percentage"}
+                name="prepaymentPercentage"
+                type="number"
+                placeholder="00"
+                value={formData?.pre_payment_percentage}
+                onChange={(e) => {
+                  setFormData((prev) => ({
+                    ...prev,
+                    pre_payment_percentage: e.target.value
+                  }));
+                }}
+              />
+            </div>
+            <div className="col-lg-6 col-12 p-2">
+              <div className="input-field">
+                <label htmlFor="period">Minimum rental Period</label>
+                <div className="time-units">
+                  {formData?.minimum_rental_period_type === "minutes" ? (
+                    <select
+                      className="units w-100"
+                      name="minits"
+                      id="minits"
+                      value={formData?.minimum_rental_period}
+                      onChange={(e) =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          minimum_rental_period: e.target.value
+                        }))
+                      }
+                    >
+                      {["15", "30", "45"].map((minit, index) => (
+                        <option key={index} value={minit}>
+                          {minit}
+                        </option>
+                      ))}
+                    </select>
+                  ) : (
+                    <input
+                      type="number"
+                      placeholder="00"
+                      name="period"
+                      id="period"
+                      value={formData?.minimum_rental_period}
+                      onChange={(e) =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          minimum_rental_period: e.target.value
+                        }))
+                      }
+                    />
+                  )}
+                  <select
+                    className="units"
+                    name="period_type"
+                    id="units"
+                    value={formData?.minimum_rental_period_type}
+                    onChange={(e) =>
+                      setFormData((prev) => ({
+                        ...prev,
+                        minimum_rental_period_type: e.target.value
+                      }))
+                    }
+                  >
+                    {["minutes", "hours", "days", "weeks", "months"].map(
+                      (unit, index) => (
+                        <option key={index} value={unit}>
+                          {unit}
+                        </option>
+                      )
+                    )}
+                  </select>
+                </div>
+              </div>
+            </div>
+            {/* Price */}
+            <div className="col-lg-6 col-12 p-2">
+              <CustomInputField
+                selectName={"type"}
+                name={"price"}
+                label="Price"
+                placeholder="00"
+                value={formData?.price}
+                onChange={(e) => {
+                  setFormData((prev) => ({
+                    ...prev,
+                    price: e.target.value
+                  }));
+                }}
+              />
+            </div>
+            <div className="col-12 p-2 d-flex align-items-center justify-content-between">
+              <div className="d-flex align-items-center gap-2 addSeason">
+                <h6 className="m-0">General Price</h6>
+              </div>
+              {!uponRequest && (
+                <button
+                  onClick={() => {
+                    setFormData((prev) => {
+                      return {
+                        ...prev,
+                        prices: [...prev.prices, initialPricesData]
+                      };
+                    });
+                  }}
+                  type="button"
+                >
+                  <img src={addIcon} alt="addIcon" />
+                </button>
+              )}
+            </div>
+            {formData?.prices?.map((e, index) => {
+              return (
+                <GeneralPriceCard
+                  key={index}
+                  formData={formData}
+                  setFormData={setFormData}
+                  index={index}
+                  hasDeleteBtn={!uponRequest ? true : false}
+                />
+              );
+            })}
             {!uponRequest && (
               <>
-                {/* Prepayment percentage */}
-                <div className="col-12 p-2">
-                  <CustomInputField
-                    hint={"( Minimum 50% )"}
-                    label={"Prepayment percentage"}
-                    name="prepaymentPercentage"
-                    type="number"
-                    placeholder="00"
-                    value={formData?.pre_payment_percentage}
-                    onChange={(e) => {
-                      setFormData((prev) => ({
-                        ...prev,
-                        pre_payment_percentage: e.target.value
-                      }));
-                    }}
-                  />
-                </div>
-                <div className="col-lg-6 col-12 p-2">
-                  <div className="input-field">
-                    <label htmlFor="period">Minimum rental Period</label>
-                    <div className="time-units">
-                      {formData?.minimum_rental_period_type === "minutes" ? (
-                        <select
-                          className="units w-100"
-                          name="minits"
-                          id="minits"
-                          value={formData?.minimum_rental_period}
-                          onChange={(e) =>
-                            setFormData((prev) => ({
-                              ...prev,
-                              minimum_rental_period: e.target.value
-                            }))
-                          }
-                        >
-                          {["15", "30", "45"].map((minit, index) => (
-                            <option key={index} value={minit}>
-                              {minit}
-                            </option>
-                          ))}
-                        </select>
-                      ) : (
-                        <input
-                          type="number"
-                          placeholder="00"
-                          name="period"
-                          id="period"
-                          value={formData?.minimum_rental_period}
-                          onChange={(e) =>
-                            setFormData((prev) => ({
-                              ...prev,
-                              minimum_rental_period: e.target.value
-                            }))
-                          }
-                        />
-                      )}
-                      <select
-                        className="units"
-                        name="period_type"
-                        id="units"
-                        value={formData?.minimum_rental_period_type}
-                        onChange={(e) =>
-                          setFormData((prev) => ({
-                            ...prev,
-                            minimum_rental_period_type: e.target.value
-                          }))
-                        }
-                      >
-                        {["minutes", "hours", "days", "weeks", "months"].map(
-                          (unit, index) => (
-                            <option key={index} value={unit}>
-                              {unit}
-                            </option>
-                          )
-                        )}
-                      </select>
-                    </div>
-                  </div>
-                </div>
-                {/* Price */}
-                <div className="col-lg-6 col-12 p-2">
-                  <CustomInputField
-                    selectName={"type"}
-                    name={"price"}
-                    label="Price"
-                    placeholder="00"
-                    value={formData?.price}
-                    onChange={(e) => {
-                      setFormData((prev) => ({
-                        ...prev,
-                        price: e.target.value
-                      }));
-                    }}
-                  />
-                </div>
-                <div className="col-12 p-2 d-flex align-items-center justify-content-between">
-                  <div className="d-flex align-items-center gap-2 addSeason">
-                    <h6 className="m-0">General Price</h6>
-                  </div>
-                  <button
-                    onClick={() => {
-                      setFormData((prev) => {
-                        return {
-                          ...prev,
-                          prices: [...prev.prices, initialPricesData]
-                        };
-                      });
-                    }}
-                    type="button"
-                  >
-                    <img src={addIcon} alt="addIcon" />
-                  </button>
-                </div>
-                {formData?.prices?.map((e, index) => {
-                  return (
-                    <GeneralPriceCard
-                      key={index}
-                      formData={formData}
-                      setFormData={setFormData}
-                      index={index}
-                    />
-                  );
-                })}
                 {/* calender seasons title */}
                 <div className="col-12 p-2 d-flex align-items-center justify-content-between">
                   <div className="d-flex align-items-center gap-2 addSeason">

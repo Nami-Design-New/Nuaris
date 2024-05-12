@@ -68,10 +68,10 @@ button {
 }
 .auth-section .left-side {
   flex: 1;
-  padding: 60px 80px;
+  padding: 50px 80px;
   display: flex;
-  gap: 60px;
   align-items: flex-start;
+  justify-content: space-between;
   flex-direction: column;
 }
 .auth-section .left-side.register {
@@ -145,7 +145,12 @@ button {
   flex: 1 1;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-end;
+}
+@media screen and (min-width: 1600px) {
+  .auth-section .left-side .form-container {
+    justify-content: center;
+  }
 }
 .auth-section .left-side .form-container .head {
   color: #0d0d0d;
@@ -3716,6 +3721,7 @@ small.error {
 
 .disabled {
   pointer-events: none;
+  opacity: 0.5;
 }
 
 .add_vat {
@@ -4940,4 +4946,45 @@ small.error {
 
 .ReactFlagsSelect-module_flagsSelect__2pfa2 {
   padding-bottom: 0;
+}
+
+.addon_prices_row {
+  display: flex;
+  gap: 16px;
+  padding: 8px;
+  position: relative;
+}
+.addon_prices_row::after {
+  content: "";
+  width: calc(100% - 16px);
+  bottom: -8px;
+  left: 8px;
+  position: absolute;
+  height: 1px;
+  background: #f2f2f2;
+  display: none;
+}
+@media screen and (max-width: 768px) {
+  .addon_prices_row {
+    flex-direction: column;
+    padding: 16px 8px;
+  }
+  .addon_prices_row::after {
+    display: block;
+  }
+}
+.addon_prices_row .inner_wrap {
+  width: 100%;
+  display: flex;
+  gap: 16px;
+  align-items: flex-end;
+}
+.addon_prices_row .inner_wrap button {
+  height: 54px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.addon_prices_row.last::after {
+  display: none;
 }/*# sourceMappingURL=index.css.map */
