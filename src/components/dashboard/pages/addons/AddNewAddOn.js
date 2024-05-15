@@ -1,45 +1,69 @@
-import React, { useEffect } from "react";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import axios from "../../../../util/axios";
 import MainInfoForm from "../../layout/addons/MainInfoForm";
 import WorkingTime from "../../layout/addons/WorkingTime";
 import Prices from "../../layout/addons/Prices";
 import PageHeader from "../../layout/shared/PageHeader";
-import { useParams } from "react-router-dom";
-import axios from "../../../../util/axios";
+import { DAYS } from "../../../../constants";
 
 const AddNewAddOn = () => {
   const { id } = useParams();
   const [addon, setAddon] = useState(null);
   const [form, setForm] = useState("Main Info");
+  const [hasParentYacht, setHasParentYacht] = useState(false);
+  const [isMainInfoValid, setIsMainInfoValid] = useState(false);
+  const [isWorkingTimeValid, setIsWorkingTimeValid] = useState(false);
+  const [isPricesValid, setIsPricesValid] = useState(false);
+
+  const workingHoursInitial = DAYS.map((day, index) => ({
+    day,
+    index,
+    selected: false,
+    hours: [{ from: "00:00", to: "00:00" }]
+  }));
+
+  const pricesInitial = {
+    price: "",
+    price_type: "",
+    min_price: ""
+  };
+
+  const [formData, setFormData] = useState({
+    attachment: Array(3).fill(""),
+    video_link: "",
+    name: "",
+    description: "",
+    category: "",
+    quantity: "",
+    yacht: "",
+    vat: null,
+    working_hours: workingHoursInitial,
+    prices: [pricesInitial]
+  });
+
   useEffect(() => {
     if (id) {
       axios
         .get(`/addons/${id}/`)
         .then((res) => {
-          console.log(res.data);
           setAddon(res.data);
         })
         .catch((err) => {
           console.log(err);
         });
     }
-  }, [id, form]);
-  let formComponent;
+  }, [id]);
 
-  switch (form) {
-    case "Main Info":
-      formComponent = <MainInfoForm setForm={setForm} addon={addon} />;
-      break;
-    case "Working Time":
-      formComponent = <WorkingTime setForm={setForm} addon={addon} />;
-      break;
-    case "Prices":
-      formComponent = <Prices setForm={setForm} addon={addon} />;
-      break;
-    default:
-      formComponent = <MainInfoForm setForm={setForm} addon={addon} />;
-      break;
-  }
+  const handleFormChange = (newForm) => {
+    if (
+      (form === "Main Info" && isMainInfoValid) ||
+      (form === "Working Time" && isWorkingTimeValid) ||
+      (form === "Prices" && isPricesValid)
+    ) {
+      setForm(newForm);
+    }
+  };
 
   return (
     <section className="section-main-content">
@@ -56,14 +80,46 @@ const AddNewAddOn = () => {
               <div
                 key={i}
                 className={`wizard_tab ${form === fo ? "active" : ""}`}
-                onClick={() => setForm(fo)}
+                onClick={() => handleFormChange(fo)}
               >
                 <div className="step_no">{i + 1}</div>
                 <h6>{fo}</h6>
               </div>
             ))}
           </div>
-          <div className="bg_white_card">{formComponent}</div>
+          <div className="bg_white_card">
+            {form === "Main Info" && (
+              <MainInfoForm
+                setForm={setForm}
+                addon={addon}
+                formData={formData}
+                setFormData={setFormData}
+                setHasParentYacht={setHasParentYacht}
+                hasParentYacht={hasParentYacht}
+                isValid={isMainInfoValid}
+                setIsValid={setIsMainInfoValid}
+              />
+            )}
+            {form === "Working Time" && (
+              <WorkingTime
+                setForm={setForm}
+                addon={addon}
+                formData={formData}
+                setFormData={setFormData}
+                isValid={isWorkingTimeValid}
+                setIsValid={setIsWorkingTimeValid}
+              />
+            )}
+            {form === "Prices" && (
+              <Prices
+                setForm={setForm}
+                addon={addon}
+                formData={formData}
+                setFormData={setFormData}
+                setIsValid={setIsPricesValid}
+              />
+            )}
+          </div>
         </div>
       </div>
     </section>
