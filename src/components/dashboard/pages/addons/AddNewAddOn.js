@@ -12,7 +12,7 @@ const AddNewAddOn = () => {
   const [addon, setAddon] = useState(null);
   const [form, setForm] = useState("Main Info");
   const [hasParentYacht, setHasParentYacht] = useState(false);
-  const [isMainInfoValid, setIsMainInfoValid] = useState(false);
+  const [isMainInfoValid, setIsMainInfoValid] = useState(true);
   const [isWorkingTimeValid, setIsWorkingTimeValid] = useState(false);
   const [isPricesValid, setIsPricesValid] = useState(false);
 

@@ -1,5 +1,8 @@
+import React from "react";
 import addIcon from "../../assets/images/addRow.svg";
 import deleteIcon from "../../assets/images/delete.svg";
+import CustomTimePicker from "./CustomTimePicker";
+import dayjs from "dayjs";
 
 const TimeRow = ({
   currentObject,
@@ -7,28 +10,55 @@ const TimeRow = ({
   day,
   handleTimeChange,
   handleAddNewHoursRow,
-  handleDeleteCUrrentHours
+  handleDeleteCurrentHours
 }) => {
+  const calculateDisabledTimes = (hours, currentIndex, key) => {
+    let disabledTimes = [];
+    hours.forEach((time, i) => {
+      if (i !== currentIndex) {
+        let start = dayjs(time.from, "HH:mm");
+        let end = dayjs(time.to, "HH:mm");
+        let range = [];
+        let curr = start;
+        while (curr.isBefore(end) || curr.isSame(end)) {
+          range.push(curr.format("HH:mm"));
+          curr = curr.add(5, "minute");
+        }
+        disabledTimes = [...disabledTimes, ...range];
+      }
+    });
+    return disabledTimes;
+  };
+
+  const disabledFromTimes = calculateDisabledTimes(
+    currentObject.hours,
+    index,
+    "from"
+  );
+  const disabledToTimes = calculateDisabledTimes(
+    currentObject.hours,
+    index,
+    "to"
+  );
+
   return (
     <div className="time_row">
       <div className="input-field">
-        <input
-          type="time"
+        <CustomTimePicker
           value={currentObject.hours[index].from}
-          onChange={(e) =>
-            handleTimeChange(e.target.value, "from", index, currentObject, day)
+          onChange={(value) =>
+            handleTimeChange(value, "from", index, currentObject, day)
           }
-          required
+          disabledTimes={disabledFromTimes}
         />
       </div>
       <div className="input-field">
-        <input
+        <CustomTimePicker
           value={currentObject.hours[index].to}
-          type="time"
-          onChange={(e) =>
-            handleTimeChange(e.target.value, "to", index, currentObject, day)
+          onChange={(value) =>
+            handleTimeChange(value, "to", index, currentObject, day)
           }
-          required
+          disabledTimes={disabledToTimes}
         />
       </div>
       {index === 0 ? (
@@ -41,7 +71,7 @@ const TimeRow = ({
         </button>
       ) : (
         <button
-          onClick={() => handleDeleteCUrrentHours(index, currentObject, day)}
+          onClick={() => handleDeleteCurrentHours(index, currentObject, day)}
           type="button"
         >
           <img src={deleteIcon} alt="delete icon" />

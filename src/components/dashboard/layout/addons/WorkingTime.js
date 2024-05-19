@@ -73,19 +73,23 @@ const WorkingTime = ({
   };
 
   const handleTimeChange = (value, key, index, currentObject, day) => {
-    currentObject.hours[index][key] = value;
+    const updatedHours = [...currentObject.hours];
+    updatedHours[index][key] = value;
+    const updatedObject = { ...currentObject, hours: updatedHours };
+  
     setFormData((prev) => {
       const currentIndex = prev.working_hours.findIndex(
         (obj) => obj.day === day
       );
       const newFormData = [...prev.working_hours];
-      newFormData[currentIndex] = currentObject;
+      newFormData[currentIndex] = updatedObject;
       return {
         ...prev,
         working_hours: newFormData
       };
     });
   };
+  
 
   const handleAddNewHoursRow = (day, currentObject) => {
     if (currentObject.hours.length < 3) {
