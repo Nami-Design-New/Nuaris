@@ -1,73 +1,79 @@
+import React from "react";
 import addIcon from "../../assets/images/addRow.svg";
 import deleteIcon from "../../assets/images/delete.svg";
+import CustomTimePicker from "./CustomTimePicker";
+import dayjs from "dayjs";
 
-const TimeRow = ({ setFormData, currentObject, index, day }) => {
-  function handleTimeChange(value, key, index) {
-    currentObject.hours[index][key] = value;
-    setFormData((prev) => {
-      const currentIndex = prev.findIndex((obj) => obj.day === day);
-      const newFormData = [...prev];
-      newFormData[currentIndex] = currentObject;
-      return newFormData;
-    });
-  }
-
-  function handleAddNewHoursRow() {
-    if (currentObject.hours.length < 3) {
-      const newObject = { ...currentObject };
-      newObject.hours.push({ from: "00:00", to: "00:00" });
-      setFormData((prev) => {
-        return prev.map((obj) => {
-          if (obj.day === day) {
-            return newObject;
-          }
-          return obj;
-        });
-      });
-    }
-  }
-
-  function handleDeleteCUrrentHours() {
-    const newObject = { ...currentObject };
-    newObject.hours.splice(index, 1);
-    setFormData((prev) => {
-      return prev.map((obj) => {
-        if (obj.day === day) {
-          return newObject;
+const TimeRow = ({
+  currentObject,
+  index,
+  day,
+  handleTimeChange,
+  handleAddNewHoursRow,
+  handleDeleteCurrentHours
+}) => {
+  const calculateDisabledTimes = (hours, currentIndex, key) => {
+    let disabledTimes = [];
+    hours.forEach((time, i) => {
+      if (i !== currentIndex) {
+        let start = dayjs(time.from, "HH:mm");
+        let end = dayjs(time.to, "HH:mm");
+        let range = [];
+        let curr = start;
+        while (curr.isBefore(end) || curr.isSame(end)) {
+          range.push(curr.format("HH:mm"));
+          curr = curr.add(5, "minute");
         }
-        return obj;
-      });
+        disabledTimes = [...disabledTimes, ...range];
+      }
     });
-  }
+    return disabledTimes;
+  };
+
+  const disabledFromTimes = calculateDisabledTimes(
+    currentObject.hours,
+    index,
+    "from"
+  );
+  const disabledToTimes = calculateDisabledTimes(
+    currentObject.hours,
+    index,
+    "to"
+  );
 
   return (
     <div className="time_row">
       <div className="input-field">
-        <input
-          type="time"
+        <CustomTimePicker
           value={currentObject.hours[index].from}
-          onChange={(e) => handleTimeChange(e.target.value, "from", index)}
-          required
+          onChange={(value) =>
+            handleTimeChange(value, "from", index, currentObject, day)
+          }
+          disabledTimes={disabledFromTimes}
         />
       </div>
       <div className="input-field">
-        <input
+        <CustomTimePicker
           value={currentObject.hours[index].to}
-          type="time"
-          onChange={(e) => handleTimeChange(e.target.value, "to", index)}
-          required
+          onChange={(value) =>
+            handleTimeChange(value, "to", index, currentObject, day)
+          }
+          disabledTimes={disabledToTimes}
         />
       </div>
       {index === 0 ? (
         <button
-          onClick={handleAddNewHoursRow}
+          onClick={() => handleAddNewHoursRow(day, currentObject)}
           disabled={currentObject.hours.length >= 3}
           type="button"
         >
           <img src={addIcon} alt="add icon" />
         </button>
       ) : (
-        <button onClick={handleDeleteCUrrentHours} type="button">
+        <button
+          onClick={() => handleDeleteCurrentHours(index, currentObject, day)}
+          type="button"
+        >
           <img src={deleteIcon} alt="delete icon" />
         </button>
       )}

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import PriceRow from "./PriceRow";
@@ -6,28 +6,21 @@ import axios from "./../../../../util/axios";
 import addIcon from "../../../../assets/images/add.svg";
 import SubmitButton from "../../../ui/form-elements/SubmitButton";
 
-const Prices = ({ setForm, addon }) => {
+const Prices = ({
+  setForm,
+  addon,
+  formData,
+  setFormData,
+  setIsValid
+}) => {
+  const [loading, setLoading] = useState(false);
   const createdAddOn = sessionStorage.getItem("addon_id");
   const navigate = useNavigate();
-  const initialData = {
+  const pricesInitial = {
     price: "",
     price_type: "",
     min_price: ""
   };
-  const [formData, setFormData] = useState([initialData]);
-  const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    if (addon && Object.keys(addon?.season_price).length > 0) {
-      setFormData([
-        {
-          price: addon?.price || "",
-          price_type: addon?.price_type || "",
-          min_price: addon?.min_price || ""
-        }
-      ]);
-    }
-  }, [addon]);
 
   const handleBack = (e) => {
     e.preventDefault();
@@ -63,13 +56,22 @@ const Prices = ({ setForm, addon }) => {
 
   const handleAddPriceRow = (e) => {
     e.preventDefault();
-    if (formData.length < 6) {
-      setFormData([...formData, initialData]);
+    if (formData.prices.length < 6) {
+      setFormData((prev) => {
+        return {
+          ...prev,
+          prices: [...prev.prices, { ...pricesInitial }]
+        };
+      });
     }
   };
 
+  const handleDeleteRow = (indexToDelete) => {
+    setFormData(formData.prices.filter((_, index) => index !== indexToDelete));
+  };
+
   const handleChange = (index, field, value) => {
-    const updatedFormData = [...formData];
+    const updatedFormData = [...formData.prices];
     if (field === "price_type") {
       updatedFormData.forEach((data, i) => {
         if (i !== index && data.price_type === value) {
@@ -78,11 +80,12 @@ const Prices = ({ setForm, addon }) => {
       });
     }
     updatedFormData[index] = { ...updatedFormData[index], [field]: value };
-    setFormData(updatedFormData);
-  };
-
-  const handleDeleteRow = (indexToDelete) => {
-    setFormData(formData.filter((_, index) => index !== indexToDelete));
+    setFormData((prev) => {
+      return {
+        ...prev,
+        prices: updatedFormData
+      };
+    });
   };
 
   return (
@@ -94,16 +97,16 @@ const Prices = ({ setForm, addon }) => {
             <img src={addIcon} alt="addIcon" />
           </button>
         </div>
-        {formData.map((data, index) => (
+        {formData.prices.map((data, index) => (
           <PriceRow
             key={index}
             index={index}
             formData={data}
-            length={formData.length}
+            length={formData.prices.length}
             handleChange={handleChange}
             options={["30 M", "1 H", "2 H", "3 H", "Trip", "Item"].filter(
               (option) =>
-                !formData.some(
+                !formData.prices.some(
                   (row) => row.price_type === option && row !== data
                 )
             )}

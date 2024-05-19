@@ -2,40 +2,40 @@ import React from "react";
 import { Accordion, Form } from "react-bootstrap";
 import TimeRow from "./TimeRow";
 
-const DayAccordionItem = ({ formData, day, index, setFormData }) => {
-  const currentObject = formData.find((obj) => obj.day === day);
-
-  const handleCheck = (e) => {
-    const { checked } = e.target;
-    setFormData((prev) => {
-      let newFormData = [...prev];
-      newFormData[index].selected = checked;
-      return newFormData;
-    });
-  };
+const DayAccordionItem = ({
+  day,
+  index,
+  workingHours,
+  handleCheck,
+  handleTimeChange,
+  handleAddNewHoursRow,
+  handleDeleteCurrentHours
+}) => {
+  const currentObject = workingHours.find((obj) => obj.day === day);
 
   return (
     <Accordion.Item key={day} eventKey={index}>
       <Accordion.Header>
         <Form.Check
-          onClick={handleCheck}
-          checked={formData[index].selected}
+          onClick={(e) => handleCheck(e, index)}
+          checked={workingHours[index].selected}
           type="switch"
           id={day}
           label={day}
         />
       </Accordion.Header>
-      {formData[index].selected && (
+      {workingHours[index].selected && (
         <Accordion.Body>
           <div className="form-ui timesRow">
             {currentObject.hours.map((_, i) => (
               <TimeRow
                 key={i}
-                formData={formData}
-                setFormData={setFormData}
-                currentObject={currentObject}
                 index={i}
                 day={day}
+                currentObject={currentObject}
+                handleTimeChange={handleTimeChange}
+                handleAddNewHoursRow={handleAddNewHoursRow}
+                handleDeleteCurrentHours={handleDeleteCurrentHours}
               />
             ))}
           </div>

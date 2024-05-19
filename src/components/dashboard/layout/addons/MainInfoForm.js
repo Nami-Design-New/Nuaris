@@ -13,46 +13,24 @@ import { toast } from "react-toastify";
 import axios from "../../../../util/axios";
 import { ADD_ONS_CATEGORIES, S3Config } from "../../../../constants";
 
-const MainInfoForm = ({ setForm, addon }) => {
+const MainInfoForm = ({
+  addon,
+  setForm,
+  formData,
+  isValid,
+  setIsValid,
+  setFormData,
+  hasParentYacht,
+  setHasParentYacht
+}) => {
   const user = useSelector((state) => state.user?.user);
   const subUser = user?.subuser_set?.filter(
     (u) => u.role === user.current_role
   )[0]?.id;
+
   const [yachts, setYachts] = useState([]);
-  const [hasParentYacht, setHasParentYacht] = useState(false);
   const [fileLoading, setFileLoading] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [videoLink, setVideoLink] = useState("");
-
-  const [formData, setFormData] = useState({
-    attachment: Array(3).fill(""),
-    name: "",
-    description: "",
-    category: "",
-    quantity: "",
-    yacht: "",
-    vat: null
-  });
-
-  useEffect(() => {
-    setFormData({
-      ...formData,
-      yacht: addon?.yacht || "",
-      category: addon?.category.toLowerCase() || "",
-      vat: addon?.vat || null,
-      quantity: addon?.quantity || "",
-      name: addon?.name || "",
-      description: addon?.description || "",
-      attachment: addon?.attachments || Array(3).fill("")
-    });
-    if (addon?.yacht) {
-      setHasParentYacht(true);
-    }
-    if (addon?.attachments[3]) {
-      setVideoLink(addon?.attachments[3]);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [addon]);
 
   useEffect(() => {
     axios
@@ -121,7 +99,10 @@ const MainInfoForm = ({ setForm, addon }) => {
 
   const handleVideoChange = async (e) => {
     if (e?.length === 0) {
-      setVideoLink("");
+      setFormData((prev) => ({
+        ...prev,
+        video_link: ""
+      }));
       return;
     }
     if (fileLoading) {
@@ -130,7 +111,10 @@ const MainInfoForm = ({ setForm, addon }) => {
     try {
       const file = e[0].file;
       const link = await handleUploadMedia(file);
-      setVideoLink(link);
+      setFormData((prev) => ({
+        ...prev,
+        video_link: link
+      }));
     } catch (error) {
       console.error("Error handling video upload:", error);
       setFileLoading(false);
@@ -140,27 +124,32 @@ const MainInfoForm = ({ setForm, addon }) => {
 
   const handleNext = (e) => {
     e.preventDefault();
-    setForm("Working Time");
+    if (isValid) {
+      setForm("Working Time");
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     try {
-      const attached = formData.attachment.filter((a) => a);
-      // const attached = [...formData.attachment];
-      if (videoLink) {
-        attached.push(videoLink);
-      }
+      const updatedAttachments = formData.attachment.filter(
+        (img) => img !== ""
+      );
       const res = await axios.request({
         method: addon ? "PATCH" : "POST",
         url: `/addons/${addon ? `${addon.id}/` : ""}`,
         data: {
-          ...formData,
-          yacht: formData.yacht === "select" ? null : formData.yacht,
           sub_user: subUser,
           user: user.id,
-          attachment: attached
+          attachment: updatedAttachments,
+          video_link: formData.video_link,
+          name: formData.name,
+          description: formData.description,
+          category: formData.category,
+          quantity: formData.quantity,
+          vat: formData.vat,
+          yacht: formData.yacht === "" ? null : formData.yacht
         }
       });
       if (res.status === 201 || res.status === 200) {
@@ -198,15 +187,14 @@ const MainInfoForm = ({ setForm, addon }) => {
                 .map((_, i) => (
                   <CustomFileUpload
                     key={i}
+                    allowMultiple={false}
+                    pannelRatio=".88"
                     labelIdle={`${
                       i === 0 ? '<label class="mainImg">Main Image</label>' : ""
                     } <img src=${fav} alt="fav"/>`}
-                    pannelRatio=".88"
                     files={
                       formData.attachment[i] ? [formData.attachment[i]] : null
                     }
-                    value
-                    allowMultiple={false}
                     onUpdateFiles={(e) => handleImagesChange(e, i)}
                   />
                 ))}
@@ -222,8 +210,8 @@ const MainInfoForm = ({ setForm, addon }) => {
             pannelRatio=".283"
             accept={["video/*"]}
             allowMultiple={false}
-            files={videoLink ? [videoLink] : null}
             onUpdateFiles={(e) => handleVideoChange(e)}
+            files={formData.video_link ? [formData.video_link] : null}
           />
         </div>
         {/* addon name */}
