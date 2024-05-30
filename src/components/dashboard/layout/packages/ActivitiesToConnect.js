@@ -11,7 +11,7 @@ const ActivitiesToConnect = ({
   activities,
 }) => {
   const handleDeleteRow = (index) => {
-    const updatedActivitiesList = formData.activities_list.filter(
+    const updatedActivitiesList = formData?.activities_list.filter(
       (_, i) => i !== index
     );
     setFormData({ ...formData, activities_list: updatedActivitiesList });
@@ -28,12 +28,12 @@ const ActivitiesToConnect = ({
     <div className="col-12 p-2">
       <div className="addons_wrap">
         <h6>Activities you want to connect to the package</h6>
-        {formData.activities_list.map((activity, index) => {
+        {formData.activities_list?.map((activity, index) => {
           return (
             <div className="select_addon_row" key={index}>
               <CustomSelectField
                 id={`activity-${index}`}
-                options={activities.map((activity) => ({
+                options={activities?.map((activity) => ({
                   name: activity.name,
                   value: activity.name,
                 }))}

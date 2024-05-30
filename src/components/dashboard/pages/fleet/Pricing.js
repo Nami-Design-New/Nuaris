@@ -16,7 +16,6 @@ const Pricing = ({ yacht }) => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const seasonCardInitialData = {
-    price: "",
     period: "",
     type: "",
     period_type: "",
@@ -119,7 +118,7 @@ const Pricing = ({ yacht }) => {
               </div>
             </div>
             {/* Prepayment percentage */}
-            <div className="col-12 p-2">
+            <div className="col-lg-6 col-12 p-2">
               <CustomInputField
                 hint={"( Minimum 50% )"}
                 label={"Advanced Payment percentage"}
@@ -195,22 +194,6 @@ const Pricing = ({ yacht }) => {
                   </select>
                 </div>
               </div>
-            </div>
-            {/* Price */}
-            <div className="col-lg-6 col-12 p-2">
-              <CustomInputField
-                selectName={"type"}
-                name={"price"}
-                label="Price"
-                placeholder="00"
-                value={formData?.price}
-                onChange={(e) => {
-                  setFormData((prev) => ({
-                    ...prev,
-                    price: e.target.value
-                  }));
-                }}
-              />
             </div>
             <div className="col-12 p-2 d-flex align-items-center justify-content-between">
               <div className="d-flex align-items-center gap-2 addSeason">

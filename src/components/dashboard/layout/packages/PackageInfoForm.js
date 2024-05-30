@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { uploadFile } from "react-s3";
 import { S3Config } from "../../../../constants";
-import { useSelector } from "react-redux";
 import fav from "../../../../assets/images/fav.png";
 import CustomFileUpload from "../../../ui/form-elements/CustomFileUpload";
 import CustomInputField from "./../../../ui/form-elements/CustomInputField";
@@ -14,68 +13,22 @@ import CustomDatePicker from "../../../ui/form-elements/CustomDatePicker";
 import AddonsToConnect from "./AddonsToConnect";
 import ActivitiesToConnect from "./ActivitiesToConnect";
 
-const PackageInfoForm = ({ setForm, tripPackage }) => {
-  const user = useSelector((state) => state.user?.user);
-  const subUser = user?.subuser_set?.filter(
-    (u) => u.role === user.current_role
-  )[0]?.id;
+const PackageInfoForm = ({
+  setForm,
+  tripPackage,
+  formData,
+  setFormData,
+  subUser,
+  addonsInitial,
+  activitiesInitial,
+  isMainInfoValid,
+  setIsMainInfoValid
+}) => {
   const [yachts, setYachts] = useState([]);
   const [addons, setAddons] = useState([]);
   const [activities, setActivities] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [videoLink, setVideoLink] = useState("");
   const [fileLoading, setFileLoading] = useState(false);
-
-  const addonsInitial = {
-    addon: null,
-    quantity: ""
-  };
-  const activitiesInitial = {
-    activity: null,
-    quantity: ""
-  };
-
-  const [formData, setFormData] = useState({
-    sub_user: subUser,
-    name: "",
-    description: "",
-    period_of_activation_from: "",
-    period_of_activation_to: "",
-    yacht: "",
-    images_list: Array(3).fill(""),
-    activities_list: [activitiesInitial],
-    addons_list: [addonsInitial]
-  });
-
-  useEffect(() => {
-    setFormData({
-      ...formData,
-      yacht: tripPackage?.yacht || "",
-      name: tripPackage?.name || "",
-      description: tripPackage?.description || "",
-      period_of_activation_from: tripPackage?.period_of_activation_from || "",
-      period_of_activation_to: tripPackage?.period_of_activation_to || "",
-      images_list: tripPackage?.images || Array(3).fill(""),
-      addons_list:
-        tripPackage?.addons?.length > 0
-          ? tripPackage?.addons?.map((a) => ({
-              addon: a?.addon?.id,
-              quantity: a?.quantity
-            }))
-          : [addonsInitial],
-      activities_list:
-        tripPackage?.activities?.length > 0
-          ? tripPackage?.activities?.map((a) => ({
-              activity: a.activity.id,
-              quantity: a.quantity
-            }))
-          : [activitiesInitial]
-    });
-    if (tripPackage?.images[3]) {
-      setVideoLink(tripPackage?.images[3]);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [tripPackage]);
 
   useEffect(() => {
     axios
@@ -106,7 +59,9 @@ const PackageInfoForm = ({ setForm, tripPackage }) => {
 
   const handleNext = (e) => {
     e.preventDefault();
-    setForm("Package Time & Price");
+    if (isMainInfoValid) {
+      setForm("Package Time & Price");
+    }
   };
 
   // ========= media ========== //
@@ -164,7 +119,10 @@ const PackageInfoForm = ({ setForm, tripPackage }) => {
   };
   const handleVideoChange = async (e) => {
     if (e?.length === 0) {
-      setVideoLink("");
+      setFormData((prev) => ({
+        ...prev,
+        video_link: ""
+      }));
       return;
     }
     if (fileLoading) {
@@ -173,7 +131,10 @@ const PackageInfoForm = ({ setForm, tripPackage }) => {
     try {
       const file = e[0].file;
       const link = await handleUploadMedia(file);
-      setVideoLink(link);
+      setFormData((prev) => ({
+        ...prev,
+        video_link: link
+      }));
     } catch (error) {
       console.error("Error handling video upload:", error);
       setFileLoading(false);
@@ -194,7 +155,7 @@ const PackageInfoForm = ({ setForm, tripPackage }) => {
         url: `/trip-packages/${tripPackage ? `${tripPackage.id}/` : ""}`,
         data: {
           ...formData,
-          video_link: videoLink,
+          video_link: formData.video_link ? formData.video_link : null,
           images_list: filteredImagesList
         }
       });
@@ -254,7 +215,7 @@ const PackageInfoForm = ({ setForm, tripPackage }) => {
             pannelRatio=".283"
             accept={["video/*"]}
             allowMultiple={false}
-            files={videoLink ? [videoLink] : null}
+            files={formData.video_link ? [formData.video_link] : null}
             onUpdateFiles={(e) => handleVideoChange(e)}
           />
         </div>

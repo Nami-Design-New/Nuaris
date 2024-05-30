@@ -12,9 +12,8 @@ const AddNewAddOn = () => {
   const [addon, setAddon] = useState(null);
   const [form, setForm] = useState("Main Info");
   const [hasParentYacht, setHasParentYacht] = useState(false);
-  const [isMainInfoValid, setIsMainInfoValid] = useState(true);
+  const [isMainInfoValid, setIsMainInfoValid] = useState(false);
   const [isWorkingTimeValid, setIsWorkingTimeValid] = useState(false);
-  const [isPricesValid, setIsPricesValid] = useState(false);
 
   const workingHoursInitial = DAYS.map((day, index) => ({
     day,
@@ -59,7 +58,7 @@ const AddNewAddOn = () => {
     if (
       (form === "Main Info" && isMainInfoValid) ||
       (form === "Working Time" && isWorkingTimeValid) ||
-      (form === "Prices" && isPricesValid)
+      form === "Prices"
     ) {
       setForm(newForm);
     }
@@ -116,7 +115,6 @@ const AddNewAddOn = () => {
                 addon={addon}
                 formData={formData}
                 setFormData={setFormData}
-                setIsValid={setIsPricesValid}
               />
             )}
           </div>

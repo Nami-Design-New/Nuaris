@@ -4,61 +4,45 @@ import CustomInputField from "./../../../ui/form-elements/CustomInputField";
 import CustomInputWithUnit from "./../../../ui/form-elements/CustomInputWIthUnit";
 
 const PricePeriodRow = ({
-  day,
   index,
   currentObject,
   setFormData,
   formData,
-  dayIndex,
+  dayIndex
 }) => {
   const handleAddRow = () => {
-    const newFormData = formData.map((obj, idx) => {
-      if (idx === dayIndex) {
-        return {
-          ...obj,
-          periods: [
-            ...obj.periods,
-            {
-              start_time: "",
-              end_time: "",
-              price: "",
-              price_type: "",
-            },
-          ],
-        };
-      }
-      return obj;
-    });
-    setFormData(newFormData);
+    const updatedTripPackageDays = [...formData.trip_package_days];
+    updatedTripPackageDays[dayIndex] = {
+      ...updatedTripPackageDays[dayIndex],
+      periods: [
+        ...updatedTripPackageDays[dayIndex].periods,
+        {
+          start_time: "",
+          end_time: "",
+          price: "",
+          price_type: ""
+        }
+      ]
+    };
+    setFormData({ ...formData, trip_package_days: updatedTripPackageDays });
   };
 
   const handleDeleteRow = () => {
-    const newFormData = formData.map((obj, idx) => {
-      if (idx === dayIndex) {
-        return {
-          ...obj,
-          periods: obj.periods.filter((_, idx) => idx !== index),
-        };
-      }
-      return obj;
-    });
-    setFormData(newFormData);
+    const updatedTripPackageDays = [...formData.trip_package_days];
+    updatedTripPackageDays[dayIndex] = {
+      ...updatedTripPackageDays[dayIndex],
+      periods: updatedTripPackageDays[dayIndex].periods.filter(
+        (_, idx) => idx !== index
+      )
+    };
+    setFormData({ ...formData, trip_package_days: updatedTripPackageDays });
   };
 
-  function handleChange(value, key, index) {
-    setFormData((prevFormData) => {
-      const newFormData = [...prevFormData];
-      const currentDayObject = { ...newFormData[dayIndex] };
-      const currentPeriods = [...currentDayObject.periods];
-      currentPeriods[index] = {
-        ...currentPeriods[index],
-        [key]: value,
-      };
-      currentDayObject.periods = currentPeriods;
-      newFormData[dayIndex] = currentDayObject;
-      return newFormData;
-    });
-  }
+  const handleChange = (value, key, periodIndex) => {
+    const updatedTripPackageDays = [...formData.trip_package_days];
+    updatedTripPackageDays[dayIndex].periods[periodIndex][key] = value;
+    setFormData({ ...formData, trip_package_days: updatedTripPackageDays });
+  };
 
   return (
     <div className="price_period_row">
@@ -83,20 +67,23 @@ const PricePeriodRow = ({
         </div>
         <div className="col-lg-6 col-12 p-2">
           <CustomInputField
-            value={formData[dayIndex]?.periods[index]?.start_time || ""}
+            value={
+              formData.trip_package_days[dayIndex]?.periods[index]
+                ?.start_time || ""
+            }
             label="Start time"
             type="time"
             id="start_time"
             name="start_time"
-            onChange={(e) => {
-              console.log(e.target);
-              handleChange(e.target.value, "start_time", index);
-            }}
+            onChange={(e) => handleChange(e.target.value, "start_time", index)}
           />
         </div>
         <div className="col-lg-6 col-12 p-2">
           <CustomInputField
-            value={formData[dayIndex]?.periods[index]?.end_time || ""}
+            value={
+              formData.trip_package_days[dayIndex]?.periods[index]?.end_time ||
+              ""
+            }
             label="End time"
             type="time"
             id="end_time"
@@ -107,9 +94,14 @@ const PricePeriodRow = ({
         <div className="col-12 p-2">
           <CustomInputWithUnit
             label="Price"
-            name={"price"}
-            value={formData[dayIndex]?.periods[index]?.price || ""}
-            selectValue={formData[dayIndex]?.periods[index]?.price_type || ""}
+            name="price"
+            value={
+              formData.trip_package_days[dayIndex]?.periods[index]?.price || ""
+            }
+            selectValue={
+              formData.trip_package_days[dayIndex]?.periods[index]
+                ?.price_type || ""
+            }
             units={["per person", "per trip"]}
             onChange={(e) => handleChange(e.target.value, "price", index)}
             selectName="price_type"

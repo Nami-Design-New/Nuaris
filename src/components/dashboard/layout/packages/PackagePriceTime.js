@@ -1,55 +1,53 @@
-import React, { useEffect, useState } from "react";
-import { DAYS } from "../../../../constants";
+import React, { useState } from "react";
 import PricingAccordion from "./PricingAccordion";
 import SubmitButton from "../../../ui/form-elements/SubmitButton";
 import axios from "./../../../../util/axios";
 import { toast } from "react-toastify";
 
-const PackagePriceTime = ({ setForm, tripPackage }) => {
+const PackagePriceTime = ({
+  setForm,
+  tripPackage,
+  formData,
+  setFormData,
+  isPriceTimeValid,
+  setIsPriceTimeValid
+}) => {
   const [loading, setLoading] = useState(false);
   const packageId = sessionStorage.getItem("package_id");
 
-  const periodInitial = {
-    start_time: "",
-    end_time: "",
-    price: "",
-    price_type: ""
-  };
-
-  const formDataInitial = DAYS.map((day, index) => {
-    return {
-      day,
-      periods: [periodInitial],
-      selected: false,
-      index
-    };
-  });
-  const [formData, setFormData] = useState(formDataInitial);
-
-  useEffect(() => {
-    if (tripPackage) {
-      const newPricingTime = tripPackage?.trip_package_days?.map((e) => {
-        return {
-          ...e,
-          selected: true,
-          index: formData.findIndex((obj) => obj.day === e.day)
-        };
-      });
-      setFormData((prevFormData) => {
-        const newFormData = [...prevFormData];
-        newPricingTime.forEach((e) => {
-          newFormData[e.index].periods = e.periods;
-          newFormData[e.index].selected = true;
-        });
-        return newFormData;
-      });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [tripPackage]);
+  // useEffect(() => {
+  //   if (tripPackage) {
+  //     const newPricingTime = tripPackage?.trip_package_days?.map((e) => {
+  //       return {
+  //         ...e,
+  //         selected: true,
+  //         index: formData?.trip_package_days?.findIndex(
+  //           (obj) => obj.day === e.day
+  //         )
+  //       };
+  //     });
+  //     setFormData((prevFormData) => {
+  //       const newFormData = [...prevFormData];
+  //       newPricingTime.forEach((e) => {
+  //         newFormData[e.index].periods = e.periods;
+  //         newFormData[e.index].selected = true;
+  //       });
+  //       return newFormData;
+  //     });
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [tripPackage]);
 
   const handleBack = (e) => {
     e.preventDefault();
     setForm("Package Info");
+  };
+
+  const handleNext = (e) => {
+    e.preventDefault();
+    if (isPriceTimeValid) {
+      setForm("Policy");
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -60,8 +58,10 @@ const PackagePriceTime = ({ setForm, tripPackage }) => {
     }
     setLoading(true);
     try {
-      const filteredFormData = formData.filter((obj) => obj.selected === true);
-      const reqData = filteredFormData.map((obj) => {
+      const filteredFormData = formData?.trip_package_days?.filter(
+        (obj) => obj.selected === true
+      );
+      const reqData = filteredFormData?.trip_package_days?.map((obj) => {
         return {
           day: obj.day,
           periods: obj.periods
@@ -106,6 +106,9 @@ const PackagePriceTime = ({ setForm, tripPackage }) => {
             name="Save"
             className="save_btn ms-auto"
           />
+          <button className="next_btn" onClick={handleNext}>
+            Next
+          </button>
         </div>
       </div>
     </form>

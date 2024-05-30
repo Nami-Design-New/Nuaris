@@ -21,9 +21,69 @@ const WorkingTime = ({
       setForm("Prices");
     }
   };
+  
   const handleBack = (e) => {
     e.preventDefault();
     setForm("Main Info");
+  };
+
+  const handleCheck = (e, index) => {
+    const { checked } = e.target;
+    setFormData((prev) => {
+      let newWorkingHours = [...prev.working_hours];
+      newWorkingHours[index].selected = checked;
+      return {
+        ...prev,
+        working_hours: newWorkingHours
+      };
+    });
+  };
+
+  const handleTimeChange = (value, key, index, currentObject, day) => {
+    const updatedHours = [...currentObject.hours];
+    updatedHours[index][key] = value;
+    const updatedObject = { ...currentObject, hours: updatedHours };
+    setFormData((prev) => {
+      const currentIndex = prev.working_hours.findIndex(
+        (obj) => obj.day === day
+      );
+      const newFormData = [...prev.working_hours];
+      newFormData[currentIndex] = updatedObject;
+      return {
+        ...prev,
+        working_hours: newFormData
+      };
+    });
+  };
+
+  const handleAddNewHoursRow = (day, currentObject) => {
+    if (currentObject.hours.length < 3) {
+      const newObject = { ...currentObject };
+      newObject.hours.push({ from: "00:00", to: "00:00" });
+      setFormData((prev) => ({
+        ...prev,
+        working_hours: prev.working_hours.map((obj) => {
+          if (obj.day === day) {
+            return newObject;
+          }
+          return obj;
+        })
+      }));
+    }
+  };
+
+  const handleDeleteCurrentHours = (index, currentObject, day) => {
+    const newObject = { ...currentObject };
+    newObject.hours.splice(index, 1);
+    setFormData((prev) => ({
+      ...prev,
+      working_hours: prev.working_hours.map((obj) => {
+        if (obj.day === day) {
+          return newObject;
+        }
+        return obj;
+      })
+    }));
   };
 
   const handleSubmit = async (e) => {
@@ -58,67 +118,6 @@ const WorkingTime = ({
     } finally {
       setLoading(false);
     }
-  };
-
-  const handleCheck = (e, index) => {
-    const { checked } = e.target;
-    setFormData((prev) => {
-      let newWorkingHours = [...prev.working_hours];
-      newWorkingHours[index].selected = checked;
-      return {
-        ...prev,
-        working_hours: newWorkingHours
-      };
-    });
-  };
-
-  const handleTimeChange = (value, key, index, currentObject, day) => {
-    const updatedHours = [...currentObject.hours];
-    updatedHours[index][key] = value;
-    const updatedObject = { ...currentObject, hours: updatedHours };
-  
-    setFormData((prev) => {
-      const currentIndex = prev.working_hours.findIndex(
-        (obj) => obj.day === day
-      );
-      const newFormData = [...prev.working_hours];
-      newFormData[currentIndex] = updatedObject;
-      return {
-        ...prev,
-        working_hours: newFormData
-      };
-    });
-  };
-  
-
-  const handleAddNewHoursRow = (day, currentObject) => {
-    if (currentObject.hours.length < 3) {
-      const newObject = { ...currentObject };
-      newObject.hours.push({ from: "00:00", to: "00:00" });
-      setFormData((prev) => ({
-        ...prev,
-        working_hours: prev.working_hours.map((obj) => {
-          if (obj.day === day) {
-            return newObject;
-          }
-          return obj;
-        })
-      }));
-    }
-  };
-
-  const handleDeleteCurrentHours = (index, currentObject, day) => {
-    const newObject = { ...currentObject };
-    newObject.hours.splice(index, 1);
-    setFormData((prev) => ({
-      ...prev,
-      working_hours: prev.working_hours.map((obj) => {
-        if (obj.day === day) {
-          return newObject;
-        }
-        return obj;
-      })
-    }));
   };
 
   return (

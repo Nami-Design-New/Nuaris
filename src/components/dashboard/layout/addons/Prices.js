@@ -10,8 +10,7 @@ const Prices = ({
   setForm,
   addon,
   formData,
-  setFormData,
-  setIsValid
+  setFormData,  
 }) => {
   const [loading, setLoading] = useState(false);
   const createdAddOn = sessionStorage.getItem("addon_id");

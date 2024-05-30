@@ -3,23 +3,28 @@ import { Accordion, Form } from "react-bootstrap";
 import PricePeriodRow from "./PricePeriodRow";
 
 const PricingAccordionItem = ({ formData, setFormData, day, index }) => {
-  const currentObject = formData.find((obj) => obj.day === day);
+  const currentObject = formData?.trip_package_days?.[index];
 
   const handleCheck = (e) => {
     const { checked } = e.target;
     setFormData((prev) => {
-      let newFormData = [...prev];
-      newFormData[index].selected = checked;
-      return newFormData;
+      let newTripPackageDays = [...prev.trip_package_days];
+      if (newTripPackageDays[index]) {
+        newTripPackageDays[index].selected = checked;
+      }
+      return {
+        ...prev,
+        trip_package_days: newTripPackageDays
+      };
     });
   };
 
   return (
-    <Accordion.Item key={day} eventKey={index}>
+    <Accordion.Item eventKey={index}>
       <Accordion.Header>
         <Form.Check
-          checked={formData[index].selected}
-          onClick={handleCheck}
+          checked={currentObject?.selected || false}
+          onChange={handleCheck}
           type="switch"
           id={day}
           label={day}
@@ -27,7 +32,7 @@ const PricingAccordionItem = ({ formData, setFormData, day, index }) => {
       </Accordion.Header>
       <Accordion.Body>
         <div className="form-ui timesRow">
-          {currentObject.periods.map((_, i) => (
+          {currentObject?.periods.map((_, i) => (
             <PricePeriodRow
               formData={formData}
               setFormData={setFormData}
