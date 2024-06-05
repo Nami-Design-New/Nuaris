@@ -969,12 +969,29 @@ button {
   flex-direction: column;
   gap: 8px;
   overflow-y: scroll;
+  position: relative;
 }
 .side_bar .navigation_menu::-webkit-scrollbar {
   display: none;
 }
+.side_bar .navigation_menu.sub_menu {
+  gap: 0;
+  display: none;
+  transition: 0.2s;
+}
+.side_bar .navigation_menu.sub_menu.show {
+  display: flex;
+}
+.side_bar .navigation_menu.sub_menu .nav_item {
+  width: 100%;
+}
+.side_bar .navigation_menu.sub_menu .nav_item a {
+  background-color: transparent !important;
+  padding: 0 0 0 50px;
+}
 .side_bar .navigation_menu .nav_item {
   width: 100%;
+  position: relative;
 }
 .side_bar .navigation_menu .nav_item a {
   border-radius: 8px;
@@ -986,6 +1003,22 @@ button {
   color: #777777;
   white-space: nowrap;
   transition: 0.3s ease-in-out;
+}
+.side_bar .navigation_menu .nav_item a .arrowBox {
+  flex: 1 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  transition: 0.3s ease-in-out;
+}
+.side_bar .navigation_menu .nav_item a .arrowBox.flip img {
+  transform: rotate(90deg);
+}
+.side_bar .navigation_menu .nav_item a .arrowBox img {
+  max-width: 22px;
+  -o-object-fit: cover;
+     object-fit: cover;
+  transition: 0.3s;
 }
 .side_bar .navigation_menu .nav_item a img {
   max-width: 22px;
@@ -1053,6 +1086,7 @@ button {
   color: #0d0d0d;
   font-weight: 500;
   transition: 0.2s;
+  white-space: nowrap;
 }
 .main_wrap nav .links ul li a.active {
   color: #006980;
