@@ -949,7 +949,8 @@ $transation: 0.3s ease-in-out;
     .nav_item {
       width: 100%;
       position: relative;
-      a {
+      a,
+      .nav_link {
         border-radius: 8px;
         padding: 10px 13px;
         display: flex;
@@ -959,6 +960,7 @@ $transation: 0.3s ease-in-out;
         color: $gray;
         white-space: nowrap;
         transition: $transation;
+        cursor: pointer;
 
         .arrowBox {
           flex: 1 0 0;
@@ -971,7 +973,7 @@ $transation: 0.3s ease-in-out;
             img {
               transform: rotate(90deg);
             }
-          } 
+          }
 
           img {
             max-width: 22px;
@@ -3529,7 +3531,7 @@ small.error {
 }
 .disabled {
   pointer-events: none;
-  opacity: .5;
+  opacity: 0.5;
 }
 .add_vat {
   background: #34b53a;
