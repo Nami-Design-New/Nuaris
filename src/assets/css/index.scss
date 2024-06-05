@@ -995,7 +995,7 @@ $transation: 0.3s ease-in-out;
       }
     }
   }
-  @media (max-width: 768px) {
+  @media (max-width: 991px) {
     width: 280px;
     left: -280px;
     &.expand {
@@ -1396,7 +1396,7 @@ $transation: 0.3s ease-in-out;
       padding: 32px 8px;
     }
   }
-  @media (max-width: 768px) {
+  @media (max-width: 991px) {
     width: 100%;
     margin-left: 0;
     &.expand {

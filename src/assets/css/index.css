@@ -1031,7 +1031,7 @@ button {
 .side_bar .navigation_menu .nav_item a.active img, .side_bar .navigation_menu .nav_item a:hover img {
   filter: grayscale(0);
 }
-@media (max-width: 768px) {
+@media (max-width: 991px) {
   .side_bar {
     width: 280px;
     left: -280px;
@@ -1469,7 +1469,7 @@ button {
     padding: 32px 8px;
   }
 }
-@media (max-width: 768px) {
+@media (max-width: 991px) {
   .main_wrap {
     width: 100%;
     margin-left: 0;
