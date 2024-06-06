@@ -171,7 +171,7 @@ export default function EditUser() {
             </div>
           </div>
           <AssignGroup
-            invitedUserId={employee.user_id}
+            invitedUserId={employee.id}
             groupNames={employee?.group_names}
           />
         </div>

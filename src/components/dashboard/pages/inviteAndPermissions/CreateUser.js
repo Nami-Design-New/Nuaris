@@ -56,7 +56,7 @@ const CreateUser = () => {
       if (response?.status === 201 || response?.status === 200) {
         toast.success("Invitation sent successfully");
         setShowAssignGroups(true);
-        setInvitedUserId(response?.data?.user_id);
+        setInvitedUserId(response?.data?.id);
         setGroupNames(response?.data?.group_names);
       } else {
         toast.error(
