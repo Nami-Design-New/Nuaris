@@ -2,7 +2,7 @@ import axios from "axios";
 import { store } from "../redux/store";
 import { setToken } from "../redux/slices/authenticatedUserSlice";
 
-axios.defaults.baseURL = "http://newstagingapi.nuaris.co";
+axios.defaults.baseURL = "https://newstagingapi.nuaris.co";
 axios.defaults.headers.common["Content-Type"] = "application/json";
 axios.defaults.headers.common.Accept = "application/json";
 
