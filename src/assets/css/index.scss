@@ -926,12 +926,31 @@ $transation: 0.3s ease-in-out;
     flex-direction: column;
     gap: 8px;
     overflow-y: scroll;
+    position: relative;
     &::-webkit-scrollbar {
       display: none;
     }
+    &.sub_menu {
+      gap: 0;
+      display: none;
+      transition: 0.2s;
+
+      &.show {
+        display: flex;
+      }
+      .nav_item {
+        width: 100%;
+        a {
+          background-color: transparent !important;
+          padding: 0 0 0 50px;
+        }
+      }
+    }
     .nav_item {
       width: 100%;
-      a {
+      position: relative;
+      a,
+      .nav_link {
         border-radius: 8px;
         padding: 10px 13px;
         display: flex;
@@ -941,6 +960,28 @@ $transation: 0.3s ease-in-out;
         color: $gray;
         white-space: nowrap;
         transition: $transation;
+        cursor: pointer;
+
+        .arrowBox {
+          flex: 1 0 0;
+          display: flex;
+          align-items: center;
+          justify-content: flex-end;
+          transition: $transation;
+
+          &.flip {
+            img {
+              transform: rotate(90deg);
+            }
+          }
+
+          img {
+            max-width: 22px;
+            object-fit: cover;
+            transition: 0.3s;
+          }
+        }
+
         img {
           max-width: 22px;
           filter: grayscale(1);
@@ -956,7 +997,7 @@ $transation: 0.3s ease-in-out;
       }
     }
   }
-  @media (max-width: 768px) {
+  @media (max-width: 991px) {
     width: 280px;
     left: -280px;
     &.expand {
@@ -1000,6 +1041,7 @@ $transation: 0.3s ease-in-out;
             color: $dark;
             font-weight: 500;
             transition: 0.2s;
+            white-space: nowrap;
             &.active {
               color: $main;
             }
@@ -1356,7 +1398,7 @@ $transation: 0.3s ease-in-out;
       padding: 32px 8px;
     }
   }
-  @media (max-width: 768px) {
+  @media (max-width: 991px) {
     width: 100%;
     margin-left: 0;
     &.expand {
@@ -3489,7 +3531,7 @@ small.error {
 }
 .disabled {
   pointer-events: none;
-  opacity: .5;
+  opacity: 0.5;
 }
 .add_vat {
   background: #34b53a;
