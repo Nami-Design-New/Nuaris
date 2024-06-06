@@ -16,26 +16,10 @@ const Scheduling = () => {
         </header>
         <div className="row m-0">
           <div className="col-12 p-2">
-            <div className="bg_white_card">
-              <div className="m-0">
-                <div className="col-12 p-2">
-                  <h6 className="form_title">Scheduling</h6>
-                </div>
-                <div className="col-12 p-2">
-                  <SchedulingCalender />
-                </div>
-              </div>
-            </div>
+            <SchedulingCalender />
           </div>
           <div className="col-12 p-2">
-            <div className="bg_white_card">
-              <div className="m-0">
-                <div className="col-12 p-2">
-                  <h6 className="form_title">Bookings</h6>
-                </div>
-              </div>
-              <Bookings />
-            </div>
+            <Bookings />
           </div>
         </div>
       </section>

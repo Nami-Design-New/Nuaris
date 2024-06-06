@@ -24,6 +24,7 @@ import Destination from "../components/dashboard/pages/destination/Destination";
 import Booking from "../components/dashboard/pages/booking-scheduling/Booking";
 import Scheduling from "../components/dashboard/pages/booking-scheduling/Scheduling";
 import Packages from "../components/dashboard/pages/Packages";
+import Home from "../components/dashboard/pages/Home";
 
 const HostDashboard = () => {
   const [sideBarOpen, setSideBarOpen] = useState(false);
@@ -35,6 +36,8 @@ const HostDashboard = () => {
         <NavBar setSideBarOpen={setSideBarOpen} sideBarOpen={sideBarOpen} />
         <main className="main_wrapper">
           <Routes>
+            {/* home */}
+            <Route path="/" element={<Home />} />
             {/* booking and scheduling */}
             <Route path="/bookings-scheduling/*" element={<Scheduling />} />
             <Route path="/bookings-scheduling/booking" element={<Booking />} />
