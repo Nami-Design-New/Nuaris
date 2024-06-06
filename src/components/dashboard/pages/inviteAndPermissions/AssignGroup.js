@@ -62,7 +62,7 @@ const AssignGroup = ({ invitedUserId, groupNames }) => {
         .filter(([groupId, isChecked]) => isChecked)
         .map(([groupId]) => parseInt(groupId));
 
-      const res = await axios.post(`/users/${invitedUserId}/assign_group/`, {
+      const res = await axios.post(`/employees/${invitedUserId}/assign-group/`, {
         ids: selectedGroupIds,
       });
       if (res?.status === 201 || res?.status === 200) {
