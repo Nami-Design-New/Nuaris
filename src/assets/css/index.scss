@@ -933,11 +933,11 @@ $transation: 0.3s ease-in-out;
     }
     &.sub_menu {
       gap: 0;
-      display: none;
-      transition: 0.2s;
+      height: 0;
+      transition: $transation;
 
       &.show {
-        display: flex;
+        height: 100%;
       }
       .nav_item {
         width: 100%;
@@ -979,7 +979,7 @@ $transation: 0.3s ease-in-out;
           img {
             max-width: 22px;
             object-fit: cover;
-            transition: 0.3s;
+            transition: $transation;
           }
         }
 

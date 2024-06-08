@@ -976,11 +976,11 @@ button {
 }
 .side_bar .navigation_menu.sub_menu {
   gap: 0;
-  display: none;
-  transition: 0.2s;
+  height: 0;
+  transition: 0.3s ease-in-out;
 }
 .side_bar .navigation_menu.sub_menu.show {
-  display: flex;
+  height: 100%;
 }
 .side_bar .navigation_menu.sub_menu .nav_item {
   width: 100%;
@@ -1023,7 +1023,7 @@ button {
   max-width: 22px;
   -o-object-fit: cover;
      object-fit: cover;
-  transition: 0.3s;
+  transition: 0.3s ease-in-out;
 }
 .side_bar .navigation_menu .nav_item a img,
 .side_bar .navigation_menu .nav_item .nav_link img {

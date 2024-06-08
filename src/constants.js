@@ -332,3 +332,6 @@ export const COUNTRIES_NAMES = {
   ZM: "Zambia",
   ZW: "Zimbabwe",
 };
+
+/////////
+export const SEND_OPTIONS = ["SMS", "WhatsApp", "Email", "App Notification"];
