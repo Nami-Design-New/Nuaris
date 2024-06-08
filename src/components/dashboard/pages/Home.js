@@ -3,6 +3,7 @@ import Announcements from "../layout/Home/Announcements";
 import SchedulingCalender from "../layout/scheduling/SchedulingCalender";
 import Bookings from "../layout/scheduling/Bookings";
 import Weather from "../layout/Home/Weather";
+import BookingsStats from "../layout/Home/BookingsStats";
 
 const Home = () => {
   return (
@@ -16,6 +17,9 @@ const Home = () => {
         </div>
         <div className="col-12 p-2">
           <SchedulingCalender />
+        </div>
+        <div className="col-12 p-2">
+          <BookingsStats />
         </div>
         <div className="col-12 p-2">
           <Bookings />
