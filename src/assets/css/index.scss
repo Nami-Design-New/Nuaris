@@ -4934,7 +4934,7 @@ small.error {
           p {
             line-height: 18px;
             margin: 0;
-            color: $JumbotronHead;
+            color: $gray;
             font-weight: 400;
             gap: 4px;
             font-size: 12px;
@@ -4991,20 +4991,19 @@ small.error {
         gap: 10px;
         background-position: top right;
         background-repeat: no-repeat;
-        background-size: contain;
         border: 1px solid $inputBG;
 
         &:first-of-type {
-          background-image: url("../images/box-bg-1.svg");
+          background-image: url("../images/img-status-8.svg");
         }
         &:nth-of-type(2) {
-          background-image: url("../images/box-bg-2.svg");
+          background-image: url("../images/img-status-5.svg");
         }
         &:nth-of-type(3) {
-          background-image: url("../images/box-bg-3.svg");
+          background-image: url("../images/img-status-2-1.svg");
         }
         &:last-of-type {
-          background-image: url("../images/box-bg-4.svg");
+          background-image: url("../images/img-status-7.svg");
         }
 
         h5 {
@@ -5121,13 +5120,12 @@ small.error {
       border-radius: 12px;
       background-position: top right;
       background-repeat: no-repeat;
-      background-size: contain;
 
       &:first-of-type {
-        background-image: url("../images/box-bg-5.svg");
+        background-image: url("../images/img-earning-bg.svg");
       }
       &:last-of-type {
-        background-image: url("../images/box-bg-6.svg");
+        background-image: url("../images/img-earning-bg-2.svg");
       }
 
       h5 {
@@ -5142,5 +5140,70 @@ small.error {
         margin: 0;
       }
     }
+  }
+}
+
+.dashboard-stats-sction {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  position: relative;
+
+  .stats-box {
+    min-width: 143.71px;
+    flex: 1 0 0;
+    background-color: $second25;
+    padding: 24px;
+    border-radius: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: center;
+    position: relative;
+    background-position: top right;
+    background-repeat: no-repeat;
+
+    &:first-of-type {
+      background-image: url("../images/img-status-4.svg");
+    }
+    &:nth-of-type(2) {
+      background-image: url("../images/img-status-3-1.svg");
+    }
+    &:nth-of-type(3) {
+      background-image: url("../images/img-status-5.svg");
+    }
+    &:nth-of-type(4) {
+      background-image: url("../images/img-status-8.svg");
+    }
+    &:nth-of-type(5) {
+      background-image: url("../images/img-status-9.svg");
+    }
+    &:nth-of-type(6) {
+      background-image: url("../images/img-status-2-1.svg");
+    }
+    &:nth-of-type(7) {
+      background-image: url("../images/img-status-7.svg");
+    }
+
+    h5 {
+      font-weight: 500;
+      font-size: 28px;
+      margin: 0;
+    }
+    p {
+      color: $gray;
+      font-size: 14px;
+      line-height: 17.64px;
+      margin: 0;
+      font-weight: 500;
+      text-align: center;
+      text-wrap: balance;
+    }
+  }
+}
+.supply-demands-section {
+  .form_title {
+    color: $dark;
   }
 }
