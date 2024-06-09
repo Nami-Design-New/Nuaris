@@ -5079,10 +5079,17 @@ small.error {
 }
 
 .announcements_container {
+  flex: 1 0 0;
   width: 100%;
   border-radius: 24px;
   overflow: hidden;
   background: #fff;
+  display: flex !important;
+  flex-direction: column;
+  height: 100%;
+}
+.announcements_container .swiper {
+  height: 100%;
 }
 .announcements_container .header {
   width: 100%;
@@ -5126,10 +5133,12 @@ small.error {
 }
 .announcements_container .content {
   padding: 24px;
+  flex: 1 0 0;
 }
 .announcements_container .content .swiper-slide {
   display: flex;
   gap: 24px;
+  background-color: #fff;
 }
 .announcements_container .content .swiper-slide .img {
   transition: 0.3s ease-in-out;
@@ -5223,6 +5232,7 @@ small.error {
   display: flex;
   flex-direction: column;
   gap: 16px;
+  background-color: #fff;
 }
 .weather_container .content .swiper-slide .slide-header {
   width: 100%;

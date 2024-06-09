@@ -11,7 +11,7 @@ const Home = () => {
   return (
     <section className="homePage">
       <div className="row m-0">
-        <div className="col-lg-8 co-12 p-2">
+        <div className="col-lg-8 co-12 p-2 d-flex">
           <Announcements />
         </div>
         <div className="col-lg-4 col-12 p-2">
