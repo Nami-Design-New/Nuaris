@@ -19,11 +19,15 @@ import TripPackages from "../components/dashboard/pages/packages/TripPackages";
 import TripPackagesForm from "../components/dashboard/pages/packages/TripPackagesForm";
 import Activities from "../components/dashboard/pages/activites/Activities";
 import ActivitiesForm from "../components/dashboard/pages/activites/ActivitiesForm";
+import Affiliate from "../components/dashboard/pages/affiliate/Affiliate";
+import Compigens from "../components/dashboard/pages/compigens/Compigens";
 import ManageAccount from "../components/dashboard/pages/manage-account/ManageAccount";
 import Destination from "../components/dashboard/pages/destination/Destination";
 import Booking from "../components/dashboard/pages/booking-scheduling/Booking";
 import Scheduling from "../components/dashboard/pages/booking-scheduling/Scheduling";
 import Packages from "../components/dashboard/pages/Packages";
+import Home from "../components/dashboard/pages/Home";
+import AddNewCompigens from "../components/dashboard/pages/compigens/AddNewCompigens";
 
 const HostDashboard = () => {
   const [sideBarOpen, setSideBarOpen] = useState(false);
@@ -35,6 +39,8 @@ const HostDashboard = () => {
         <NavBar setSideBarOpen={setSideBarOpen} sideBarOpen={sideBarOpen} />
         <main className="main_wrapper">
           <Routes>
+            {/* home */}
+            <Route path="/" element={<Home />} />
             {/* booking and scheduling */}
             <Route path="/bookings-scheduling/*" element={<Scheduling />} />
             <Route path="/bookings-scheduling/booking" element={<Booking />} />
@@ -84,6 +90,16 @@ const HostDashboard = () => {
             <Route path="/destination" element={<Destination />} />
             {/* packeges */}
             <Route path="/packages" element={<Packages />} />
+            {/* affiliate */}
+            <Route path="/affiliate" element={<Affiliate />} />
+            {/* <Route path="/addons/add-new-addon" element={<AddNewAddOn />} />
+            <Route path="/addons/edit-addon/:id" element={<AddNewAddOn />} /> */}
+            {/* Compigens */}
+            <Route path="/compigens" element={<Compigens />} />
+            <Route
+              path="/compigens/add-new-compigens"
+              element={<AddNewCompigens />}
+            />
             {/* manage account */}
             <Route path="/manage-account/*" element={<ManageAccount />} />
             {/* error redirect */}
