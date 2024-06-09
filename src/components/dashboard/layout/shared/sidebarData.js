@@ -56,9 +56,9 @@ const sidebarData = [
         label: "Affiliate",
       },
       {
-        path: "compignes",
-        label: "Compignes",
-      }
+        path: "compigens",
+        label: "Compigens",
+      },
     ],
   },
   {
@@ -66,15 +66,18 @@ const sidebarData = [
     icon: require("../../../../assets/images/Reports.svg").default,
     alt: "analytics-icon",
     label: "Analytics",
-    submenu: [{
-      path: "reports",
-      label: "Reports",
-    }, {
-      path: "clients",
-      label: "Clients",
-    }]
+    submenu: [
+      {
+        path: "reports",
+        label: "Reports",
+      },
+      {
+        path: "clients",
+        label: "Clients",
+      },
+    ],
   },
-  
+
   {
     path: "guests",
     icon: require("../../../../assets/images/guest-details.svg").default,
@@ -97,7 +100,7 @@ const sidebarData = [
         path: "questions-settings",
         label: "Questions",
       },
-    ]
+    ],
   },
 ];
 
