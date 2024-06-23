@@ -1,12 +1,15 @@
-function RadioInput({ option, hint, name, checked, onChange }) {
+import React from "react";
+
+function CheckboxInputAsRadio({ option, hint, name, checked, onChange }) {
   return (
-    <div className="checkbox-row checkbox-radio-row col-12">
+    <div className="checkbox-row checkbox-radio-row col-3">
       <input
         id={option}
         name={name}
-        type="radio"
+        type="checkbox"
         value={option}
         onChange={onChange}
+        className="checkbox-input"
         checked={checked}
       />
       <label htmlFor={option}>
@@ -16,4 +19,4 @@ function RadioInput({ option, hint, name, checked, onChange }) {
   );
 }
 
-export default RadioInput;
+export default CheckboxInputAsRadio;

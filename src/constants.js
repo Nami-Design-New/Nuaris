@@ -48,6 +48,8 @@ export const BRANDS = [
 ];
 export const FUEL = ["Diesel", "Gasoline", "Electric", "Other"];
 export const TYPE = ["Motor", "Sailing", "Catamaran"];
+export const OPTIONS = ["option1", "option2", "option3", "option4"];
+export const CAMPAIGN_SCHEDULE = ["Now", "Set a time"];
 
 // early years
 const currentYear = new Date().getFullYear();

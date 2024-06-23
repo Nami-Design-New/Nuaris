@@ -2872,6 +2872,86 @@ th:last-child .p-column-header-content {
   height: 16px;
 }
 
+.h-54 {
+  height: 54px;
+}
+
+.checkbox-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  position: relative;
+  min-width: 250px;
+  padding: 0;
+  flex: 1 0 0;
+  /* Style the custom checkbox when checked */
+}
+.checkbox-row.checkbox-radio-row::after {
+  content: "";
+  width: 20px;
+  height: 100%;
+  background-color: #fff;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.checkbox-row.checkbox-radio-row input:checked {
+  background-color: #006980 !important;
+}
+.checkbox-row.checkbox-radio-row input:checked::before {
+  background-color: #006980;
+}
+.checkbox-row.checkbox-radio-row input:checked::after {
+  border-color: #006980;
+}
+.checkbox-row.checkbox-radio-row input::before {
+  content: "";
+  width: 12px;
+  height: 12px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  cursor: pointer;
+  border-radius: 50%;
+  z-index: 4;
+}
+.checkbox-row.checkbox-radio-row input::after {
+  content: "";
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: #fff;
+  cursor: pointer;
+  border: 1px solid #777777;
+  z-index: 2;
+  border-radius: 50%;
+}
+.checkbox-row input {
+  width: 20px;
+  height: 20px;
+  position: relative;
+  cursor: pointer;
+  border-radius: 4px;
+}
+.checkbox-row input:checked {
+  background-color: #006980 !important;
+}
+.checkbox-row label {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 20.16px;
+  color: #0d0d0d;
+  cursor: pointer;
+}
+.checkbox-row .checkbox-input:checked + label::before {
+  border-color: #006980;
+  background-color: #006980;
+}
+
 .ReactFlagsSelect-module_selectOptions__3LNBJ {
   font-size: 16px;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
@@ -5526,4 +5606,33 @@ small.error {
 
 .supply-demands-section .form_title {
   color: #0d0d0d;
+}
+
+.budget-box {
+  background-color: #f8f8f8;
+  border: 1px solid #f2f2f2;
+  flex: 1 0 0;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 24px;
+  align-items: center;
+}
+.budget-box p {
+  margin: 0;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 20.16px;
+  align-items: center;
+  color: #0d0d0d;
+}
+.budget-box h5 {
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 25.2px;
+  color: #0d0d0d;
+}
+.budget-box h5.colored {
+  color: #006980;
 }/*# sourceMappingURL=index.css.map */
