@@ -287,8 +287,8 @@ const PackageInfoForm = ({
           />
         </div>
         <AddonsToConnect
-          formData={formData}
           addons={addons}
+          formData={formData}
           setFormData={setFormData}
           addonsInitial={addonsInitial}
         />

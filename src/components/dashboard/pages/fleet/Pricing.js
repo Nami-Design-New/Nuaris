@@ -15,21 +15,24 @@ const Pricing = ({ yacht }) => {
   const yachtId = sessionStorage.getItem("yacht_id");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+
   const seasonCardInitialData = {
-    period: "",
+    period: "30",
     type: "",
-    period_type: "",
+    period_type: "minutes",
     extra_hour_price: "",
     minimum_price: "",
     dates: [new Date()]
   };
+
   const initialPricesData = {
-    period: 4,
+    period: 30,
     period_type: "minutes",
     price: "",
     extra_hour_price: "",
     minimum_price: ""
   };
+
   const initialData = {
     prices: [initialPricesData],
     season_prices: [seasonCardInitialData],
@@ -117,6 +120,7 @@ const Pricing = ({ yacht }) => {
                 />
               </div>
             </div>
+
             {/* Prepayment percentage */}
             <div className="col-lg-6 col-12 p-2">
               <CustomInputField
@@ -134,6 +138,7 @@ const Pricing = ({ yacht }) => {
                 }}
               />
             </div>
+
             <div className="col-lg-6 col-12 p-2">
               <div className="input-field">
                 <label htmlFor="period">Minimum rental Period</label>
@@ -195,11 +200,12 @@ const Pricing = ({ yacht }) => {
                 </div>
               </div>
             </div>
-            <div className="col-12 p-2 d-flex align-items-center justify-content-between">
-              <div className="d-flex align-items-center gap-2 addSeason">
-                <h6 className="m-0">General Price</h6>
-              </div>
-              {!uponRequest && (
+
+            {!uponRequest && (
+              <div className="col-12 p-2 d-flex align-items-center justify-content-between">
+                <div className="d-flex align-items-center gap-2 addSeason">
+                  <h6 className="m-0">General Price</h6>
+                </div>
                 <button
                   onClick={() => {
                     setFormData((prev) => {
@@ -213,19 +219,73 @@ const Pricing = ({ yacht }) => {
                 >
                   <img src={addIcon} alt="addIcon" />
                 </button>
-              )}
-            </div>
-            {formData?.prices?.map((e, index) => {
-              return (
-                <GeneralPriceCard
-                  key={index}
-                  formData={formData}
-                  setFormData={setFormData}
-                  index={index}
-                  hasDeleteBtn={!uponRequest ? true : false}
-                />
-              );
-            })}
+              </div>
+            )}
+
+            {!uponRequest && (
+              <>
+                {formData?.prices?.map((e, index) => {
+                  return (
+                    <GeneralPriceCard
+                      key={index}
+                      formData={formData}
+                      setFormData={setFormData}
+                      index={index}
+                      hasDeleteBtn={!uponRequest ? true : false}
+                    />
+                  );
+                })}
+              </>
+            )}
+
+            {uponRequest && (
+              <div className="col-12 p-2">
+                <div className="price_card p-2">
+                  <div className="row m-0 w-100">
+                    {/* Minimum Booking Time */}
+                    <div className="col-lg-6 col-12 p-2">
+                      <div className="input-field">
+                        <label htmlFor="period"> Booking Time</label>
+                        <div className="time-units">
+                          <select
+                            className="units w-100"
+                            name="period"
+                            id="min_booking_time_type"
+                          ></select>
+                          <select
+                            className="units"
+                            name="period_type"
+                            id="units"
+                          >
+                            {[
+                              "minutes",
+                              "hours",
+                              "days",
+                              "weeks",
+                              "months"
+                            ].map((unit, index) => (
+                              <option key={index} value={unit}>
+                                {unit}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    {/* Price */}
+                    <div className="col-lg-6 col-12 p-2">
+                      <CustomInputField
+                        label="Price"
+                        name="price"
+                        type="number"
+                        placeholder="00"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
             {!uponRequest && (
               <>
                 {/* calender seasons title */}

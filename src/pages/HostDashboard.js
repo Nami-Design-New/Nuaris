@@ -28,6 +28,8 @@ import Scheduling from "../components/dashboard/pages/booking-scheduling/Schedul
 import Packages from "../components/dashboard/pages/Packages";
 import Home from "../components/dashboard/pages/Home";
 import AddNewCompigens from "../components/dashboard/pages/compigens/AddNewCompigens";
+import Reports from "../components/dashboard/pages/reports/Reports";
+import Clients from "../components/dashboard/pages/clients/Clients";
 
 const HostDashboard = () => {
   const [sideBarOpen, setSideBarOpen] = useState(false);
@@ -86,23 +88,17 @@ const HostDashboard = () => {
               path="/activities/add-new-activity"
               element={<ActivitiesForm />}
             />
-            {/* destionation */}
             <Route path="/destination" element={<Destination />} />
-            {/* packeges */}
             <Route path="/packages" element={<Packages />} />
-            {/* affiliate */}
             <Route path="/affiliate" element={<Affiliate />} />
-            {/* <Route path="/addons/add-new-addon" element={<AddNewAddOn />} />
-            <Route path="/addons/edit-addon/:id" element={<AddNewAddOn />} /> */}
-            {/* Compigens */}
             <Route path="/compigens" element={<Compigens />} />
             <Route
               path="/compigens/add-new-compigens"
               element={<AddNewCompigens />}
             />
-            {/* manage account */}
+            <Route path="/reports" element={<Reports />} />
+            <Route path="/clients" element={<Clients />} />
             <Route path="/manage-account/*" element={<ManageAccount />} />
-            {/* error redirect */}
             <Route path="*" element={<>404 page</>} />
           </Routes>
         </main>
