@@ -106,7 +106,7 @@ const GeneralPriceCard = ({ formData, setFormData, index, hasDeleteBtn }) => {
                 formData?.prices[index].period_type === "weeks" ||
                 formData?.prices[index].period_type === "months"
               }
-              label={"Extra Hour Price"}
+              label={`Extra ${formData?.prices[index].period} ${formData?.prices[index].period_type} price`}
               name="extra_hour_price"
               hint={`( ${currency} )`}
               type="number"
