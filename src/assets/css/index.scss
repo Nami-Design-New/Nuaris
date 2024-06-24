@@ -4761,6 +4761,7 @@ small.error {
   width: 100%;
   border-radius: 24px;
   overflow: hidden;
+  height: 100%;
   background: $white;
   .header {
     width: 100%;
@@ -4892,6 +4893,7 @@ small.error {
     padding: 24px;
     .swiper-slide {
       display: flex;
+      background-color: $white;
       flex-direction: column;
       gap: 16px;
       .slide-header {

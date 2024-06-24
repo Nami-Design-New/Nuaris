@@ -6,6 +6,7 @@ import CustomInputWithUnit from "../../../ui/form-elements/CustomInputWIthUnit";
 import CustomInputField from "../../../ui/form-elements/CustomInputField";
 
 const SeasonCard = ({ formData, setFormData, index }) => {
+  let optionsArray = [];
   const currentCard = formData?.season_prices[index];
   const [initialDates, setInitialDates] = useState([]);
 
@@ -50,81 +51,177 @@ const SeasonCard = ({ formData, setFormData, index }) => {
     });
   }
 
+  if (currentCard.period_type === "minutes") {
+    optionsArray = ["15", "30", "45"];
+  } else if (currentCard.period_type === "hours") {
+    optionsArray = Array(12)
+      .fill(1)
+      .map((e, i) => i + 1);
+  } else if (currentCard.period_type === "days") {
+    optionsArray = Array(31)
+      .fill(1)
+      .map((e, i) => i + 1);
+  } else if (currentCard.period_type === "weeks") {
+    optionsArray = Array.from({ length: 51 }, (_, i) => i + 2);
+  } else if (currentCard.period_type === "months") {
+    optionsArray = Array(12)
+      .fill(1)
+      .map((e, i) => i + 1);
+  }
+
   return (
     <div className="col-12 p-2">
       <div className="season_calender_card">
-        <div className="p-2 ps-0">
-          <Calendar
-            value={initialDates}
-            onChange={(dates) => {
-              const updatedSeasonPrices = [...formData?.season_prices];
-              updatedSeasonPrices[index].dates = dates.map((dateRange) => {
-                if (dateRange[0] && dateRange[1]) {
-                  return {
-                    from: dateRange[0].format("YYYY/MM/DD"),
-                    to: dateRange[1].format("YYYY/MM/DD")
-                  };
-                }
-                return null;
-              });
-              setFormData((prevFormData) => ({
-                ...prevFormData,
-                season_prices: updatedSeasonPrices
-              }));
-            }}
-            multiple
-            range
-            plugins={[<DatePanel />]}
-          />
-        </div>
         <div className="row m-0">
-          {/* Minimum rental period */}
-          <div className="col-12 p-2 pe-0 ps-0">
-            <CustomInputWithUnit
-              value={currentCard.period}
-              selectValue={currentCard.period_type}
-              onChange={(e) => handleChangeSeasonPrice(e, index)}
-              selectOnChange={(e) => handleChangeSeasonPrice(e, index)}
-              selectName={"period_type"}
-              name={"period"}
-              label="Minimum Rental Period"
-              units={["minute", "hour", "day", "week", "month"]}
-            />
-          </div>
-          {/* Price */}
-          <div className="col-12 p-2 pe-0 ps-0">
-            <CustomInputWithUnit
-              name={"price"}
-              onChange={(e) => handleChangeSeasonPrice(e, index)}
-              selectOnChange={(e) => handleChangeSeasonPrice(e, index)}
-              value={currentCard.price}
-              selectValue={currentCard.type}
-              selectName={"type"}
-              label={"Price"}
-              units={["minute", "hour", "day", "week", "month"]}
-            />
-          </div>
-          {/* Extra Hour price */}
-          <div className="col-lg-6 col-12 p-2 pe-lg-2 ps-0">
+          <div className="col-lg-6 col-12 p-2">
             <CustomInputField
-              name="extra_hour_price"
-              label={"Extra Hour Price"}
-              placeholder="00"
+              hint={"( Minimum 50% )"}
+              label={"Advanced Payment percentage"}
+              name="prepaymentPercentage"
               type="number"
-              value={currentCard.extra_hour_price}
-              onChange={(e) => handleChangeSeasonPrice(e, index)}
+              placeholder="00"
+              value={formData?.pre_payment_percentage}
+              onChange={(e) => {
+                setFormData((prev) => ({
+                  ...prev,
+                  pre_payment_percentage: e.target.value
+                }));
+              }}
             />
           </div>
-          {/* Extra Hour price */}
-          <div className="col-lg-6 col-12 p-2 pe-0 ps-0">
-            <CustomInputField
-              name="minimum_price"
-              label={"Minimum Price"}
-              placeholder="00"
-              type="number"
-              value={currentCard.minimum_price}
-              onChange={(e) => handleChangeSeasonPrice(e, index)}
-            />
+          <div className="col-lg-6 col-12 p-2">
+            <div className="input-field">
+              <label htmlFor="period">Minimum Rental Period</label>
+              <div className="time-units">
+                <select
+                  className="units w-100"
+                  name="period"
+                  id="min_booking_time_type"
+                  value={currentCard.period}
+                  onChange={(e) => handleChangeSeasonPrice(e, index)}
+                >
+                  {optionsArray.map((minit, index) => (
+                    <option key={index} value={minit}>
+                      {minit}
+                    </option>
+                  ))}
+                </select>
+                <select
+                  className="units"
+                  name="period_type"
+                  id="units"
+                  value={currentCard.period_type}
+                  onChange={(e) => handleChangeSeasonPrice(e, index)}
+                >
+                  {["minutes", "hours", "days", "weeks", "months"].map(
+                    (unit, index) => (
+                      <option key={index} value={unit}>
+                        {unit}
+                      </option>
+                    )
+                  )}
+                </select>
+              </div>
+            </div>
+          </div>
+          <div className="d-flex gap-2">
+            <div className="p-2 ps-0">
+              <Calendar
+                value={initialDates}
+                onChange={(dates) => {
+                  const updatedSeasonPrices = [...formData?.season_prices];
+                  updatedSeasonPrices[index].dates = dates.map((dateRange) => {
+                    if (dateRange[0] && dateRange[1]) {
+                      return {
+                        from: dateRange[0].format("YYYY/MM/DD"),
+                        to: dateRange[1].format("YYYY/MM/DD")
+                      };
+                    }
+                    return null;
+                  });
+                  setFormData((prevFormData) => ({
+                    ...prevFormData,
+                    season_prices: updatedSeasonPrices
+                  }));
+                }}
+                multiple
+                range
+                plugins={[<DatePanel />]}
+              />
+            </div>
+            <div className="row m-0">
+              {/* Minimum rental period */}
+              <div className="col-12 p-0 pb-2">
+                <div className="input-field">
+                  <label htmlFor="period">Minimum Rental Period</label>
+                  <div className="time-units">
+                    <select
+                      className="units w-100"
+                      name="period"
+                      id="min_booking_time_type"
+                      value={currentCard.period}
+                      onChange={(e) => handleChangeSeasonPrice(e, index)}
+                    >
+                      {optionsArray.map((minit, index) => (
+                        <option key={index} value={minit}>
+                          {minit}
+                        </option>
+                      ))}
+                    </select>
+                    <select
+                      className="units"
+                      name="period_type"
+                      id="units"
+                      value={currentCard.period_type}
+                      onChange={(e) => handleChangeSeasonPrice(e, index)}
+                    >
+                      {["minutes", "hours", "days", "weeks", "months"].map(
+                        (unit, index) => (
+                          <option key={index} value={unit}>
+                            {unit}
+                          </option>
+                        )
+                      )}
+                    </select>
+                  </div>
+                </div>
+              </div>
+              {/* Price */}
+              <div className="col-12 p-2 pe-0 ps-0">
+                <CustomInputWithUnit
+                  name={"price"}
+                  onChange={(e) => handleChangeSeasonPrice(e, index)}
+                  selectOnChange={(e) => handleChangeSeasonPrice(e, index)}
+                  value={currentCard.price}
+                  selectValue={currentCard.type}
+                  selectName={"type"}
+                  label={"Price"}
+                  units={["minute", "hour", "day", "week", "month"]}
+                />
+              </div>
+              {/* Extra Hour price */}
+              <div className="col-lg-6 col-12 p-2 pe-lg-2 ps-0 pb-0">
+                <CustomInputField
+                  name="extra_hour_price"
+                  label={`Extra ${currentCard.period} ${currentCard.period_type} Price`}
+                  placeholder="00"
+                  type="number"
+                  value={currentCard.extra_hour_price}
+                  onChange={(e) => handleChangeSeasonPrice(e, index)}
+                />
+              </div>
+              {/* Extra Hour price */}
+              <div className="col-lg-6 col-12 p-2 pe-0 ps-0 pb-0">
+                <CustomInputField
+                  name="minimum_price"
+                  label={"Minimum Price"}
+                  placeholder="00"
+                  type="number"
+                  value={currentCard.minimum_price}
+                  onChange={(e) => handleChangeSeasonPrice(e, index)}
+                />
+              </div>
+            </div>
           </div>
         </div>
         <button

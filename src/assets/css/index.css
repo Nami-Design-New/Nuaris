@@ -5082,6 +5082,7 @@ small.error {
   width: 100%;
   border-radius: 24px;
   overflow: hidden;
+  height: 100%;
   background: #fff;
 }
 .announcements_container .header {
@@ -5221,6 +5222,7 @@ small.error {
 }
 .weather_container .content .swiper-slide {
   display: flex;
+  background-color: #fff;
   flex-direction: column;
   gap: 16px;
 }

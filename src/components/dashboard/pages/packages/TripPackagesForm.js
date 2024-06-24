@@ -117,6 +117,8 @@ const TripPackagesForm = () => {
                 setFormData={setFormData}
                 isMainInfoValid={isMainInfoValid}
                 setIsMainInfoValid={setIsMainInfoValid}
+                addonsInitial={addonsInitial}
+                activitiesInitial={activitiesInitial}
               />
             )}
             {form === "Package Time & Price" && (

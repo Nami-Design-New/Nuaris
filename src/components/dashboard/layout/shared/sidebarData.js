@@ -28,7 +28,7 @@ const sidebarData = [
         label: "Trip Packages",
       },
       {
-        path: "booking",
+        path: "bookings-scheduling",
         label: "Booking",
       },
       {
