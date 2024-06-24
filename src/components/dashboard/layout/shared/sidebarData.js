@@ -28,6 +28,7 @@ const sidebarData = [
         label: "Trip Packages",
       },
       {
+
         path: "bookings-scheduling",
         label: "Booking",
       },

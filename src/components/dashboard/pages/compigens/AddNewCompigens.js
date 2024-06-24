@@ -14,7 +14,7 @@ function AddNewCompigens() {
       </header>
       <div className="row m-0">
         <div className="addon_form_wrapper">
-          <div className="bg_white_card">
+          <div className="">
             <NewCompigensForm />
           </div>
         </div>

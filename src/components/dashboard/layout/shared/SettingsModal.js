@@ -17,7 +17,6 @@ export default function SettingsModal({ isOpen, setIsOpen }) {
   function handleRadioChange(e) {
     // TODO: implement
     setActive(e.target.value);
-    console.log(active);
   }
 
   const dropdownRef = useRef(null);

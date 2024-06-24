@@ -28,6 +28,7 @@ import Scheduling from "../components/dashboard/pages/booking-scheduling/Schedul
 import Packages from "../components/dashboard/pages/Packages";
 import Home from "../components/dashboard/pages/Home";
 import AddNewCompigens from "../components/dashboard/pages/compigens/AddNewCompigens";
+import CreateAffiliate from "../components/dashboard/pages/affiliate/CreateAffiliate";
 import Reports from "../components/dashboard/pages/reports/Reports";
 import Clients from "../components/dashboard/pages/clients/Clients";
 
@@ -91,6 +92,14 @@ const HostDashboard = () => {
             <Route path="/destination" element={<Destination />} />
             <Route path="/packages" element={<Packages />} />
             <Route path="/affiliate" element={<Affiliate />} />
+            <Route
+              path="/affiliate/create-affiliate"
+              element={<CreateAffiliate />}
+            />
+            {/* <Route path="/addons/add-new-addon" element={<AddNewAddOn />} />
+            <Route path="/addons/edit-addon/:id" element={<AddNewAddOn />} /> */}
+            {/* Compigens */}
+
             <Route path="/compigens" element={<Compigens />} />
             <Route
               path="/compigens/add-new-compigens"
