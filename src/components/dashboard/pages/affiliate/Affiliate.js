@@ -126,7 +126,7 @@ function Affiliate() {
     <section className="section-main-content">
       <header className="flex-header">
         <PageHeader />
-        <Link to="create-affiliate-link" className="button success">
+        <Link to="create-affiliate" className="button success">
           Create Affiliate Link
         </Link>
       </header>

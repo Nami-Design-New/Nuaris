@@ -28,6 +28,7 @@ import Scheduling from "../components/dashboard/pages/booking-scheduling/Schedul
 import Packages from "../components/dashboard/pages/Packages";
 import Home from "../components/dashboard/pages/Home";
 import AddNewCompigens from "../components/dashboard/pages/compigens/AddNewCompigens";
+import CreateAffiliate from "../components/dashboard/pages/affiliate/CreateAffiliate";
 
 const HostDashboard = () => {
   const [sideBarOpen, setSideBarOpen] = useState(false);
@@ -92,6 +93,10 @@ const HostDashboard = () => {
             <Route path="/packages" element={<Packages />} />
             {/* affiliate */}
             <Route path="/affiliate" element={<Affiliate />} />
+            <Route
+              path="/affiliate/create-affiliate"
+              element={<CreateAffiliate />}
+            />
             {/* <Route path="/addons/add-new-addon" element={<AddNewAddOn />} />
             <Route path="/addons/edit-addon/:id" element={<AddNewAddOn />} /> */}
             {/* Compigens */}
