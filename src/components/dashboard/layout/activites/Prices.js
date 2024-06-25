@@ -6,8 +6,15 @@ import addIcon from "../../../../assets/images/add.svg";
 import SubmitButton from "../../../ui/form-elements/SubmitButton";
 import GeneralPriceCard from "../fleet/GeneralPriceCard";
 import CustomInputField from "../../../ui/form-elements/CustomInputField";
+import Vat from "../shared/Vat";
 
-const Prices = ({ setForm, formData, setFormData }) => {
+const Prices = ({
+  setForm,
+  formData,
+  setFormData,
+  initialPricesData,
+  seasonCardInitialData
+}) => {
   const [loading, setLoading] = useState(false);
 
   const handleNext = (e) => {
@@ -105,6 +112,69 @@ const Prices = ({ setForm, formData, setFormData }) => {
               </select>
             </div>
           </div>
+        </div>
+
+        <div className="col-12 p-2 d-flex align-items-center justify-content-between">
+          <div className="d-flex align-items-center gap-2 addSeason">
+            <h6 className="m-0">General Price</h6>
+          </div>
+          <button
+            onClick={() => {
+              setFormData((prev) => {
+                return {
+                  ...prev,
+                  prices: [...prev.prices, initialPricesData]
+                };
+              });
+            }}
+            type="button"
+          >
+            <img src={addIcon} alt="addIcon" />
+          </button>
+        </div>
+
+        {formData?.prices?.map((e, index) => {
+          return (
+            <GeneralPriceCard
+              key={index}
+              formData={formData}
+              setFormData={setFormData}
+              index={index}
+            />
+          );
+        })}
+
+        {/* calender seasons title */}
+        <div className="col-12 p-2 d-flex align-items-center justify-content-between">
+          <div className="d-flex align-items-center gap-2 addSeason">
+            <img src={calenderIcon} alt="calender" />
+            <h6 className="m-0">Season Price</h6>
+          </div>
+          <button
+            onClick={() => {
+              setFormData((prev) => {
+                return {
+                  ...prev,
+                  season_prices: [...prev.season_prices, seasonCardInitialData]
+                };
+              });
+            }}
+            type="button"
+          >
+            <img src={addIcon} alt="addIcon" />
+          </button>
+        </div>
+        {/* calender seasons cards */}
+        {formData?.season_prices?.map((_, rowIndex) => (
+          <SeasonCard
+            key={rowIndex}
+            index={rowIndex}
+            formData={formData}
+            setFormData={setFormData}
+          />
+        ))}
+        <div className="col-12 p-2">
+          <Vat />
         </div>
 
         <div className="col-12 p-2 pt-4 d-flex gap-3">

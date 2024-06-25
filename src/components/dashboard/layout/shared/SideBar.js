@@ -1,20 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import logo from "../../../../assets/images/logoH.svg";
 import fav from "../../../../assets/images/fav.svg";
 import sidebarData from "./sidebarData";
 import NavigationItem from "./NavigationItem";
 
 const SideBar = ({ sideBarOpen, setSideBarOpen }) => {
-  function handlExpandAsideWhenHover(e) {
-    if (!sideBarOpen) {
-      setSideBarOpen(true);
-    }
-  }
+  const [hoverExpand, setHoverExpand] = useState(false);
 
   return (
     <aside
-      className={`side_bar ${sideBarOpen ? "expand" : ""}`}
-      onMouseOver={handlExpandAsideWhenHover}
+      className={`side_bar ${sideBarOpen ? "expand" : ""} ${
+        hoverExpand ? "hoverExpand" : ""
+      }`}
+      onMouseEnter={() => setHoverExpand(true)}
+      onMouseLeave={() => setHoverExpand(false)}
     >
       <div className="logo_wrapper">
         <span className="logo-lg">

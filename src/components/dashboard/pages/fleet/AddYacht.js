@@ -36,13 +36,13 @@ const AddYacht = () => {
         <PageHeader name={yacht?.id ? "Edit yacht / boat" : "Add a new yacht / boat"} />
       </header>
       <div className="row m-0">
-        <div className="col-lg-4 col-12 p-2">
+        <div className="col-lg-3 col-12 p-2">
           <div className="sideBar_wrap">
             <SideBar />
             <VesselStatusForm yacht={yacht} />
           </div>
         </div>
-        <div className="col-lg-8 col-12 p-2">
+        <div className="col-lg-9 col-12 p-2">
           <Routes>
             <Route path="/" element={<MainInfo yacht={yacht} />} />
             <Route path="/media-photos" element={<Media yacht={yacht} />} />

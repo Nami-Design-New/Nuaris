@@ -3,7 +3,12 @@ import deleteIcon from "../../../../assets/images/delete.svg";
 import CustomInputField from "../../../ui/form-elements/CustomInputField";
 import { useSelector } from "react-redux";
 
-const GeneralPriceCard = ({ formData, setFormData, index, hasDeleteBtn }) => {
+const GeneralPriceCard = ({
+  formData,
+  setFormData,
+  index,
+  hasDeleteBtn = true
+}) => {
   const currency = useSelector((state) => state.user?.user?.currency);
   let optionsArray = [];
   function handleChangePrice(e, i) {
@@ -53,7 +58,7 @@ const GeneralPriceCard = ({ formData, setFormData, index, hasDeleteBtn }) => {
           {/* Minimum Booking Time */}
           <div className="col-lg-6 col-12 p-2">
             <div className="input-field">
-              <label htmlFor="period">Minimum Booking Time</label>
+              <label htmlFor="period">Booking Time</label>
               <div className="time-units">
                 <select
                   className="units w-100"
