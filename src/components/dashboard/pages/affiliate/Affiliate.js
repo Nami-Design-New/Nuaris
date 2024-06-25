@@ -60,8 +60,8 @@ function Affiliate() {
       axios
         .get(`/affiliate/?sub_user=${subUser}`, {
           params: {
-            page: currentPage,
-          },
+            page: currentPage
+          }
         })
         .then((res) => {
           console.log(res?.data);

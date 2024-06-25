@@ -2,12 +2,11 @@ import React, { useEffect, useState } from "react";
 import photoSessionImg from "../../../../assets/images/photoSession.svg";
 import fav from "../../../../assets/images/fav.png";
 import CustomFileUpload from "../../../ui/form-elements/CustomFileUpload";
-import { uploadFile } from "react-s3";
+import { handleUploadMedia } from "../../../../util/helpers";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import axios from "../../../../util/axios";
 import SubmitButton from "../../../ui/form-elements/SubmitButton";
-import { S3Config } from "../../../../constants";
 window.Buffer = window.Buffer || require("buffer").Buffer;
 
 const Media = ({ yacht }) => {
@@ -17,36 +16,15 @@ const Media = ({ yacht }) => {
   const [fileLoading, setFileLoading] = useState(false);
   const [formData, setFormData] = useState({
     image: Array(5).fill(""),
-    video_link: "",
+    video_link: ""
   });
 
   useEffect(() => {
     setFormData({
       image: yacht?.images || Array(5).fill(""),
-      video_link: yacht?.video_link || "",
+      video_link: yacht?.video_link || ""
     });
   }, [yacht]);
-
-  // ========= media ========== //
-  const handleUploadMedia = async (file) => {
-    if (fileLoading) {
-      return "";
-    }
-    setFileLoading(true);
-    try {
-      const blob = file.slice(0, file.size, file.type);
-      const newFile = new File([blob], `${Date.now()}${file.name.slice(-3)}`, {
-        type: file.type,
-      });
-      const data = await uploadFile(newFile, S3Config);
-      return data.location;
-    } catch (error) {
-      console.error("Error uploading file:", error);
-      throw error;
-    } finally {
-      setFileLoading(false);
-    }
-  };
 
   const handleImagesChange = async (e, i) => {
     if (e?.length === 0) {
@@ -55,7 +33,7 @@ const Media = ({ yacht }) => {
         image[i] = "";
         return {
           ...prev,
-          image: image,
+          image: image
         };
       });
       return;
@@ -65,13 +43,13 @@ const Media = ({ yacht }) => {
     }
     try {
       const file = e[0].file;
-      const link = await handleUploadMedia(file);
+      const link = await handleUploadMedia(file, setFileLoading, fileLoading);
       setFormData((prev) => {
         const image = [...prev.image];
         image[i] = link;
         return {
           ...prev,
-          image: image,
+          image: image
         };
       });
     } catch (error) {
@@ -86,7 +64,7 @@ const Media = ({ yacht }) => {
     if (e?.length === 0) {
       setFormData({
         ...formData,
-        video_link: "",
+        video_link: ""
       });
       return;
     }
@@ -95,10 +73,10 @@ const Media = ({ yacht }) => {
     }
     try {
       const file = e[0].file;
-      const link = await handleUploadMedia(file);
+      const link = await handleUploadMedia(file, setFileLoading, fileLoading);
       setFormData({
         ...formData,
-        video_link: link,
+        video_link: link
       });
     } catch (error) {
       console.error("Error handling video upload:", error);
@@ -106,7 +84,6 @@ const Media = ({ yacht }) => {
       toast.error("Error uploading video");
     }
   };
-  // ========= end of media ========= //
 
   const handleSubmit = async (e) => {
     e.preventDefault();

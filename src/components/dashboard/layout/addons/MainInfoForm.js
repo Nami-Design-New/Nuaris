@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Form } from "react-bootstrap";
 import { useSelector } from "react-redux";
-import { uploadFile } from "react-s3";
+import { handleUploadMedia } from "../../../../util/helpers";
 import CustomFileUpload from "../../../ui/form-elements/CustomFileUpload";
 import InputField from "../../../ui/form-elements/InputField";
 import CommentField from "../../../ui/form-elements/CommentField";
@@ -11,7 +11,7 @@ import Vat from "../shared/Vat";
 import fav from "../../../../assets/images/fav.png";
 import { toast } from "react-toastify";
 import axios from "../../../../util/axios";
-import { ADD_ONS_CATEGORIES, S3Config } from "../../../../constants";
+import { ADD_ONS_CATEGORIES } from "../../../../constants";
 
 const MainInfoForm = ({
   addon,
@@ -43,26 +43,6 @@ const MainInfoForm = ({
       });
   }, [subUser]);
 
-  const handleUploadMedia = async (file) => {
-    if (fileLoading) {
-      return "";
-    }
-    setFileLoading(true);
-    try {
-      const blob = file.slice(0, file.size, file.type);
-      const newFile = new File([blob], `${Date.now()}${file.name.slice(-3)}`, {
-        type: file.type
-      });
-      const data = await uploadFile(newFile, S3Config);
-      return data.location;
-    } catch (error) {
-      console.error("Error uploading file:", error);
-      throw error;
-    } finally {
-      setFileLoading(false);
-    }
-  };
-
   const handleImagesChange = async (e, i) => {
     if (e?.length === 0) {
       setFormData((prev) => {
@@ -80,7 +60,7 @@ const MainInfoForm = ({
     }
     try {
       const file = e[0].file;
-      const link = await handleUploadMedia(file);
+      const link = await handleUploadMedia(file, setFileLoading, fileLoading);
       setFormData((prev) => {
         const attachment = [...prev.attachment];
         attachment[i] = link;
@@ -110,7 +90,7 @@ const MainInfoForm = ({
     }
     try {
       const file = e[0].file;
-      const link = await handleUploadMedia(file);
+      const link = await handleUploadMedia(file, setFileLoading, fileLoading);
       setFormData((prev) => ({
         ...prev,
         video_link: link
