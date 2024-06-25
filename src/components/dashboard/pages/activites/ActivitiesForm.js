@@ -9,8 +9,8 @@ import { DAYS } from "../../../../constants";
 
 const ActivitiesForm = () => {
   const [form, setForm] = useState("Main Info");
-  const [isMainInfoValid, setIsMainInfoValid] = useState(true);
-  const [isLocationValid, setIsLocationValid] = useState(true);
+  const [isMainInfoValid, setIsMainInfoValid] = useState(false);
+  const [isLocationValid, setIsLocationValid] = useState(false);
   const [isWorkingHoursValid, setIsWorkingHoursValid] = useState(false);
   const [isPricesValid, setIsPricesValid] = useState(false);
 
@@ -28,6 +28,23 @@ const ActivitiesForm = () => {
     };
   });
 
+  const initialPricesData = {
+    period: 30,
+    period_type: "minutes",
+    price: "",
+    extra_hour_price: "",
+    minimum_price: ""
+  };
+
+  const seasonCardInitialData = {
+    period: "30",
+    type: "",
+    period_type: "minutes",
+    extra_hour_price: "",
+    minimum_price: "",
+    dates: [new Date()]
+  };
+
   const [formData, setFormData] = useState({
     images: Array(3).fill(""),
     video_link: "",
@@ -42,7 +59,11 @@ const ActivitiesForm = () => {
     location_point: LocationPoint,
     location_name: "",
     working_hours: workingHoursInitial,
-    pre_payment_percentage: 100
+    pre_payment_percentage: 100,
+    minimum_rental_period: "",
+    minimum_rental_period_type: "minutes",
+    prices: [initialPricesData],
+    season_prices: [seasonCardInitialData]
   });
 
   useEffect(() => {
@@ -128,6 +149,8 @@ const ActivitiesForm = () => {
             {form === "Prices" && (
               <Prices
                 formData={formData}
+                seasonCardInitialData={seasonCardInitialData}
+                initialPricesData={initialPricesData}
                 setFormData={setFormData}
                 setForm={setForm}
                 isValid={isPricesValid}

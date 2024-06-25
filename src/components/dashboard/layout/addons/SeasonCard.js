@@ -6,7 +6,7 @@ import CustomInputWithUnit from "../../../ui/form-elements/CustomInputWIthUnit";
 import CustomInputField from "../../../ui/form-elements/CustomInputField";
 
 const SeasonCard = ({ formData, setFormData, index }) => {
-  const currentCard = formData?.season_price[index];
+  const currentCard = formData?.season_prices[index];
   const [initialDates, setInitialDates] = useState([]);
 
   useEffect(() => {
@@ -30,27 +30,27 @@ const SeasonCard = ({ formData, setFormData, index }) => {
 
   function handleDeleteSeasonCard() {
     setFormData((prev) => {
-      const season_price = [...prev.season_price];
-      season_price.splice(index, 1);
+      const season_prices = [...prev.season_prices];
+      season_prices.splice(index, 1);
       return {
         ...prev,
-        season_price
+        season_prices
       };
     });
   }
 
   function handleChangeSeasonPrice(e, i) {
     setFormData((prev) => {
-      const season_price = [...prev.season_price];
-      season_price[i][e.target.name] = e.target.value;
+      const season_prices = [...prev.season_prices];
+      season_prices[i][e.target.name] = e.target.value;
       return {
         ...prev,
-        season_price
+        season_prices
       };
     });
   }
 
-  console.log(formData?.season_price);
+  console.log(formData?.season_prices);
 
   return (
     <div className="col-12 p-2">
@@ -59,7 +59,7 @@ const SeasonCard = ({ formData, setFormData, index }) => {
           <Calendar
             value={initialDates}
             onChange={(dates) => {
-              const updatedSeasonPrices = [...formData?.season_price];
+              const updatedSeasonPrices = [...formData?.season_prices];
               updatedSeasonPrices[index].dates = dates.map((dateRange) => {
                 if (dateRange[0] && dateRange[1]) {
                   return {
@@ -71,7 +71,7 @@ const SeasonCard = ({ formData, setFormData, index }) => {
               });
               setFormData((prevFormData) => ({
                 ...prevFormData,
-                season_price: updatedSeasonPrices
+                season_prices: updatedSeasonPrices
               }));
             }}
             multiple
@@ -126,9 +126,9 @@ const SeasonCard = ({ formData, setFormData, index }) => {
           </div>
         </div>
         <button
-          disabled={formData?.season_price?.length === 1}
+          disabled={formData?.season_prices?.length === 1}
           style={{
-            opacity: formData?.season_price?.length === 1 ? "0.5" : "1"
+            opacity: formData?.season_prices?.length === 1 ? "0.5" : "1"
           }}
           type="button"
           className="delete_btn"
