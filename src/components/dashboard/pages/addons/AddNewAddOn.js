@@ -11,7 +11,7 @@ const AddNewAddOn = () => {
   const { id } = useParams();
   const [addon, setAddon] = useState(null);
   const [form, setForm] = useState("Main Info");
-  const [hasParentYacht, setHasParentYacht] = useState(false);
+  const [hasParentYacht, setHasParentYacht] = useState(true);
   const [isMainInfoValid, setIsMainInfoValid] = useState(false);
   const [isWorkingTimeValid, setIsWorkingTimeValid] = useState(false);
 
@@ -55,12 +55,19 @@ const AddNewAddOn = () => {
   }, [id]);
 
   const handleFormChange = (newForm) => {
-    if (
-      (form === "Main Info" && isMainInfoValid) ||
-      (form === "Working Time" && isWorkingTimeValid) ||
-      form === "Prices"
-    ) {
+    const steps = ["Main Info ", "Working Time", "Prices"];
+    const newFormIndex = steps.indexOf(newForm);
+    const currentFormIndex = steps.indexOf(form);
+    if (newFormIndex < currentFormIndex) {
       setForm(newForm);
+    } else {
+      if (
+        (form === "Main Info" && isMainInfoValid) ||
+        (form === "Working Time" && isWorkingTimeValid) ||
+        form === "Prices"
+      ) {
+        setForm(newForm);
+      }
     }
   };
 
