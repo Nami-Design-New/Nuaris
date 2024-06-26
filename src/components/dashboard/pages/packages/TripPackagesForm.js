@@ -21,24 +21,24 @@ const TripPackagesForm = () => {
 
   const addonsInitial = {
     addon: null,
-    quantity: ""
+    quantity: "",
   };
   const activitiesInitial = {
     activity: null,
-    quantity: ""
+    quantity: "",
   };
   const periodInitial = {
     start_time: "",
     end_time: "",
     price: "",
-    price_type: ""
+    price_type: "",
   };
   const pricesInitial = DAYS.map((day, index) => {
     return {
       day,
       index,
       selected: false,
-      periods: [periodInitial]
+      periods: [periodInitial],
     };
   });
 
@@ -53,7 +53,7 @@ const TripPackagesForm = () => {
     images_list: Array(3).fill(""),
     activities_list: [activitiesInitial],
     addons_list: [addonsInitial],
-    trip_package_days: pricesInitial
+    trip_package_days: pricesInitial,
   });
 
   useEffect(() => {

@@ -965,9 +965,32 @@ $transation: 0.3s ease-in-out;
         }
       }
     }
+    .accordion-button {
+      padding: 0;
+    }
+    .accordion-item {
+      overflow: hidden;
+      border: none !important;
+
+      &:not(:has(.accordion-collapse)) {
+        .accordion-button {
+          &::after {
+            content: none;
+          }
+        }
+      }
+    }
+    .sub_menu {
+      padding: 0px 8px 0px 48px !important;
+    }
     .nav_item {
       width: 100%;
       position: relative;
+      &.sub_nav_item {
+        .nav_link {
+          padding: 0;
+        }
+      }
       a,
       .nav_link {
         border-radius: 8px;
@@ -977,9 +1000,9 @@ $transation: 0.3s ease-in-out;
         width: 100%;
         gap: 14px;
         color: $gray;
-        white-space: nowrap;
         transition: $transation;
         cursor: pointer;
+        white-space: nowrap;
 
         .arrowBox {
           flex: 1 0 0;
@@ -1005,9 +1028,7 @@ $transation: 0.3s ease-in-out;
           max-width: 22px;
           filter: grayscale(1);
         }
-        &.active,
         &:hover {
-          background: $main10;
           color: $main;
           img {
             filter: grayscale(0);
