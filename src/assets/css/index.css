@@ -966,8 +966,16 @@ button {
 .side_bar .logo_wrapper .logo-sm {
   display: inline-block;
 }
+.side_bar.hoverExpand {
+  width: 280px;
+  position: fixed;
+  left: 0;
+  top: 0;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
 .side_bar.expand {
   width: 280px;
+  box-shadow: none;
 }
 .side_bar.expand .logo_wrapper .logo-lg {
   display: inline-block;
@@ -3075,7 +3083,7 @@ small.error {
   align-items: end;
   gap: 8px;
   background: #ebf3f5;
-  padding: 20px 20px 16px;
+  padding: 16px;
   border-radius: 12px;
   position: relative;
 }
@@ -3084,7 +3092,7 @@ small.error {
   position: absolute;
   top: 8px;
   padding: 0 !important;
-  right: 12px;
+  right: 16px;
   width: 32px;
 }
 .season_calender_card .delete_btn img,

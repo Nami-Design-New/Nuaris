@@ -124,8 +124,8 @@ const SeasonCard = ({ formData, setFormData, index }) => {
               </div>
             </div>
           </div>
-          <div className="d-flex gap-2">
-            <div className="p-2 ps-0">
+          <div className="d-flex gap-3 p-2">
+            <div className="p-0">
               <Calendar
                 value={initialDates}
                 onChange={(dates) => {

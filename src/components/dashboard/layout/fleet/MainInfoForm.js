@@ -7,33 +7,13 @@ import SubmitButton from "../../../ui/form-elements/SubmitButton";
 import { toast } from "react-toastify";
 import axios from "./../../../../util/axios";
 import { useSelector } from "react-redux";
-import { BRANDS, S3Config, TYPE } from "../../../../constants";
-import { uploadFile } from "react-s3";
+import { BRANDS, TYPE } from "../../../../constants";
+import { handleUploadMedia } from "../../../../util/helpers";
 import CustomFileUpload from "../../../ui/form-elements/CustomFileUpload";
 window.Buffer = window.Buffer || require("buffer").Buffer;
 
 const MainInfoForm = ({ setForm, yacht }) => {
-  // ======== start file upload configration =======//
   const [fileLoading, setFileLoading] = useState(false);
-  const handleUploadMedia = async (file) => {
-    if (fileLoading) {
-      return "";
-    }
-    setFileLoading(true);
-    try {
-      const blob = file.slice(0, file.size, file.type);
-      const newFile = new File([blob], `${Date.now()}${file.name.slice(-3)}`, {
-        type: file.type
-      });
-      const data = await uploadFile(newFile, S3Config);
-      return data.location;
-    } catch (error) {
-      console.error("Error uploading file:", error);
-      throw error;
-    } finally {
-      setFileLoading(false);
-    }
-  };
 
   const handleFileChange = async (e) => {
     if (!e || e.length === 0) {
@@ -45,7 +25,7 @@ const MainInfoForm = ({ setForm, yacht }) => {
     }
     try {
       const file = e[0].file;
-      const link = await handleUploadMedia(file);
+      const link = await handleUploadMedia(file, setFileLoading, fileLoading);
       setFormData((prevFormData) => ({
         ...prevFormData,
         license_file: link
@@ -56,8 +36,6 @@ const MainInfoForm = ({ setForm, yacht }) => {
       toast.error("Error uploading file");
     }
   };
-
-  // ======== end file upload configuration =======//
 
   const [formData, setFormData] = useState({
     type: "select",

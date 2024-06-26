@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { handleUploadMedia } from "../../../../util/helpers";
 import { toast } from "react-toastify";
-import { uploadFile } from "react-s3";
-import { S3Config } from "../../../../constants";
 import { Form } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import fav from "../../../../assets/images/fav.png";
@@ -14,29 +13,16 @@ import axios from "./../../../../util/axios";
 import SubmitButton from "../../../ui/form-elements/SubmitButton";
 import WhatIncluded from "./WhatIncluded";
 
-const MainInfoForm = ({ setForm }) => {
+const MainInfoForm = ({ setForm, formData, setFormData }) => {
   const user = useSelector((state) => state.user?.user);
   const subUser = user?.subuser_set?.filter(
     (u) => u.role === user.current_role
   )[0]?.id;
-  const [videoLink, setVideoLink] = useState("");
 
   const [loading, setLoading] = useState(false);
   const [fileLoading, setFileLoading] = useState(false);
   const [hasParentYacht, setHasParentYacht] = useState(false);
   const [yachts, setYachts] = useState([]);
-
-  const [formData, setFormData] = useState({
-    images: Array(3).fill(""),
-    name: "",
-    category: "",
-    description: "",
-    capacity: "",
-    quantity: "",
-    restrictions: "",
-    yacht: "",
-    vat: null,
-  });
 
   useEffect(() => {
     axios
@@ -50,25 +36,6 @@ const MainInfoForm = ({ setForm }) => {
   }, [subUser]);
 
   // ========= media ========== //
-  const handleUploadMedia = async (file) => {
-    if (fileLoading) {
-      return "";
-    }
-    setFileLoading(true);
-    try {
-      const blob = file.slice(0, file.size, file.type);
-      const newFile = new File([blob], `${Date.now()}${file.name.slice(-3)}`, {
-        type: file.type,
-      });
-      const data = await uploadFile(newFile, S3Config);
-      return data.location;
-    } catch (error) {
-      console.error("Error uploading file:", error);
-      throw error;
-    } finally {
-      setFileLoading(false);
-    }
-  };
   const handleImagesChange = async (e, i) => {
     if (e?.length === 0) {
       setFormData((prev) => {
@@ -76,7 +43,7 @@ const MainInfoForm = ({ setForm }) => {
         images[i] = "";
         return {
           ...prev,
-          images: images,
+          images: images
         };
       });
       return;
@@ -86,13 +53,13 @@ const MainInfoForm = ({ setForm }) => {
     }
     try {
       const file = e[0].file;
-      const link = await handleUploadMedia(file);
+      const link = await handleUploadMedia(file, setFileLoading, fileLoading);
       setFormData((prev) => {
         const images = [...prev.images];
         images[i] = link;
         return {
           ...prev,
-          images: images,
+          images: images
         };
       });
     } catch (error) {
@@ -104,7 +71,10 @@ const MainInfoForm = ({ setForm }) => {
   };
   const handleVideoChange = async (e) => {
     if (e?.length === 0) {
-      setVideoLink("");
+      setFormData((prev) => ({
+        ...prev,
+        video_link: ""
+      }));
       return;
     }
     if (fileLoading) {
@@ -112,8 +82,11 @@ const MainInfoForm = ({ setForm }) => {
     }
     try {
       const file = e[0].file;
-      const link = await handleUploadMedia(file);
-      setVideoLink(link);
+      const link = await handleUploadMedia(file, setFileLoading, fileLoading);
+      setFormData((prev) => ({
+        ...prev,
+        video_link: link
+      }));
     } catch (error) {
       console.error("Error handling video upload:", error);
       setFileLoading(false);
@@ -144,6 +117,7 @@ const MainInfoForm = ({ setForm }) => {
       setLoading(false);
     }
   };
+
   return (
     <form className="form-ui" onSubmit={handleSubmit}>
       <div className="row m-0">
@@ -184,7 +158,7 @@ const MainInfoForm = ({ setForm }) => {
             pannelRatio=".283"
             accept={["video/*"]}
             allowMultiple={false}
-            files={videoLink ? [videoLink] : null}
+            files={formData.video_link ? [formData.video_link] : null}
             onUpdateFiles={(e) => handleVideoChange(e)}
           />
         </div>
@@ -200,7 +174,7 @@ const MainInfoForm = ({ setForm }) => {
               setFormData((prev) => {
                 return {
                   ...prev,
-                  name: e.target.value,
+                  name: e.target.value
                 };
               })
             }
@@ -217,19 +191,19 @@ const MainInfoForm = ({ setForm }) => {
               setFormData((prev) => {
                 return {
                   ...prev,
-                  category: e.target.value,
+                  category: e.target.value
                 };
               })
             }
             options={[
               {
                 name: "Shore activities",
-                value: "shore",
+                value: "shore"
               },
               {
                 name: "Water activities",
-                value: "water",
-              },
+                value: "water"
+              }
             ]}
           />
         </div>
@@ -258,7 +232,7 @@ const MainInfoForm = ({ setForm }) => {
               setFormData((prev) => {
                 return {
                   ...prev,
-                  capacity: e.target.value,
+                  capacity: e.target.value
                 };
               })
             }
@@ -277,7 +251,7 @@ const MainInfoForm = ({ setForm }) => {
               setFormData((prev) => {
                 return {
                   ...prev,
-                  quantity: e.target.value,
+                  quantity: e.target.value
                 };
               })
             }
@@ -319,7 +293,7 @@ const MainInfoForm = ({ setForm }) => {
             }}
             options={yachts?.map((yacht) => ({
               name: yacht.name_en,
-              value: yacht.id,
+              value: yacht.id
             }))}
           />
         </div>

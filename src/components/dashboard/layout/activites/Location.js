@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import SubmitButton from "../../../ui/form-elements/SubmitButton";
 import MapWithMarker from "../../../ui/map-modal/MapWithMarker";
 import CustomInputField from "../../../ui/form-elements/CustomInputField";
-const Location = ({ setForm }) => {
+const Location = ({ setForm, formData, setFormData, setLocationPoint , LocationPoint }) => {
   const [loading, setLoading] = useState(false);
   const [serchedPlace, setSerchedPlace] = useState("Search on Map");
   const [mapLoaded, setMapLoaded] = useState(false);
@@ -16,16 +16,6 @@ const Location = ({ setForm }) => {
     e.preventDefault();
     setForm("Main Info");
   };
-
-  const [LocationPoint, setLocationPoint] = useState({
-    lat: 24.7136,
-    lng: 46.6753,
-  });
-
-  const [formData, setFormData] = useState({
-    location_point: LocationPoint,
-    location_name: "",
-  });
 
   useEffect(() => {
     const script = document.createElement("script");
