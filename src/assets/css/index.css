@@ -1001,9 +1001,25 @@ button {
   background-color: transparent !important;
   padding: 0 0 0 50px;
 }
+.side_bar .navigation_menu .accordion-button {
+  padding: 0;
+}
+.side_bar .navigation_menu .accordion-item {
+  overflow: hidden;
+  border: none !important;
+}
+.side_bar .navigation_menu .accordion-item:not(:has(.accordion-collapse)) .accordion-button::after {
+  content: none;
+}
+.side_bar .navigation_menu .sub_menu {
+  padding: 0px 8px 0px 48px !important;
+}
 .side_bar .navigation_menu .nav_item {
   width: 100%;
   position: relative;
+}
+.side_bar .navigation_menu .nav_item.sub_nav_item .nav_link {
+  padding: 0;
 }
 .side_bar .navigation_menu .nav_item a,
 .side_bar .navigation_menu .nav_item .nav_link {
@@ -1014,9 +1030,9 @@ button {
   width: 100%;
   gap: 14px;
   color: #777777;
-  white-space: nowrap;
   transition: 0.3s ease-in-out;
   cursor: pointer;
+  white-space: nowrap;
 }
 .side_bar .navigation_menu .nav_item a .arrowBox,
 .side_bar .navigation_menu .nav_item .nav_link .arrowBox {
@@ -1042,14 +1058,11 @@ button {
   max-width: 22px;
   filter: grayscale(1);
 }
-.side_bar .navigation_menu .nav_item a.active, .side_bar .navigation_menu .nav_item a:hover,
-.side_bar .navigation_menu .nav_item .nav_link.active,
+.side_bar .navigation_menu .nav_item a:hover,
 .side_bar .navigation_menu .nav_item .nav_link:hover {
-  background: #ebf3f5;
   color: #006980;
 }
-.side_bar .navigation_menu .nav_item a.active img, .side_bar .navigation_menu .nav_item a:hover img,
-.side_bar .navigation_menu .nav_item .nav_link.active img,
+.side_bar .navigation_menu .nav_item a:hover img,
 .side_bar .navigation_menu .nav_item .nav_link:hover img {
   filter: grayscale(0);
 }

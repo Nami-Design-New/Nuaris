@@ -2,7 +2,8 @@ import React from "react";
 import logo from "../../../../assets/images/logoH.svg";
 import fav from "../../../../assets/images/fav.svg";
 import sidebarData from "./sidebarData";
-import NavigationItem from "./NavigationItem";
+import { Accordion } from "react-bootstrap";
+import { NavLink } from "react-router-dom";
 
 const SideBar = ({ sideBarOpen, setSideBarOpen }) => {
   function handlExpandAsideWhenHover(e) {
@@ -25,12 +26,32 @@ const SideBar = ({ sideBarOpen, setSideBarOpen }) => {
         </span>
       </div>
       <ul className="navigation_menu">
-        {sidebarData.map((item) => (
-          <NavigationItem
-            key={item.label}
-            item={item}
-            sideBarOpen={sideBarOpen}
-          />
+        {sidebarData?.map((item, index) => (
+          <Accordion defaultActiveKey={null}>
+            <Accordion.Item eventKey={index}>
+              <Accordion.Header className="nav_item">
+                <NavLink end to={item.path} className="nav_link">
+                  <img src={item.icon} alt={item.alt} />
+                  <span>{item.label}</span>
+                </NavLink>
+              </Accordion.Header>
+              {item?.submenu && (
+                <Accordion.Body className="sub_menu">
+                  <ul className="sub_navigation_menu">
+                    {item?.submenu.map((item, index) => (
+                      <>
+                        <li className="sub_nav_item nav_item">
+                          <NavLink className="nav_link" to={item.path}>
+                            <span>{item.label}</span>
+                          </NavLink>
+                        </li>
+                      </>
+                    ))}
+                  </ul>
+                </Accordion.Body>
+              )}
+            </Accordion.Item>
+          </Accordion>
         ))}
       </ul>
     </aside>
