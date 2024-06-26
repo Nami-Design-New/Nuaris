@@ -14,6 +14,11 @@ const ActivitiesForm = () => {
   const [isWorkingHoursValid, setIsWorkingHoursValid] = useState(false);
   const [isPricesValid, setIsPricesValid] = useState(false);
 
+  const whatIsIncludedInitial = {
+    item: "",
+    quantity: ""
+  };
+
   const [LocationPoint, setLocationPoint] = useState({
     lat: 24.7136,
     lng: 46.6753
@@ -38,8 +43,9 @@ const ActivitiesForm = () => {
 
   const seasonCardInitialData = {
     period: "30",
-    type: "",
     period_type: "minutes",
+    advanced_payment_percentage: 100,
+    price: "",
     extra_hour_price: "",
     minimum_price: "",
     dates: [new Date()]
@@ -53,14 +59,15 @@ const ActivitiesForm = () => {
     description: "",
     capacity: "",
     quantity: "",
-    restrictions: "",
+    what_included: [whatIsIncludedInitial],
     yacht: "",
     vat: null,
+    restrictions: "",
     location_point: LocationPoint,
     location_name: "",
     working_hours: workingHoursInitial,
-    pre_payment_percentage: 100,
-    minimum_rental_period: "",
+    advanced_payment_percentage: 100,
+    minimum_rental_period: "30",
     minimum_rental_period_type: "minutes",
     prices: [initialPricesData],
     season_prices: [seasonCardInitialData]
@@ -124,6 +131,7 @@ const ActivitiesForm = () => {
                 setForm={setForm}
                 isValid={isMainInfoValid}
                 setIsValid={setIsMainInfoValid}
+                whatIsIncludedInitial={whatIsIncludedInitial}
               />
             )}
             {form === "Location" && (

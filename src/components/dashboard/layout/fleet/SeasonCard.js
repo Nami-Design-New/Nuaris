@@ -80,11 +80,11 @@ const SeasonCard = ({ formData, setFormData, index }) => {
               name="prepaymentPercentage"
               type="number"
               placeholder="00"
-              value={formData?.pre_payment_percentage}
+              value={formData?.advanced_payment_percentage}
               onChange={(e) => {
                 setFormData((prev) => ({
                   ...prev,
-                  pre_payment_percentage: e.target.value
+                  advanced_payment_percentage: e.target.value
                 }));
               }}
             />
@@ -153,7 +153,7 @@ const SeasonCard = ({ formData, setFormData, index }) => {
               {/* Minimum rental period */}
               <div className="col-12 p-0 pb-2">
                 <div className="input-field">
-                  <label htmlFor="period">Minimum Rental Period</label>
+                  <label htmlFor="period">Booking Time</label>
                   <div className="time-units">
                     <select
                       className="units w-100"
@@ -188,15 +188,12 @@ const SeasonCard = ({ formData, setFormData, index }) => {
               </div>
               {/* Price */}
               <div className="col-12 p-2 pe-0 ps-0">
-                <CustomInputWithUnit
+                <CustomInputField
                   name={"price"}
                   onChange={(e) => handleChangeSeasonPrice(e, index)}
-                  selectOnChange={(e) => handleChangeSeasonPrice(e, index)}
                   value={currentCard.price}
-                  selectValue={currentCard.type}
-                  selectName={"type"}
                   label={"Price"}
-                  units={["minute", "hour", "day", "week", "month"]}
+                  placeholder="00"
                 />
               </div>
               {/* Extra Hour price */}

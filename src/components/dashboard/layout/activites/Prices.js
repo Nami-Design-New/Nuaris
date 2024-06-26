@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import InputField from "../../../ui/form-elements/InputField";
-import SeasonCard from "../addons/SeasonCard";
 import calenderIcon from "../../../../assets/images/calender.svg";
 import addIcon from "../../../../assets/images/add.svg";
 import SubmitButton from "../../../ui/form-elements/SubmitButton";
 import GeneralPriceCard from "../fleet/GeneralPriceCard";
 import CustomInputField from "../../../ui/form-elements/CustomInputField";
 import Vat from "../shared/Vat";
+import SeasonCard from './../fleet/SeasonCard';
+
 
 const Prices = ({
   setForm,
@@ -15,7 +15,7 @@ const Prices = ({
   initialPricesData,
   seasonCardInitialData
 }) => {
-  const [loading, setLoading] = useState(false);
+  const [loading, ] = useState(false);
 
   const handleNext = (e) => {
     e.preventDefault();
@@ -42,11 +42,11 @@ const Prices = ({
             name="prepaymentPercentage"
             type="number"
             placeholder="00"
-            value={formData?.pre_payment_percentage}
+            value={formData?.advanced_payment_percentage}
             onChange={(e) => {
               setFormData((prev) => ({
                 ...prev,
-                pre_payment_percentage: e.target.value
+                advanced_payment_percentage: e.target.value
               }));
             }}
           />
@@ -176,7 +176,6 @@ const Prices = ({
         <div className="col-12 p-2">
           <Vat />
         </div>
-
         <div className="col-12 p-2 pt-4 d-flex gap-3">
           <button className="next_btn" onClick={handleBack}>
             Back

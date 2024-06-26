@@ -11,15 +11,11 @@ const Prices = ({
   addon,
   formData,
   setFormData,  
+  pricesInitial
 }) => {
   const [loading, setLoading] = useState(false);
   const createdAddOn = sessionStorage.getItem("addon_id");
   const navigate = useNavigate();
-  const pricesInitial = {
-    price: "",
-    price_type: "",
-    min_price: ""
-  };
 
   const handleBack = (e) => {
     e.preventDefault();

@@ -13,7 +13,12 @@ import axios from "./../../../../util/axios";
 import SubmitButton from "../../../ui/form-elements/SubmitButton";
 import WhatIncluded from "./WhatIncluded";
 
-const MainInfoForm = ({ setForm, formData, setFormData }) => {
+const MainInfoForm = ({
+  setForm,
+  formData,
+  setFormData,
+  whatIsIncludedInitial
+}) => {
   const user = useSelector((state) => state.user?.user);
   const subUser = user?.subuser_set?.filter(
     (u) => u.role === user.current_role
@@ -259,7 +264,11 @@ const MainInfoForm = ({ setForm, formData, setFormData }) => {
         </div>
         {/* whats included */}
         <div className="col-12 p-2">
-          <WhatIncluded />
+          <WhatIncluded
+            whatIsIncludedInitial={whatIsIncludedInitial}
+            formData={formData}
+            setFormData={setFormData}
+          />
         </div>
         {/* Need to know & restrictions about activity */}
         <div className="col-12 p-2">
