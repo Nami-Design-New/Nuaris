@@ -1,9 +1,9 @@
 // PriceRow.js
 
 import React from "react";
-import InputField from "../../../ui/form-elements/InputField";
-import deleteIcon from "../../../../assets/images/delete.svg";
 import { useSelector } from "react-redux";
+import deleteIcon from "../../../../assets/images/delete.svg";
+import CustomInputField from './../../../ui/form-elements/CustomInputField';
 
 const PriceRow = ({
   formData,
@@ -52,10 +52,10 @@ const PriceRow = ({
         </div>
       </div>
       <div className="inner_wrap">
-        <InputField
-          formData={formData}
-          setFormData={handleChange}
+        <CustomInputField
           label="Minimum Price"
+          value={formData.min_price}
+          onChange={(e) => handleChange(index, "min_price", e.target.value)}
           htmlFor={`min_price-${index}`}
           hint={`( ${currency} )`}
           type="number"

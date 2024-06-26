@@ -21,7 +21,7 @@ const WorkingTime = ({
       setForm("Prices");
     }
   };
-  
+
   const handleBack = (e) => {
     e.preventDefault();
     setForm("Main Info");
@@ -109,6 +109,7 @@ const WorkingTime = ({
           ? toast.success("Working Time Updated Successfully")
           : toast.success("Working Time Saved Successfully");
         setForm("Prices");
+        setIsValid(true);
       } else {
         toast.error("Something went wrong");
       }

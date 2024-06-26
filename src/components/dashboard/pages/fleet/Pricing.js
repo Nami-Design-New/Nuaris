@@ -16,15 +16,6 @@ const Pricing = ({ yacht }) => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const seasonCardInitialData = {
-    period: "30",
-    type: "",
-    period_type: "minutes",
-    extra_hour_price: "",
-    minimum_price: "",
-    dates: [new Date()]
-  };
-
   const initialPricesData = {
     period: 30,
     period_type: "minutes",
@@ -33,12 +24,22 @@ const Pricing = ({ yacht }) => {
     minimum_price: ""
   };
 
+  const seasonCardInitialData = {
+    period: "30",
+    period_type: "minutes",
+    advanced_payment_percentage: 100,
+    price: "",
+    extra_hour_price: "",
+    minimum_price: "",
+    dates: [new Date()]
+  };
+
   const initialData = {
     prices: [initialPricesData],
     season_prices: [seasonCardInitialData],
     vat: null,
     price: "",
-    pre_payment_percentage: 100,
+    advanced_payment_percentage: 100,
     minimum_rental_period: "",
     minimum_rental_period_type: "hours"
   };
@@ -57,7 +58,7 @@ const Pricing = ({ yacht }) => {
             : [seasonCardInitialData],
         vat: yacht.vat || null,
         price: yacht.price || "",
-        pre_payment_percentage: yacht.pre_payment_percentage || 100,
+        advanced_payment_percentage: yacht.advanced_payment_percentage || 100,
         minimum_rental_period: yacht.minimum_rental_period || "",
         minimum_rental_period_type: yacht.minimum_rental_period_type || "hours"
       }));
@@ -69,8 +70,8 @@ const Pricing = ({ yacht }) => {
     e.preventDefault();
     setLoading(true);
     if (
-      formData.pre_payment_percentage < 50 ||
-      formData.pre_payment_percentage > 100
+      formData.advanced_payment_percentage < 50 ||
+      formData.advanced_payment_percentage > 100
     ) {
       toast.error("Advanced Payment percentage must be between 50% and 100%");
       setLoading(false);
@@ -129,11 +130,11 @@ const Pricing = ({ yacht }) => {
                 name="prepaymentPercentage"
                 type="number"
                 placeholder="00"
-                value={formData?.pre_payment_percentage}
+                value={formData?.advanced_payment_percentage}
                 onChange={(e) => {
                   setFormData((prev) => ({
                     ...prev,
-                    pre_payment_percentage: e.target.value
+                    advanced_payment_percentage: e.target.value
                   }));
                 }}
               />
