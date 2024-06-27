@@ -13,10 +13,10 @@ const ManageAccount = () => {
         <PageHeader name="Manage Your Nuaris Account" />
       </header>
       <div className="row m-0">
-        <div className="col-lg-4 col-12 p-2">
+        <div className="col-lg-3 col-12 p-2">
           <SideBar />
         </div>
-        <div className="col-lg-8 col-12 p-2">
+        <div className="col-lg-9 col-12 p-2">
           <main className="routes_wrapper">
             <Routes>
               <Route path="/" element={<ProfileInfo />} />

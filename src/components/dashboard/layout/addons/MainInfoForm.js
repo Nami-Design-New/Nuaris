@@ -27,10 +27,9 @@ const MainInfoForm = ({
   const subUser = user?.subuser_set?.filter(
     (u) => u.role === user.current_role
   )[0]?.id;
-
-  const [yachts, setYachts] = useState([]);
   const [fileLoading, setFileLoading] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [yachts, setYachts] = useState([]);
 
   useEffect(() => {
     axios
@@ -43,6 +42,14 @@ const MainInfoForm = ({
       });
   }, [subUser]);
 
+  const handleNext = (e) => {
+    e.preventDefault();
+    if (isValid) {
+      setForm("Working Time");
+    }
+  };
+
+  // media functions
   const handleImagesChange = async (e, i) => {
     if (e?.length === 0) {
       setFormData((prev) => {
@@ -76,7 +83,6 @@ const MainInfoForm = ({
       setFileLoading(false);
     }
   };
-
   const handleVideoChange = async (e) => {
     if (e?.length === 0) {
       setFormData((prev) => ({
@@ -99,13 +105,6 @@ const MainInfoForm = ({
       console.error("Error handling video upload:", error);
       setFileLoading(false);
       toast.error("Error uploading video");
-    }
-  };
-
-  const handleNext = (e) => {
-    e.preventDefault();
-    if (isValid) {
-      setForm("Working Time");
     }
   };
 
@@ -136,6 +135,7 @@ const MainInfoForm = ({
         addon
           ? toast.success("Addon Main Info Updated Successfully")
           : toast.success("Addon Main Info Saved Successfully");
+        setIsValid(true);
         setForm("Working Time");
         sessionStorage.setItem("addon_id", res?.data?.id);
       } else {

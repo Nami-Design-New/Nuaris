@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { DAYS } from "../../../../constants";
 import axios from "../../../../util/axios";
 import MainInfoForm from "../../layout/addons/MainInfoForm";
 import WorkingTime from "../../layout/addons/WorkingTime";
 import Prices from "../../layout/addons/Prices";
 import PageHeader from "../../layout/shared/PageHeader";
-import { DAYS } from "../../../../constants";
 
 const AddNewAddOn = () => {
   const { id } = useParams();
   const [addon, setAddon] = useState(null);
   const [form, setForm] = useState("Main Info");
-  const [hasParentYacht, setHasParentYacht] = useState(true);
-  const [isMainInfoValid, setIsMainInfoValid] = useState(false);
-  const [isWorkingTimeValid, setIsWorkingTimeValid] = useState(false);
+  const [hasParentYacht, setHasParentYacht] = useState(false);
+  const [isMainInfoValid, setIsMainInfoValid] = useState(true);
+  const [isWorkingTimeValid, setIsWorkingTimeValid] = useState(true);
 
   const workingHoursInitial = DAYS.map((day, index) => ({
     day,
@@ -120,6 +120,7 @@ const AddNewAddOn = () => {
               <Prices
                 setForm={setForm}
                 addon={addon}
+                pricesInitial={pricesInitial}
                 formData={formData}
                 setFormData={setFormData}
               />

@@ -3,7 +3,7 @@ const sidebarData = [
     path: "",
     icon: require("../../../../assets/images/Dashboard.svg").default,
     alt: "dash-board-icon",
-    label: "Dashboard",
+    label: "Dashboard"
   },
   {
     path: "fleet",
@@ -13,34 +13,33 @@ const sidebarData = [
     submenu: [
       {
         path: "fleet",
-        label: "Fleet",
+        label: "Fleet"
       },
       {
         path: "addons",
-        label: "Addons",
+        label: "Addons"
       },
       {
         path: "activities",
-        label: "Activities",
+        label: "Activities"
       },
       {
         path: "trip-packages",
-        label: "Trip Packages",
+        label: "Trip Packages"
       },
       {
-
         path: "bookings-scheduling",
-        label: "Booking",
+        label: "Booking"
       },
       {
         path: "destination",
-        label: "Destination",
+        label: "Destination"
       },
       {
         path: "packages",
-        label: "Packages",
-      },
-    ],
+        label: "Packages"
+      }
+    ]
   },
   {
     path: "agent-request",
@@ -50,17 +49,17 @@ const sidebarData = [
     submenu: [
       {
         path: "agent-request",
-        label: "Agent Requests",
+        label: "Agent Requests"
       },
       {
         path: "affiliate",
-        label: "Affiliate",
+        label: "Affiliate"
       },
       {
         path: "compigens",
-        label: "Compigens",
-      },
-    ],
+        label: "Compigens"
+      }
+    ]
   },
   {
     path: "reports",
@@ -70,13 +69,13 @@ const sidebarData = [
     submenu: [
       {
         path: "reports",
-        label: "Reports",
+        label: "Reports"
       },
       {
         path: "clients",
-        label: "Clients",
-      },
-    ],
+        label: "Clients"
+      }
+    ]
   },
 
   {
@@ -87,22 +86,22 @@ const sidebarData = [
     submenu: [
       {
         path: "guests",
-        label: "Guests",
+        label: "Guests"
       },
       {
         path: "complaint",
-        label: "Complaint",
+        label: "Complaint"
       },
       {
         path: "rating",
-        label: "Rating",
+        label: "Rating"
       },
       {
         path: "questions-settings",
-        label: "Questions",
-      },
-    ],
-  },
+        label: "Questions"
+      }
+    ]
+  }
 ];
 
 export default sidebarData;
