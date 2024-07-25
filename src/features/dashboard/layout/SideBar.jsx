@@ -180,7 +180,7 @@ export default function SideBar({
             <Accordion.Body>
               <ul className="sub_navigation_menu">
                 <li className="sub_nav_item">
-                  <NavLink to="clients" onClick={() => setManualExpand(false)}>
+                  <NavLink to="reports" onClick={() => setManualExpand(false)}>
                     <img src={arrowSub} alt="arrow" />
                     <span>Reports</span>
                   </NavLink>

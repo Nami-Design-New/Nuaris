@@ -1,4 +1,4 @@
-import FullCalender from "../../../ui/FullCalender";
+import FullCalender from "../../../../ui/FullCalender";
 
 const SchedulingCalender = () => {
   return (

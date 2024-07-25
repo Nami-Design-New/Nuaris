@@ -10,7 +10,7 @@ export default function Logout() {
 
   useEffect(() => {
     axios
-      .post("/web_logout/logout")
+      .post("/api/v1/web_logout/logout")
       .then((res) => {
         if (res.status === 200) {
           delete axios.defaults.headers.common["Authorization"];

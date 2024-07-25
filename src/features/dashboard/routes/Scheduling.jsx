@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import PageHeader from "./../layout/PageHeader";
-import SchedulingCalender from "../layout/SchedulingCalender";
-
+import Bookings from "../components/booking-scheduling/Bookings";
+import SchedulingCalender from "../components/booking-scheduling/SchedulingCalender";
 
 const Scheduling = () => {
   return (
@@ -17,9 +17,9 @@ const Scheduling = () => {
           <div className="col-12 p-2">
             <SchedulingCalender />
           </div>
-          {/* <div className="col-12 p-2">
+          <div className="col-12 p-2">
             <Bookings />
-          </div> */}
+          </div>
         </div>
       </section>
     </div>

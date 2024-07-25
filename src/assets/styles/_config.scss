@@ -32,6 +32,7 @@
   margin: 0;
   box-sizing: border-box;
   line-height: 36px;
+  scrollbar-width: none;
   scroll-behavior: smooth;
   font-family: "Outfit", sans-serif;
   -webkit-tap-highlight-color: transparent;
@@ -64,11 +65,6 @@ button {
   height: 300px;
 }
 
-.disabled {
-  pointer-events: none;
-  opacity: 0.5;
-}
-
 $main: #006980;
 $main10: #ebf3f5;
 $main25: #bfd5d8;
@@ -95,6 +91,48 @@ $dangerLight: #dc3545cc;
 $borderRadius: 12px;
 $transation: 0.3s ease-in-out;
 
+.disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.sideBar_wrap {
+  position: sticky;
+  top: 100px;
+}
+
+.badge {
+  font-weight: 400;
+  border-radius: 40px;
+  padding: 0 12px;
+  color: $white;
+  background-color: $gray;
+  line-height: 26px;
+  cursor: default;
+  font-size: 12px;
+  text-transform: capitalize;
+  z-index: 2;
+  &.success {
+    background-color: $success;
+  }
+  &.danger {
+    background-color: $danger;
+  }
+  &.idle {
+    background-color: $gray;
+  }
+}
+
+.next_btn,
+.back_btn {
+  width: 74px;
+  @include clearInput();
+  height: 52px;
+  border: 1px solid $dark;
+  color: $dark;
+  border-radius: 12px;
+}
+
 // filepond customization
 .filepond--root .filepond--credits[style] {
   display: none !important;
@@ -112,10 +150,20 @@ $transation: 0.3s ease-in-out;
   min-height: 100%;
   label {
     color: #e2e2e2;
-    font-family: "Outfit", sans-serif;
-    font-weight: 900;
-    font-size: 40px;
+    font-family: "Outfit", sans-serif !important;
+    font-weight: 900 !important;
+    font-size: 40px !important;
   }
+}
+
+.mainImg {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  background: $white;
+  border-radius: 20px;
+  color: $main !important;
+  padding: 6px 24px !important;
 }
 
 // react flags customization
@@ -143,6 +191,7 @@ $transation: 0.3s ease-in-out;
   border: 0;
   max-height: 208px;
   border-radius: 8px;
+  scrollbar-width: none;
   input {
     height: 48px !important;
     border-radius: 8px !important;
@@ -269,8 +318,11 @@ $transation: 0.3s ease-in-out;
   width: auto;
   height: fit-content;
 }
-.rmdp-panel-header + div::-webkit-scrollbar {
-  display: none;
+.rmdp-panel-header + div {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 // text editor customization
@@ -308,6 +360,7 @@ $transation: 0.3s ease-in-out;
 .public-DraftEditor-content {
   height: 140px !important;
   overflow-y: scroll !important;
+  scrollbar-width: none !important;
   &::-webkit-scrollbar {
     display: none;
   }

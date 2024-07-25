@@ -19,7 +19,7 @@ export default function AuthProvider({ children }) {
   useLayoutEffect(() => {
     if (!accessToken) {
       axios
-        .post("/web_refresh")
+        .post("/api/v1/web_refresh")
         .then((refresh) => {
           if (refresh.status === 200) {
             const newAccessToken = refresh.data.access_token;
@@ -63,7 +63,7 @@ export default function AuthProvider({ children }) {
           originalRequest._retry = true;
 
           try {
-            const refresh = await axios.post("/web_refresh");
+            const refresh = await axios.post("/api/v1/web_refresh");
             if (refresh.status === 200) {
               const newAccessToken = refresh.data.access_token;
               dispatch(setToken(newAccessToken));

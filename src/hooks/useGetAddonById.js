@@ -1,11 +1,13 @@
 import axios from "./../utils/axios";
 import { useQuery } from "@tanstack/react-query";
 
-export default function useGetUser() {
+export default function useGetAddonById(id) {
   const { data, isLoading, error } = useQuery({
-    queryKey: ["user"],
+    queryKey: ["addon", id],
     queryFn: async () => {
-      const res = await axios.get("/api/v1/users/get_user_info");
+      const res = await axios.get(
+        `/addons/${id}`
+      );
       return res.data;
     },
     retry: false

@@ -1,5 +1,7 @@
 import {
+  checkPasswordStrength,
   fetchCitiesForCountry,
+  filterEmptyKeys,
   handleChange,
   handlePhoneChange,
   handleSelectCountry
@@ -9,6 +11,7 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setUser } from "../../../redux/slices/authedUser";
+import axios from "./../../../utils/axios";
 import BackButton from "../../../ui/form-elements/BackButton";
 import SubmitButton from "../../../ui/form-elements/SubmitButton";
 import InputField from "../../../ui/form-elements/InputField";
@@ -16,7 +19,7 @@ import PhoneField from "../../../ui/form-elements/PhoneField";
 import PasswordField from "../../../ui/form-elements/PasswordField";
 import SelectField from "../../../ui/form-elements/SelectField";
 import ReactFlagsSelect from "react-flags-select";
-import axios from "./../../../utils/axios";
+import MediaUploadField from "../../../ui/form-elements/MediaUploadField";
 
 export default function AgentForm({ setFormSelection }) {
   const navigate = useNavigate();
@@ -57,13 +60,21 @@ export default function AgentForm({ setFormSelection }) {
   const handleSubmit = async (e) => {
     setLoading(true);
     e.preventDefault();
+    if (!checkPasswordStrength(formData.password)) {
+      toast.error(
+        "Password is weak! Must contain at least 8 characters, a mix of letters, numbers, and symbols."
+      );
+      setLoading(false);
+      return;
+    }
     try {
-      const res = await axios.post("/user/signup", formData);
+      const filteredData = filterEmptyKeys(formData);
+      const res = await axios.post("/api/v1/user/signup", filteredData);
       if (res.status === 200 || res.status === 201) {
         toast.success("Account created successfully");
         try {
-          const login = await axios.post("/web_login", {
-            username: formData.email,
+          const login = await axios.post("/api/v1/web_login", {
+            username: formData.username,
             password: formData.password,
             role: formData?.role
           });
@@ -114,7 +125,17 @@ export default function AgentForm({ setFormSelection }) {
             onChange={(e) => handleChange(e, setFormData)}
           />
         </div>
-        <div className="col-lg-6 col-12 p-2">{/* logo */}</div>
+        <div className="col-lg-6 col-12 p-2">
+          <MediaUploadField
+            label="Upload Your Logo"
+            hint="(PNG or JPG)"
+            labelIdle="LOGO"
+            companyLogo={true}
+            pannelRatio={0.3666}
+            accept={["image/png", "image/jpeg"]}
+            files={formData.logo ? [formData.logo] : []}
+          />
+        </div>
         <div className="col-lg-6 col-12 p-2">
           <InputField
             label="Email Address"

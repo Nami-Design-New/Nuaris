@@ -28,6 +28,7 @@
       margin: 0 auto;
       height: 100%;
       width: calc(100% - 8rem);
+      scrollbar-width: none;
       @media (max-width: 576px) {
         padding: 2rem 0;
       }
@@ -433,7 +434,7 @@
           left: 10px;
         }
         select {
-          padding: 12px 6px 12px 30px;
+          padding: 12px 6px 12px 36px;
         }
       }
       .phone-code {
@@ -553,6 +554,12 @@
         }
       }
     }
+    .filepond--root .filepond--drop-label label {
+      color: #e2e2e2 !important;
+      &.mainImg {
+        color: $main !important;
+      }
+    }
   }
   .check-field {
     width: 100%;
@@ -605,6 +612,7 @@
     &::-webkit-inner-spin-button {
       display: none;
     }
+    appearance: textfield;
   }
   .simiLabel {
     color: $dark;
@@ -680,15 +688,6 @@
         }
       }
     }
-  }
-  .next_btn,
-  .back_btn {
-    width: 74px;
-    @include clearInput();
-    height: 52px;
-    border: 1px solid $dark;
-    color: $dark;
-    border-radius: 12px;
   }
   .submit_btn {
     width: 200px;
@@ -1363,6 +1362,7 @@
       .body {
         max-height: calc(70px * 4);
         overflow: scroll;
+        scrollbar-width: none;
         &::-webkit-scrollbar {
           display: none;
         }
@@ -1567,6 +1567,10 @@ footer {
           font-size: 20px;
           margin: 0;
         }
+        .buttons {
+          display: flex;
+          gap: 12px;
+        }
       }
     }
     .comming_soon {
@@ -1653,7 +1657,7 @@ footer {
       @media screen and (max-width: 576px) {
         padding: 16px 8px;
       }
-      .form-ui {
+      .form_ui {
         .form_title {
           font-weight: 500;
           color: $inputHint;
@@ -1846,7 +1850,6 @@ footer {
     }
   }
 }
-
 .button {
   @include clearInput();
   padding: 8px 16px;
@@ -1886,49 +1889,6 @@ footer {
     line-height: 24px;
   }
 }
-
-.deleteModal {
-  p {
-    margin-top: 16px;
-    margin-bottom: 4px;
-    color: $dark;
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 24px;
-    text-align: center;
-    span {
-      line-height: inherit;
-      color: $danger;
-      font-weight: 600;
-    }
-  }
-  .cancel {
-    @include clearInput();
-    height: 44px;
-    border: 1px solid $dark;
-    color: $dark;
-    &:hover {
-      background: none;
-    }
-  }
-  .confirm {
-    background: $main;
-    height: 44px;
-    &:hover {
-      background: $main;
-    }
-    &.red {
-      background: #ff3a29;
-      &:hover {
-        background: #ff3a29;
-      }
-    }
-  }
-}
-.sideBar_wrap {
-  position: sticky;
-  top: 100px;
-}
 .fleet_side_bar {
   width: 100%;
   border-radius: 24px;
@@ -1944,6 +1904,7 @@ footer {
     flex-direction: column;
     gap: 8px;
     overflow-y: scroll;
+    scrollbar-width: none;
     &::-webkit-scrollbar {
       display: none;
     }
@@ -1971,8 +1932,28 @@ footer {
     }
   }
 }
-.fleet_form__wrapper,
-.addon_form_wrapper {
+.vessel_status {
+  .checkboxs_inputs {
+    label input:checked + span {
+      color: $dark !important;
+    }
+    .bg-active {
+      transform: translateX(0);
+      width: calc(100% / 3) !important;
+      background: $second !important;
+      &.active {
+        transform: translateX(0%) !important;
+      }
+      &.inactive {
+        transform: translateX(100%) !important;
+      }
+      &.hidden {
+        transform: translateX(200%) !important;
+      }
+    }
+  }
+}
+.inner_form_wrapper {
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -1982,6 +1963,7 @@ footer {
     padding: 16px 24px;
     background: $white;
     border-radius: 24px;
+    scrollbar-width: none;
     @media screen and (max-width: 576px) {
       padding: 16px 8px;
     }
@@ -2043,7 +2025,7 @@ footer {
     gap: 16px;
     flex-wrap: wrap;
   }
-  .form-ui {
+  .form_ui {
     &.specifications {
       display: flex;
       flex-direction: column;
@@ -2055,6 +2037,18 @@ footer {
   }
   .parent_yacht_label {
     @include space-between();
+  }
+}
+.empty_wrap {
+  @include centerFlex();
+  flex-direction: column;
+  img {
+    height: 300px;
+  }
+  h3 {
+    font-weight: 500;
+    font-size: 28px;
+    color: $main;
   }
 }
 .policy_form {
@@ -2100,7 +2094,6 @@ footer {
     @include centerFlex();
   }
 }
-
 .fleet-card {
   position: relative;
   background-color: $white;
@@ -2174,56 +2167,6 @@ footer {
     }
   }
 }
-.badge {
-  font-weight: 400;
-  border-radius: 40px;
-  padding: 0 12px;
-  color: $white;
-  background-color: $gray;
-  line-height: 26px;
-  cursor: default;
-  font-size: 12px;
-  text-transform: capitalize;
-  z-index: 2;
-  &.success {
-    background-color: $success;
-  }
-  &.danger {
-    background-color: $danger;
-  }
-  &.idle {
-    background-color: $gray;
-  }
-}
-.fleet-media-swiper {
-  position: relative;
-  border-radius: 12px;
-  overflow: hidden;
-  .badge {
-    position: absolute;
-    top: 12px;
-    left: 12px;
-  }
-  .swiper-slide {
-    height: min(400px, 400px);
-  }
-  .swiper-pagination {
-    text-align: left;
-    padding-left: 12px;
-    .swiper-pagination-bullet {
-      background: $white;
-      width: 10px;
-      height: 10px;
-    }
-  }
-  img,
-  video {
-    max-width: 100%;
-    width: 100%;
-    object-fit: cover;
-    height: 100%;
-  }
-}
 .map-card {
   padding: 4px;
   border-radius: 12px;
@@ -2269,6 +2212,190 @@ footer {
     overflow: hidden;
   }
 }
+.fleet-media-swiper {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  .badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+  }
+  .swiper-slide {
+    height: min(400px, 400px);
+  }
+  .swiper-pagination {
+    text-align: left;
+    padding-left: 12px;
+    .swiper-pagination-bullet {
+      background: $white;
+      width: 10px;
+      height: 10px;
+    }
+  }
+  img,
+  video {
+    max-width: 100%;
+    width: 100%;
+    object-fit: cover;
+    height: 100%;
+  }
+}
+.addOnModal {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  .details {
+    background: $inputBG;
+    padding: 12px;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    .aboutAddOn {
+      display: flex;
+      gap: 16px;
+      .img {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        img {
+          height: 100px;
+          border-radius: 12px;
+          object-fit: contain;
+        }
+      }
+      .about {
+        flex: 6;
+        h3 {
+          font-size: 28px;
+          color: $dark;
+          font-weight: 500;
+          line-height: 35px;
+          margin-bottom: 4px;
+        }
+        span {
+          font-size: 16px;
+          font-weight: 500;
+          line-height: 20px;
+          color: $main;
+        }
+        p {
+          font-size: 16px;
+          font-weight: 400;
+          line-height: 20px;
+          color: $gray;
+        }
+      }
+    }
+    .info {
+      display: grid;
+      gap: 12px;
+      grid-template-columns: repeat(3, 1fr);
+      width: 100%;
+      .info_card {
+        background: $main10;
+        padding: 8px 16px;
+        border-radius: 12px;
+        span {
+          font-size: 14px;
+          font-weight: 400;
+          line-height: 18px;
+          color: $gray;
+        }
+        h5 {
+          font-size: 16px;
+          font-weight: 500;
+          line-height: 20px;
+          color: $dark;
+        }
+      }
+    }
+  }
+  .statistics {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    .stat_card {
+      background: $second25;
+      padding: 24px;
+      border-radius: 12px;
+      @include centerFlex();
+      flex-direction: column;
+      h4 {
+        font-size: 28px;
+        font-weight: 700;
+        color: $dark;
+      }
+      h6 {
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 18px;
+        color: $gray;
+      }
+    }
+  }
+  .upComingBooking {
+    padding: 24px;
+    border-radius: 24px;
+    background: $main10;
+    h4 {
+      color: $dark;
+      font-size: 20px;
+      font-weight: 600;
+      line-height: 25px;
+    }
+    .p-datatable-emptymessage,
+    tr {
+      background: none;
+      td {
+        &:last-child {
+          text-align: center;
+        }
+      }
+    }
+  }
+}
+.confirmation_modal {
+  p {
+    margin-top: 16px;
+    margin-bottom: 4px;
+    color: $dark;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    text-align: center;
+    span {
+      line-height: inherit;
+      color: $danger;
+      font-weight: 600;
+    }
+  }
+  .cancel {
+    @include clearInput();
+    height: 44px;
+    border: 1px solid $dark;
+    color: $dark;
+    &:hover {
+      background: none;
+    }
+  }
+  .confirm {
+    background: $main;
+    height: 44px;
+    &:hover {
+      background: $main;
+    }
+    &.red {
+      background: #ff3a29;
+      &:hover {
+        background: #ff3a29;
+      }
+    }
+  }
+}
+// ******************************** //
+
 .stars_rate {
   display: flex;
   align-items: center;
@@ -2572,6 +2699,7 @@ footer {
   max-height: 65vh;
   overflow: scroll;
   flex: 1;
+  scrollbar-width: none;
   &::-webkit-scrollbar {
     display: none;
   }
@@ -2655,22 +2783,6 @@ footer {
     background-color: $main;
   }
 }
-small.error {
-  font-size: 12px;
-  line-height: 15px;
-  color: $danger;
-}
-.mainImg {
-  position: absolute;
-  top: 8px;
-  left: 8px;
-  background: $white;
-  border-radius: 20px;
-  color: $main !important;
-  padding: 6px 24px !important;
-}
-// accordion globals
-// season calender card
 .season_calender_card,
 .price_card {
   position: relative;
@@ -2727,120 +2839,7 @@ small.error {
   }
 }
 // add on modal
-.addOnModal {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  .details {
-    background: $inputBG;
-    padding: 12px;
-    border-radius: 12px;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    .aboutAddOn {
-      display: flex;
-      gap: 16px;
-      .img {
-        flex: 1;
-        display: flex;
-        justify-content: center;
-        img {
-          height: 80px;
-          object-fit: contain;
-        }
-      }
-      .about {
-        flex: 6;
-        h3 {
-          font-size: 28px;
-          color: $dark;
-          font-weight: 500;
-          line-height: 35px;
-          margin-bottom: 4px;
-        }
-        span {
-          font-size: 16px;
-          font-weight: 500;
-          line-height: 20px;
-          color: $main;
-        }
-        p {
-          font-size: 16px;
-          font-weight: 400;
-          line-height: 20px;
-          color: $gray;
-        }
-      }
-    }
-    .info {
-      display: grid;
-      gap: 12px;
-      grid-template-columns: repeat(3, 1fr);
-      width: 100%;
-      .info_card {
-        background: $main10;
-        padding: 8px 16px;
-        border-radius: 12px;
-        span {
-          font-size: 14px;
-          font-weight: 400;
-          line-height: 18px;
-          color: $gray;
-        }
-        h5 {
-          font-size: 16px;
-          font-weight: 500;
-          line-height: 20px;
-          color: $dark;
-        }
-      }
-    }
-  }
-  .statistics {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
-    .stat_card {
-      background: $second25;
-      padding: 24px;
-      border-radius: 12px;
-      @include centerFlex();
-      flex-direction: column;
-      h4 {
-        font-size: 28px;
-        font-weight: 700;
-        color: $dark;
-      }
-      h6 {
-        font-size: 14px;
-        font-weight: 500;
-        line-height: 18px;
-        color: $gray;
-      }
-    }
-  }
-  .upComingBooking {
-    padding: 24px;
-    border-radius: 24px;
-    background: $main10;
-    h4 {
-      color: $dark;
-      font-size: 20px;
-      font-weight: 600;
-      line-height: 25px;
-    }
-    .p-datatable-emptymessage,
-    tr {
-      background: none;
-      td {
-        &:last-child {
-          text-align: center;
-        }
-      }
-    }
-  }
-}
+
 .table-container {
   .addon {
     height: 60px;
@@ -2996,27 +2995,6 @@ small.error {
   img {
     width: 100%;
     height: 100%;
-  }
-}
-.vessel_status {
-  .checkboxs_inputs {
-    label input:checked + span {
-      color: $dark !important;
-    }
-    .bg-active {
-      transform: translateX(0);
-      width: calc(100% / 3) !important;
-      background: $second !important;
-      &.active {
-        transform: translateX(0%) !important;
-      }
-      &.inactive {
-        transform: translateX(100%) !important;
-      }
-      &.hidden {
-        transform: translateX(200%) !important;
-      }
-    }
   }
 }
 .addons_wrap {
@@ -3273,7 +3251,7 @@ small.error {
     }
   }
 }
-.invoice_design_wrapper .form-ui {
+.invoice_design_wrapper .form_ui {
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -3350,6 +3328,7 @@ small.error {
 }
 .previewmodal {
   overflow-x: scroll;
+  scrollbar-width: none;
   &::-webkit-scrollbar {
     height: 2px;
   }

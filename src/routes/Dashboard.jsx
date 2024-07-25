@@ -18,6 +18,10 @@ import Reports from "../features/dashboard/routes/Reports";
 import Clients from "../features/dashboard/routes/Clients";
 import Nssm from "../features/dashboard/routes/Nssm";
 import Scheduling from "../features/dashboard/routes/Scheduling";
+import InviteUser from "../features/dashboard/routes/InviteUser";
+import AddonForm from "../features/dashboard/routes/AddonForm";
+import FleetForm from "./../features/dashboard/routes/FleetForm";
+import Permissions from "../features/dashboard/routes/Permissions";
 
 export default function Dashboard() {
   const { data: user } = useGetUser();
@@ -45,8 +49,17 @@ export default function Dashboard() {
         <div className="router_wrapper">
           <Routes>
             <Route path="/" element={<>Home</>} />
+            <Route path="/invite-user/" element={<InviteUser />} />
+            <Route path="/invite-user/permissions" element={<Permissions />} />
+
             <Route path="/fleet" element={<Fleet />} />
+            <Route path="/fleet/add-yacht/*" element={<FleetForm />} />
+            <Route path="/fleet/edit-yacht/:id/*" element={<FleetForm />} />
+
             <Route path="/addons" element={<Addons />} />
+            <Route path="/addons/add-addon" element={<AddonForm />} />
+            <Route path="/addons/edit-addon/:id" element={<AddonForm />} />
+
             <Route path="/activities" element={<Activities />} />
             <Route path="/trip-packages" element={<TripPackages />} />
             <Route path="/destination" element={<Destination />} />

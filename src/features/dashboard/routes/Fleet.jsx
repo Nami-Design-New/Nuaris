@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import PageHeader from "../layout/PageHeader";
+import FleetCardsGrid from "../components/fleet/FleetCardsGrid";
 
 export default function Fleet() {
   return (
@@ -10,6 +11,7 @@ export default function Fleet() {
           Add a new Yacht / Boat
         </Link>
       </header>
+      <FleetCardsGrid />
     </section>
   );
 }

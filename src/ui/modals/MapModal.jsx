@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import GoogleMaps from "./GoogleMaps";
+import GoogleMaps from "../GoogleMaps";
 
 const MapModal = ({
   showModal,

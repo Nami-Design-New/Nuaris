@@ -25,7 +25,7 @@ export default function UserNameForm({ setShowLoginForm, userTypeSelected }) {
     setLoading(true);
     e.preventDefault();
     try {
-      const res = await axios.post("/web_login", {
+      const res = await axios.post("/api/v1/web_login", {
         ...formData,
         role: userTypeSelected
       });

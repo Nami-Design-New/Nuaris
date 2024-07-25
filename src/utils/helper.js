@@ -12,7 +12,15 @@ export const filterEmptyKeys = (data) => {
   return Object.fromEntries(Object.entries(data).filter(([_, v]) => v !== ""));
 };
 
-// country state city helpers
+export const checkPasswordStrength = (password) => {
+  const hasMinLength = password.length >= 8;
+  const hasLetters = /[a-zA-Z]/.test(password);
+  const hasNumbers = /[0-9]/.test(password);
+  const hasSymbols = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+
+  return hasMinLength && hasLetters && hasNumbers && hasSymbols;
+};
+
 export const handleSelectCountry = (countryCode, setFormData) => {
   setFormData((prev) => ({
     ...prev,
@@ -55,7 +63,6 @@ export const handleSelectCity = (
   }
 };
 
-// string helpers
 export function capitalizeWord(word) {
   return word[0].toUpperCase() + word.slice(1);
 }

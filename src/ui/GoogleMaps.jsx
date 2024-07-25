@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { GoogleMap, Marker, StandaloneSearchBox } from "@react-google-maps/api";
-import pin from "../../assets/images/icons/map-pin.svg";
+import pin from "../assets/images/icons/map-pin.svg";
 
 export default function GoogleMaps({
   formData,
