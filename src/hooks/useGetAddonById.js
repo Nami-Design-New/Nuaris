@@ -5,9 +5,7 @@ export default function useGetAddonById(id) {
   const { data, isLoading, error } = useQuery({
     queryKey: ["addon", id],
     queryFn: async () => {
-      const res = await axiosInstance.get(
-        `/addons/${id}`
-      );
+      const res = await axiosInstance.get(`addon/get_addon?addon_id=${id}`);
       return res.data;
     },
     retry: false

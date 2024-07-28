@@ -6,8 +6,5 @@ export default defineConfig({
   server: {
     host: "newstagingapilocal.nuaris.co",
     port: 3000
-  },
-  build: {
-    outDir: "dist"
   }
 });
