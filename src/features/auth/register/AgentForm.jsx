@@ -6,8 +6,9 @@ import {
   checkPasswordStrength,
   filterEmptyKeys
 } from "../../../utils/helper";
+import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
-
+import { EXCEPTION_MESSAGES } from "../../../utils/contants";
 import BackButton from "../../../ui/form-elements/BackButton";
 import SubmitButton from "../../../ui/form-elements/SubmitButton";
 import InputField from "../../../ui/form-elements/InputField";
@@ -16,8 +17,6 @@ import PasswordField from "../../../ui/form-elements/PasswordField";
 import SelectField from "../../../ui/form-elements/SelectField";
 import ReactFlagsSelect from "react-flags-select";
 import MediaUploadField from "../../../ui/form-elements/MediaUploadField";
-import { toast } from "react-toastify";
-import { EXCEPTION_MESSAGES } from "../../../utils/contants";
 import axiosInstance from "../../../utils/axiosInstance";
 
 export default function AgentForm({
