@@ -7,7 +7,7 @@ import { useSearchParams } from "react-router-dom";
 import PageHeader from "../layout/PageHeader";
 
 // import AddDestinationModal from "./AddDestinationModal";
-// import axios from "../../../../util/axios";
+// import axiosInstance from "../../../../util/axios";
 // import CustomPagination from "../../../ui/CustomPagination";
 // import TableLoader from "../../../ui/TableLoader";
 // import deleteIcon from "../../../../assets/images/delete.svg";

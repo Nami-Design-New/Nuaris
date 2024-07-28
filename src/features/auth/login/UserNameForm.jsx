@@ -1,13 +1,14 @@
-import axios from "../../../utils/axios";
+import axiosInstance from "../../../utils/axiosInstance";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { useDispatch } from "react-redux";
-import { setToken, setUser } from "../../../redux/slices/authedUser";
+import { useDispatch, useSelector } from "react-redux";
 import BackButton from "../../../ui/form-elements/BackButton";
 import SubmitButton from "../../../ui/form-elements/SubmitButton";
+import { setToken, setUser } from "../../../redux/slices/authedUser";
 
-export default function UserNameForm({ setShowLoginForm, userTypeSelected }) {
+export default function UserNameForm({ setShowLoginForm }) {
+  const role = useSelector((state) => state.authRole.role);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
@@ -25,20 +26,17 @@ export default function UserNameForm({ setShowLoginForm, userTypeSelected }) {
     setLoading(true);
     e.preventDefault();
     try {
-      const res = await axios.post("/api/v1/web_login", {
+      const res = await axiosInstance.post("/api/v1/web_login", {
         ...formData,
-        role: userTypeSelected
+        role: role
       });
       if (res?.status === 200) {
         navigate("/dashboard");
         toast.success("Welcome To Nuaris");
         dispatch(setUser(res.data));
         dispatch(setToken(res.data.access_token));
-      } else {
-        toast.error("Incorrect username or password");
       }
     } catch (error) {
-      toast.error("Error occurred, please try again");
       console.error(error);
     } finally {
       setLoading(false);

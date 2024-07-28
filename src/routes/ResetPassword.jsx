@@ -39,18 +39,18 @@ export default function ResetPassword() {
         <p>{subTitle}</p>
         {resetPasswordStep === "s1" && (
           <ResetForm
-            setResetPasswordStep={setResetPasswordStep}
             formData={formData}
             setFormData={setFormData}
             setOtpFromResponse={setOtpFromResponse}
+            setResetPasswordStep={setResetPasswordStep}
           />
         )}
         {resetPasswordStep === "s2" && (
           <OtpForm
-            setResetPasswordStep={setResetPasswordStep}
             formData={formData}
-            otpFromResponse={otpFromResponse}
             setFormData={setFormData}
+            otpFromResponse={otpFromResponse}
+            setResetPasswordStep={setResetPasswordStep}
           />
         )}
         {resetPasswordStep === "s3" && (

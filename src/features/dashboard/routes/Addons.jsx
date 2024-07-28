@@ -6,7 +6,7 @@ import { Button } from "primereact/button";
 import { useSelector } from "react-redux";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-toastify";
-import axios from "../../../utils/axios";
+import axiosInstance from "../../../utils/axiosInstance";
 import useGetAddons from "./../../../hooks/useGetAddons";
 import PageHeader from "../layout/PageHeader";
 import TableLoader from "../../../ui/loaders/TableLoader";
@@ -73,7 +73,7 @@ const AddOns = () => {
     setShowDeleteModal(false);
     setLoading(true);
     try {
-      const res = await axios.delete(`/addons/${row?.id}`);
+      const res = await axiosInstance.delete(`/addons/${row?.id}`);
       if (res.status === 200) {
         toast.success("Addon deleted successfully");
         queryClient.invalidateQueries(["addons"]);

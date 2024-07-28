@@ -13,7 +13,7 @@ import PageHeader from "../layout/PageHeader";
 // import eyeView from "../../../../assets/images/eye.svg";
 // import StarsRate from "../../../ui/StarsRate";
 // import PackageModal from "../../../../components/dashboard/layout/packages/PackageModal";
-// import axios from "./../../../../util/axios";
+// import axiosInstance from "./../../../../util/axios";
 // import DeleteModal from "../../../ui/DeleteModal";
 
 export default function TripPackages() {

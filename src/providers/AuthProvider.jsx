@@ -1,8 +1,8 @@
-import axios from "./../utils/axios";
 import { useEffect, useLayoutEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setToken } from "../redux/slices/authedUser";
 import { useNavigate } from "react-router-dom";
+import axiosInstance from "./../utils/axiosInstance";
 
 export default function AuthProvider({ children }) {
   const navigate = useNavigate();
@@ -18,13 +18,13 @@ export default function AuthProvider({ children }) {
 
   useLayoutEffect(() => {
     if (!accessToken) {
-      axios
+      axiosInstance
         .post("/api/v1/web_refresh")
         .then((refresh) => {
           if (refresh.status === 200) {
             const newAccessToken = refresh.data.access_token;
             dispatch(setToken(newAccessToken));
-            axios.defaults.headers.common[
+            axiosInstance.defaults.headers.common[
               "Authorization"
             ] = `Bearer ${newAccessToken}`;
           } else {
@@ -44,7 +44,7 @@ export default function AuthProvider({ children }) {
   }, [accessToken, dispatch, navigate]);
 
   useLayoutEffect(() => {
-    const requestInterceptor = axios.interceptors.request.use(
+    const requestInterceptor = axiosInstance.interceptors.request.use(
       (config) => {
         if (accessToken) {
           config.headers.Authorization = `Bearer ${accessToken}`;
@@ -54,24 +54,23 @@ export default function AuthProvider({ children }) {
       (error) => Promise.reject(error)
     );
 
-    const responseInterceptor = axios.interceptors.response.use(
+    const responseInterceptor = axiosInstance.interceptors.response.use(
       (response) => response,
       async (error) => {
         const originalRequest = error.config;
 
         if (error.response.status === 401 && !originalRequest._retry) {
           originalRequest._retry = true;
-
           try {
-            const refresh = await axios.post("/api/v1/web_refresh");
+            const refresh = await axiosInstance.post("/api/v1/web_refresh");
             if (refresh.status === 200) {
               const newAccessToken = refresh.data.access_token;
               dispatch(setToken(newAccessToken));
-              axios.defaults.headers.common[
+              axiosInstance.defaults.headers.common[
                 "Authorization"
               ] = `Bearer ${newAccessToken}`;
               originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
-              return axios(originalRequest);
+              return axiosInstance(originalRequest);
             }
           } catch (refreshError) {
             console.error(refreshError);
@@ -83,8 +82,8 @@ export default function AuthProvider({ children }) {
     );
 
     return () => {
-      axios.interceptors.request.eject(requestInterceptor);
-      axios.interceptors.response.eject(responseInterceptor);
+      axiosInstance.interceptors.request.eject(requestInterceptor);
+      axiosInstance.interceptors.response.eject(responseInterceptor);
     };
   }, [accessToken, dispatch]);
 

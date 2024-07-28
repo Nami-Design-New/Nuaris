@@ -1,26 +1,32 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
-import axios from "../../../utils/axios";
+import { useSelector } from "react-redux";
+import axiosInstance from "../../../utils/axiosInstance";
 import SubmitButton from "../../../ui/form-elements/SubmitButton";
 
 export default function EmailForm({
   formData,
   setFormData,
-  setResetPasswordStep,
-  setOtpFromResponse
+  setResetPasswordStep
 }) {
   const [loading, setLoading] = useState(false);
+  const role = useSelector((state) => state.authRole.role);
 
   const handleSubmit = async (e) => {
     setLoading(true);
     e.preventDefault();
     try {
-      const res = await axios.post();
-      setResetPasswordStep("s2");
-      const message = res.data.message;
-      const otp = message.match(/\d{6}$/);
-      setOtpFromResponse(otp[0]);
+      const res = await axiosInstance.post(
+        "/api/v1/user/generate_forgot_password_otp",
+        {
+          email: formData.email,
+          role: role
+        }
+      );
+      if (res.status === 200 || res.status === 201) {
+        setResetPasswordStep("s2");
+      }
     } catch (error) {
       toast.error("error occurred please try again");
       throw new Error(error);

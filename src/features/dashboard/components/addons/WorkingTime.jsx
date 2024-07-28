@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
-import axios from "../../../../utils/axios";
+import axiosInstance from "../../../../utils/axiosInstance";
 import SubmitButton from "../../../../ui/form-elements/SubmitButton";
 import DaysAccordion from "../../../../ui/working-hours/DaysAccordion";
 
@@ -103,7 +103,7 @@ const WorkingTime = ({
       let url = addon?.id
         ? `/addons/${addon?.id}/`
         : `/addons/${createdAddOn}/`;
-      const response = await axios.patch(url, dictionary);
+      const response = await axiosInstance.patch(url, dictionary);
       if (response.status === 200) {
         addon
           ? toast.success("Working Time Updated Successfully")

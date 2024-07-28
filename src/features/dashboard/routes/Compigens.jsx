@@ -10,7 +10,7 @@ import PageHeader from "../layout/PageHeader";
 // import deleteIcon from "../../../../assets/images/delete.svg";
 // import editIcon from "../../../../assets/images/edit.svg";
 // import eyeView from "../../../../assets/images/eye.svg";
-// import axios from "axios";
+// import axiosInstance from "axios";
 // import DeleteModal from "../../../ui/DeleteModal";
 // import AddNewCompigens from "./AddNewCompigens";
 

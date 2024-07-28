@@ -4,7 +4,7 @@ import { handleChange } from "../../../../utils/helper";
 import { PAGE_SIZE } from "../../../../utils/contants";
 import { toast } from "react-toastify";
 import { useQueryClient } from "@tanstack/react-query";
-import axios from "../../../../utils/axios";
+import axiosInstance from "../../../../utils/axiosInstance";
 import fav from "../../../../assets/images/fav.png";
 import SubmitButton from "./../../../../ui/form-elements/SubmitButton";
 import InputField from "./../../../../ui/form-elements/InputField";
@@ -34,7 +34,7 @@ export default function MainInfoForm({
     e.preventDefault();
     setLoading(true);
     try {
-      const res = await axios.post("/addons/", {
+      const res = await axiosInstance.post("/addons/", {
         name: formData.name,
         description: formData.description,
         category: formData.category,

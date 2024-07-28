@@ -20,7 +20,7 @@ import PasswordField from "../../../ui/form-elements/PasswordField";
 import PhoneField from "../../../ui/form-elements/PhoneField";
 import SubmitButton from "../../../ui/form-elements/SubmitButton";
 import MapModal from "../../../ui/modals/MapModal";
-import axios from "./../../../utils/axios";
+import axiosInstance from "../../../utils/axiosInstance";
 import SelectField from "../../../ui/form-elements/SelectField";
 import MediaUploadField from "../../../ui/form-elements/MediaUploadField";
 
@@ -104,11 +104,11 @@ export default function ServiceProviderForm({ setFormSelection }) {
     }
     try {
       const filteredData = filterEmptyKeys(formData);
-      const res = await axios.post("/api/v1/user/signup", filteredData);
+      const res = await axiosInstance.post("/api/v1/user/signup", filteredData);
       if (res.status === 200 || res.status === 201) {
         toast.success("Account created successfully");
         try {
-          const login = await axios.post("/api/v1/web_login", {
+          const login = await axiosInstance.post("/api/v1/web_login", {
             username: formData.username,
             password: formData.password,
             role: formData?.role
@@ -116,7 +116,7 @@ export default function ServiceProviderForm({ setFormSelection }) {
           if (login?.status === 200) {
             navigate("/dashboard");
             dispatch(setUser(res.data));
-            axios.defaults.headers.common[
+            axiosInstance.defaults.headers.common[
               "Authorization"
             ] = `Bearer ${res.data.access_token}`;
           }

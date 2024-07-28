@@ -1,11 +1,11 @@
-import axios from "../utils/axios";
+import axiosInstance from "../utils/axiosInstance";
 import { useQuery } from "@tanstack/react-query";
 
 export default function useGetGroups(currentPage = 1) {
   const { data, isLoading, error } = useQuery({
     queryKey: ["groups", currentPage],
     queryFn: async () => {
-      const res = await axios.get("/groups", {
+      const res = await axiosInstance.get("/groups", {
         params: {
           page: currentPage
         }

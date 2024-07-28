@@ -1,7 +1,8 @@
 import { useState } from "react";
 import PageHeader from "./../layout/PageHeader";
-import { useParams } from "react-router-dom";
+import { Route, Routes, useParams } from "react-router-dom";
 import SideBar from "../components/fleet/SideBar";
+import MainInfo from "../components/fleet/MainInfo";
 
 export default function FleetForm() {
   const [yacht, setYacht] = useState({});
@@ -20,10 +21,10 @@ export default function FleetForm() {
             {/* <VesselStatusForm yacht={yacht} /> */}
           </div>
         </div>
-        {/* <div className="col-lg-9 col-12 p-2">
+        <div className="col-lg-9 col-12 p-2">
           <Routes>
             <Route path="/" element={<MainInfo yacht={yacht} />} />
-            <Route path="/media-photos" element={<Media yacht={yacht} />} />
+            {/* <Route path="/media-photos" element={<Media yacht={yacht} />} />
             <Route
               path="/boat-specification"
               element={<BoatSpecification yacht={yacht} />}
@@ -38,9 +39,9 @@ export default function FleetForm() {
               element={<AddOnsConnected yacht={yacht} />}
             />
             <Route path="/more-info" element={<MoreInfo yacht={yacht} />} />
-            <Route path="*" element={<MainInfo yacht={yacht} />} />
+            <Route path="*" element={<MainInfo yacht={yacht} />} /> */}
           </Routes>
-        </div> */}
+        </div>
       </div>
     </section>
   );

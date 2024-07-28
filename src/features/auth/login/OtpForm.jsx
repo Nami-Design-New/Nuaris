@@ -1,9 +1,9 @@
-import axios from "../../../utils/axios";
+import axiosInstance from "../../../utils/axiosInstance";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { setUser } from "../../../redux/slices/authedUser";
+import { setToken, setUser } from "../../../redux/slices/authedUser";
 import Otpcontainer from "../../../ui/Otpcontainer";
 import SubmitButton from "../../../ui/form-elements/SubmitButton";
 import BackButton from "../../../ui/form-elements/BackButton";
@@ -13,7 +13,6 @@ export default function OtpForm({
   formData,
   setFormData,
   SetShowOtpForm,
-  userTypeSelected,
   setShowLoginForm
 }) {
   const [loading, setLoading] = useState(false);
@@ -30,23 +29,18 @@ export default function OtpForm({
     setLoading(true);
     e.preventDefault();
     try {
-      const res = await axios.post("/users/login-otp/", {
-        ...formData,
-        role: userTypeSelected
-      });
+      const res = await axiosInstance.post(
+        "/api/v1/user/verify_email_login_otp",
+        formData
+      );
       if (res.status === 200) {
         navigate("/dashboard");
         toast.success("Welcome To Nuaris");
         dispatch(setUser(res.data));
-        axios.defaults.headers.common[
-          "Authorization"
-        ] = `Bearer ${res.data.access_token}`;
-      } else {
-        toast.error("Invalid OTP");
+        dispatch(setToken(res.data.access_token));
       }
     } catch (error) {
-      toast.error("error occurred please try again");
-      throw new Error(error);
+      console.error(error);
     } finally {
       setLoading(false);
     }

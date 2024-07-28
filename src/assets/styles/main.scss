@@ -1,5 +1,5 @@
 @import "./config";
-// ****** authentication ****** //
+
 .auth_section {
   width: 100%;
   height: 100dvh;
@@ -605,15 +605,6 @@
       }
     }
   }
-  input[type="number"] {
-    &::-webkit-outer-spin-button {
-      display: none;
-    }
-    &::-webkit-inner-spin-button {
-      display: none;
-    }
-    appearance: textfield;
-  }
   .simiLabel {
     color: $dark;
   }
@@ -815,7 +806,6 @@
     color: $inputHint;
   }
 }
-// ****** dashboard layout ****** //
 .side_bar {
   width: 80px;
   background: $white;
@@ -2356,6 +2346,7 @@ footer {
     }
   }
 }
+
 .confirmation_modal {
   p {
     margin-top: 16px;

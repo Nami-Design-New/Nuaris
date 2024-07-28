@@ -49,6 +49,18 @@ button {
   height: 300px;
 }
 
+input[type=number] {
+  -webkit-appearance: textfield;
+          appearance: textfield;
+  -moz-appearance: textfield;
+}
+input[type=number]::-webkit-outer-spin-button {
+  display: none;
+}
+input[type=number]::-webkit-inner-spin-button {
+  display: none;
+}
+
 .disabled {
   pointer-events: none;
   opacity: 0.5;
@@ -1292,17 +1304,6 @@ th:last-child .p-column-header-content {
   left: 50%;
   transform: translate(-50%, -50%);
   font-size: 16px !important;
-}
-.form_ui input[type=number] {
-  -webkit-appearance: textfield;
-     -moz-appearance: textfield;
-          appearance: textfield;
-}
-.form_ui input[type=number]::-webkit-outer-spin-button {
-  display: none;
-}
-.form_ui input[type=number]::-webkit-inner-spin-button {
-  display: none;
 }
 .form_ui .simiLabel {
   color: #0d0d0d;

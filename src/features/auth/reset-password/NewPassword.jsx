@@ -1,4 +1,4 @@
-import axios from "../../../utils/axios";
+import axiosInstance from "../../../utils/axiosInstance";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -13,15 +13,13 @@ export default function NewPassword({ formData, setFormData }) {
     setLoading(true);
     e.preventDefault();
     try {
-      const res = await axios.post("/users/reset_password/", formData);
+      const res = await axiosInstance.post("/users/reset_password/", formData);
       if (res?.status === 200) {
         toast.success("Password Reset Successful");
         navigate("/Login");
-      } else {
-        toast.error("error occurred please try again");
       }
     } catch (error) {
-      toast.error("error occurred please try again");
+      console.error(error);
       throw new Error(error);
     } finally {
       setLoading(false);
@@ -39,6 +37,16 @@ export default function NewPassword({ formData, setFormData }) {
           required
           onChange={(e) =>
             setFormData({ ...formData, password: e.target.value })
+          }
+        />
+        <input
+          required
+          name="password"
+          id="password"
+          type="password"
+          placeholder="Confirm Password"
+          onChange={(e) =>
+            setFormData({ ...formData, re_password: e.target.value })
           }
         />
         <div className="buttons">

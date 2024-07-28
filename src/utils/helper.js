@@ -1,4 +1,5 @@
 import { City } from "country-state-city";
+import { EXCEPTION_MESSAGES } from "./contants";
 
 export const handleChange = (e, setFormData) => {
   setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -65,4 +66,10 @@ export const handleSelectCity = (
 
 export function capitalizeWord(word) {
   return word[0].toUpperCase() + word.slice(1);
+}
+
+
+export function getExceptionMessage(type, code) {
+  const message = EXCEPTION_MESSAGES[type]?.[code];
+  return message || "An unknown error occurred";
 }

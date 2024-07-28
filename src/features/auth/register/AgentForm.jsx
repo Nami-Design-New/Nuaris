@@ -11,7 +11,7 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setUser } from "../../../redux/slices/authedUser";
-import axios from "./../../../utils/axios";
+import axiosInstance from "../../../utils/axiosInstance";
 import BackButton from "../../../ui/form-elements/BackButton";
 import SubmitButton from "../../../ui/form-elements/SubmitButton";
 import InputField from "../../../ui/form-elements/InputField";
@@ -69,11 +69,11 @@ export default function AgentForm({ setFormSelection }) {
     }
     try {
       const filteredData = filterEmptyKeys(formData);
-      const res = await axios.post("/api/v1/user/signup", filteredData);
+      const res = await axiosInstance.post("/api/v1/user/signup", filteredData);
       if (res.status === 200 || res.status === 201) {
         toast.success("Account created successfully");
         try {
-          const login = await axios.post("/api/v1/web_login", {
+          const login = await axiosInstance.post("/api/v1/web_login", {
             username: formData.username,
             password: formData.password,
             role: formData?.role
@@ -81,7 +81,7 @@ export default function AgentForm({ setFormSelection }) {
           if (login?.status === 200) {
             navigate("/dashboard");
             dispatch(setUser(res.data));
-            axios.defaults.headers.common[
+            axiosInstance.defaults.headers.common[
               "Authorization"
             ] = `Bearer ${res.data.access_token}`;
           }

@@ -1,6 +1,6 @@
-import axios from "./../../../utils/axios";
+import axiosInstance from "../../../utils/axiosInstance";
 import { useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useDispatch } from "react-redux";
 import { logout } from "../../../redux/slices/authedUser";
@@ -23,10 +23,20 @@ export default function ProfileMenu({
   const filteredSubUsers = subUsers?.filter((u) => {
     return u.role !== user.current_role && u.role;
   });
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  const handleLogout = async () => {
+    const res = await axiosInstance.post("/api/v1/web_logout/logout");
+    if (res.status === 200) {
+      delete axiosInstance.defaults.headers.common["Authorization"];
+      navigate("/login");
+      dispatch(logout());
+    }
+  };
+
   async function handleSwitch(subUserRole) {
-    const res = await axios.post(`/users/${user.id}/switch-role/`, {
+    const res = await axiosInstance.post(`/users/${user.id}/switch-role/`, {
       role: subUserRole
     });
     console.log("switch role =>", res);
@@ -74,7 +84,7 @@ export default function ProfileMenu({
       <div className="account_owner">
         <div className="avatar">
           <img src={user && user.logo ? user.logo : fav} alt="avatar" />
-          <Link className="edit">
+          <Link className="edit" to="manage-account">
             <img src={editIcon} alt="edit" />
           </Link>
         </div>
@@ -87,6 +97,7 @@ export default function ProfileMenu({
           <span>{user && user.email ? user.email : "mail@mail.com"}</span>
         </div>
       </div>
+
       {/* manage and invite links */}
       <div className="manage_invite">
         <div className="link" onClick={() => setProfileDropDown(false)}>
@@ -100,6 +111,7 @@ export default function ProfileMenu({
           <Link to="/dashboard/manage-account">Manage Your Nuaris Account</Link>
         </div>
       </div>
+
       {/* switch users */}
       <div className="select_frame">
         {multiAccounts && (
@@ -111,7 +123,6 @@ export default function ProfileMenu({
                 key={index}
               >
                 <div className="avatar">
-                  {/* TODO: Change image to be parent image || ask for adding an image to the subuser model */}
                   <img src={!subUser?.logo ? subUser.logo : fav} alt="avatar" />
                 </div>
                 <div className="type_mail">
@@ -122,6 +133,7 @@ export default function ProfileMenu({
             ))}
           </div>
         )}
+
         <div className="manage_invite">
           <div className="link ps-2">
             <img src={addAcc} alt="add-account" />
@@ -135,7 +147,7 @@ export default function ProfileMenu({
           ) : (
             <div className="link ps-2">
               <img src={logoutIcon} alt="logout" />
-              <Link to={"/logout"}>Logout</Link>
+              <Link onClick={handleLogout}>Logout</Link>
             </div>
           )}
         </div>

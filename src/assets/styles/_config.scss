@@ -65,6 +65,17 @@ button {
   height: 300px;
 }
 
+input[type="number"] {
+  &::-webkit-outer-spin-button {
+    display: none;
+  }
+  &::-webkit-inner-spin-button {
+    display: none;
+  }
+  appearance: textfield;
+  -moz-appearance: textfield;
+}
+
 $main: #006980;
 $main10: #ebf3f5;
 $main25: #bfd5d8;

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
-import axios from "../../../utils/axios";
+import axiosInstance from "../../../utils/axiosInstance";
 import SubmitButton from "../../../ui/form-elements/SubmitButton";
 
 export default function PhoneForm({
@@ -16,7 +16,7 @@ export default function PhoneForm({
     setLoading(true);
     e.preventDefault();
     try {
-      const res = await axios.post("/users/otp/", formData);
+      const res = await axiosInstance.post("/users/otp/", formData);
       if (res?.status === 200) {
         SetShowOtpForm(true);
         setShowLoginForm(false);

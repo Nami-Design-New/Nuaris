@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import axios from "../../../../utils/axios";
+import axiosInstance from "../../../../utils/axiosInstance";
 import PriceRow from "./PriceRow";
 import addIcon from "../../../../assets/images/icons/add.svg";
 import SubmitButton from "../../../../ui/form-elements/SubmitButton";
@@ -23,7 +23,7 @@ const Prices = ({ setForm, addon, formData, setFormData, pricesInitial }) => {
       let url = addon?.id
         ? `/addons/${addon?.id}/`
         : `/addons/${createdAddOn}/`;
-      const response = await axios.patch(url, {
+      const response = await axiosInstance.patch(url, {
         ...formData[0],
         price_type: formData[0].price_type.toLocaleLowerCase()
       });

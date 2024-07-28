@@ -1,11 +1,11 @@
-import axios from "../utils/axios";
+import axiosInstance from "../utils/axiosInstance";
 import { useQuery } from "@tanstack/react-query";
 
 export default function useGetEmployees(currentPage = 1) {
   const { data, isLoading, error } = useQuery({
     queryKey: ["employees", currentPage],
     queryFn: async () => {
-      const res = await axios.get("/employees", {
+      const res = await axiosInstance.get("/employees", {
         params: {
           page: currentPage
         }

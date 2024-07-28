@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { toast } from "react-toastify";
-import axios from "../../../utils/axios";
+import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import axiosInstance from "../../../utils/axiosInstance";
 import SubmitButton from "../../../ui/form-elements/SubmitButton";
 import BackButton from "../../../ui/form-elements/BackButton";
 
@@ -11,6 +12,7 @@ export default function EmailForm({
   setFormData
 }) {
   const [loading, setLoading] = useState(false);
+  const role = useSelector((state) => state.authRole.role);
 
   const handleBackButtonClick = (e) => {
     e.preventDefault();
@@ -22,16 +24,19 @@ export default function EmailForm({
     setLoading(true);
     e.preventDefault();
     try {
-      const res = await axios.post("/users/send-otp/", formData);
-      if (res.status === 200) {
+      const res = await axiosInstance.post(
+        "/api/v1/user/generate_email_login_otp",
+        {
+          email: formData.email,
+          role: role
+        }
+      );
+      if (res.status === 200 || res.status === 201) {
         SetShowOtpForm(true);
         setShowLoginForm(false);
-      } else {
-        toast.error("Email address not registered");
       }
     } catch (error) {
-      toast.error("error occurred please try again");
-      throw new Error(error);
+      console.log(error);
     } finally {
       setLoading(false);
     }
@@ -43,11 +48,12 @@ export default function EmailForm({
         type="email"
         name="email"
         id="email"
+        required
         placeholder="EX: mail@mail.com"
         value={formData.email}
-        required
         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
       />
+      <Link to={"/reset-password"}>Forget Password?</Link>
       <div className="buttons">
         <BackButton onClick={handleBackButtonClick} />
         <SubmitButton loading={loading} name="Login" />

@@ -17,6 +17,40 @@ export const YRARS = Array.from(
   (_, i) => currentYear - i
 );
 
+export const EXCEPTION_MESSAGES = {
+  1: {
+    1: "You are already logged in. Please log out before attempting to log in again.",
+    2: "Invalid role specified. Please check your role and try again.",
+    3: "Your session has expired. Please log in again to continue.",
+    4: "Incorrect username or password.",
+    5: "Password too weak. Ensure it is at least 8 characters long and includes a mix of letters, numbers, and symbols.",
+    6: "This role already exists. Please choose a different role.",
+    7: "Passwords do not match. Please re-enter your password.",
+    8: "Too many verification attempts. Please wait a while before trying again.",
+    9: "Signup failed. Please check your details and try again.",
+    10: "Invalid verification code. Please check the code and try again.",
+    11: "Required information is missing. Please fill in all the necessary fields.",
+    12: "Your session has expired. Please log in again to continue.",
+    13: "Account not found. Please check the email address and try again.",
+    14: "Too many reset password attempts. Please wait a while before trying again.",
+    15: "A system error occurred. Please try again later.",
+    16: "Invalid OTP. Please check the OTP and try again."
+  },
+  3: {
+    1: "Cancel policy must be of the same type as the existing policy.",
+    2: "Cancel policy duration must be larger than the current policy duration."
+  },
+  4: {
+    1: "A server error occurred. Please check the server logs for more details.",
+    2: "Invalid parameters provided. Please check your inputs and try again."
+  },
+  5: {
+    1: "Yacht not found. Please check the yacht details and try again.",
+    2: "You do not have ownership rights to this yacht.",
+    3: "Failed to create the addon. Please try again later."
+  }
+};
+
 export const DAYS = [
   "Saturday",
   "Sunday",
@@ -312,13 +346,4 @@ export const COUNTRIES_NAMES = {
   YE: "Yemen",
   ZM: "Zambia",
   ZW: "Zimbabwe"
-};
-
-export const AUTH_EXEPTIONS = {
-  1: "Already logged in",
-  2: "Invalid role",
-  3: "Your session has expired please login",
-  4: "Wrong credentials",
-  5: "Weak password must be at least 8 characters a mix of letters, numbers, and symbols",
-  6: "Role already exists"
 };

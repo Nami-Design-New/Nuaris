@@ -5,7 +5,7 @@ import { Button } from "primereact/button";
 import { Column } from "primereact/column";
 import { toast } from "react-toastify";
 import { useQueryClient } from "@tanstack/react-query";
-import axios from "./../../../utils/axios";
+import axiosInstance from "../../../utils/axiosInstance";
 import PageHeader from "../layout/PageHeader";
 import useGetEmployees from "./../../../hooks/useGetEmployees";
 import TableLoader from "../../../ui/loaders/TableLoader";
@@ -27,7 +27,7 @@ const InviteUser = () => {
     setShowDeleteModal(false);
     setLoading(true);
     try {
-      const res = await axios.delete(`/employees/${row?.id}`);
+      const res = await axiosInstance.delete(`/employees/${row?.id}`);
       if (res.status === 200) {
         toast.success("Employee deleted successfully");
         queryClient.invalidateQueries(["employees"]);

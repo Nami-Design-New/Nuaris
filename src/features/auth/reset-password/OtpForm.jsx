@@ -1,13 +1,11 @@
 import { useState } from "react";
-import { toast } from "react-toastify";
 import Otpcontainer from "../../../ui/Otpcontainer";
 import SubmitButton from "../../../ui/form-elements/SubmitButton";
 
 export default function OtpForm({
   formData,
   setFormData,
-  setResetPasswordStep,
-  otpFromResponse
+  setResetPasswordStep
 }) {
   const [loading, setLoading] = useState(false);
 
@@ -20,12 +18,7 @@ export default function OtpForm({
   const handleSubmit = async (e) => {
     setLoading(true);
     e.preventDefault();
-    if (otpFromResponse === formData.otp) {
-      setResetPasswordStep("s3");
-    } else {
-      toast.error("OTP Incorrect");
-      setLoading(false);
-    }
+    setResetPasswordStep("s3");
   };
 
   return (

@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { toast } from "react-toastify";
-import axios from "../../../utils/axios";
+import { Link } from "react-router-dom";
+import axiosInstance from "../../../utils/axiosInstance";
 import SubmitButton from "../../../ui/form-elements/SubmitButton";
 import BackButton from "../../../ui/form-elements/BackButton";
 
@@ -22,16 +22,13 @@ export default function PhoneForm({
     setLoading(true);
     e.preventDefault();
     try {
-      const res = await axios.post("/users/send-otp/", formData);
+      const res = await axiosInstance.post("/users/send-otp/", formData);
       if (res.status === 200) {
         SetShowOtpForm(true);
         setShowLoginForm(false);
-      } else {
-        toast.error("phone number not registered");
       }
     } catch (error) {
-      toast.error("error occurred please try again");
-      throw new Error(error);
+      console.log(error);
     } finally {
       setLoading(false);
     }
@@ -45,6 +42,7 @@ export default function PhoneForm({
         required
         onChange={(e) => setFormData({ ...formData, mobile: e.target.value })}
       />
+      <Link to={"/reset-password"}>Forget Password?</Link>
       <div className="buttons">
         <BackButton onClick={handleBackButtonClick} />
         <SubmitButton loading={loading} name="Login" />
