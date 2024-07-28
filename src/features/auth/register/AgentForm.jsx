@@ -1,17 +1,13 @@
 import {
-  checkPasswordStrength,
-  fetchCitiesForCountry,
-  filterEmptyKeys,
   handleChange,
   handlePhoneChange,
-  handleSelectCountry
+  handleSelectCountry,
+  fetchCitiesForCountry,
+  checkPasswordStrength,
+  filterEmptyKeys
 } from "../../../utils/helper";
 import { useEffect, useState } from "react";
-import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { setUser } from "../../../redux/slices/authedUser";
-import axiosInstance from "../../../utils/axiosInstance";
+
 import BackButton from "../../../ui/form-elements/BackButton";
 import SubmitButton from "../../../ui/form-elements/SubmitButton";
 import InputField from "../../../ui/form-elements/InputField";
@@ -20,28 +16,19 @@ import PasswordField from "../../../ui/form-elements/PasswordField";
 import SelectField from "../../../ui/form-elements/SelectField";
 import ReactFlagsSelect from "react-flags-select";
 import MediaUploadField from "../../../ui/form-elements/MediaUploadField";
+import { toast } from "react-toastify";
+import { EXCEPTION_MESSAGES } from "../../../utils/contants";
+import axiosInstance from "../../../utils/axiosInstance";
 
-export default function AgentForm({ setFormSelection }) {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
+export default function AgentForm({
+  formData,
+  setFormData,
+  setShowOtpForm,
+  setShowRegisterForm
+}) {
   const [loading, setLoading] = useState(false);
   const [cityList, setCityList] = useState([]);
   const [cityNameList, setCityNameList] = useState(null);
-
-  const [formData, setFormData] = useState({
-    role: "agent",
-    first_name: "",
-    last_name: "",
-    email: "",
-    mobile_number: "",
-    username: "",
-    password: "",
-    commercial_name: "",
-    registration_type: "freelancer",
-    licence_number: "",
-    country: "SA",
-    city: ""
-  });
 
   useEffect(() => {
     fetchCitiesForCountry(formData.country, setCityList, setCityNameList);
@@ -61,9 +48,7 @@ export default function AgentForm({ setFormSelection }) {
     setLoading(true);
     e.preventDefault();
     if (!checkPasswordStrength(formData.password)) {
-      toast.error(
-        "Password is weak! Must contain at least 8 characters, a mix of letters, numbers, and symbols."
-      );
+      toast.error(EXCEPTION_MESSAGES[1][5]);
       setLoading(false);
       return;
     }
@@ -71,37 +56,18 @@ export default function AgentForm({ setFormSelection }) {
       const filteredData = filterEmptyKeys(formData);
       const res = await axiosInstance.post("/api/v1/user/signup", filteredData);
       if (res.status === 200 || res.status === 201) {
-        toast.success("Account created successfully");
-        try {
-          const login = await axiosInstance.post("/api/v1/web_login", {
-            username: formData.username,
-            password: formData.password,
-            role: formData?.role
-          });
-          if (login?.status === 200) {
-            navigate("/dashboard");
-            dispatch(setUser(res.data));
-            axiosInstance.defaults.headers.common[
-              "Authorization"
-            ] = `Bearer ${res.data.access_token}`;
-          }
-        } catch (error) {
-          toast.error("error occurred please try again");
-          throw new Error(error);
-        }
-      } else {
-        toast.error("email already exists");
+        toast.success("Verify your email to continue");
+        setShowOtpForm(true);
       }
     } catch (error) {
-      toast.error("error occurred please try again");
-      throw new Error(error);
+      console.log(error);
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <form className="form_ui" onSubmit={handleSubmit}>
+    <form className="form_ui" onSubmit={(e) => handleSubmit(e)}>
       <div className="row m-0">
         <div className="col-lg-6 col-12 p-2 d-flex flex-column gap-3">
           <InputField
@@ -250,7 +216,7 @@ export default function AgentForm({ setFormSelection }) {
         </div>
         <div className="col-12 p-2 mt-3">
           <div className="buttons">
-            <BackButton onClick={() => setFormSelection("")} />
+            <BackButton onClick={() => setShowRegisterForm(false)} />
             <SubmitButton loading={loading} name="Confirm" />
           </div>
         </div>

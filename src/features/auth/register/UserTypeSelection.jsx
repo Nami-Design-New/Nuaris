@@ -1,7 +1,10 @@
 import { useState } from "react";
 import handWave from "../../../assets/images/icons/waving-hand.svg";
 
-export default function UserTypeSelection({ setFormSelection }) {
+export default function UserTypeSelection({
+  setFormSelection,
+  setShowRegisterForm
+}) {
   const [activeType, setActiveType] = useState("host");
 
   return (
@@ -21,7 +24,13 @@ export default function UserTypeSelection({ setFormSelection }) {
           </button>
         ))}
       </div>
-      <button className="next" onClick={() => setFormSelection(activeType)}>
+      <button
+        className="next"
+        onClick={() => {
+          setFormSelection(activeType);
+          setShowRegisterForm(true);
+        }}
+      >
         Next
       </button>
     </div>

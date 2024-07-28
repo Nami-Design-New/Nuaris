@@ -1,18 +1,15 @@
 import {
-  checkPasswordStrength,
-  fetchCitiesForCountry,
-  filterEmptyKeys,
   handleChange,
   handlePhoneChange,
   handleSelectCity,
-  handleSelectCountry
+  handleSelectCountry,
+  fetchCitiesForCountry,
+  checkPasswordStrength,
+  filterEmptyKeys
 } from "../../../utils/helper";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { setUser } from "../../../redux/slices/authedUser";
-import axiosInstance from "../../../utils/axiosInstance";
+import { EXCEPTION_MESSAGES } from "../../../utils/contants";
 import InputField from "./../../../ui/form-elements/InputField";
 import BackButton from "./../../../ui/form-elements/BackButton";
 import SubmitButton from "../../../ui/form-elements/SubmitButton";
@@ -23,34 +20,19 @@ import MapLocationField from "../../../ui/form-elements/MapLocationField";
 import MapModal from "../../../ui/modals/MapModal";
 import ReactFlagsSelect from "react-flags-select";
 import MediaUploadField from "../../../ui/form-elements/MediaUploadField";
+import axiosInstance from "../../../utils/axiosInstance";
 
-export default function HostForm({ setFormSelection }) {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
+export default function HostForm({
+  setShowRegisterForm,
+  setShowOtpForm,
+  formData,
+  setFormData
+}) {
   const [loading, setLoading] = useState(false);
   const [searchedPlace, setSearchedPlace] = useState("search on map");
   const [showMapModal, setShowMapModal] = useState(false);
   const [cityList, setCityList] = useState([]);
   const [cityNameList, setCityNameList] = useState(null);
-
-  const [formData, setFormData] = useState({
-    role: "host",
-    first_name: "",
-    last_name: "",
-    email: "",
-    mobile_number: "",
-    username: "",
-    password: "",
-    commercial_name: "",
-    registration_type: "company",
-    registration_number: "",
-    licence_number: "",
-    country: "SA",
-    city: "",
-    lat: 24.7136,
-    lng: 46.6753,
-    location_on_map: ""
-  });
 
   useEffect(() => {
     if (searchedPlace !== "search on map") {
@@ -59,7 +41,7 @@ export default function HostForm({ setFormSelection }) {
         location_on_map: searchedPlace
       }));
     }
-  }, [searchedPlace]);
+  }, [searchedPlace, setFormData]);
 
   useEffect(() => {
     fetchCitiesForCountry(formData.country, setCityList, setCityNameList);
@@ -69,9 +51,7 @@ export default function HostForm({ setFormSelection }) {
     setLoading(true);
     e.preventDefault();
     if (!checkPasswordStrength(formData.password)) {
-      toast.error(
-        "Password is weak! Must contain at least 8 characters, a mix of letters, numbers, and symbols."
-      );
+      toast.error(EXCEPTION_MESSAGES[1][5]);
       setLoading(false);
       return;
     }
@@ -79,30 +59,11 @@ export default function HostForm({ setFormSelection }) {
       const filteredData = filterEmptyKeys(formData);
       const res = await axiosInstance.post("/api/v1/user/signup", filteredData);
       if (res.status === 200 || res.status === 201) {
-        toast.success("Account created successfully");
-        try {
-          const login = await axiosInstance.post("/api/v1/web_login", {
-            username: formData.username,
-            password: formData.password,
-            role: formData?.role
-          });
-          if (login?.status === 200) {
-            navigate("/dashboard");
-            dispatch(setUser(res.data));
-            axiosInstance.defaults.headers.common[
-              "Authorization"
-            ] = `Bearer ${res.data.access_token}`;
-          }
-        } catch (error) {
-          toast.error("error occurred please try again");
-          throw new Error(error);
-        }
-      } else {
-        toast.error("email already exists");
+        toast.success("Verify your email to continue");
+        setShowOtpForm(true);
       }
     } catch (error) {
-      toast.error("error occurred please try again");
-      throw new Error(error);
+      console.log(error);
     } finally {
       setLoading(false);
     }
@@ -288,7 +249,7 @@ export default function HostForm({ setFormSelection }) {
         </div>
         <div className="col-12 p-2 mt-3">
           <div className="buttons">
-            <BackButton onClick={() => setFormSelection("")} />
+            <BackButton onClick={() => setShowRegisterForm(false)} />
             <SubmitButton loading={loading} name="Confirm" />
           </div>
         </div>

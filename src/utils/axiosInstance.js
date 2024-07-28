@@ -16,21 +16,11 @@ axiosInstance.interceptors.response.use(
       error.response?.data?.exception_type &&
       error.response?.data?.exception
     ) {
-      console.log(
-        error?.response?.data?.exception_type,
-        error?.response?.data?.exception
-      );
       const message = getExceptionMessage(
         error.response.data.exception_type,
         error.response.data.exception
       );
       toast.error(message);
-    } else if (error.response) {
-      const errorMessage =
-        error.response.data.message || "An error occurred. Please try again.";
-      toast.error(errorMessage);
-    } else {
-      toast.error("Network error. Please check your connection.");
     }
     return Promise.reject(error);
   }

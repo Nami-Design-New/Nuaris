@@ -28,8 +28,7 @@ export default function EmailForm({
         setResetPasswordStep("s2");
       }
     } catch (error) {
-      toast.error("error occurred please try again");
-      throw new Error(error);
+      console.log(error);
     } finally {
       setLoading(false);
     }

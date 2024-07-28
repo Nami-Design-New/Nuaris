@@ -20,12 +20,9 @@ export default function PhoneForm({
       if (res?.status === 200) {
         SetShowOtpForm(true);
         setShowLoginForm(false);
-      } else {
-        toast.error("phone number not registered");
       }
     } catch (error) {
-      toast.error("error occurred please try again");
-      throw new Error(error);
+      console.log(error);
     } finally {
       setLoading(false);
     }

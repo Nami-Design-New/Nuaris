@@ -9,9 +9,7 @@ import {
   handleSelectCountry
 } from "../../../utils/helper";
 import { toast } from "react-toastify";
-import { setUser } from "../../../redux/slices/authedUser";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { EXCEPTION_MESSAGES } from "../../../utils/contants";
 import ReactFlagsSelect from "react-flags-select";
 import BackButton from "../../../ui/form-elements/BackButton";
 import InputField from "../../../ui/form-elements/InputField";
@@ -20,13 +18,16 @@ import PasswordField from "../../../ui/form-elements/PasswordField";
 import PhoneField from "../../../ui/form-elements/PhoneField";
 import SubmitButton from "../../../ui/form-elements/SubmitButton";
 import MapModal from "../../../ui/modals/MapModal";
-import axiosInstance from "../../../utils/axiosInstance";
 import SelectField from "../../../ui/form-elements/SelectField";
 import MediaUploadField from "../../../ui/form-elements/MediaUploadField";
+import axiosInstance from "../../../utils/axiosInstance";
 
-export default function ServiceProviderForm({ setFormSelection }) {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
+export default function ServiceProviderForm({
+  setShowRegisterForm,
+  setShowOtpForm,
+  formData,
+  setFormData
+}) {
   const [loading, setLoading] = useState(false);
   const [searchedPlace, setSearchedPlace] = useState("search on map");
   const [showMapModal, setShowMapModal] = useState(false);
@@ -35,24 +36,6 @@ export default function ServiceProviderForm({ setFormSelection }) {
   const [cityList, setCityList] = useState([]);
   const [cityNameList, setCityNameList] = useState(null);
 
-  const [formData, setFormData] = useState({
-    first_name: "",
-    last_name: "",
-    email: "",
-    mobile_number: "",
-    username: "",
-    password: "",
-    commercial_name: "",
-    registration_number: "",
-    role: "service_provider",
-    lat: 24.7136,
-    lng: 46.6753,
-    location_on_map: "",
-    business_core: "",
-    country: "SA",
-    city: ""
-  });
-
   useEffect(() => {
     if (searchedPlace !== "search on map") {
       setFormData((prev) => ({
@@ -60,7 +43,7 @@ export default function ServiceProviderForm({ setFormSelection }) {
         location_on_map: searchedPlace
       }));
     }
-  }, [searchedPlace]);
+  }, [searchedPlace, setFormData]);
 
   useEffect(() => {
     fetchCitiesForCountry(formData.country, setCityList, setCityNameList);
@@ -96,9 +79,7 @@ export default function ServiceProviderForm({ setFormSelection }) {
     setLoading(true);
     e.preventDefault();
     if (!checkPasswordStrength(formData.password)) {
-      toast.error(
-        "Password is weak! Must contain at least 8 characters, a mix of letters, numbers, and symbols."
-      );
+      toast.error(EXCEPTION_MESSAGES[1][5]);
       setLoading(false);
       return;
     }
@@ -106,30 +87,11 @@ export default function ServiceProviderForm({ setFormSelection }) {
       const filteredData = filterEmptyKeys(formData);
       const res = await axiosInstance.post("/api/v1/user/signup", filteredData);
       if (res.status === 200 || res.status === 201) {
-        toast.success("Account created successfully");
-        try {
-          const login = await axiosInstance.post("/api/v1/web_login", {
-            username: formData.username,
-            password: formData.password,
-            role: formData?.role
-          });
-          if (login?.status === 200) {
-            navigate("/dashboard");
-            dispatch(setUser(res.data));
-            axiosInstance.defaults.headers.common[
-              "Authorization"
-            ] = `Bearer ${res.data.access_token}`;
-          }
-        } catch (error) {
-          toast.error("error occurred please try again");
-          throw new Error(error);
-        }
-      } else {
-        toast.error("email already exists");
+        toast.success("Verify your email to continue");
+        setShowOtpForm(true);
       }
     } catch (error) {
-      toast.error("error occurred please try again");
-      throw new Error(error);
+      console.log(error);
     } finally {
       setLoading(false);
     }
@@ -326,7 +288,7 @@ export default function ServiceProviderForm({ setFormSelection }) {
         </div>
         <div className="col-12 p-2 mt-3">
           <div className="buttons">
-            <BackButton onClick={() => setFormSelection("")} />
+            <BackButton onClick={() => setShowRegisterForm(false)} />
             <SubmitButton loading={loading} name="Confirm" />
           </div>
         </div>
