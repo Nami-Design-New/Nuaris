@@ -351,6 +351,7 @@
       .buttons {
         display: flex;
         gap: 12px;
+        margin-top: 8px;
       }
       .log {
         @include clearInput();

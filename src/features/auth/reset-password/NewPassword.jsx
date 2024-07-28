@@ -3,6 +3,8 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
+import { checkPasswordStrength } from "../../../utils/helper";
+import { EXCEPTION_MESSAGES } from "../../../utils/contants";
 import SubmitButton from "../../../ui/form-elements/SubmitButton";
 
 export default function NewPassword({ formData, setFormData }) {
@@ -12,8 +14,21 @@ export default function NewPassword({ formData, setFormData }) {
   const handleSubmit = async (e) => {
     setLoading(true);
     e.preventDefault();
+    if (!checkPasswordStrength(formData.password)) {
+      toast.error(EXCEPTION_MESSAGES[1][5]);
+      setLoading(false);
+      return;
+    }
+    if (formData.password !== formData.re_password) {
+      toast.error(EXCEPTION_MESSAGES[1][7]);
+      setLoading(false);
+      return;
+    }
     try {
-      const res = await axiosInstance.post("/users/reset_password/", formData);
+      const res = await axiosInstance.post(
+        "/api/v1/user/verify_reset_pass_otp",
+        formData
+      );
       if (res?.status === 200) {
         toast.success("Password Reset Successful");
         navigate("/Login");

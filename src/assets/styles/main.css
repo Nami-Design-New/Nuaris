@@ -1035,6 +1035,7 @@ th:last-child .p-column-header-content {
 .reset_section .reset-container .reset-form .buttons {
   display: flex;
   gap: 12px;
+  margin-top: 8px;
 }
 .reset_section .reset-container .reset-form .log {
   border: none;

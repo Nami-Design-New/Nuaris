@@ -57,13 +57,11 @@ export default function HostForm({
     }
     try {
       const filteredData = filterEmptyKeys(formData);
-      const res = await axiosInstance.post("/api/v1/user/signup", filteredData);
-      if (res.status === 200 || res.status === 201) {
-        toast.success("Verify your email to continue");
-        setShowOtpForm(true);
-      }
+      await axiosInstance.post("/api/v1/user/signup", filteredData);
+      toast.success("Verify your email to continue");
+      setShowOtpForm(true);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     } finally {
       setLoading(false);
     }
