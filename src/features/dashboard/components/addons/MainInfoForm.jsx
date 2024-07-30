@@ -13,10 +13,6 @@ import SelectField from "./../../../../ui/form-elements/SelectField";
 import Vat from "../../../../ui/Vat";
 import MediaUploadField from "./../../../../ui/form-elements/MediaUploadField";
 import useGetYachts from "./../../../../hooks/useGetYachts";
-import {
-  handleFilesListUpload,
-  handleSingleFileUpload
-} from "../../../../utils/mediaHelpers";
 
 export default function MainInfoForm({
   formData,
@@ -84,15 +80,6 @@ export default function MainInfoForm({
                     labelIdle={`${
                       i === 0 ? '<label class="mainImg">Main Image</label>' : ""
                     } <img src=${fav} alt="fav"/>`}
-                    onUpdateFiles={(e) =>
-                      handleFilesListUpload(
-                        e,
-                        "attachment",
-                        setFormData,
-                        loading,
-                        setLoading
-                      )
-                    }
                     files={
                       formData.attachment[i] ? [formData.attachment[i]] : null
                     }
@@ -109,15 +96,6 @@ export default function MainInfoForm({
             pannelRatio=".283"
             accept={["video/*"]}
             allowMultiple={false}
-            onUpdateFiles={(e) =>
-              handleSingleFileUpload(
-                e,
-                "video_link",
-                setFormData,
-                loading,
-                setLoading
-              )
-            }
             files={formData.video_link ? [formData.video_link] : null}
           />
         </div>
