@@ -2,9 +2,9 @@ import { useSearchParams } from "react-router-dom";
 import PaginationNumbers from "./PaginationNumbers";
 
 export default function Pagination({
-  pageSize,
-  className,
   count,
+  pageSize = 10,
+  className,
   param = "page"
 }) {
   const [searchParams, setSearchParams] = useSearchParams();

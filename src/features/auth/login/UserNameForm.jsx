@@ -3,9 +3,9 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
+import { setToken, setUser } from "../../../redux/slices/authedUser";
 import BackButton from "../../../ui/form-elements/BackButton";
 import SubmitButton from "../../../ui/form-elements/SubmitButton";
-import { setToken, setUser } from "../../../redux/slices/authedUser";
 
 export default function UserNameForm({ setShowLoginForm }) {
   const role = useSelector((state) => state.authRole.role);
@@ -14,7 +14,7 @@ export default function UserNameForm({ setShowLoginForm }) {
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     username: "",
-    password: ""
+    password: "",
   });
 
   const handleBackButtonClick = (e) => {
@@ -26,9 +26,9 @@ export default function UserNameForm({ setShowLoginForm }) {
     setLoading(true);
     e.preventDefault();
     try {
-      const res = await axiosInstance.post("/api/v1/web_login", {
+      const res = await axiosInstance.post("/web_login", {
         ...formData,
-        role: role
+        role: role,
       });
       if (res?.status === 200) {
         navigate("/dashboard");

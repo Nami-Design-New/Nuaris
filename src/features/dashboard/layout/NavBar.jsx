@@ -1,19 +1,16 @@
 import { useState } from "react";
-import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
+import { s3Url } from "../../../utils/constants";
 import SettingsMenu from "./SettingsMenu";
 import NotificationMenu from "./NotificationMenu";
-import fav from "../../../assets/images/fav.svg";
-import settingsIcon from "../../../assets/images/icons/settings.svg";
-import notificationIcon from "../../../assets/images/icons/notification.svg";
 import ProfileMenu from "./ProfileMenu";
+import useGetOrganizationInfo from "../../../hooks/user/useGetOrganizationInfo";
 
 export default function NavBar({ manualExpand, setManualExpand }) {
   const [profileDropDown, setProfileDropDown] = useState(false);
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
-  const user = useSelector((state) => state.user?.user);
-  const subUsers = user?.subuser_set;
+  const { data: organization } = useGetOrganizationInfo();
 
   return (
     <nav className="navbar">
@@ -54,7 +51,7 @@ export default function NavBar({ manualExpand, setManualExpand }) {
               onClick={() => setIsSettingsOpen(!isSettingsOpen)}
               to={null}
             >
-              <img src={settingsIcon} alt="setting-icon" />
+              <img src="/images/icons/settings.svg" alt="setting-icon" />
             </NavLink>
             <SettingsMenu
               setIsOpen={setIsSettingsOpen}
@@ -67,7 +64,10 @@ export default function NavBar({ manualExpand, setManualExpand }) {
               onClick={() => setIsNotificationOpen(!isNotificationOpen)}
               to={null}
             >
-              <img src={notificationIcon} alt="notification-icon" />
+              <img
+                src="/images/icons/notification.svg"
+                alt="notification-icon"
+              />
               <span className="number">3</span>
             </NavLink>
             <NotificationMenu
@@ -82,13 +82,14 @@ export default function NavBar({ manualExpand, setManualExpand }) {
               onClick={() => setProfileDropDown(!profileDropDown)}
             >
               <div className="avatar">
-                <img src={user && user.logo ? user.logo : fav} alt="avatar" />
+                <img
+                  src={s3Url + organization?.logo || "/images/fav.svg"}
+                  alt="avatar"
+                />
               </div>
               <div className="name">
                 <h6 className={profileDropDown ? "animate" : ""}>
-                  {user && user.commercial_name
-                    ? user.commercial_name
-                    : "Amwaj Al Bahar"}{" "}
+                  {organization?.commercial_name || "Organization Name"}
                   <i className="fa-regular fa-angle-right" />
                 </h6>
               </div>
@@ -97,8 +98,7 @@ export default function NavBar({ manualExpand, setManualExpand }) {
         </ul>
         <ProfileMenu
           profileDropDown={profileDropDown}
-          user={user}
-          subUsers={subUsers}
+          organization={organization}
           setProfileDropDown={setProfileDropDown}
         />
       </div>

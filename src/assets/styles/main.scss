@@ -1,761 +1,10 @@
 @import "./config";
+@import "./auth";
+@import "./dashboard-layout";
+@import "./form-ui";
+@import "./invoice";
+@import "./pagination";
 
-.auth_section {
-  width: 100%;
-  height: 100dvh;
-  display: flex;
-  .image_wrapper {
-    flex: 1;
-    background-size: cover;
-    transition: $transation;
-    background-position: center left;
-    @media (max-width: 768px) {
-      display: none;
-    }
-  }
-  .form_wrapper {
-    flex: 1;
-    &.register {
-      flex: 2;
-    }
-    .form_container {
-      overflow-y: scroll;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      padding: 3rem 0;
-      gap: 16px;
-      margin: 0 auto;
-      height: 100%;
-      width: calc(100% - 8rem);
-      scrollbar-width: none;
-      @media (max-width: 576px) {
-        padding: 2rem 0;
-      }
-      &::-webkit-scrollbar {
-        display: none;
-      }
-      scrollbar-width: none;
-      @media (max-width: 576px) {
-        width: calc(100% - 2.5rem);
-      }
-      .form-header {
-        width: 100%;
-        display: flex;
-        justify-content: space-between;
-        flex-direction: column;
-        gap: 16px;
-        .logo {
-          display: flex;
-          align-items: end;
-          gap: 12px;
-          img {
-            height: 60px;
-            object-fit: contain;
-          }
-          h1 {
-            color: $main;
-            margin: 0;
-            font-weight: 400;
-            font-size: 36px;
-          }
-          span {
-            height: 50px;
-            width: 2px;
-            background: $main25;
-            display: block;
-            position: relative;
-            &::after {
-              content: "";
-              position: absolute;
-              width: 4px;
-              height: 4px;
-              background: $main25;
-              top: -3px;
-              left: 50%;
-              transform: translateX(-50%);
-              border-radius: 50%;
-            }
-            &::before {
-              content: "";
-              position: absolute;
-              width: 4px;
-              height: 4px;
-              background: $main25;
-              bottom: -3px;
-              left: 50%;
-              transform: translateX(-50%);
-              border-radius: 50%;
-            }
-          }
-        }
-        h6 {
-          color: $dark;
-          a {
-            color: $main;
-          }
-        }
-      }
-      .form {
-        width: 100%;
-        flex: 1 1;
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-end;
-        @media screen and (min-width: 1600px) {
-          justify-content: center;
-        }
-        .head {
-          color: $dark;
-          font-size: 32px;
-          font-weight: 500;
-          margin-bottom: 0;
-          img {
-            height: 40px;
-          }
-        }
-        .sub-head {
-          font-size: 18px;
-          font-weight: 400;
-          color: $gray;
-          margin-bottom: 12px;
-          line-height: 26px;
-          span {
-            color: $main;
-            font-weight: bold;
-          }
-        }
-        .selection-grid {
-          display: flex;
-          flex-wrap: wrap;
-          gap: 12px;
-          margin-top: 24px;
-          .select {
-            height: 70px;
-            min-width: calc(50% - 6px);
-            flex: 1;
-            @include clearInput();
-            background: $inputBG;
-            border-radius: 12px;
-            font-size: 16px;
-            font-weight: 600;
-            color: $dark;
-            transition: $transation;
-            &.active {
-              background: $main;
-              color: $white;
-            }
-          }
-        }
-        .next {
-          @include clearInput();
-          @include centerFlex();
-          width: 100%;
-          height: 60px;
-          background: $main;
-          color: $white;
-          border-radius: 12px;
-          margin-top: 24px;
-        }
-        .tabs {
-          width: 100%;
-          border-bottom: 2px solid $inputStroke;
-          button {
-            @include clearInput();
-            padding: 0 12px;
-            position: relative;
-            font-size: 16px;
-            font-weight: 500;
-            transition: $transation;
-            color: $dark;
-            &::after {
-              content: "";
-              position: absolute;
-              bottom: -2px;
-              width: 0;
-              left: 50%;
-              transform: translateX(-50%);
-              height: 2px;
-              background: $main;
-              transition: $transation;
-            }
-            &.active {
-              color: $main;
-              &::after {
-                width: 100%;
-              }
-            }
-          }
-        }
-        form {
-          padding: 16px 0;
-          display: flex;
-          flex-direction: column;
-          gap: 16px;
-          input {
-            height: 54px;
-            border: 1px solid $inputStroke;
-            background: $inputBG;
-            padding: 12px 16px;
-            border-radius: 8px;
-            outline: none;
-            color: $dark;
-            &::placeholder {
-              color: $inputHint;
-            }
-          }
-          a {
-            color: $main;
-            align-self: flex-end;
-            color: $main;
-          }
-          .resend {
-            @include space-between();
-            h6 {
-              color: $main;
-            }
-          }
-        }
-      }
-    }
-  }
-  .buttons {
-    display: flex;
-    gap: 12px;
-  }
-  .log {
-    @include clearInput();
-    width: 100%;
-    height: 54px;
-    background: $main;
-    color: $white;
-    border-radius: 12px;
-  }
-  .back {
-    @include clearInput();
-    width: 100%;
-    height: 54px;
-    border: 1px solid $dark;
-    color: $dark;
-    border-radius: 12px;
-    width: 70px;
-    font-size: 18px;
-    transition: $transation;
-    &:hover {
-      color: $main;
-      border-color: $main;
-    }
-  }
-}
-.reset_section {
-  padding: 60px;
-  @media (max-width: 576px) {
-    padding: 32px 24px;
-  }
-  @include centerFlex();
-  flex-direction: column;
-  .header {
-    display: flex;
-    width: 100%;
-    .logo {
-      height: 60px;
-      img {
-        height: 60px;
-      }
-    }
-  }
-  .reset-container {
-    display: flex;
-    padding: 80px 0;
-    width: min(100%, 576px);
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    h1 {
-      color: $dark;
-      font-size: 32px;
-      @media (max-width: 576px) {
-        font-size: 28px;
-      }
-    }
-    p {
-      color: $gray;
-      line-height: 28px;
-      text-align: center;
-      font-size: 20px;
-      span {
-        color: $main;
-        font-weight: bold;
-      }
-      @media (max-width: 576px) {
-        font-size: 14px;
-        line-height: 28px;
-      }
-    }
-    .reset-form {
-      padding: 24px 0;
-      width: 100%;
-      .tabs {
-        width: 100%;
-        border-bottom: 2px solid $inputStroke;
-        button {
-          @include clearInput();
-          padding: 0 12px;
-          position: relative;
-          font-size: 16px;
-          font-weight: 500;
-          transition: $transation;
-          color: $dark;
-          &::after {
-            content: "";
-            position: absolute;
-            bottom: -2px;
-            width: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            height: 2px;
-            background: $main;
-            transition: $transation;
-          }
-          &.active {
-            color: $main;
-            &::after {
-              width: 100%;
-            }
-          }
-        }
-      }
-      form {
-        padding: 16px 0;
-        display: flex;
-        flex-direction: column;
-        gap: 16px;
-        input {
-          height: 54px;
-          border: 1px solid $inputStroke;
-          background: $inputBG;
-          padding: 12px 16px;
-          border-radius: 8px;
-          outline: none;
-          color: $dark;
-          &::placeholder {
-            color: $inputHint;
-          }
-        }
-        a {
-          color: $main;
-          align-self: flex-end;
-          color: $main;
-        }
-      }
-      .buttons {
-        display: flex;
-        gap: 12px;
-        margin-top: 8px;
-      }
-      .log {
-        @include clearInput();
-        width: 100%;
-        height: 54px;
-        background: $main;
-        color: $white;
-        border-radius: 12px;
-      }
-      .back {
-        @include clearInput();
-        @include centerFlex();
-        width: 100%;
-        height: 54px;
-        border: 1px solid $dark;
-        color: $dark;
-        border-radius: 12px;
-        width: 70px;
-        font-size: 18px;
-        transition: $transation;
-        &:hover {
-          color: $main;
-          border-color: $main;
-        }
-      }
-      .resend {
-        padding: 12px 0;
-        @include space-between();
-        h6 {
-          color: $main;
-        }
-      }
-    }
-  }
-}
-.form_ui {
-  width: 100%;
-  .input-field {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    .main-elements {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      h6 {
-        line-height: 20px;
-        font-size: 16px;
-        font-weight: 500;
-      }
-    }
-    .pass-group {
-      display: flex;
-      .show-pass {
-        @include centerFlex();
-        cursor: pointer;
-        width: 60px;
-        height: 54px;
-        border: 1px solid $inputStroke;
-        background: $inputBG;
-        border-left: 0;
-        border-radius: 0 12px 12px 0 !important;
-        color: $inputHint;
-      }
-      input {
-        border-right: 0 !important;
-        border-radius: 12px 0 0 12px !important;
-      }
-    }
-    .phone-group {
-      .PhoneInput {
-        display: flex;
-        gap: 12px;
-        .PhoneInputCountryIcon {
-          position: relative;
-        }
-        .PhoneInputCountryIconImg {
-          width: 20px;
-          position: absolute;
-          top: -33px;
-          left: 10px;
-        }
-        select {
-          padding: 12px 6px 12px 36px;
-        }
-      }
-      .phone-code {
-        height: 54px;
-        border-radius: 4px;
-      }
-    }
-    .searchMapGroup {
-      gap: 8px;
-      display: flex;
-      button {
-        min-width: 54px;
-        height: 54px;
-        border-radius: 12px;
-        @include clearInput();
-        background-image: url("../images/icons/mapIcon.svg");
-      }
-      span {
-        width: 100%;
-        height: 54px;
-        overflow: hidden;
-        outline: none;
-        border: 1px solid $inputStroke;
-        border-radius: 12px;
-        color: $inputHint;
-        background: $inputBG;
-        padding: 8px 16px;
-      }
-    }
-    input,
-    select,
-    textarea {
-      width: 100%;
-      height: 54px;
-      display: block;
-      outline: none;
-      border: 1px solid $inputStroke;
-      border-radius: 12px;
-      background: $inputBG;
-      padding: 12px 16px;
-      box-shadow: none !important;
-    }
-    textarea {
-      height: 152px;
-      line-height: 24px;
-    }
-    label {
-      color: $dark;
-      font-weight: 500;
-      span {
-        font-size: 12px;
-        color: $gray;
-      }
-    }
-    select {
-      color: $dark;
-      cursor: pointer;
-      &.disable {
-        pointer-events: none;
-        background: $border;
-        color: $grayLight;
-      }
-    }
-    &.files {
-      .filepond--root .filepond--drop-label {
-        min-height: 100%;
-        label {
-          color: $inputHint;
-          font-size: 14px !important;
-          font-weight: 400 !important;
-          line-height: 18px !important;
-        }
-      }
-    }
-    .checkboxs_inputs {
-      display: flex;
-      width: 100%;
-      height: 54px;
-      border: 1px solid $inputStroke;
-      border-radius: 12px;
-      position: relative;
-      isolation: isolate;
-      overflow: hidden;
-      label {
-        cursor: pointer;
-        flex: 1;
-        @include centerFlex();
-        span {
-          font-size: 16px;
-          font-weight: 400;
-          line-height: 20px;
-          color: $dark;
-          cursor: pointer;
-          transition: $transation;
-        }
-        input {
-          display: none;
-          appearance: none;
-          &:checked + span {
-            color: $white;
-          }
-        }
-      }
-      .bg-active {
-        transition: $transation;
-        position: absolute;
-        content: "";
-        top: 0;
-        transform: translateX(0);
-        height: 100%;
-        width: 50%;
-        z-index: -1;
-        background: $main;
-        border-radius: 12px;
-        &.refuse {
-          transform: translateX(100%);
-        }
-      }
-    }
-    .filepond--root .filepond--drop-label label {
-      color: #e2e2e2 !important;
-      &.mainImg {
-        color: $main !important;
-      }
-    }
-  }
-  .check-field {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    label {
-      color: $dark;
-      font-weight: 500;
-      span {
-        font-size: 14px;
-        color: $gray;
-      }
-    }
-    .inputs {
-      display: flex;
-      gap: 8px;
-      label {
-        flex: 1;
-        height: 54px;
-        border-radius: 12px;
-        position: relative;
-        cursor: pointer;
-        overflow: hidden;
-        input {
-          transition: $transation;
-          background: $main10;
-          cursor: pointer;
-          appearance: none;
-          width: 100%;
-          height: 100%;
-          &:checked {
-            background-color: $main;
-            & + span {
-              color: $white;
-            }
-          }
-        }
-        span {
-          color: $main;
-          @include centerAbsolute();
-          font-size: 16px !important;
-        }
-      }
-    }
-  }
-  .simiLabel {
-    color: $dark;
-  }
-  .check_field {
-    width: 100%;
-    padding: 12px 16px;
-    border: 1px dashed $inputHint;
-    border-radius: 12px;
-    .form-check {
-      width: 100%;
-      @include space-between();
-      flex-direction: row-reverse;
-      padding-left: 0 !important;
-      input {
-        cursor: pointer;
-        box-shadow: none !important;
-      }
-      label {
-        width: 100%;
-        display: block;
-        cursor: pointer;
-      }
-    }
-  }
-  .time-units {
-    display: flex;
-    gap: 8px;
-    .units {
-      width: 160px;
-    }
-  }
-  .addItem {
-    padding: 8px;
-    border-radius: 8px;
-    border: 1px solid $lightGray;
-    cursor: pointer;
-    transition: all 0.3s ease-in-out;
-    position: relative;
-    input {
-      appearance: none;
-      display: none;
-    }
-    label {
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      h6 {
-        margin: 0;
-        color: $text;
-        font-size: 16px;
-        font-weight: 400;
-        line-height: 20px;
-      }
-      i {
-        color: $text;
-        width: 16px;
-        font-size: 14px;
-        font-weight: 600;
-        @include centerFlex();
-      }
-    }
-    &.active {
-      background: $main10;
-      border-color: transparent;
-      label {
-        h6 {
-          color: $main;
-        }
-        i {
-          color: $dark;
-        }
-      }
-    }
-  }
-  .submit_btn {
-    width: 200px;
-    @include clearInput();
-    height: 52px;
-    border: 1px solid $main;
-    color: $white;
-    border-radius: 12px;
-    background-color: $main;
-  }
-}
-.gender_select {
-  display: flex;
-  flex-direction: column;
-  .gender_card {
-    background-color: red;
-    display: flex;
-    gap: 8px;
-    background-color: $white;
-    color: $dark;
-    align-items: center;
-    justify-content: center;
-    border-radius: 12px;
-    border: 1px solid $white;
-    padding: 12px 16px;
-    transition: 0.3s;
-    cursor: pointer;
-    font-weight: 400 !important;
-    font-size: 14px;
-    width: 100%;
-    img {
-      height: 30px;
-      width: 30px;
-    }
-    &:hover {
-      background-color: $main10;
-    }
-    &.active {
-      border: 1px solid $main;
-      background-color: $main10;
-    }
-  }
-  & > div {
-    display: flex;
-    gap: 8px;
-  }
-  input {
-    visibility: hidden;
-  }
-  label {
-    font-weight: 500;
-  }
-}
-.otp-container {
-  display: flex;
-  gap: 8px;
-  .otp-input {
-    flex: 1;
-    width: 100%;
-    height: 80px !important;
-    outline: none;
-    background: $inputBG;
-    border: 1px solid $inputStroke;
-    border-radius: 12px;
-    text-align: center;
-    font-size: 28px;
-    font-weight: 600;
-    color: $main !important;
-    &::-webkit-inner-spin-button {
-      display: none;
-    }
-    @media screen and (max-width: 576px) {
-      height: 60px !important;
-    }
-  }
-}
 .modal-body {
   padding-top: 0;
   .input-field {
@@ -791,1059 +40,10 @@
     width: 100%;
   }
 }
-.mapSearchInput {
-  position: absolute;
-  top: 8px;
-  left: 8px;
-  height: 54px;
-  width: calc(100% - 16px);
-  border: 1px solid $inputStroke;
-  background: $white;
-  padding: 12px 16px;
-  border-radius: 12px;
-  outline: none;
-  color: $dark;
-  &::placeholder {
-    color: $inputHint;
-  }
-}
-.side_bar {
-  width: 80px;
-  background: $white;
-  position: fixed;
-  top: 0;
-  z-index: 99;
-  left: 0;
-  gap: 24px;
-  height: 100%;
-  display: flex;
-  padding: 24px 16px 0 16px;
-  flex-direction: column;
-  transition: $transation;
-  .logo_wrapper {
-    width: 100%;
-    img {
-      object-fit: contain;
-      height: 43px;
-    }
-    .logo-lg {
-      display: none;
-    }
-    .logo-sm {
-      display: inline-block;
-    }
-  }
-  .navigation_menu {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    overflow-y: scroll;
-    scrollbar-width: none;
-    &::-webkit-scrollbar {
-      display: none;
-    }
-    h6 {
-      line-height: 20px;
-      color: $dark;
-      margin-bottom: 0px;
-    }
-    .nav_item {
-      width: 100%;
-      a {
-        border-radius: 16px;
-        padding: 8px;
-        gap: 6px;
-        width: 100%;
-        color: $dark;
-        display: flex;
-        align-items: center;
-        white-space: nowrap;
-        transition: $transation;
-        .icon {
-          min-width: 36px;
-          height: 36px;
-          @include centerFlex();
-          border-radius: 12px;
-          img {
-            height: 20px;
-          }
-        }
-        &:hover,
-        &.active {
-          background: $main10;
-          span {
-            color: $main;
-          }
-        }
-      }
-    }
-    .accordion-item {
-      border: 0 !important;
-      overflow: hidden;
-      .accordion-button {
-        border-radius: 16px;
-        padding: 8px;
-        background: transparent;
-        gap: 6px;
-        width: 100%;
-        color: $dark;
-        display: flex;
-        align-items: center;
-        white-space: nowrap;
-        transition: $transation;
-        .icon {
-          height: 36px;
-          min-width: 36px;
-          @include centerFlex();
-          border-radius: 12px;
-          img {
-            height: 20px;
-          }
-        }
-        &::after {
-          display: flex;
-          justify-content: flex-end;
-        }
-      }
-      .accordion-body {
-        padding: 0 0 0 40px;
-        height: 0;
-        overflow: hidden;
-        .sub_navigation_menu {
-          display: flex;
-          flex-direction: column;
-          gap: 4px;
-          .sub_nav_item {
-            a {
-              display: flex;
-              align-items: center;
-              gap: 8px;
-              padding: 0 10px;
-              border-radius: 8px;
-              white-space: nowrap;
-              span {
-                color: $dark;
-                font-size: 14px;
-              }
-              img {
-                filter: grayscale(1);
-              }
-              &:hover,
-              &.active {
-                background: $main10;
-                img {
-                  filter: grayscale(0);
-                }
-                span {
-                  color: $main;
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-  &.hoverExpand {
-    width: 300px;
-    position: fixed;
-    left: 0;
-    top: 0;
-    z-index: 9999;
-    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-    .logo_wrapper .logo-lg {
-      display: inline-block;
-    }
-    .logo_wrapper .logo-sm {
-      display: none;
-    }
-    @media screen and (max-width: 992px) {
-      z-index: 0;
-      .logo_wrapper {
-        display: none;
-      }
-    }
-    .accordion-item .accordion-body {
-      height: auto;
-    }
-  }
-  &.expand {
-    width: 300px;
-    box-shadow: none;
-    .logo_wrapper .logo-lg {
-      display: inline-block;
-    }
-    .logo_wrapper .logo-sm {
-      display: none;
-    }
-    .accordion-item .accordion-body {
-      height: auto;
-    }
-  }
-  @media (max-width: 992px) {
-    width: 300px;
-    left: -300px;
-    &.expand {
-      left: 0;
-    }
-  }
-}
-.navbar {
-  height: 80px;
-  width: 100%;
-  background: $white;
-  display: flex;
-  position: sticky;
-  top: 0;
-  z-index: 999;
-  .links {
-    flex: 1;
-    ul {
-      display: flex;
-      height: 100%;
-      li {
-        height: 100%;
-        @include centerFlex();
-        padding: 0 12px;
-        height: 48px;
-        a {
-          line-height: 48px;
-          color: $dark;
-          font-weight: 500;
-          transition: 0.2s;
-          white-space: nowrap;
-          &.active {
-            color: $main;
-          }
-          &:hover {
-            color: $main;
-          }
-        }
-        .menuToggler {
-          width: 26px;
-          height: 18px;
-          @include clearInput();
-          display: flex;
-          flex-direction: column;
-          justify-content: space-between;
-          span {
-            transition: $transation;
-            width: 100%;
-            height: 2px;
-            display: block;
-            background-color: $main;
-            background: $main;
-            &:nth-child(1) {
-              width: 60%;
-            }
-            &:nth-child(3) {
-              width: 60%;
-            }
-          }
-          &.expand {
-            span {
-              background: $dark;
-              &:nth-child(1) {
-                width: 100%;
-              }
-              &:nth-child(3) {
-                width: 100%;
-              }
-            }
-          }
-        }
-        @media (max-width: 768px) {
-          display: none;
-          &:first-child {
-            display: flex;
-          }
-        }
-      }
-    }
-  }
-  .settings {
-    flex: 1;
-    position: relative;
-    display: flex;
-    justify-content: end;
-    ul {
-      height: 100%;
-      display: flex;
-      gap: 12px;
-      li {
-        position: relative;
-        @include centerFlex();
-        a {
-          background: $inputStroke;
-          @include centerFlex();
-          width: 48px;
-          height: 48px;
-          border-radius: 50%;
-          img {
-            height: 20px;
-          }
-          @media (max-width: 768px) {
-            width: 42px;
-            height: 42px;
-            img {
-              height: 16px;
-            }
-          }
-        }
-        &.notification {
-          position: relative;
-          a {
-            background: $main10;
-          }
-        }
-        .number {
-          top: 4px;
-          right: 5px;
-          position: absolute;
-          width: 20px;
-          height: 20px;
-          background: #006980;
-          color: #fff;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          font-size: 12px;
-          border-radius: 50%;
-        }
-        .dropdownButton {
-          height: 48px;
-          border: 1px solid $inputStroke;
-          background: $white;
-          border-radius: 24px;
-          display: flex;
-          cursor: pointer;
-          @media (max-width: 768px) {
-            border: none;
-            margin-right: 12px;
-          }
-          .avatar {
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            border: 1px solid $inputStroke;
-            overflow: hidden;
-            border-left: 0;
-            img {
-              width: 100%;
-              height: 100%;
-              object-fit: cover;
-            }
-          }
-          .name {
-            @include centerFlex();
-            padding: 0 18px 0 12px;
-            @media (max-width: 768px) {
-              display: none;
-            }
-            h6 {
-              color: $dark;
-              margin: 0;
-              display: flex;
-              gap: 4px;
-              i {
-                transform: translateY(2px);
-                transition: $transation;
-              }
-              &.animate {
-                i {
-                  transform: translateY(2px) rotate(90deg);
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-    .profile_dropdown {
-      position: absolute;
-      box-shadow: 0px 2px 15px -3px #00000012;
-      top: 100%;
-      z-index: 9;
-      width: 320px;
-      border-radius: 24px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      background: $white;
-      height: 0;
-      overflow: hidden;
-      padding: 16px;
-      height: fit-content;
-      top: 58px;
-      @media (max-width: 768px) {
-        right: 8px;
-      }
-      .account_owner {
-        gap: 12px;
-        @include centerFlex();
-        flex-direction: column;
-        position: relative;
-        .avatar {
-          overflow: hidden;
-          width: 80px;
-          height: 80px;
-          border-radius: 50%;
-          border: 1px solid $inputStroke;
-          .edit {
-            width: 25px;
-            height: 25px;
-            border-radius: 12px;
-            border: 1px solid $inputStroke;
-            @include centerFlex();
-            position: absolute;
-            background: $white;
-            right: 102px;
-            bottom: 56px;
-            img {
-              height: 12px !important;
-              object-fit: contain;
-            }
-          }
-          img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-          }
-        }
-      }
-      .account_welcoming {
-        width: 100%;
-        h6 {
-          color: $dark;
-          margin: 0;
-          text-align: center;
-        }
-        span {
-          color: $gray;
-          width: 100%;
-          display: block;
-          text-align: center;
-          line-height: 24px;
-        }
-      }
-      .manage_invite {
-        display: flex;
-        flex-direction: column;
-        gap: 4px;
-        .link {
-          display: flex;
-          align-items: center;
-          padding: 0 8px;
-          gap: 8px;
-          a,
-          h6 {
-            font-weight: 600;
-            font-size: 14px;
-            color: $dark;
-            cursor: pointer;
-          }
-          img {
-            height: 20px;
-          }
-        }
-      }
-      .select_frame {
-        background: $main10;
-        padding: 8px;
-        border-radius: 16px;
-        display: flex;
-        gap: 8px;
-        flex-direction: column;
-        .accounts {
-          padding: 12px;
-          border-radius: 12px;
-          padding: 12px;
-          background: $white;
-          display: flex;
-          flex-direction: column;
-          gap: 8px;
-          .acc {
-            display: flex;
-            gap: 12px;
-            .avatar {
-              width: 52px;
-              height: 52px;
-              border-radius: 50%;
-              border-radius: 50%;
-              border: 1px solid $inputStroke;
-              overflow: hidden;
-              img {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-                object-position: center;
-              }
-            }
-            .type_mail {
-              display: flex;
-              justify-content: center;
-              flex-direction: column;
-              h6 {
-                color: $dark;
-                font-size: 16px;
-                margin: 0;
-                font-weight: 600;
-              }
-              span {
-                color: $gray;
-                line-height: 24px;
-              }
-            }
-          }
-        }
-      }
-    }
 
-    .modals {
-      position: absolute;
-      box-shadow: 0px 2px 15px -3px #00000012;
-      top: 100%;
-      z-index: 9;
-      border-radius: 24px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      right: 0;
-      background: $white;
-      overflow: hidden;
-      padding: 16px;
-      transform-origin: top;
-      top: 58px;
-      .header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        font-weight: 500;
-        font-size: 16px;
-        color: $dark;
-        p {
-          margin: 0;
-          line-height: 20px;
-        }
-        a {
-          font-size: 14px;
-          font-weight: 400;
-          line-height: 18px;
-          color: $main;
-          border: none;
-          background: none !important;
-          height: unset !important;
-        }
-      }
-      .body {
-        display: flex;
-        flex-direction: column;
-        gap: 4px;
-      }
-    }
-    .settings-gear {
-      position: relative;
-    }
-    .settings-modal {
-      width: 250px;
-    }
-    .notification-modal {
-      width: 320px;
-      .body {
-        max-height: calc(70px * 4);
-        overflow: scroll;
-        scrollbar-width: none;
-        &::-webkit-scrollbar {
-          display: none;
-        }
-      }
-      .notification-card {
-        display: flex;
-        align-items: start;
-        gap: 8px;
-        padding: 8px 4px;
-        transition: background-color 0.3s;
-        cursor: pointer;
-        &:hover {
-          p {
-            color: $dark !important;
-          }
-        }
-        .image {
-          width: 36px;
-          height: 36px;
-          border-radius: 50%;
-          overflow: hidden;
-          flex-shrink: 0;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-          }
-        }
-        .content {
-          display: flex;
-          flex-direction: column;
-          gap: 4px;
-          h3 {
-            font-weight: 400;
-            font-size: 14px;
-            line-height: 18px;
-            color: $dark;
-            margin: 0;
-          }
-          p {
-            font-weight: 400;
-            font-size: 12px;
-            line-height: 15px;
-            color: $text;
-            margin: 0;
-            transition: color 0.3s;
-          }
-        }
-      }
-    }
-    .radio {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding-left: 8px;
-      cursor: pointer;
-      label {
-        cursor: pointer;
-        line-height: 18px;
-      }
-      .check {
-        line-height: 18px;
-        padding: 8px;
-        padding-left: 18px;
-        position: relative;
-      }
-      .check::before {
-        content: "";
-        position: absolute;
-        left: 0;
-        top: 50%;
-        transform: translateY(-50%);
-        height: 11px;
-        width: 11px;
-        border: 1px solid $gray;
-        border-radius: 50%;
-        transition: 0.3s;
-      }
-      input:checked + label .check::before {
-        background-color: $main;
-        border-color: $main;
-      }
-      input {
-        display: none;
-        width: 16px;
-        height: 16px;
-      }
-    }
-  }
-}
-footer {
-  height: 100px;
-  background: $white;
-  display: flex;
-  align-items: center;
-  @media (max-width: 576px) {
-    height: auto;
-    padding: 24px 8px;
-  }
-  .inner_footer {
-    height: 52px;
-    background: $inputBG;
-    border-radius: 40px;
-    padding: 16px 24px;
-    width: 100%;
-    @include space-between();
-    h6 {
-      margin: 0;
-      color: $dark;
-      a {
-        color: $main;
-      }
-    }
-    @media (max-width: 576px) {
-      height: auto;
-      flex-direction: column-reverse;
-    }
-  }
-  .links {
-    display: flex;
-    gap: 12px;
-    a {
-      color: $dark;
-      transition: $transation;
-      &:hover {
-        color: $main;
-      }
-    }
-  }
-}
-.main_wrap {
-  transition: $transation;
-  padding-right: 16px;
-  width: calc(100% - 80px);
-  margin-left: 80px;
-  height: 100%;
-  &.expand {
-    width: calc(100% - 300px);
-    margin-left: 300px;
-  }
-  @media (max-width: 768px) {
-    padding-right: 0;
-  }
-  @media (max-width: 991px) {
-    width: 100%;
-    margin-left: 0;
-    &.expand {
-      width: 100%;
-      margin-left: 0;
-    }
-  }
-  .router_wrapper {
-    min-height: calc(100vh - 180px);
-    background: $dashboardBg;
-    border-radius: 24px;
-    padding: 32px 24px;
-    display: flex;
-    flex-direction: column;
-    .page_header {
-      h1 {
-        color: $JumbotronHead;
-        font-size: 32px;
-        font-weight: 500;
-        margin: 0;
-      }
-      h5 {
-        font-size: 16px;
-        color: $JumbotronHead;
-        a {
-          color: $main;
-        }
-        small {
-          font-size: 12px;
-        }
-      }
-    }
-    .inner_card {
-      background: $white;
-      padding: 24px;
-      background: $white;
-      border-radius: 24px;
-      gap: 24px;
-      display: flex;
-      flex-direction: column;
-      @media screen and (max-width: 576px) {
-        padding: 24px 8px;
-      }
-      .card_header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        @media (max-width: 576px) {
-          flex-direction: column;
-          align-items: flex-start;
-          gap: 16px;
-        }
-        h3 {
-          color: $dark;
-          font-size: 20px;
-          margin: 0;
-        }
-        .buttons {
-          display: flex;
-          gap: 12px;
-        }
-      }
-    }
-    .comming_soon {
-      width: 100%;
-      height: 100%;
-      @include centerFlex();
-      flex-direction: column;
-      margin: auto;
-      gap: 24px;
-      img {
-        height: 240px;
-      }
-      h1 {
-        font-size: 28px;
-        color: $main;
-        margin: 0;
-      }
-    }
-    .route_path {
-      font-weight: 500;
-      display: flex;
-      gap: 8px;
-      a {
-        font-size: 16px;
-        color: $main;
-      }
-      a.disabled {
-        color: $JumbotronHead;
-        cursor: default;
-      }
-      span {
-        font-weight: 400;
-      }
-      small {
-        font-size: 12px;
-      }
-    }
-    .section-main-content {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-    .flex-header {
-      display: flex;
-      width: 100%;
-      align-items: flex-end;
-      justify-content: space-between;
-      padding: 0 8px;
-      .utility-buttons {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        a,
-        button {
-          color: $dark;
-          display: flex;
-          align-items: center;
-          font-size: 16px;
-          font-weight: 500;
-          gap: 10px;
-          padding: 12px;
-          img {
-            height: 20px;
-          }
-        }
-        @media screen and (max-width: 576px) {
-          gap: 0;
-          padding: 8px;
-          a,
-          button {
-            font-size: 16px;
-            gap: 4px;
-            img {
-              height: 18px;
-            }
-          }
-        }
-      }
-    }
-    .bg_white_card {
-      padding: 16px;
-      background: $white;
-      border-radius: 24px;
-      @media screen and (max-width: 576px) {
-        padding: 16px 8px;
-      }
-      .form_ui {
-        .form_title {
-          font-weight: 500;
-          color: $inputHint;
-          font-size: 16px;
-        }
-        .member_card {
-          display: flex;
-          flex-direction: column;
-          gap: 16px;
-          padding: 16px;
-          background: $inputBG;
-          border-radius: 12px;
-          .card_header {
-            font-size: 14px;
-            font-weight: 500;
-            line-height: 15px;
-            color: $main;
-            margin: 0;
-          }
-          .card_row {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            div {
-              width: 100%;
-            }
-          }
-          input,
-          .flag-select button {
-            background-color: $white !important;
-          }
-          label {
-            font-weight: 500;
-          }
-        }
-        &.timesRow {
-          display: flex;
-          flex-direction: column;
-          gap: 8px;
-        }
-      }
-      .form_title {
-        font-weight: 500;
-        color: $inputHint;
-        font-size: 16px;
-      }
-      .request_photo_session {
-        padding: 24px;
-        border-radius: 16px;
-        background: $main10;
-        display: flex;
-        align-items: center;
-        @media (max-width: 768px) {
-          flex-direction: column-reverse;
-          align-items: flex-start;
-        }
-        gap: 32px;
-        .bread_crumb {
-          flex: 1;
-          @include centerFlex();
-        }
-        .content {
-          flex: 3;
-          h5 {
-            font-size: 24px;
-            font-weight: 500;
-            line-height: 29px;
-          }
-          p {
-            margin-bottom: 8px;
-            line-height: 24px;
-            color: $text;
-          }
-          button {
-            height: 44px;
-            color: $main;
-            padding: 0 24px;
-            border-radius: 12px;
-            border: 1px solid $main;
-          }
-        }
-      }
-      .photos {
-        display: flex;
-        gap: 8px;
-        @media (max-width: 768px) {
-          flex-wrap: wrap;
-          .files {
-            width: calc(50% - 4px);
-          }
-        }
-      }
-      .time_row {
-        display: flex;
-        gap: 8px;
-        button {
-          min-width: 48px;
-          @include centerFlex();
-          img {
-            height: 18px;
-          }
-        }
-      }
-      .uponRequest {
-        width: 100%;
-        background: $main10;
-        padding: 12px 24px;
-        border-radius: 60px;
-        border: 1px solid $main25;
-        .form-switch {
-          padding: 0;
-          display: flex;
-          flex-direction: row-reverse;
-          justify-content: space-between;
-          align-items: center;
-          label {
-            color: $main;
-            font-size: 16px;
-            font-weight: 700;
-          }
-          input {
-            box-shadow: none !important;
-            width: 48px;
-            height: 24px;
-            cursor: pointer;
-          }
-        }
-      }
-      .addSeason {
-        h6 {
-          color: $dark;
-          font-size: 16px;
-          font-weight: 700;
-        }
-      }
-      .topography {
-        font-size: 14px;
-        font-weight: 400;
-        line-height: 18px;
-        color: $main;
-      }
-      .vat_container {
-        padding: 16px;
-        border-radius: 12px;
-        gap: 16px;
-        display: flex;
-        flex-direction: column;
-        background: $inputBG;
-        .country_field {
-          @include space-between();
-          padding: 12px 16px;
-          border-radius: 12px;
-          background: $white;
-          border: 1px solid $inputStroke;
-          .country {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            h6 {
-              margin: 0;
-              color: $dark;
-            }
-          }
-          .form-switch {
-            display: flex;
-            align-items: center;
-            flex-direction: row-reverse;
-            padding: 0;
-            gap: 12px;
-            width: 80px;
-            label {
-              color: $dark;
-              font-weight: 600;
-            }
-            input {
-              box-shadow: none !important;
-              margin: 0;
-              float: none;
-              width: 40px;
-              cursor: pointer;
-              height: 20px;
-            }
-          }
-        }
-      }
-    }
-    @media (max-width: 768px) {
-      margin: 0 8px;
-      padding: 32px 8px;
-    }
-  }
-}
 .button {
   @include clearInput();
-  padding: 8px 16px;
+  padding: 4px 26px;
   font-size: 14px;
   font-weight: 500;
   color: $white;
@@ -1880,49 +80,7 @@ footer {
     line-height: 24px;
   }
 }
-.fleet_side_bar {
-  width: 100%;
-  border-radius: 24px;
-  background: $white;
-  gap: 24px;
-  display: flex;
-  padding: 24px 16px;
-  flex-direction: column;
-  transition: $transation;
-  .navigation_menu {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    overflow-y: scroll;
-    scrollbar-width: none;
-    &::-webkit-scrollbar {
-      display: none;
-    }
-    .nav_item {
-      width: 100%;
-      a {
-        border-radius: 8px;
-        padding: 10px 13px;
-        display: flex;
-        align-items: center;
-        width: 100%;
-        gap: 14px;
-        color: $dark;
-        white-space: nowrap;
-        transition: $transation;
-        img {
-          max-width: 22px;
-        }
-        &.active,
-        &:hover {
-          background: $main10;
-          color: $main;
-        }
-      }
-    }
-  }
-}
+
 .vessel_status {
   .checkboxs_inputs {
     label input:checked + span {
@@ -1932,104 +90,19 @@ footer {
       transform: translateX(0);
       width: calc(100% / 3) !important;
       background: $second !important;
-      &.active {
+      &.Active {
         transform: translateX(0%) !important;
       }
-      &.inactive {
+      &.Inactive {
         transform: translateX(100%) !important;
       }
-      &.hidden {
+      &.Hidden {
         transform: translateX(200%) !important;
       }
     }
   }
 }
-.inner_form_wrapper {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  .wizard_tabs {
-    @include space-between();
-    position: relative;
-    padding: 16px 24px;
-    background: $white;
-    border-radius: 24px;
-    scrollbar-width: none;
-    @media screen and (max-width: 576px) {
-      padding: 16px 8px;
-    }
-    &::after {
-      content: "";
-      width: calc(100% - 48px);
-      height: 1px;
-      background: $inputHint;
-      left: 24px;
-      position: absolute;
-      top: 52%;
-      transform: translateY(-50%);
-    }
-    @media (max-width: 768px) {
-      overflow-x: scroll;
-      &::-webkit-scrollbar {
-        display: none;
-      }
-    }
-    .wizard_tab {
-      display: flex;
-      gap: 8px;
-      white-space: nowrap;
-      align-items: center;
-      background: $white !important;
-      z-index: 3;
-      padding: 8px;
-      cursor: pointer;
-      .step_no {
-        transition: $transation;
-        font-weight: 500;
-        color: $dark;
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        @include centerFlex();
-        border: 1px solid $dark;
-      }
-      h6 {
-        margin: 0;
-        font-weight: 500;
-        transition: $transation;
-      }
-      &.active,
-      &:hover {
-        .step_no {
-          border-color: $main;
-          background: $main10;
-          color: $main;
-        }
-        h6 {
-          color: $main;
-        }
-      }
-    }
-  }
-  .elements {
-    display: flex;
-    gap: 16px;
-    flex-wrap: wrap;
-  }
-  .form_ui {
-    &.specifications {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-      .save_btn {
-        margin-top: 16px;
-      }
-    }
-  }
-  .parent_yacht_label {
-    @include space-between();
-  }
-}
+
 .empty_wrap {
   @include centerFlex();
   flex-direction: column;
@@ -2042,6 +115,17 @@ footer {
     color: $main;
   }
 }
+
+.coming-soon {
+  color: $lightGray;
+  text-transform: uppercase;
+  line-height: 52px;
+  width: 100%;
+  text-align: center;
+  font-weight: 700;
+  font-size: 41px;
+}
+
 .policy_form {
   .header {
     display: flex;
@@ -2053,6 +137,7 @@ footer {
     }
   }
 }
+
 .policy_cancel {
   display: flex;
   align-items: flex-end;
@@ -2085,6 +170,7 @@ footer {
     @include centerFlex();
   }
 }
+
 .fleet-card {
   position: relative;
   background-color: $white;
@@ -2158,6 +244,7 @@ footer {
     }
   }
 }
+
 .map-card {
   padding: 4px;
   border-radius: 12px;
@@ -2192,6 +279,10 @@ footer {
         color: $dark;
         line-height: 18px;
         margin: 0;
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
       }
     }
   }
@@ -2203,6 +294,7 @@ footer {
     overflow: hidden;
   }
 }
+
 .fleet-media-swiper {
   position: relative;
   border-radius: 12px;
@@ -2232,6 +324,7 @@ footer {
     height: 100%;
   }
 }
+
 .addOnModal {
   display: flex;
   flex-direction: column;
@@ -2348,6 +441,41 @@ footer {
   }
 }
 
+.price_period_row {
+  padding: 8px;
+  border-radius: 12px;
+  background: $inputBG;
+  .title {
+    @include space-between();
+    h6 {
+      color: $inputHint;
+      font-size: 16px;
+      font-weight: 500;
+      margin-bottom: 0;
+    }
+    button {
+      img {
+        height: 20px;
+      }
+    }
+  }
+  input,
+  select {
+    background: $white !important;
+  }
+  .MuiFormControl-root {
+    background: $white !important;
+    width: 100%;
+  }
+}
+
+.what_included {
+  padding: 16px;
+  border-radius: 12px;
+  background: $inputBG;
+  width: 100%;
+}
+
 .confirmation_modal {
   p {
     margin-top: 16px;
@@ -2386,12 +514,11 @@ footer {
     }
   }
 }
-// ******************************** //
 
 .stars_rate {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 16px;
   .stars {
     display: flex;
     align-items: center;
@@ -2409,6 +536,7 @@ footer {
     }
   }
 }
+
 .fleet-part {
   background-color: $white;
   padding: 24px;
@@ -2589,15 +717,7 @@ footer {
     }
   }
 }
-.coming-soon {
-  color: $lightGray;
-  text-transform: uppercase;
-  line-height: 52px;
-  width: 100%;
-  text-align: center;
-  font-weight: 700;
-  font-size: 41px;
-}
+
 .rate_modal {
   position: fixed;
   width: 100%;
@@ -2636,6 +756,7 @@ footer {
     padding: 12px 16px;
   }
 }
+
 .stars_rate_modal {
   border-radius: 20px;
   padding: 8px 12px;
@@ -2648,6 +769,7 @@ footer {
     height: 16px !important;
   }
 }
+
 .rate_card {
   padding: 12px;
   gap: 16px;
@@ -2684,6 +806,7 @@ footer {
     font-weight: 400;
   }
 }
+
 .rate_cards {
   display: flex;
   flex-direction: column;
@@ -2696,6 +819,7 @@ footer {
     display: none;
   }
 }
+
 .checkbox-row {
   display: flex;
   align-items: center;
@@ -2769,12 +893,12 @@ footer {
     color: $dark;
     cursor: pointer;
   }
-  /* Style the custom checkbox when checked */
   .checkbox-input:checked + label::before {
     border-color: $main;
     background-color: $main;
   }
 }
+
 .season_calender_card,
 .price_card {
   position: relative;
@@ -2804,12 +928,39 @@ footer {
     padding-top: 50px;
   }
 }
+
+.season_calender_card {
+  background: $second5;
+}
+
+.price_card_season {
+  background: $white;
+  border-radius: 12px;
+  padding: 16px;
+  position: relative;
+  input,
+  select {
+    background: $inputBG !important;
+  }
+  .delete_btn {
+    position: absolute;
+    top: 8px;
+    padding: 0 !important;
+    right: 16px;
+    width: 32px;
+    img {
+      height: 20px;
+    }
+  }
+}
+
 .actions_cell_addons {
   width: max-content;
   display: flex;
   align-items: center;
   gap: 12px;
 }
+
 .addon_button {
   padding: 12px 20px;
   border-radius: 8px;
@@ -2817,28 +968,21 @@ footer {
   font-size: 14px;
   line-height: 18px;
   min-width: 110px;
-  background: $dark;
   &.active {
-    background-color: transparent;
-    color: $dark;
-    border-color: $dark;
-    &:hover {
-      background-color: transparent !important;
-    }
-  }
-  &:hover {
-    background-color: $dark !important;
+    background-color: $dark;
+    color: $white;
   }
 }
-// add on modal
 
 .table-container {
   .addon {
     height: 60px;
     border-radius: 8px;
-    object-fit: contain;
+    object-fit: cover;
+    aspect-ratio: 3 / 2;
   }
 }
+
 .price_template {
   display: flex;
   align-items: center;
@@ -2850,134 +994,31 @@ footer {
     font-size: 18px;
   }
 }
+
 .form-switch {
   input {
     box-shadow: none !important;
   }
 }
-.pagination_component {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  user-select: none;
-  justify-content: center;
-  img {
-    opacity: 50%;
-    transition: opacity 0.2s;
-  }
-  button:hover {
-    img {
-      opacity: 100%;
-    }
-  }
-  button.disabled:hover {
-    img {
-      opacity: 50%;
-    }
-    cursor: default;
-  }
-  .reverse {
-    img {
-      transform: rotate(180deg);
-    }
-  }
-  p {
-    margin: 0;
-    display: flex;
-    align-items: center;
-    gap: 0.3rem;
-    span {
-      color: $dark;
-      font-weight: 600;
-    }
-  }
-}
-.numbers {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  justify-content: center;
-  button {
-    border-radius: 50%;
-    width: 42px;
-    height: 42px;
-    font-size: 15px;
-    color: $dark;
-    font-weight: 500;
-    transition: 0.2s;
-    &:hover {
-      background: $inputBG;
-    }
-    &.active {
-      background: $main10;
-    }
-  }
-}
-.paginator_btns {
-  display: flex;
-  align-items: center;
-  button {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    @include centerFlex();
-    cursor: pointer;
-    i {
-      color: $gray;
-      font-size: 18px;
-    }
-    &.disabled {
-      opacity: 50%;
-      pointer-events: none;
-    }
-    &:hover i {
-      color: $dark;
-    }
-  }
-}
+
 .tableLoader {
-  min-height: 548px;
+  min-height: calc(100vh - 80px);
   @include centerFlex();
   flex-direction: column;
   .loader--style8 {
-    width: 80px;
-    height: 80px;
+    width: 40px;
+    height: 40px;
   }
   svg path,
   svg rect {
-    fill: $main;
+    stroke: $main;
   }
 }
-.pagination_template {
-  width: 100%;
-  @include space-between();
-  margin-top: 32px;
-  gap: 0.5rem;
-  .pagination_btns {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    .paginator_btn {
-      width: 32px;
-      height: 32px;
-      background: $main;
-      border-radius: 50%;
-      @include centerFlex();
-      cursor: pointer;
-      i {
-        color: $white;
-        font-size: 16px;
-      }
-      &.disabled {
-        opacity: 50%;
-        pointer-events: none;
-      }
-    }
-  }
-}
+
 .table-container {
   white-space: nowrap !important;
 }
+
 .price_trash_icon {
   position: absolute;
   top: 15px;
@@ -2989,6 +1030,7 @@ footer {
     height: 100%;
   }
 }
+
 .addons_wrap {
   width: 100%;
   padding: 16px;
@@ -3000,6 +1042,7 @@ footer {
     font-weight: 700;
   }
 }
+
 .select_addon_row {
   display: flex;
   gap: 8px;
@@ -3024,167 +1067,7 @@ footer {
     }
   }
 }
-.price_period_row {
-  padding: 8px;
-  border-radius: 12px;
-  background: $inputBG;
-  .title {
-    @include space-between();
-    h6 {
-      color: $inputHint;
-      font-size: 16px;
-      font-weight: 500;
-      margin-bottom: 0;
-    }
-    button {
-      img {
-        height: 20px;
-      }
-    }
-  }
-  input,
-  select {
-    background: $white !important;
-  }
-}
-.what_included {
-  padding: 16px;
-  border-radius: 12px;
-  background: $inputBG;
-  width: 100%;
-}
-// manage account
-.manage_account_side_bar {
-  width: 100%;
-  border-radius: 24px;
-  background: $white;
-  position: sticky;
-  top: 100px;
-  gap: 24px;
-  display: flex;
-  padding: 24px 16px;
-  flex-direction: column;
-  transition: $transation;
-  .navigation_menu {
-    width: 100%;
-    display: flex;
-    gap: 8px;
-    flex-direction: column;
-    .nav_item {
-      width: 100%;
-      a {
-        border-radius: 16px;
-        padding: 8px;
-        gap: 14px;
-        width: 100%;
-        color: $dark;
-        display: flex;
-        align-items: center;
-        white-space: nowrap;
-        transition: $transation;
-        .icon {
-          height: 36px;
-          width: 36px;
-          @include centerFlex();
-          border-radius: 12px;
-          img {
-            height: 20px;
-          }
-        }
-        &.active,
-        &:hover {
-          background: $inputBG;
-        }
-      }
-    }
-    .accordion-item {
-      border: 0 !important;
-    }
-    .accordion-button {
-      border-radius: 16px;
-      padding: 8px;
-      background: transparent;
-      gap: 14px;
-      width: 100%;
-      color: $dark;
-      display: flex;
-      align-items: center;
-      white-space: nowrap;
-      transition: $transation;
-      .icon {
-        height: 36px;
-        width: 36px;
-        @include centerFlex();
-        border-radius: 12px;
-        img {
-          height: 20px;
-        }
-      }
-      h6 {
-        line-height: 20px;
-        color: $dark;
-        margin-bottom: 0px;
-      }
-      span {
-        font-size: 12px;
-        color: $gray;
-        line-height: 14px;
-      }
-    }
-    .accordion-body {
-      padding: 8px 0 0 24px;
-    }
-    .sub_navigation_menu {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-      .sub_nav_item {
-        a {
-          display: flex;
-          align-items: center;
-          gap: 8px;
-          padding: 0 10px;
-          border-radius: 8px;
-          span {
-            color: $dark;
-            font-size: 14px;
-          }
-          img {
-            filter: brightness(0);
-          }
-          &.active {
-            background: $main10;
-            img {
-              filter: brightness(1);
-            }
-          }
-        }
-      }
-    }
-  }
-}
-.routes_wrapper {
-  width: 100%;
-  .profile_info_wrapper {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    .input-field {
-      &.files {
-        .filepond--root .filepond--drop-label {
-          min-height: 100% !important;
-          label {
-            color: #e2e2e2 !important;
-            font-family: "Outfit", sans-serif !important;
-            font-weight: 900 !important;
-            font-size: 40px !important;
-          }
-        }
-      }
-    }
-  }
-}
+
 .language_select_grid {
   display: flex;
   align-items: center;
@@ -3205,13 +1088,13 @@ footer {
       padding: 4px 24px;
       border: 1px solid $lightGray;
       border-radius: 8px;
-      transition: $transation;
+      transition: $transition;
       span {
         font-size: 16px;
         font-weight: 400;
         line-height: 20px;
         color: $dark;
-        transition: $transation;
+        transition: $transition;
       }
     }
   }
@@ -3226,15 +1109,17 @@ footer {
   font-weight: 400;
   line-height: 20px;
 }
+
 .vat_row {
   padding: 16px 8px;
   background: $inputBG;
   border-radius: 12px;
-  .ReactFlagsSelect-module_selectBtn__19wW7,
-  .input-field input {
+  .input-field input,
+  .input-field select {
     background: $white !important;
   }
 }
+
 .form_check_label {
   @include space-between();
   button {
@@ -3243,24 +1128,7 @@ footer {
     }
   }
 }
-.invoice_design_wrapper .form_ui {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  .buttons {
-    display: flex;
-    gap: 10px;
-    .preview_modal {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 0 32px;
-      border: 1px solid $dark;
-      border-radius: 12px;
-      white-space: nowrap;
-    }
-  }
-}
+
 .select_grid {
   display: grid;
   gap: 8px;
@@ -3290,6 +1158,7 @@ footer {
     }
   }
 }
+
 .switches_grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -3318,6 +1187,7 @@ footer {
     }
   }
 }
+
 .previewmodal {
   overflow-x: scroll;
   scrollbar-width: none;
@@ -3325,312 +1195,13 @@ footer {
     height: 2px;
   }
 }
-.invoice_template {
-  background: $inputBG;
-  padding: 32px 24px;
-  width: 766px;
-  border-top: 8px solid $main;
-  border-bottom: 8px solid $main;
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-  .header {
-    p {
-      margin: 0;
-      line-height: 20px;
-      color: $dark;
-    }
-    @include space-between();
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      .img {
-        height: 82px;
-        img {
-          height: 100%;
-        }
-      }
-    }
-    .company {
-      h6 {
-        color: $dark;
-        font-size: 24px;
-        font-weight: 700;
-        margin-bottom: 8px;
-        line-height: 24px;
-      }
-      p span {
-        font-weight: 500;
-        line-height: inherit;
-      }
-    }
-    .invoice_data {
-      display: flex;
-      gap: 8px;
-      flex-direction: column;
-      align-items: end;
-      h6 {
-        color: $dark;
-        font-size: 24px;
-        font-weight: 700;
-        line-height: 24px;
-      }
-    }
-  }
-  .line {
-    height: 1px;
-    width: 100%;
-    background: $inputStroke;
-  }
-  .total_price_wrap {
-    @include space-between();
-    .info {
-      display: flex;
-      align-items: center;
-      gap: 34px;
-      p {
-        font-size: 14px;
-        margin: 0;
-        line-height: 18px;
-        color: $dark;
-      }
-      .block {
-        h6 {
-          font-size: 16px;
-          font-weight: 500;
-          line-height: 13px;
-        }
-      }
-    }
-    .total {
-      display: flex;
-      gap: 8px;
-      align-items: center;
-      h6 {
-        font-size: 22px;
-        font-weight: 700;
-        line-height: 20px;
-        margin: 0;
-        color: $main;
-      }
-      p {
-        color: $main;
-        font-size: 20px;
-        font-weight: 500;
-        line-height: 20px;
-        margin: 0;
-      }
-    }
-  }
-  .exampleTable {
-    th,
-    td {
-      text-align: center;
-    }
-  }
-  .invoice_subTotal {
-    margin: 0 0 0 auto;
-    min-width: 300px;
-    ul {
-      display: flex;
-      gap: 12px;
-      flex-direction: column;
-      li {
-        line-height: 24px;
-        @include space-between();
-        h6,
-        p {
-          line-height: inherit;
-          margin: 0;
-          color: $dark;
-          font-size: 15px;
-          font-weight: 500;
-        }
-      }
-    }
-  }
-  .invoice_footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: end;
-    padding-top: 60px;
-    .policy {
-      display: flex;
-      flex-direction: column;
-      h6 {
-        font-size: 14px;
-        margin: 0;
-        font-weight: 600;
-      }
-      p {
-        font-size: 12px;
-        margin: 0;
-        line-height: 24px;
-        color: $gray;
-      }
-    }
-    .qr_holder {
-      width: 100px;
-      height: 100px;
-      background: $white;
-      border-radius: 12px;
-      @include centerFlex();
-      padding: 12px;
-      img {
-        height: 100%;
-        object-fit: contain;
-      }
-    }
-  }
-  &.temp2 {
-    border: 0;
-    background: none;
-    padding: 12px;
-    .header {
-      .invoice_data h6 {
-        opacity: 0.6;
-      }
-    }
-    .invoice_footer {
-      background: $main10;
-      padding: 16px;
-      border-radius: 12px;
-      margin-top: 60px;
-      align-items: center;
-    }
-    .invoice_subTotal {
-      margin: 0 0 0 auto;
-      border-radius: 12px;
-      padding: 16px 24px;
-      min-width: 300px;
-      background: $main10;
-    }
-    .total_price_wrap {
-      .about_invoice {
-        min-width: 200px;
-        display: flex;
-        flex-direction: column;
-        gap: 4px;
-        p {
-          width: 100%;
-          @include space-between();
-          font-size: 14px;
-          line-height: normal;
-          margin: 0;
-          span {
-            line-height: normal;
-          }
-        }
-      }
-    }
-  }
-  &.temp3 {
-    border: 0;
-    background: $main10;
-    gap: 36px;
-    .header {
-      @include centerFlex();
-      .invo {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        flex-direction: column;
-        h6 {
-          color: $dark;
-          font-size: 36px;
-          font-weight: 500;
-          line-height: 36px;
-          font-family: "Playfair Display", serif;
-        }
-        p {
-          color: $dark;
-          text-transform: uppercase;
-          font-size: 16px;
-          letter-spacing: 4px;
-          font-weight: 400;
-          line-height: 16px;
-        }
-      }
-    }
-    .pill_to {
-      @include space-between();
-      .pilling {
-        padding: 12px 16px;
-        border: 1px solid $inputHint;
-        min-width: 60%;
-        @include space-between();
-        .block {
-          display: flex;
-          flex-direction: column;
-          gap: 12px;
-          p {
-            color: $dark;
-            font-size: 16px;
-            font-weight: 500;
-            line-height: 16px;
-            margin: 0;
-          }
-        }
-      }
-    }
-    .line {
-      background: $dark;
-    }
-    .invoice_subTotal {
-      width: 100%;
-      @include space-between();
-      ul {
-        min-width: 300px;
-        gap: 0;
-        li {
-          padding: 8px;
-          &:last-child {
-            border: 1px solid $inputHint;
-          }
-        }
-      }
-      .bank_info {
-        h6 {
-          color: $dark;
-          font-weight: 500;
-        }
-        p {
-          margin: 0;
-        }
-      }
-    }
-    .exampleTable {
-      border-collapse: collapse;
-      border: 1px solid $inputHint;
-      td,
-      th {
-        border: 0;
-        border-bottom: 1px solid $inputHint;
-      }
-    }
-    .invoice_footer {
-      padding: 0px;
-      .left_side {
-        display: flex;
-        flex-direction: column;
-        gap: 16px;
-        h3 {
-          font-family: Playfair Display;
-          font-size: 36px;
-          font-weight: 500;
-          line-height: 36px;
-          color: $dark;
-        }
-      }
-    }
-  }
-}
+
 .destinations {
   display: grid;
   gap: 8px;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
 }
+
 .save_btn {
   @include clearInput();
   height: 52px;
@@ -3639,20 +1210,7 @@ footer {
   color: $white;
   border-radius: 12px;
 }
-.pathes {
-  display: grid;
-  gap: 8px;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  .path {
-    @include centerFlex();
-    border: 1px solid $main;
-    background: $main10;
-    padding: 16px 20px;
-    line-height: 20px;
-    border-radius: 12px;
-    cursor: pointer;
-  }
-}
+
 .inner_card {
   .form_title {
     font-size: 20px;
@@ -3668,6 +1226,7 @@ footer {
     }
   }
 }
+
 .booking_card {
   width: 100%;
   background: $inputBG;
@@ -3756,14 +1315,67 @@ footer {
         background: $main;
         color: $white;
       }
+      &.second {
+        background: $second;
+        color: $dark;
+      }
     }
   }
 }
-.payment_wapper,
+
 .require_id_wrapper {
-  background: $inputBG;
+  background: $main10;
   border-radius: 12px;
-  padding: 6px;
+  padding: 16px;
+  .input-field input {
+    background: $white;
+    border-color: $white;
+  }
+  .form-switch {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row-reverse;
+    padding: 0;
+    margin-bottom: 8px;
+    input {
+      cursor: pointer;
+    }
+  }
+  .otp_title {
+    padding-top: 8px;
+    margin: 0;
+    text-align: center;
+    color: $dark;
+    font-size: 24px;
+  }
+  .otp_description {
+    font-size: 14px;
+    color: $text;
+    text-align: center;
+    margin-bottom: 4px;
+    span {
+      color: $main;
+    }
+  }
+  .otp_btn {
+    width: fit-content !important;
+    padding: 0 42px !important;
+    margin: 0 auto !important;
+    margin-bottom: 8px !important;
+  }
+  .resend {
+    width: fit-content;
+    padding: 0 32px;
+    white-space: nowrap;
+    &.disabled {
+      pointer-events: none;
+      opacity: 0.7 !important;
+    }
+  }
+}
+
+.payment_wapper {
   .checkboxs_inputs {
     display: flex;
     width: 100%;
@@ -3773,6 +1385,7 @@ footer {
     position: relative;
     isolation: isolate;
     overflow: hidden;
+    border: 1px solid $inputStroke;
     label {
       cursor: pointer;
       flex: 1;
@@ -3809,14 +1422,8 @@ footer {
       }
     }
   }
-  .input-field input {
-    background: $white;
-    border-color: $white;
-  }
 }
-.require_id_wrapper {
-  background: $main10;
-}
+
 .path_footer {
   padding-top: 12px;
   @include space-between();
@@ -3838,6 +1445,7 @@ footer {
     }
   }
 }
+
 .id_row {
   display: flex;
   align-items: end;
@@ -3852,6 +1460,7 @@ footer {
     }
   }
 }
+
 .addons_wrapper {
   display: flex;
   align-items: end;
@@ -3865,6 +1474,7 @@ footer {
     }
   }
 }
+
 .bookings_filter {
   width: 100%;
   display: flex;
@@ -3900,7 +1510,11 @@ footer {
       font-size: 16px;
       font-weight: 400;
       color: $gray;
-      transition: $transation;
+      text-align: center;
+      transition: $transition;
+      @media screen and (max-width: 576px) {
+        font-size: 14px;
+      }
     }
     &.active {
       h6 {
@@ -3909,6 +1523,49 @@ footer {
     }
   }
 }
+
+.location-destination-tabs {
+  width: 100%;
+  display: flex;
+  height: 54px;
+  border-radius: 12px;
+  background: $main10;
+  position: relative;
+  isolation: isolate;
+  .activeTab {
+    transition: 0.25s ease-in-out;
+    position: absolute;
+    content: "";
+    top: 0;
+    transform: translateX(0);
+    height: 100%;
+    width: calc(100% / 2);
+    z-index: -1;
+    background: $main;
+    border-radius: 12px;
+    &.Location {
+      transform: translateX(100%);
+    }
+  }
+  .tab {
+    width: 100%;
+    @include centerFlex();
+    cursor: pointer;
+    h6 {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 400;
+      color: $gray;
+      transition: $transition;
+    }
+    &.active {
+      h6 {
+        color: $white;
+      }
+    }
+  }
+}
+
 .booking_modal {
   display: flex;
   gap: 24px;
@@ -3929,6 +1586,7 @@ footer {
       overflow: hidden;
       height: 100%;
       width: 100%;
+      aspect-ratio: 3 / 2;
       img {
         width: 100%;
         height: 100%;
@@ -4016,6 +1674,7 @@ footer {
       padding: 12px;
       border-radius: 12px;
       background: $main10;
+      height: 100%;
       display: flex;
       flex-direction: column;
       gap: 4px;
@@ -4036,7 +1695,8 @@ footer {
       }
     }
     .list_info {
-      @include space-between();
+      display: flex;
+      flex-direction: column;
       p {
         color: $gray;
         margin: 0;
@@ -4044,7 +1704,7 @@ footer {
       }
       h6 {
         color: $dark;
-        padding: 0 8px;
+
         font-size: 16px;
         font-weight: 500;
         margin: 0;
@@ -4123,7 +1783,7 @@ footer {
           font-size: 16px;
           font-weight: 400;
           color: $dark;
-          transition: $transation;
+          transition: $transition;
         }
       }
     }
@@ -4169,6 +1829,7 @@ footer {
     }
   }
 }
+
 .value_placeholder {
   margin: 0;
   font-weight: 600;
@@ -4181,6 +1842,7 @@ footer {
     font-size: 18px;
   }
 }
+
 .reservations {
   padding: 8px;
   border-radius: 12px;
@@ -4220,7 +1882,33 @@ footer {
         }
         &.fullyBooked {
           &::after {
+            background: $inputHint;
+          }
+        }
+        &.selected {
+          &::after {
             background: $main;
+          }
+        }
+      }
+    }
+  }
+  .reservation_card_label {
+    cursor: pointer;
+    width: 100%;
+    input {
+      display: none;
+      appearance: none;
+      &:checked + .reservation_card {
+        background: $main;
+        border-color: $main;
+        p {
+          color: $white;
+        }
+        h6 {
+          color: $white;
+          span {
+            color: $white;
           }
         }
       }
@@ -4233,6 +1921,7 @@ footer {
     border: 1px solid $white;
     display: flex;
     flex-direction: column;
+    transition: all 0.2s ease-in-out;
     p {
       margin-bottom: 4px;
       line-height: 24px;
@@ -4256,6 +1945,7 @@ footer {
     }
     &.fullyBooked {
       background: $inputHint;
+      pointer-events: none;
       border-color: $inputHint;
       p {
         color: $white;
@@ -4285,9 +1975,7 @@ footer {
     }
   }
 }
-.table {
-  margin: 0;
-}
+
 .rowActivation {
   width: 50px;
   height: 30px;
@@ -4302,6 +1990,7 @@ footer {
     }
   }
 }
+
 .addon_prices_row {
   display: flex;
   gap: 16px;
@@ -4340,220 +2029,11 @@ footer {
     }
   }
 }
-.announcements_container {
-  flex: 1 0 0;
-  width: 100%;
-  border-radius: 24px;
-  overflow: hidden;
-  height: 100%;
-  background: $white;
-  display: flex !important;
-  flex-direction: column;
-  height: 100%;
-  .swiper {
-    height: 100%;
-  }
-  .header {
-    width: 100%;
-    padding: 12px 16px;
-    background: $main;
-    @include space-between();
-    h6 {
-      color: $white;
-      margin: 0;
-    }
-    .swiper_controls {
-      display: flex;
-      align-items: center;
-      gap: 24px;
-      .btns {
-        display: flex;
-        align-items: center;
-        gap: 24px;
-        i {
-          color: $white;
-          font-size: 20px;
-        }
-      }
-      .announcements-pagination {
-        display: flex;
-        gap: 4px;
-        .swiper-pagination-bullet {
-          background: $white;
-          width: 12px;
-          min-height: 12px;
-          &.swiper-pagination-bullet-active {
-            width: 24px;
-            transition: $transation;
-            border-radius: 12px;
-          }
-        }
-      }
-    }
-  }
-  .content {
-    padding: 24px;
-    flex: 1 0 0;
-    .swiper-slide {
-      display: flex;
-      gap: 24px;
-      background-color: $white;
-      .img {
-        transition: 0.3s ease-in-out;
-        flex: 3;
-        aspect-ratio: 3 / 2;
-        border-radius: 24px;
-        overflow: hidden;
-        img {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-          object-position: center;
-        }
-      }
-      .slide_content {
-        transition: 0.3s ease-in-out;
-        width: 100%;
-        display: flex;
-        justify-content: space-between;
-        flex: 7;
-        flex-direction: column;
-        p {
-          line-height: 26px;
-          margin: 0;
-          color: $dark;
-          font-weight: 500;
-        }
-        button {
-          align-self: flex-end;
-          color: $main;
-          line-height: 28px;
-          font-weight: 500;
-        }
-      }
-    }
-  }
-}
-.weather_container {
-  width: 100%;
-  border-radius: 24px;
-  overflow: hidden;
-  background: $white;
-  .header {
-    width: 100%;
-    padding: 12px 16px;
-    background: $main;
-    @include space-between();
-    h6 {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin: 0;
-      color: $white;
-    }
-    .swiper_controls {
-      display: flex;
-      align-items: center;
-      gap: 24px;
-      .btns {
-        display: flex;
-        align-items: center;
-        gap: 24px;
-        i {
-          color: $white;
-          font-size: 20px;
-        }
-      }
-      .weather-pagination {
-        display: flex;
-        gap: 4px;
-        .swiper-pagination-bullet {
-          background: $white;
-          width: 12px;
-          min-height: 12px;
-          &.swiper-pagination-bullet-active {
-            width: 24px;
-            transition: $transation;
-            border-radius: 12px;
-          }
-        }
-      }
-    }
-  }
-  .content {
-    padding: 24px;
-    .swiper-slide {
-      display: flex;
-      background-color: $white;
-      flex-direction: column;
-      gap: 16px;
-      background-color: $white;
-      .slide-header {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-        align-items: center;
-        .img-container {
-          transition: 0.3s ease-in-out;
-          overflow: hidden;
-          margin: 0;
-          img {
-            width: 100%;
-            max-width: 80px;
-            object-fit: cover;
-            object-position: center;
-          }
-        }
-        h3 {
-          font-size: 36px;
-          font-weight: 500;
-          margin: 0;
-        }
-      }
-      .slide_content {
-        transition: 0.3s ease-in-out;
-        width: 100%;
-        display: flex;
-        gap: 24px;
-        .slide_content_box {
-          display: flex;
-          flex-direction: column;
-          gap: 4px;
-          flex: 1 0 0;
-          p {
-            line-height: 18px;
-            margin: 0;
-            color: $gray;
-            font-weight: 400;
-            gap: 4px;
-            font-size: 12px;
-            span {
-              line-height: 18px;
-              color: $dark;
-              font-weight: 500;
-            }
-          }
-        }
-      }
-    }
-  }
-}
-.styled_select {
-  border: 1px solid $inputStroke;
-  border-radius: 8px;
-  padding: 8px 16px;
-}
-.bg-light-gray {
-  background-color: $inputBG;
-}
-.bg-gray {
-  background-color: $main08;
-}
+
 .bookings-stats-content {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 16px;
   position: relative;
   .bookings-stats-specific {
     width: 100%;
@@ -4578,16 +2058,16 @@ footer {
         background-repeat: no-repeat;
         border: 1px solid $inputBG;
         &:first-of-type {
-          background-image: url("../images/img-status-8.svg");
+          background-image: url("/images/img-status-8.svg");
         }
         &:nth-of-type(2) {
-          background-image: url("../images/img-status-5.svg");
+          background-image: url("/images/img-status-5.svg");
         }
         &:nth-of-type(3) {
-          background-image: url("../images/img-status-2-1.svg");
+          background-image: url("/images/img-status-2-1.svg");
         }
         &:last-of-type {
-          background-image: url("../images/img-status-7.svg");
+          background-image: url("/images/img-status-7.svg");
         }
         h5 {
           font-weight: 500;
@@ -4599,6 +2079,9 @@ footer {
           font-size: 14px;
           line-height: 17.6px;
           margin: 0;
+        }
+        @media screen and (max-width: 576px) {
+          min-width: 200px;
         }
       }
     }
@@ -4668,11 +2151,14 @@ footer {
         margin: 0;
         position: relative;
         overflow: hidden;
-        transition: $transation;
+        transition: $transition;
         &:hover {
           color: $white;
           background-color: $main;
         }
+      }
+      @media (max-width: 576px) {
+        flex: 1;
       }
     }
   }
@@ -4680,9 +2166,12 @@ footer {
     width: 100%;
     display: flex;
     justify-content: space-between;
-    gap: 24px;
+    gap: 16px;
     flex-wrap: wrap;
     position: relative;
+    @media screen and (max-width: 576px) {
+      flex-direction: column;
+    }
     .bookings-stats-total-box {
       flex: 1 0 0;
       padding: 48px 24px;
@@ -4695,10 +2184,10 @@ footer {
       background-position: top right;
       background-repeat: no-repeat;
       &:first-of-type {
-        background-image: url("../images/img-earning-bg.svg");
+        background-image: url("/images/img-earning-bg.svg");
       }
       &:last-of-type {
-        background-image: url("../images/img-earning-bg-2.svg");
+        background-image: url("/images/img-earning-bg-2.svg");
       }
       h5 {
         font-weight: 500;
@@ -4714,6 +2203,7 @@ footer {
     }
   }
 }
+
 .dashboard-stats-sction {
   width: 100%;
   display: flex;
@@ -4724,7 +2214,7 @@ footer {
     min-width: 143.71px;
     flex: 1 0 0;
     background-color: $second25;
-    padding: 24px;
+    padding: 32px 16px;
     border-radius: 24px;
     display: flex;
     flex-direction: column;
@@ -4734,25 +2224,25 @@ footer {
     background-position: top right;
     background-repeat: no-repeat;
     &:first-of-type {
-      background-image: url("../images/img-status-4.svg");
+      background-image: url("/images/img-status-4.svg");
     }
     &:nth-of-type(2) {
-      background-image: url("../images/img-status-3-1.svg");
+      background-image: url("/images/img-status-3-1.svg");
     }
     &:nth-of-type(3) {
-      background-image: url("../images/img-status-5.svg");
+      background-image: url("/images/img-status-5.svg");
     }
     &:nth-of-type(4) {
-      background-image: url("../images/img-status-8.svg");
+      background-image: url("/images/img-status-8.svg");
     }
     &:nth-of-type(5) {
-      background-image: url("../images/img-status-9.svg");
+      background-image: url("/images/img-status-9.svg");
     }
     &:nth-of-type(6) {
-      background-image: url("../images/img-status-2-1.svg");
+      background-image: url("/images/img-status-2-1.svg");
     }
     &:nth-of-type(7) {
-      background-image: url("../images/img-status-7.svg");
+      background-image: url("/images/img-status-7.svg");
     }
     h5 {
       font-weight: 500;
@@ -4770,11 +2260,13 @@ footer {
     }
   }
 }
+
 .supply-demands-section {
   .form_title {
     color: $dark;
   }
 }
+
 .budget-box {
   background-color: $inputBG;
   border: 1px solid $inputStroke;
@@ -4803,6 +2295,7 @@ footer {
     }
   }
 }
+
 .IBAN-btn-box {
   height: 54px;
   position: relative;
@@ -4841,6 +2334,7 @@ footer {
     font-size: 20px;
   }
 }
+
 .service_discounst_box {
   border-radius: 16px;
   border: 1px solid $inputStroke;
@@ -4848,4 +2342,120 @@ footer {
   display: flex;
   flex-direction: column;
   gap: 12px;
+}
+
+.seasonCalenderPopUp {
+  padding: 16px;
+
+  button {
+    background: none;
+    height: auto;
+    width: auto;
+    border-radius: unset;
+    &:hover {
+      background: none;
+    }
+  }
+
+  .rmdp-shadow {
+    box-shadow: none !important;
+    border-radius: 8px;
+  }
+  .rmdp-arrow-container {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    i {
+      margin: 0;
+    }
+    &:hover {
+      background-color: $main;
+    }
+    &.rmdp-right i {
+      margin-right: 3px;
+    }
+  }
+  .rmdp-panel-body li .b-deselect {
+    padding: 0 10px;
+    background-color: $second !important;
+  }
+  .rmdp-panel-body li .b-deselect span {
+    font-size: 18px !important;
+  }
+  .rmdp-panel-body li,
+  .rmdp-panel-body li.bg-blue {
+    background-color: $main !important;
+  }
+  .rmdp-panel-body li {
+    box-shadow: none;
+    overflow: hidden;
+    border-radius: 0;
+  }
+  .rmdp-range {
+    background-color: $main;
+  }
+  .rmdp-wrapper {
+    width: auto;
+    height: fit-content;
+  }
+  .rmdp-panel {
+    width: 100%;
+  }
+  .rmdp-panel-header + div {
+    scrollbar-width: none;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+}
+
+.announcement_modal {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  .media_card {
+    flex: 1;
+    img,
+    video {
+      aspect-ratio: 3 / 2;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 24px;
+    }
+  }
+  .terms {
+    line-height: 1.5;
+    color: $gray;
+    font-size: 14px;
+  }
+  .actions {
+    gap: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    button {
+      padding: 0 24px;
+      width: fit-content;
+      border-radius: 16px;
+      &.stroked {
+        color: $main;
+        background: none;
+        border: 1px solid $main;
+      }
+      &:last-child {
+        padding: 0 62px;
+      }
+    }
+  }
+  .accept_terms {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    h6 {
+      margin: 0;
+    }
+  }
 }

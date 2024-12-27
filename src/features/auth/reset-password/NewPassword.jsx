@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
 import { checkPasswordStrength } from "../../../utils/helper";
-import { EXCEPTION_MESSAGES } from "../../../utils/contants";
+import { EXCEPTION_MESSAGES } from "../../../utils/constants";
 import SubmitButton from "../../../ui/form-elements/SubmitButton";
 
 export default function NewPassword({ formData, setFormData }) {
@@ -26,7 +26,7 @@ export default function NewPassword({ formData, setFormData }) {
     }
     try {
       const res = await axiosInstance.post(
-        "/api/v1/user/verify_reset_pass_otp",
+        "/user/verify_reset_pass_otp",
         formData
       );
       if (res?.status === 200) {

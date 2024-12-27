@@ -1,9 +1,12 @@
 import { Modal } from "react-bootstrap";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
+import { useSelector } from "react-redux";
 import CountUp from "react-countup";
 
 const AddonModal = ({ showModal, setShowModal, data }) => {
+  const currency = useSelector((state) => state?.authedUser?.currency) || "SAR";
+
   const tableData = [
     {
       id: "#51465",
@@ -11,6 +14,25 @@ const AddonModal = ({ showModal, setShowModal, data }) => {
       startDate: "01/01/2024",
       startTime: "3:07 am",
       payment: "cash"
+    }
+  ];
+
+  const categories = [
+    {
+      value: "party_themes",
+      name: "Party Themes"
+    },
+    {
+      value: "f&b",
+      name: "Food & Beverages"
+    },
+    {
+      value: "expert_assistant",
+      name: "Expert Assistant"
+    },
+    {
+      value: "other",
+      name: "Other"
     }
   ];
 
@@ -30,18 +52,21 @@ const AddonModal = ({ showModal, setShowModal, data }) => {
           <div className="details">
             <div className="aboutAddOn">
               <div className="img">
-                <img src={data?.attachments?.[0]} alt={data?.name} />
+                <img
+                  src={data?.attachments && data?.attachments[0]?.url}
+                  alt={data?.name}
+                />
               </div>
               <div className="about">
                 <h3>{data?.name}</h3>
-                <span>{data?.category}</span>
+                <span>{categories?.find((c) => c?.value === data?.category)?.name}</span>
                 <p>{data?.description}</p>
               </div>
             </div>
             <div className="info">
               <div className="info_card">
                 <span>Parent Yacht</span>
-                <h5>{data?.parent_yacht_name}</h5>
+                <h5>{data?.yacht?.name_en}</h5>
               </div>
               <div className="info_card">
                 <span>Quantity</span>
@@ -50,7 +75,8 @@ const AddonModal = ({ showModal, setShowModal, data }) => {
               <div className="info_card">
                 <span>Price</span>
                 <h5>
-                  ${data?.price} <span>/ {data?.price_type}</span>
+                  {data?.prices && Number(data?.prices[0]?.price)} {currency}{" "}
+                  <span>/ {data?.price_type}</span>
                 </h5>
               </div>
             </div>

@@ -18,7 +18,7 @@ export default function EmailForm({
     e.preventDefault();
     try {
       const res = await axiosInstance.post(
-        "/api/v1/user/generate_forgot_password_otp",
+        "/user/generate_forgot_password_otp",
         {
           email: formData.email,
           role: role

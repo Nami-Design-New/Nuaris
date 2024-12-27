@@ -2,7 +2,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { getExceptionMessage } from "./helper";
 
-axios.defaults.baseURL = "https://newstagingapi.nuaris.co";
+axios.defaults.baseURL = "https://newstagingapi.nuaris.co/api/v1";
 axios.defaults.headers.common["Content-Type"] = "application/json";
 axios.defaults.headers.common.Accept = "application/json";
 axios.defaults.withCredentials = true;

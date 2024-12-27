@@ -1,19 +1,18 @@
 import { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import avatar from "../../../assets/images/av1.png";
 
 export default function NotificationMenu({ isOpen, setIsOpen }) {
   const dropdownRef = useRef(null);
   const variants = {
     open: {
       opacity: 1,
-      height: "340px"
+      height: "340px",
     },
     closed: {
       opacity: 0,
-      height: 0
-    }
+      height: 0,
+    },
   };
 
   useEffect(() => {
@@ -59,7 +58,7 @@ function NotificationCard() {
   return (
     <div className="notification-card">
       <div className="image">
-        <img src={avatar} alt="fav" />
+        <img src="/images/av1.png" alt="fav" />
       </div>
       <div className="content">
         <h3>New Booking Confirmation</h3>

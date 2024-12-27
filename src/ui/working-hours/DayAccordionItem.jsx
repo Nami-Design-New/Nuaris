@@ -10,23 +10,23 @@ const DayAccordionItem = ({
   handleAddNewHoursRow,
   handleDeleteCurrentHours
 }) => {
-  const currentObject = workingHours.find((obj) => obj.day === day);
+  const currentObject = workingHours?.find((obj) => obj?.day === day);
 
   return (
     <Accordion.Item key={day} eventKey={index}>
       <Accordion.Header>
         <Form.Check
           onClick={(e) => handleCheck(e, index)}
-          checked={workingHours[index].selected}
+          checked={workingHours?.[index]?.selected}
           type="switch"
           id={day}
           label={day}
         />
       </Accordion.Header>
-      {workingHours[index].selected && (
+      {workingHours?.[index]?.selected && (
         <Accordion.Body>
           <div className="form_ui timesRow">
-            {currentObject.hours.map((_, i) => (
+            {currentObject?.hours.map((_, i) => (
               <TimeRow
                 key={i}
                 index={i}

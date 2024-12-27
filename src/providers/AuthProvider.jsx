@@ -19,7 +19,7 @@ export default function AuthProvider({ children }) {
   useLayoutEffect(() => {
     if (!accessToken) {
       axiosInstance
-        .post("/api/v1/web_refresh")
+        .post("/web_refresh")
         .then((refresh) => {
           if (refresh.status === 200) {
             const newAccessToken = refresh.data.access_token;
@@ -32,8 +32,7 @@ export default function AuthProvider({ children }) {
             navigate("/login");
           }
         })
-        .catch((error) => {
-          console.error("Refresh token failed", error);
+        .catch(() => {
           dispatch(setToken(null));
           navigate("/login");
         })
@@ -58,11 +57,10 @@ export default function AuthProvider({ children }) {
       (response) => response,
       async (error) => {
         const originalRequest = error.config;
-
         if (error.response.status === 401 && !originalRequest._retry) {
           originalRequest._retry = true;
           try {
-            const refresh = await axiosInstance.post("/api/v1/web_refresh");
+            const refresh = await axiosInstance.post("/web_refresh");
             if (refresh.status === 200) {
               const newAccessToken = refresh.data.access_token;
               dispatch(setToken(newAccessToken));
@@ -73,7 +71,6 @@ export default function AuthProvider({ children }) {
               return axiosInstance(originalRequest);
             }
           } catch (refreshError) {
-            console.error(refreshError);
             return Promise.reject(refreshError);
           }
         }

@@ -1,47 +1,32 @@
 import {
   handleChange,
   handlePhoneChange,
-  handleSelectCountry,
-  fetchCitiesForCountry,
   checkPasswordStrength,
-  filterEmptyKeys
+  filterEmptyKeys,
+  handleFileUpload,
 } from "../../../utils/helper";
 import { toast } from "react-toastify";
-import { useEffect, useState } from "react";
-import { EXCEPTION_MESSAGES } from "../../../utils/contants";
+import { useState } from "react";
+import { EXCEPTION_MESSAGES } from "../../../utils/constants";
 import BackButton from "../../../ui/form-elements/BackButton";
 import SubmitButton from "../../../ui/form-elements/SubmitButton";
 import InputField from "../../../ui/form-elements/InputField";
 import PhoneField from "../../../ui/form-elements/PhoneField";
 import PasswordField from "../../../ui/form-elements/PasswordField";
 import SelectField from "../../../ui/form-elements/SelectField";
-import ReactFlagsSelect from "react-flags-select";
 import MediaUploadField from "../../../ui/form-elements/MediaUploadField";
 import axiosInstance from "../../../utils/axiosInstance";
+import useGetCountries from "../../../hooks/app/useGetCountries";
 
 export default function AgentForm({
   formData,
   setFormData,
   setShowOtpForm,
-  setShowRegisterForm
+  setShowRegisterForm,
 }) {
   const [loading, setLoading] = useState(false);
-  const [cityList, setCityList] = useState([]);
-  const [cityNameList, setCityNameList] = useState(null);
-
-  useEffect(() => {
-    fetchCitiesForCountry(formData.country, setCityList, setCityNameList);
-  }, [formData.country]);
-
-  const handleSelectCity = (cityName) => {
-    const selectedCity = cityList?.find((city) => city.name === cityName);
-    if (selectedCity) {
-      setFormData((prev) => ({
-        ...prev,
-        city: cityName
-      }));
-    }
-  };
+  const [fileLoading, setFileLoading] = useState(false);
+  const { data: countries } = useGetCountries();
 
   const handleSubmit = async (e) => {
     setLoading(true);
@@ -53,7 +38,7 @@ export default function AgentForm({
     }
     try {
       const filteredData = filterEmptyKeys(formData);
-      const res = await axiosInstance.post("/api/v1/user/signup", filteredData);
+      const res = await axiosInstance.post("/user/signup", filteredData);
       if (res.status === 200 || res.status === 201) {
         toast.success("Verify your email to continue");
         setShowOtpForm(true);
@@ -67,7 +52,7 @@ export default function AgentForm({
 
   return (
     <form className="form_ui" onSubmit={(e) => handleSubmit(e)}>
-      <div className="row m-0">
+      <div className="row">
         <div className="col-lg-6 col-12 p-2 d-flex flex-column gap-3">
           <InputField
             label="First Name"
@@ -99,6 +84,17 @@ export default function AgentForm({
             pannelRatio={0.3666}
             accept={["image/png", "image/jpeg"]}
             files={formData.logo ? [formData.logo] : []}
+            handleFileUpload={(fileItems) =>
+              handleFileUpload(
+                fileItems,
+                "photos",
+                null,
+                setFormData,
+                "logo",
+                setFileLoading,
+                fileLoading
+              )
+            }
           />
         </div>
         <div className="col-lg-6 col-12 p-2">
@@ -163,7 +159,7 @@ export default function AgentForm({
             label="Registration Type"
             options={[
               { value: "freelancer", name: "Freelancer" },
-              { value: "tour_guide", name: "Tour Guide" }
+              { value: "tour_guide", name: "Tour Guide" },
             ]}
             id="registration_type"
             name="registration_type"
@@ -183,40 +179,44 @@ export default function AgentForm({
           />
         </div>
         <div className="col-lg-6 col-12 p-2">
-          <div className="input-field">
-            <label htmlFor="companyLocation">
-              Company Location. <span>(Country)</span>
-            </label>
-            <ReactFlagsSelect
-              searchable={true}
-              selectedSize={false}
-              selected={formData?.country}
-              onSelect={(code) => {
-                handleSelectCountry(code, setFormData);
-              }}
-            />
-          </div>
+          <SelectField
+            label="Company Location"
+            required
+            id="country"
+            name="country"
+            value={formData.country}
+            options={countries?.map((country) => ({
+              name: country?.name,
+              value: country?.name,
+            }))}
+            onChange={(e) => {
+              setFormData({ ...formData, country: e.target.value, city: "" });
+            }}
+          />
         </div>
         <div className="col-12 p-2">
           <SelectField
-            label="city"
+            label="City"
+            required
             name="city"
             id="city"
-            required
-            options={cityNameList?.map((city) => ({
-              name: city,
-              value: city
-            }))}
             value={formData.city}
-            onChange={(e) =>
-              handleSelectCity(e.target.value, setFormData, cityList)
-            }
+            options={countries
+              ?.find((c) => c?.name === formData?.country)
+              ?.cities?.map((city) => ({
+                name: city?.name,
+                value: city?.name,
+              }))}
+            onChange={(e) => setFormData({ ...formData, city: e.target.value })}
           />
         </div>
         <div className="col-12 p-2 mt-3">
           <div className="buttons">
             <BackButton onClick={() => setShowRegisterForm(false)} />
-            <SubmitButton loading={loading} name="Confirm" />
+            <SubmitButton
+              loading={loading || fileLoading}
+              name={fileLoading ? "Logo Uploading" : "Confirm"}
+            />
           </div>
         </div>
       </div>

@@ -5,96 +5,29 @@ export default function TableLoader({ minHeight }) {
       style={{ minHeight: minHeight }}
     >
       <svg
-        version="1.1"
-        id="Layer_1"
         xmlns="http://www.w3.org/2000/svg"
-        xmlnsXlink="http://www.w3.org/1999/xlink"
-        x="0px"
-        y="0px"
-        width="24px"
-        height="30px"
-        viewBox="0 0 24 30"
-        style={{ enableBackground: "new 0 0 50 50" }}
-        xmlSpace="preserve"
+        width="60px"
+        height="60px"
+        viewBox="0 0 100 100"
+        preserveAspectRatio="xMidYMid"
       >
-        <rect x="0" y="10" width="4" height="10" fill="#333" opacity="0.2">
+        <path
+          fill="none"
+          d="M24.3,30C11.4,30,5,43.3,5,50s6.4,20,19.3,20c19.3,0,32.1-40,51.4-40 C88.6,30,95,43.3,95,50s-6.4,20-19.3,20C56.4,70,43.6,30,24.3,30z"
+          stroke="#1b355e"
+          strokeWidth="2"
+          strokeDasharray="205.271142578125 51.317785644531256"
+        >
           <animate
-            attributeName="opacity"
-            attributeType="XML"
-            values="0.2; 1; .2"
+            attributeName="stroke-dashoffset"
+            calcMode="linear"
+            values="0;256.58892822265625"
+            keyTimes="0;1"
+            dur=".5"
             begin="0s"
-            dur="0.6s"
             repeatCount="indefinite"
           />
-          <animate
-            attributeName="height"
-            attributeType="XML"
-            values="10; 20; 10"
-            begin="0s"
-            dur="0.6s"
-            repeatCount="indefinite"
-          />
-          <animate
-            attributeName="y"
-            attributeType="XML"
-            values="10; 5; 10"
-            begin="0s"
-            dur="0.6s"
-            repeatCount="indefinite"
-          />
-        </rect>
-        <rect x="8" y="10" width="4" height="10" fill="#333" opacity="0.2">
-          <animate
-            attributeName="opacity"
-            attributeType="XML"
-            values="0.2; 1; .2"
-            begin="0.15s"
-            dur="0.6s"
-            repeatCount="indefinite"
-          />
-          <animate
-            attributeName="height"
-            attributeType="XML"
-            values="10; 20; 10"
-            begin="0.15s"
-            dur="0.6s"
-            repeatCount="indefinite"
-          />
-          <animate
-            attributeName="y"
-            attributeType="XML"
-            values="10; 5; 10"
-            begin="0.15s"
-            dur="0.6s"
-            repeatCount="indefinite"
-          />
-        </rect>
-        <rect x="16" y="10" width="4" height="10" fill="#333" opacity="0.2">
-          <animate
-            attributeName="opacity"
-            attributeType="XML"
-            values="0.2; 1; .2"
-            begin="0.3s"
-            dur="0.6s"
-            repeatCount="indefinite"
-          />
-          <animate
-            attributeName="height"
-            attributeType="XML"
-            values="10; 20; 10"
-            begin="0.3s"
-            dur="0.6s"
-            repeatCount="indefinite"
-          />
-          <animate
-            attributeName="y"
-            attributeType="XML"
-            values="10; 5; 10"
-            begin="0.3s"
-            dur="0.6s"
-            repeatCount="indefinite"
-          />
-        </rect>
+        </path>
       </svg>
     </div>
   );

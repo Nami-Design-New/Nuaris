@@ -1,14 +1,16 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { useQueryClient } from "@tanstack/react-query";
 import axiosInstance from "../../../../utils/axiosInstance";
 import PriceRow from "./PriceRow";
-import addIcon from "../../../../assets/images/icons/add.svg";
 import SubmitButton from "../../../../ui/form-elements/SubmitButton";
+import useGetAddons from "../../../../hooks/addons/useGetAddons";
 
-const Prices = ({ setForm, addon, formData, setFormData, pricesInitial }) => {
+const Prices = ({ id, setForm, formData, setFormData, createdAddonId }) => {
   const [loading, setLoading] = useState(false);
-  const createdAddOn = sessionStorage.getItem("addon_id");
+  const { refetch } = useGetAddons();
+  const queryClient = useQueryClient();
   const navigate = useNavigate();
 
   const handleBack = (e) => {
@@ -20,43 +22,36 @@ const Prices = ({ setForm, addon, formData, setFormData, pricesInitial }) => {
     e.preventDefault();
     setLoading(true);
     try {
-      let url = addon?.id
-        ? `/addons/${addon?.id}/`
-        : `/addons/${createdAddOn}/`;
-      const response = await axiosInstance.patch(url, {
-        ...formData[0],
-        price_type: formData[0].price_type.toLocaleLowerCase()
+      const response = await axiosInstance.post("/addon/create_addon", {
+        step_id: 3,
+        addon_id: id ? id : createdAddonId,
+        prices: formData?.prices,
       });
-      if (response.status === 200) {
-        addon
-          ? toast.success("Prices Updated Successfully")
-          : toast.success("Prices Saved Successfully");
+      if (response.status === 200 || response.status === 201) {
+        toast.success("Prices Saved Successfully");
+        refetch();
+        queryClient.invalidateQueries({
+          queryKey: ["addon", createdAddonId || id],
+        });
         navigate("/dashboard/addons");
-      } else {
-        toast.error("Something went wrong");
       }
     } catch (error) {
       console.error("Error:", error);
-      toast.error("Something went wrong");
+      toast.error(
+        error?.response
+          ? "minimum price should be less than price"
+          : "Something went wrong"
+      );
     } finally {
       setLoading(false);
     }
   };
 
-  const handleAddPriceRow = (e) => {
-    e.preventDefault();
-    if (formData.prices.length < 6) {
-      setFormData((prev) => {
-        return {
-          ...prev,
-          prices: [...prev.prices, { ...pricesInitial }]
-        };
-      });
-    }
-  };
-
   const handleDeleteRow = (indexToDelete) => {
-    setFormData(formData.prices.filter((_, index) => index !== indexToDelete));
+    setFormData((prev) => ({
+      ...prev,
+      prices: prev.prices?.filter((_, index) => index !== indexToDelete) || [],
+    }));
   };
 
   const handleChange = (index, field, value) => {
@@ -69,36 +64,25 @@ const Prices = ({ setForm, addon, formData, setFormData, pricesInitial }) => {
       });
     }
     updatedFormData[index] = { ...updatedFormData[index], [field]: value };
-    setFormData((prev) => {
-      return {
-        ...prev,
-        prices: updatedFormData
-      };
-    });
+    setFormData((prev) => ({
+      ...prev,
+      prices: updatedFormData,
+    }));
   };
 
   return (
     <form className="form_ui" onSubmit={handleSubmit}>
-      <div className="row m-0">
+      <div className="row">
         <div className="col-12 p-2 d-flex align-items-center justify-content-between">
           <h6 className="form_title mb-0">Prices</h6>
-          <button onClick={handleAddPriceRow} type="button">
-            <img src={addIcon} alt="addIcon" />
-          </button>
         </div>
-        {formData.prices.map((data, index) => (
+        {formData.prices?.map((data, index) => (
           <PriceRow
             key={index}
             index={index}
             formData={data}
             length={formData.prices.length}
             handleChange={handleChange}
-            options={["30 M", "1 H", "2 H", "3 H", "Trip", "Item"].filter(
-              (option) =>
-                !formData.prices.some(
-                  (row) => row.price_type === option && row !== data
-                )
-            )}
             onDelete={handleDeleteRow}
           />
         ))}
@@ -118,3 +102,18 @@ const Prices = ({ setForm, addon, formData, setFormData, pricesInitial }) => {
 };
 
 export default Prices;
+
+// const handleAddPriceRow = (e) => {
+//   e.preventDefault();
+//   if (formData.prices.length < 6) {
+//     setFormData((prev) => ({
+//       ...prev,
+//       prices: [...prev.prices, { ...pricesInitial }],
+//     }));
+//   }
+// };
+{
+  /* <button onClick={handleAddPriceRow} type="button">
+<img src="/images/icons/add.svg" alt="addIcon" />
+</button> */
+}

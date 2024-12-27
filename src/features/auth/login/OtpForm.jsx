@@ -7,13 +7,12 @@ import { setToken, setUser } from "../../../redux/slices/authedUser";
 import Otpcontainer from "../../../ui/Otpcontainer";
 import SubmitButton from "../../../ui/form-elements/SubmitButton";
 import BackButton from "../../../ui/form-elements/BackButton";
-import handWave from "../../../assets/images/icons/waving-hand.svg";
 
 export default function OtpForm({
   formData,
   setFormData,
   SetShowOtpForm,
-  setShowLoginForm
+  setShowLoginForm,
 }) {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -30,7 +29,7 @@ export default function OtpForm({
     e.preventDefault();
     try {
       const res = await axiosInstance.post(
-        "/api/v1/user/verify_email_login_otp",
+        "/user/verify_email_login_otp",
         formData
       );
       if (res.status === 200) {
@@ -50,7 +49,8 @@ export default function OtpForm({
     <div className="form">
       <form onSubmit={handleSubmit}>
         <h2 className="head">
-          Welcome Back ! <img src={handWave} alt="hand-wave" />
+          Welcome Back !{" "}
+          <img src="/images/icons/waving-hand.svg" alt="hand-wave" />
         </h2>
         <p className="sub-head">
           Please enter the verification code sent to{" "}

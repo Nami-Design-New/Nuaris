@@ -38,7 +38,7 @@ const MapModal = ({
         <h6>{title}</h6>
       </Modal.Header>
       <Modal.Body>
-        <div className="row m-0">
+        <div className="row">
           <div className="col-12 p-0 mb-2">
             <div className="map">
               {mapLoaded && (

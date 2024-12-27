@@ -1,5 +1,3 @@
-import addIcon from "../../assets/images/icons/addRow.svg";
-import deleteIcon from "../../assets/images/icons/delete.svg";
 import CustomTimePicker from "./CustomTimePicker";
 import dayjs from "dayjs";
 
@@ -9,14 +7,14 @@ const TimeRow = ({
   day,
   handleTimeChange,
   handleAddNewHoursRow,
-  handleDeleteCurrentHours
+  handleDeleteCurrentHours,
 }) => {
-  const calculateDisabledTimes = (hours, currentIndex, key) => {
+  const calculateDisabledTimes = (hours, currentIndex) => {
     let disabledTimes = [];
     hours.forEach((time, i) => {
       if (i !== currentIndex) {
-        let start = dayjs(time.from, "HH:mm");
-        let end = dayjs(time.to, "HH:mm");
+        let start = dayjs(time.from_time, "HH:mm");
+        let end = dayjs(time.to_time, "HH:mm");
         let range = [];
         let curr = start;
         while (curr.isBefore(end) || curr.isSame(end)) {
@@ -32,30 +30,30 @@ const TimeRow = ({
   const disabledFromTimes = calculateDisabledTimes(
     currentObject.hours,
     index,
-    "from"
+    "from_time"
   );
   const disabledToTimes = calculateDisabledTimes(
     currentObject.hours,
     index,
-    "to"
+    "to_time"
   );
 
   return (
     <div className="time_row">
       <div className="input-field">
         <CustomTimePicker
-          value={currentObject.hours[index].from}
+          value={currentObject.hours[index].from_time}
           onChange={(value) =>
-            handleTimeChange(value, "from", index, currentObject, day)
+            handleTimeChange(value, "from_time", index, currentObject, day)
           }
           disabledTimes={disabledFromTimes}
         />
       </div>
       <div className="input-field">
         <CustomTimePicker
-          value={currentObject.hours[index].to}
+          value={currentObject.hours[index].to_time}
           onChange={(value) =>
-            handleTimeChange(value, "to", index, currentObject, day)
+            handleTimeChange(value, "to_time", index, currentObject, day)
           }
           disabledTimes={disabledToTimes}
         />
@@ -66,14 +64,14 @@ const TimeRow = ({
           disabled={currentObject.hours.length >= 3}
           type="button"
         >
-          <img src={addIcon} alt="add icon" />
+          <img src="/images/icons/addRow.svg" alt="add icon" />
         </button>
       ) : (
         <button
           onClick={() => handleDeleteCurrentHours(index, currentObject, day)}
           type="button"
         >
-          <img src={deleteIcon} alt="delete icon" />
+          <img src="/images/icons/delete.svg" alt="delete icon" />
         </button>
       )}
     </div>

@@ -1,19 +1,23 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
+import { useQueryClient } from "@tanstack/react-query";
 import axiosInstance from "../../../../utils/axiosInstance";
 import SubmitButton from "../../../../ui/form-elements/SubmitButton";
 import DaysAccordion from "../../../../ui/working-hours/DaysAccordion";
+import useGetAddons from "../../../../hooks/addons/useGetAddons";
 
 const WorkingTime = ({
+  id,
   setForm,
-  addon,
   formData,
   setFormData,
   isValid,
-  setIsValid
+  setIsValid,
+  createdAddonId,
 }) => {
   const [loading, setLoading] = useState(false);
-  const createdAddOn = sessionStorage.getItem("addon_id");
+  const { refetch } = useGetAddons();
+  const queryClient = useQueryClient();
 
   const handleNext = (e) => {
     e.preventDefault();
@@ -31,10 +35,15 @@ const WorkingTime = ({
     const { checked } = e.target;
     setFormData((prev) => {
       let newWorkingHours = [...prev.working_hours];
+      if (!checked) {
+        newWorkingHours[index].hours = [
+          { from_time: "00:00", to_time: "00:00" },
+        ];
+      }
       newWorkingHours[index].selected = checked;
       return {
         ...prev,
-        working_hours: newWorkingHours
+        working_hours: newWorkingHours,
       };
     });
   };
@@ -51,7 +60,7 @@ const WorkingTime = ({
       newFormData[currentIndex] = updatedObject;
       return {
         ...prev,
-        working_hours: newFormData
+        working_hours: newFormData,
       };
     });
   };
@@ -59,7 +68,7 @@ const WorkingTime = ({
   const handleAddNewHoursRow = (day, currentObject) => {
     if (currentObject.hours.length < 3) {
       const newObject = { ...currentObject };
-      newObject.hours.push({ from: "00:00", to: "00:00" });
+      newObject.hours.push({ from_time: "00:00", to_time: "00:00" });
       setFormData((prev) => ({
         ...prev,
         working_hours: prev.working_hours.map((obj) => {
@@ -67,7 +76,7 @@ const WorkingTime = ({
             return newObject;
           }
           return obj;
-        })
+        }),
       }));
     }
   };
@@ -82,7 +91,7 @@ const WorkingTime = ({
           return newObject;
         }
         return obj;
-      })
+      }),
     }));
   };
 
@@ -96,34 +105,40 @@ const WorkingTime = ({
       const reqData = filteredFormData.map((obj) => {
         return {
           day: obj.day,
-          hours: obj.hours
+          hours: obj.hours,
         };
       });
-      const dictionary = { working_hours: reqData };
-      let url = addon?.id
-        ? `/addons/${addon?.id}/`
-        : `/addons/${createdAddOn}/`;
-      const response = await axiosInstance.patch(url, dictionary);
-      if (response.status === 200) {
-        addon
-          ? toast.success("Working Time Updated Successfully")
-          : toast.success("Working Time Saved Successfully");
+      const dictionary = {
+        step_id: 2,
+        addon_id: id ? id : createdAddonId,
+        working_hours: {
+          working_hours: reqData,
+        },
+      };
+      const response = await axiosInstance.post(
+        "/addon/create_addon",
+        dictionary
+      );
+      if (response.status === 200 || response.status === 201) {
+        toast.success("Working Time Saved Successfully");
+        refetch();
+        queryClient.invalidateQueries({
+          queryKey: ["addon", createdAddonId || id],
+        });
         setForm("Prices");
         setIsValid(true);
-      } else {
-        toast.error("Something went wrong");
       }
     } catch (error) {
       console.error("Error:", error);
-      toast.error("Something went wrong");
+      toast.error("Something went wrong. Please try again later.");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <form className="form-ui" onSubmit={handleSubmit}>
-      <div className="row m-0">
+    <form className="form_ui" onSubmit={handleSubmit}>
+      <div className="row">
         <div className="col-12 p-2">
           <h6 className="form_title">Working Time</h6>
         </div>

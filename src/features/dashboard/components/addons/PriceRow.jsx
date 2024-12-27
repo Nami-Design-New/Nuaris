@@ -1,21 +1,15 @@
 import { useSelector } from "react-redux";
-import deleteIcon from "../../../../assets/images/icons/delete.svg";
 import InputField from "../../../../ui/form-elements/InputField";
+import useGetPeriodTypes from "./../../../../hooks/app/useGetPeriodTypes";
 
-const PriceRow = ({
-  formData,
-  index,
-  handleChange,
-  options,
-  onDelete,
-  length
-}) => {
-  const currency = useSelector((state) => state.user?.user?.currency);
+const PriceRow = ({ formData, index, handleChange, length }) => {
+  const currency = useSelector((state) => state?.authedUser?.currency) || "SAR";
+  const { data: durations } = useGetPeriodTypes(3);
 
-  const handleDelete = (e) => {
-    e.preventDefault();
-    onDelete(index);
-  };
+  // const handleDelete = (e) => {
+  //   e.preventDefault();
+  //   onDelete(index);
+  // };
 
   return (
     <div className={`addon_prices_row ${index === length - 1 ? "last" : ""}`}>
@@ -34,15 +28,15 @@ const PriceRow = ({
             className="units"
             name={`units-${index}`}
             id={`units-${index}`}
-            value={formData.price_type}
-            onChange={(e) => handleChange(index, "price_type", e.target.value)}
+            value={formData.period_id}
+            onChange={(e) => handleChange(index, "period_id", e.target.value)}
           >
             <option value="" disabled>
               Select
             </option>
-            {options.map((option, i) => (
-              <option key={i} value={option}>
-                {option}
+            {durations?.map((option, i) => (
+              <option key={i} value={option?.id}>
+                {option?.name}
               </option>
             ))}
           </select>
@@ -51,20 +45,20 @@ const PriceRow = ({
       <div className="inner_wrap">
         <InputField
           label="Minimum Price"
-          value={formData.min_price}
-          onChange={(e) => handleChange(index, "min_price", e.target.value)}
-          htmlFor={`min_price-${index}`}
+          value={formData.minimum_price}
+          onChange={(e) => handleChange(index, "minimum_price", e.target.value)}
+          htmlFor={`minimum_price-${index}`}
           hint={`( ${currency} )`}
           type="number"
           placeholder="00"
           id={`minPrice-${index}`}
         />
-        <button
+        {/* <button
           onClick={(e) => handleDelete(e)}
           className={`${length === 1 ? "disabled" : ""}`}
         >
-          <img src={deleteIcon} alt="delete" />
-        </button>
+          <img src="/images/icons/delete.svg" alt="delete" />
+        </button> */}
       </div>
     </div>
   );

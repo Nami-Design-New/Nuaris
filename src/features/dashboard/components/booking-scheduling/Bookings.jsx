@@ -1,4 +1,4 @@
-import BookingsTable from "./BookingsTable";
+import BookingsTable from "./cards/BookingsTable";
 
 export default function Bookings() {
   return (

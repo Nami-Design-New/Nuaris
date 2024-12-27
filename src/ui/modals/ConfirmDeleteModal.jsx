@@ -16,7 +16,7 @@ const ConfirmDeleteModal = ({
       centered
     >
       <Modal.Body>
-        <div className="row m-0 confirmation_modal">
+        <div className="row confirmation_modal">
           <div className="col-12 p-2">
             <p>
               {`You are about to remove `} <span>{deletionTarget}</span>{" "}
@@ -35,7 +35,7 @@ const ConfirmDeleteModal = ({
               name={"Confirm"}
               className="confirm red"
               loading={loading}
-              onClick={onConfirm}
+              event={onConfirm}
             />
           </div>
         </div>

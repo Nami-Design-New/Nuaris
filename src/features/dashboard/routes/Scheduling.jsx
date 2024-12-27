@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import PageHeader from "./../layout/PageHeader";
 import Bookings from "../components/booking-scheduling/Bookings";
-import SchedulingCalender from "../components/booking-scheduling/SchedulingCalender";
+import SchedulingCalender from "../components/booking-scheduling/cards/SchedulingCalender";
 
 const Scheduling = () => {
   return (
@@ -13,7 +13,7 @@ const Scheduling = () => {
             Add New Booking
           </Link>
         </header>
-        <div className="row m-0">
+        <div className="row">
           <div className="col-12 p-2">
             <SchedulingCalender />
           </div>

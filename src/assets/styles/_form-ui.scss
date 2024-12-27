@@ -1,0 +1,375 @@
+.form_ui {
+  width: 100%;
+  .input-field {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    .main-elements {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      h6 {
+        line-height: 20px;
+        font-size: 16px;
+        font-weight: 500;
+      }
+    }
+    .pass-group {
+      display: flex;
+      .show-pass {
+        @include centerFlex();
+        cursor: pointer;
+        width: 60px;
+        height: 54px;
+        border: 1px solid $inputStroke;
+        background: $inputBG;
+        border-left: 0;
+        border-radius: 0 12px 12px 0 !important;
+        color: $inputHint;
+      }
+      input {
+        border-right: 0 !important;
+        border-radius: 12px 0 0 12px !important;
+      }
+    }
+    .phone-group {
+      .PhoneInput {
+        display: flex;
+        gap: 12px;
+        .PhoneInputCountryIcon {
+          position: relative;
+        }
+        .PhoneInputCountryIconImg {
+          width: 20px;
+          position: absolute;
+          top: -33px;
+          left: 10px;
+        }
+        select {
+          padding: 12px 6px 12px 36px;
+        }
+      }
+      .phone-code {
+        height: 54px;
+        border-radius: 4px;
+      }
+    }
+    .searchMapGroup {
+      gap: 8px;
+      display: flex;
+      button {
+        min-width: 54px;
+        height: 54px;
+        border-radius: 12px;
+        @include clearInput();
+        background-image: url("/images/icons/mapIcon.svg");
+      }
+      span {
+        width: 100%;
+        height: 54px;
+        overflow: hidden;
+        outline: none;
+        border: 1px solid $inputStroke;
+        border-radius: 12px;
+        color: $inputHint;
+        background: $inputBG;
+        padding: 8px 16px;
+      }
+    }
+    input,
+    select,
+    textarea {
+      width: 100%;
+      height: 54px;
+      display: block;
+      outline: none;
+      border: 1px solid $inputStroke;
+      border-radius: 12px;
+      background: $inputBG;
+      padding: 12px 16px;
+      box-shadow: none !important;
+    }
+    textarea {
+      height: 152px;
+      line-height: 24px;
+    }
+    label {
+      color: $dark;
+      font-weight: 500;
+      span {
+        font-size: 12px;
+        color: $gray;
+      }
+    }
+    select {
+      color: $dark;
+      cursor: pointer;
+      &.disable {
+        pointer-events: none;
+        background: $border;
+        color: $grayLight;
+      }
+    }
+    &.files {
+      .filepond--root .filepond--drop-label {
+        min-height: 100%;
+        label {
+          color: $inputHint;
+          font-size: 14px !important;
+          font-weight: 400 !important;
+          line-height: 18px !important;
+        }
+      }
+    }
+    .checkboxs_inputs {
+      display: flex;
+      width: 100%;
+      height: 54px;
+      border: 1px solid $inputStroke;
+      border-radius: 12px;
+      position: relative;
+      isolation: isolate;
+      overflow: hidden;
+      label {
+        cursor: pointer;
+        flex: 1;
+        @include centerFlex();
+        span {
+          font-size: 16px;
+          font-weight: 400;
+          line-height: 20px;
+          color: $dark;
+          cursor: pointer;
+          transition: $transition;
+        }
+        input {
+          display: none;
+          appearance: none;
+          &:checked + span {
+            color: $white;
+          }
+        }
+      }
+      .bg-active {
+        transition: $transition;
+        position: absolute;
+        content: "";
+        top: 0;
+        transform: translateX(0);
+        height: 100%;
+        width: 50%;
+        z-index: -1;
+        background: $main;
+        border-radius: 12px;
+        &.refuse {
+          transform: translateX(100%);
+        }
+      }
+    }
+    .filepond--root .filepond--drop-label label {
+      color: #e2e2e2 !important;
+      &.mainImg {
+        color: $main !important;
+      }
+    }
+  }
+  .check-field {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    label {
+      color: $dark;
+      font-weight: 500;
+      span {
+        font-size: 14px;
+        color: $gray;
+      }
+    }
+    .inputs {
+      display: flex;
+      gap: 8px;
+      label {
+        flex: 1;
+        height: 54px;
+        border-radius: 12px;
+        position: relative;
+        cursor: pointer;
+        overflow: hidden;
+        input {
+          transition: $transition;
+          background: $main10;
+          cursor: pointer;
+          appearance: none;
+          width: 100%;
+          height: 100%;
+          &:checked {
+            background-color: $main;
+            & + span {
+              color: $white;
+            }
+          }
+        }
+        span {
+          color: $main;
+          @include centerAbsolute();
+          font-size: 16px !important;
+        }
+      }
+    }
+  }
+  .simiLabel {
+    color: $dark;
+  }
+  .check_field {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px dashed $inputHint;
+    border-radius: 12px;
+    .form-check {
+      width: 100%;
+      @include space-between();
+      flex-direction: row-reverse;
+      padding-left: 0 !important;
+      input {
+        cursor: pointer;
+        box-shadow: none !important;
+      }
+      label {
+        width: 100%;
+        display: block;
+        cursor: pointer;
+      }
+    }
+  }
+  .time-units {
+    display: flex;
+    gap: 8px;
+    .units {
+      width: 160px;
+    }
+  }
+  .addItem {
+    padding: 8px;
+    border-radius: 8px;
+    border: 1px solid $lightGray;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    position: relative;
+    input {
+      appearance: none;
+      display: none;
+    }
+    label {
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      h6 {
+        margin: 0;
+        color: $text;
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 20px;
+      }
+      i {
+        color: $text;
+        width: 16px;
+        font-size: 14px;
+        font-weight: 600;
+        @include centerFlex();
+      }
+    }
+    &.active {
+      background: $main10;
+      border-color: transparent;
+      label {
+        h6 {
+          color: $main;
+        }
+        i {
+          color: $dark;
+        }
+      }
+    }
+  }
+  .submit_btn {
+    width: 200px;
+    @include clearInput();
+    height: 52px;
+    border: 1px solid $main;
+    color: $white;
+    border-radius: 12px;
+    background-color: $main;
+  }
+  .elements {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+}
+.gender_select {
+  display: flex;
+  flex-direction: column;
+  .gender_card {
+    background-color: red;
+    display: flex;
+    gap: 8px;
+    background-color: $white;
+    color: $dark;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    border: 1px solid $white;
+    padding: 12px 16px;
+    transition: 0.3s;
+    cursor: pointer;
+    font-weight: 400 !important;
+    font-size: 14px;
+    width: 100%;
+    img {
+      height: 30px;
+      width: 30px;
+    }
+    &:hover {
+      background-color: $main10;
+    }
+    &.active {
+      border: 1px solid $main;
+      background-color: $main10;
+    }
+  }
+  & > div {
+    display: flex;
+    gap: 8px;
+  }
+  input {
+    visibility: hidden;
+  }
+  label {
+    font-weight: 500;
+  }
+}
+
+.otp-container {
+  display: flex;
+  gap: 8px;
+  .otp-input {
+    flex: 1;
+    width: 100%;
+    height: 80px !important;
+    outline: none;
+    background: $inputBG;
+    border: 1px solid $inputStroke;
+    border-radius: 12px;
+    text-align: center;
+    font-size: 28px;
+    font-weight: 600;
+    color: $main !important;
+    &::-webkit-inner-spin-button {
+      display: none;
+    }
+    @media screen and (max-width: 576px) {
+      height: 60px !important;
+    }
+  }
+}

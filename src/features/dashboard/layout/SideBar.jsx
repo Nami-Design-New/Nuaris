@@ -1,20 +1,12 @@
 import { useEffect, useState } from "react";
 import { Accordion } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
-import logo from "../../../assets/images/logoH.svg";
-import fav from "../../../assets/images/fav.svg";
-import arrowSub from "../../../assets/images/icons/subArrow.svg";
-import manageListing from "../../../assets/images/icons/manage-listing.svg";
-import marketing from "../../../assets/images/icons/markiting-promotion.svg";
-import analytics from "../../../assets/images/icons/Reports.svg";
-import guests from "../../../assets/images/icons/guest-details.svg";
-import dashboard from "../../../assets/images/icons/Dashboard.svg";
 
 export default function SideBar({
   manualExpand,
   setManualExpand,
   hoverExpand,
-  setHoverExpand
+  setHoverExpand,
 }) {
   const [sideClass, setSideClass] = useState("");
 
@@ -36,10 +28,10 @@ export default function SideBar({
     >
       <div className="logo_wrapper">
         <span className="logo-lg">
-          <img src={logo} alt="logo" />
+          <img src="/images/logo.svg" alt="logo" />
         </span>
         <span className="logo-sm">
-          <img src={fav} alt="fav" />
+          <img src="/images/fav.svg" alt="fav" />
         </span>
       </div>
       {/* navigation menu */}
@@ -47,7 +39,7 @@ export default function SideBar({
         <li className="nav_item">
           <NavLink to="" end onClick={() => setManualExpand(false)}>
             <div className="icon">
-              <img src={dashboard} alt="dashboard" />
+              <img src="/images/icons/Dashboard.svg" alt="dashboard" />
             </div>
             <h6>Dashboard</h6>
           </NavLink>
@@ -57,7 +49,10 @@ export default function SideBar({
           <Accordion.Item eventKey="0">
             <Accordion.Header>
               <div className="icon">
-                <img src={manageListing} alt="Manage-Listings-icon" />
+                <img
+                  src="/images/icons/manage-listing.svg"
+                  alt="Manage-Listings-icon"
+                />
               </div>
               <div className="d-flex flex-column">
                 <h6>Manage Listings</h6>
@@ -68,13 +63,13 @@ export default function SideBar({
               <ul className="sub_navigation_menu">
                 <li className="sub_nav_item">
                   <NavLink to="fleet" onClick={() => setManualExpand(false)}>
-                    <img src={arrowSub} alt="arrow" />
+                    <img src="/images/icons/subArrow.svg" alt="arrow" />
                     <span>Fleet</span>
                   </NavLink>
                 </li>
                 <li className="sub_nav_item">
                   <NavLink to="addons" onClick={() => setManualExpand(false)}>
-                    <img src={arrowSub} alt="arrow" />
+                    <img src="/images/icons/subArrow.svg" alt="arrow" />
                     <span>Addons</span>
                   </NavLink>
                 </li>
@@ -83,7 +78,7 @@ export default function SideBar({
                     to="activities"
                     onClick={() => setManualExpand(false)}
                   >
-                    <img src={arrowSub} alt="arrow" />
+                    <img src="/images/icons/subArrow.svg" alt="arrow" />
                     <span>Activities</span>
                   </NavLink>
                 </li>
@@ -92,7 +87,7 @@ export default function SideBar({
                     to="trip-packages"
                     onClick={() => setManualExpand(false)}
                   >
-                    <img src={arrowSub} alt="arrow" />
+                    <img src="/images/icons/subArrow.svg" alt="arrow" />
                     <span>Trip Packages</span>
                   </NavLink>
                 </li>
@@ -101,7 +96,7 @@ export default function SideBar({
                     to="bookings-scheduling"
                     onClick={() => setManualExpand(false)}
                   >
-                    <img src={arrowSub} alt="arrow" />
+                    <img src="/images/icons/subArrow.svg" alt="arrow" />
                     <span>Bookings </span>
                   </NavLink>
                 </li>
@@ -110,13 +105,13 @@ export default function SideBar({
                     to="destination"
                     onClick={() => setManualExpand(false)}
                   >
-                    <img src={arrowSub} alt="arrow" />
+                    <img src="/images/icons/subArrow.svg" alt="arrow" />
                     <span>Destination</span>
                   </NavLink>
                 </li>
                 <li className="sub_nav_item">
                   <NavLink to="packages" onClick={() => setManualExpand(false)}>
-                    <img src={arrowSub} alt="arrow" />
+                    <img src="/images/icons/subArrow.svg" alt="arrow" />
                     <span>packages</span>
                   </NavLink>
                 </li>
@@ -127,7 +122,10 @@ export default function SideBar({
           <Accordion.Item eventKey="1">
             <Accordion.Header>
               <div className="icon">
-                <img src={marketing} alt="markiting-icon" />
+                <img
+                  src="/images/icons/markiting-promotion.svg"
+                  alt="markiting-icon"
+                />
               </div>
               <div className="d-flex flex-column">
                 <h6>Markiting & Promotions</h6>
@@ -141,7 +139,7 @@ export default function SideBar({
                     to="agent-request"
                     onClick={() => setManualExpand(false)}
                   >
-                    <img src={arrowSub} alt="arrow" />
+                    <img src="/images/icons/subArrow.svg" alt="arrow" />
                     <span>Agent Requests</span>
                   </NavLink>
                 </li>
@@ -150,7 +148,7 @@ export default function SideBar({
                     to="affiliate"
                     onClick={() => setManualExpand(false)}
                   >
-                    <img src={arrowSub} alt="arrow" />
+                    <img src="/images/icons/subArrow.svg" alt="arrow" />
                     <span>Affiliate</span>
                   </NavLink>
                 </li>
@@ -159,7 +157,7 @@ export default function SideBar({
                     to="compigens"
                     onClick={() => setManualExpand(false)}
                   >
-                    <img src={arrowSub} alt="arrow" />
+                    <img src="/images/icons/subArrow.svg" alt="arrow" />
                     <span>Compigens</span>
                   </NavLink>
                 </li>
@@ -170,7 +168,7 @@ export default function SideBar({
           <Accordion.Item eventKey="2">
             <Accordion.Header>
               <div className="icon">
-                <img src={analytics} alt="Analytics" />
+                <img src="/images/icons/Reports.svg" alt="Analytics" />
               </div>
               <div className="d-flex flex-column">
                 <h6>Analytics</h6>
@@ -181,13 +179,13 @@ export default function SideBar({
               <ul className="sub_navigation_menu">
                 <li className="sub_nav_item">
                   <NavLink to="reports" onClick={() => setManualExpand(false)}>
-                    <img src={arrowSub} alt="arrow" />
+                    <img src="/images/icons/subArrow.svg" alt="arrow" />
                     <span>Reports</span>
                   </NavLink>
                 </li>
                 <li className="sub_nav_item">
                   <NavLink to="clients" onClick={() => setManualExpand(false)}>
-                    <img src={arrowSub} alt="arrow" />
+                    <img src="/images/icons/subArrow.svg" alt="arrow" />
                     <span>Clients</span>
                   </NavLink>
                 </li>
@@ -198,7 +196,7 @@ export default function SideBar({
           <Accordion.Item eventKey="3">
             <Accordion.Header>
               <div className="icon">
-                <img src={guests} alt="Analytics" />
+                <img src="/images/icons/guest-details.svg" alt="Analytics" />
               </div>
               <div className="d-flex flex-column">
                 <h6>Guest Details & Reviews</h6>
@@ -209,7 +207,7 @@ export default function SideBar({
               <ul className="sub_navigation_menu">
                 <li className="sub_nav_item">
                   <NavLink to="guests" onClick={() => setManualExpand(false)}>
-                    <img src={arrowSub} alt="arrow" />
+                    <img src="/images/icons/subArrow.svg" alt="arrow" />
                     <span>Guests</span>
                   </NavLink>
                 </li>
@@ -218,13 +216,13 @@ export default function SideBar({
                     to="complaint"
                     onClick={() => setManualExpand(false)}
                   >
-                    <img src={arrowSub} alt="arrow" />
+                    <img src="/images/icons/subArrow.svg" alt="arrow" />
                     <span>Complaint</span>
                   </NavLink>
                 </li>
                 <li className="sub_nav_item">
                   <NavLink to="rating" onClick={() => setManualExpand(false)}>
-                    <img src={arrowSub} alt="arrow" />
+                    <img src="/images/icons/subArrow.svg" alt="arrow" />
                     <span>Rating</span>
                   </NavLink>
                 </li>
@@ -233,7 +231,7 @@ export default function SideBar({
                     to="questions-settings"
                     onClick={() => setManualExpand(false)}
                   >
-                    <img src={arrowSub} alt="arrow" />
+                    <img src="/images/icons/subArrow.svg" alt="arrow" />
                     <span>Questions</span>
                   </NavLink>
                 </li>

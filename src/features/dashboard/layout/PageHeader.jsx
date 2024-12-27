@@ -1,4 +1,4 @@
-import useGetRouteName from "../../../hooks/useGetRouteName";
+import useGetRouteName from "../../../hooks/helpers/useGetRouteName";
 import RoutePath from "./RoutePath";
 
 export default function PageHeader({ name, hint, currentName, removeLast }) {

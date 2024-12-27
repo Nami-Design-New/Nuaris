@@ -1,6 +1,6 @@
 import { Fragment } from "react";
 import { Link } from "react-router-dom";
-import useGetRouteName from "../../../hooks/useGetRouteName";
+import useGetRouteName from "../../../hooks/helpers/useGetRouteName";
 
 
 export default function RoutePath({ currentName, hint, removeLast }) {

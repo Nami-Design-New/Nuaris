@@ -1,29 +1,36 @@
-import { Route, Routes } from "react-router-dom";
-import Home from "./routes/Home";
-import Login from "./routes/Login";
-import Register from "./routes/Register";
-import ResetPassword from "./routes/ResetPassword";
-import Dashboard from "./routes/Dashboard";
-import AuthProvider from "./providers/AuthProvider";
+import { useEffect, useState } from "react";
+import { router } from "./providers/router";
+import { RouterProvider } from "react-router-dom";
+import IntroLoader from "./ui/loaders/IntroLoader";
+import ReactGA from "react-ga4";
 
 export default function App() {
+  const [showIntro, setShowIntro] = useState(true);
+
+  useEffect(() => {
+    const handleLocationChange = () => {
+      ReactGA.send({
+        hitType: "pageview",
+        page: window.location.pathname + window.location.search,
+      });
+    };
+
+    ReactGA.initialize(import.meta.env.VITE_TRACKING_ID);
+    handleLocationChange();
+
+    window.addEventListener("popstate", handleLocationChange);
+    return () => window.removeEventListener("popstate", handleLocationChange);
+  }, []);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setShowIntro(false), 3000);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
-    <div className="App">
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/reset-password" element={<ResetPassword />} />
-        <Route
-          path="/dashboard/*"
-          element={
-            <AuthProvider>
-              <Dashboard />
-            </AuthProvider>
-          }
-        />
-        <Route path="*" element={<>404 page not found</>} />
-      </Routes>
-    </div>
+    <>
+      <IntroLoader className={showIntro ? "" : "hide"} />
+      <RouterProvider router={router} />
+    </>
   );
 }

@@ -1,5 +1,5 @@
 
-import { DAYS } from "../../utils/contants";
+import { DAYS } from "../../utils/constants";
 import { Accordion } from "react-bootstrap";
 import DayAccordionItem from "./DayAccordionItem";
 

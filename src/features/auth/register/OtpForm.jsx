@@ -31,7 +31,7 @@ export default function OtpForm({ email, setShowOtpForm }) {
     e.preventDefault();
     try {
       const res = await axiosInstance.post(
-        "/api/v1/user/verify_email_signup_otp",
+        "/user/verify_email_signup_otp",
         formData
       );
       if (res.status === 200) {

@@ -4,20 +4,16 @@ import timeGridPlugin from "@fullcalendar/timegrid";
 import listPlugin from "@fullcalendar/list";
 import interactionPlugin from "@fullcalendar/interaction";
 
-export default function FullCalender() {
+export default function FullCalender({ events }) {
   return (
     <FullCalendar
+      height={"auto"}
+      expandRows={true}
+      handleWindowResize={true}
+      stickyHeaderDates={true}
       plugins={[dayGridPlugin, timeGridPlugin, listPlugin, interactionPlugin]}
       initialView="dayGridMonth"
-      events={[
-        {
-          title: `#445 - mahmoud gamal`,
-          start: "2024-07-1",
-          end: "2024-07-010"
-        },
-        { title: `#444 - mahmoud gamal`, start: "2024-07-11" },
-        { title: `#434 - mahmoud gamal`, start: "2024-07-15" }
-      ]}
+      events={events}
       editable={true}
       eventDrop={(event) => {
         console.log("Event dropped:", event);
@@ -25,14 +21,14 @@ export default function FullCalender() {
       headerToolbar={{
         left: "prev,next today",
         center: "title",
-        right: "dayGridMonth,timeGridWeek,timeGridDay,listWeek"
+        right: "dayGridMonth,timeGridWeek,timeGridDay,listWeek",
       }}
       buttonText={{
         today: "Today",
         month: "Month",
         week: "Week",
         day: "Day",
-        list: "List"
+        list: "List",
       }}
     />
   );

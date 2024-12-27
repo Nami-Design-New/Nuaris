@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { DataTable } from "primereact/datatable";
 import { Button } from "primereact/button";
 import { Column } from "primereact/column";
@@ -7,21 +7,42 @@ import { toast } from "react-toastify";
 import { useQueryClient } from "@tanstack/react-query";
 import axiosInstance from "../../../utils/axiosInstance";
 import PageHeader from "../layout/PageHeader";
-import useGetEmployees from "./../../../hooks/useGetEmployees";
+import useGetEmployees from "./../../../hooks/employees/useGetEmployees";
 import TableLoader from "../../../ui/loaders/TableLoader";
 import Pagination from "../../../ui/Pagination";
-import deleteIcon from "../../../assets/images/icons/delete.svg";
-import editIcon from "../../../assets/images/icons/edit.svg";
 import ConfirmDeleteModal from "../../../ui/modals/ConfirmDeleteModal";
 
 const InviteUser = () => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [loading, setLoading] = useState(true);
   const [row, setRow] = useState({});
-  const [searchParams] = useSearchParams();
-  const currentPage = searchParams.get("page");
   const queryClient = useQueryClient();
-  const { data: employees, isLoading } = useGetEmployees(currentPage);
+  const { data: employees, isLoading } = useGetEmployees();
+
+  const actionTemplate = (rowData) => (
+    <div className="actions_cell">
+      <Button onClick={() => deleteRow(rowData)}>
+        <img src="/images/icons/delete.svg" alt="delete" />
+      </Button>
+      <Link to={`edit-user/${rowData.id}`}>
+        <Button>
+          <img src="/images/icons/edit.svg" alt="edit" />
+        </Button>
+      </Link>
+    </div>
+  );
+
+  const deleteRow = (rowData) => {
+    setShowDeleteModal(true);
+    setRow(rowData);
+  };
+
+  const groupsNamesTemplate = (rowData) => {
+    if (rowData?.group_names?.length === 0) {
+      return "-";
+    }
+    return rowData?.group_names?.map((group) => group).join(", ");
+  };
 
   const deleteEmployee = async () => {
     setShowDeleteModal(false);
@@ -40,38 +61,13 @@ const InviteUser = () => {
     }
   };
 
-  const actionTemplate = (rowData) => (
-    <div className="actions_cell">
-      <Button onClick={() => deleteRow(rowData)}>
-        <img src={deleteIcon} alt="delete" />
-      </Button>
-      <Link to={`edit-user/${rowData.id}`}>
-        <Button>
-          <img src={editIcon} alt="edit" />
-        </Button>
-      </Link>
-    </div>
-  );
-
-  const deleteRow = (rowData) => {
-    setShowDeleteModal(true);
-    setRow(rowData);
-  };
-
-  const groupsNamesTemplate = (rowData) => {
-    if (rowData?.group_names?.length === 0) {
-      return "-";
-    }
-    return rowData?.group_names?.map((group) => group).join(", ");
-  };
-
   return (
     <>
       <section className="section-main-content">
         <header className="flex-header">
           <PageHeader name="Invite user" />
         </header>
-        <div className="row m-0">
+        <div className="row">
           <div className="col-12 p-2">
             <div className="inner_card">
               <div className="card_header">
@@ -104,7 +100,7 @@ const InviteUser = () => {
                     />
                     <Column header="Actions" body={actionTemplate} />
                   </DataTable>
-                  {employees?.count > 0 && (
+                  {employees?.count > 10 && (
                     <Pagination count={employees?.count} />
                   )}
                 </div>

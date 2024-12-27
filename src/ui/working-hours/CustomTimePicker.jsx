@@ -23,7 +23,7 @@ const CustomTimePicker = ({ value, onChange, disabledTimes = [] }) => {
         value={value ? dayjs(value, "HH:mm") : null}
         onChange={handleChange}
         minutesStep={5}
-        ampm={true}
+        ampm={false}
         views={["hours", "minutes"]}
         shouldDisableTime={shouldDisableTime}
       />
